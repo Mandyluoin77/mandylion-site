@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dark Ambient Space</title>
+
+<style>
+html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+    font-family: system-ui, sans-serif;
+    background: radial-gradient(circle at top, #111827, #050510 70%);
+    color:#e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.container{
+    text-align:center;
+    backdrop-filter: blur(10px);
+    background: rgba(20,20,35,0.6);
+    padding:50px;
+    border-radius:20px;
+    box-shadow:0 0 40px rgba(0,0,0,0.7);
+    max-width:600px;
+}
+
+h1{
+    font-size:2.2em;
+    margin-bottom:20px;
+    letter-spacing:1px;
+}
+
+p{
+    opacity:0.8;
+    margin-bottom:30px;
+}
+
+button{
+    background:#1f2937;
+    border:1px solid #374151;
+    color:#e5e7eb;
+    padding:12px 25px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#374151;
+}
+
+footer{
+    position:absolute;
+    bottom:15px;
+    font-size:0.8em;
+    opacity:0.4;s
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>רגע של שקט</h1>
+    <p>נשום עמוק. האט. תן למוזיקה להוביל אותך.</p>
+    <button onclick="toggleAudio()">הפעל / עצור מוזיקה</button>
+</div>
+
+<footer>Dark Ambient Experience</footer>
+
+<audio id="bgMusic" loop>
+    <!-- Ambient track (royalty-free sample) -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_6b7e6fef55.mp3?filename=deep-ambient-124008.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const audio = document.getElementById("bgMusic");
+
+function toggleAudio(){
+    if(audio.paused){
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
+</script>
+
+</body>
+</html>
