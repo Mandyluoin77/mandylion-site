@@ -3,1195 +3,231 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CatMind — להבין את החתול</title>
-  <meta name="description" content="כלי אינטראקטיבי שמתרגם התנהגות חתולים להבנה מעשית ותוכנית פעולה." />
-  <meta http-equiv="Cache-Control" content="no-store" />
+  <title>CatMind AI — האפליקציה המלאה</title>
   <style>
     :root{
-      --bg:#070a0f;
-      --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.08);
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.68);
-      --line:rgba(255,255,255,.12);
-      --accent:#20e3b2;
-      --accent2:#ffb86b;
-      --danger:#ff5c7a;
-      --ok:#7CFF7A;
-      --shadow: 0 20px 70px rgba(0,0,0,.45);
-      --radius:20px;
+      --bg:#070a0f; --text:rgba(255,255,255,.92); --muted:rgba(255,255,255,.68);
+      --line:rgba(255,255,255,.12); --accent:#20e3b2; --accent2:#ffb86b;
+      --danger:#ff5c7a; --ok:#7CFF7A; --radius:20px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html,body{height:100%; margin:0; padding:0;}
     body{
-      margin:0;
       color:var(--text);
-      background: radial-gradient(1200px 800px at 70% 10%, rgba(32,227,178,.12), transparent 55%),
-                  radial-gradient(900px 600px at 15% 35%, rgba(255,184,107,.10), transparent 60%),
-                  linear-gradient(180deg, #05070c, #070a0f 45%, #05070c);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans Hebrew", sans-serif;
-      overflow-x:hidden;
-    }
-    a{color:inherit}
-    .wrap{
-      min-height:100%;
-      display:flex;
-      flex-direction:column;
-      position:relative;
-      isolation:isolate;
+      background-color: #000;
+      font-family: system-ui, -apple-system, sans-serif; overflow-x:hidden;
     }
 
-    /* Background particles canvas */
-    #fx{
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      pointer-events:none;
-      opacity:.95;
+    /* מנגנון רקע מתחלף */
+    #bg-slider {
+      position: fixed; inset: 0; z-index: -2;
+      background-size: cover; background-position: center;
+      transition: background-image 2s ease-in-out;
+    }
+    .overlay {
+      position: fixed; inset: 0; z-index: -1;
+      background: linear-gradient(rgba(7, 10, 15, 0.7), rgba(7, 10, 15, 0.85));
     }
 
-    /* Soft vignette */
-    .vignette{
-      position:fixed;
-      inset:-40px;
-      z-index:-1;
-      pointer-events:none;
-      background:
-        radial-gradient(60% 55% at 50% 38%, transparent 30%, rgba(0,0,0,.45) 72%, rgba(0,0,0,.72) 100%);
-    }
-
-    header{
-      padding:22px 18px 10px;
-      display:flex;
-      justify-content:center;
-    }
+    #fx{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:0.4;}
+    .wrap{min-height:100%; display:flex; flex-direction:column; position:relative; padding: 20px;}
+    header{padding:20px 0; text-align:center;}
     .topbar{
-      width:min(1100px, 100%);
-      display:flex;
-      gap:14px;
-      align-items:center;
-      justify-content:space-between;
-      padding:14px 16px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:rgba(0,0,0,.22);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 40px rgba(0,0,0,.25);
+      max-width:1100px; margin:0 auto; width:100%; display:flex; justify-content:space-between; align-items:center;
+      padding:15px 25px; background:rgba(0,0,0,0.4); backdrop-filter:blur(15px); border-radius:100px; border:1px solid var(--line);
     }
-    .brand{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      min-width:220px;
-    }
-    .logo{
-      width:42px;height:42px;
-      border-radius:14px;
-      background:
-        radial-gradient(circle at 35% 35%, rgba(255,255,255,.22), transparent 55%),
-        linear-gradient(135deg, rgba(32,227,178,.9), rgba(255,184,107,.85));
-      box-shadow: 0 14px 40px rgba(32,227,178,.15);
-      position:relative;
-      overflow:hidden;
-    }
-    .logo:after{
-      content:"";
-      position:absolute; inset:-30%;
-      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.35), transparent 55%);
-      transform: rotate(25deg);
-    }
-    .brand h1{
-      margin:0;
-      font-size:16px;
-      letter-spacing:.2px;
-      line-height:1.1;
-    }
-    .brand small{
-      display:block;
-      margin-top:3px;
-      color:var(--muted);
-      font-size:12px;
-      font-weight:500;
-    }
-
-    .controls{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      backdrop-filter: blur(10px);
-    }
-    .pill label{
-      font-size:12px;
-      color:var(--muted);
-      cursor:pointer;
-      user-select:none;
-    }
-    .btn{
-      appearance:none;
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:999px;
-      cursor:pointer;
-      font-weight:700;
-      font-size:12px;
-      transition: transform .08s ease, border-color .2s ease, background .2s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,.18);
-    }
-    .btn:hover{transform: translateY(-1px); border-color: rgba(32,227,178,.35)}
-    .btn:active{transform: translateY(0px) scale(.99)}
-    .btn.primary{
-      border-color: rgba(32,227,178,.35);
-      background: linear-gradient(180deg, rgba(32,227,178,.18), rgba(255,255,255,.03));
-    }
-
-    main{
-      width:min(1100px, 100%);
-      margin:0 auto;
-      padding: 14px 18px 44px;
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:16px;
-    }
-    @media (max-width: 980px){
-      main{grid-template-columns:1fr; padding-bottom:60px}
-      .brand{min-width:auto}
-    }
+    .brand h1{margin:0; font-size:22px; color:var(--accent); letter-spacing:1px;}
+    
+    main{max-width:1100px; margin:30px auto; display:grid; grid-template-columns: 1.2fr 0.8fr; gap:25px; width:100%;}
+    @media (max-width: 900px){ main{grid-template-columns:1fr;} }
 
     .card{
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
+      background: rgba(15, 20, 25, 0.7); backdrop-filter: blur(20px); border: 1px solid var(--line);
+      border-radius: var(--radius); padding:30px; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
     }
-    .card .inner{padding:18px}
-    .title{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:18px 18px 12px;
-      border-bottom:1px solid var(--line);
-      background: rgba(0,0,0,.18);
-      backdrop-filter: blur(10px);
-    }
-    .title h2{
-      margin:0;
-      font-size:16px;
-      letter-spacing:.2px;
-    }
-    .title p{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.4;
+    h2{margin-top:0; color:var(--accent); font-size:1.5rem;}
+    .grid{display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;}
+    @media (max-width: 500px){ .grid{grid-template-columns:1fr;} }
+
+    .field label{display:block; font-size:12px; color:var(--muted); margin-bottom:8px; font-weight:bold;}
+    select, textarea, input{
+      width:100%; padding:12px; border-radius:12px; border:1px solid var(--line);
+      background: rgba(255,255,255,0.05); color:white; font-size:14px; outline:none;
     }
 
-    /* Hero: cat eyes */
-    .hero{
-      min-height:260px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      position:relative;
-      overflow:hidden;
+    .btn{
+      padding:15px 25px; border-radius:50px; border:none; cursor:pointer; font-weight:bold;
+      transition:0.3s; font-size:16px; width:100%;
     }
-    .heroBg{
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(600px 420px at 70% 35%, rgba(32,227,178,.18), transparent 60%),
-        radial-gradient(520px 380px at 25% 60%, rgba(255,184,107,.16), transparent 65%),
-        linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.06));
-      filter:saturate(1.1);
-      opacity:.95;
-    }
-    .hero .inner{position:relative; z-index:1}
-    .hero h3{
-      margin:0;
-      font-size:24px;
-      letter-spacing:.2px;
-      line-height:1.2;
-    }
-    .hero .sub{
-      margin:10px 0 0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-      max-width: 56ch;
-    }
-    .heroFooter{
-      position:relative;
-      z-index:1;
-      padding:0 18px 18px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      font-size:12px;
-      color:var(--muted);
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.20);
-    }
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.55), rgba(32,227,178,.85));
-      box-shadow: 0 0 18px rgba(32,227,178,.28);
-    }
+    .primary{background:var(--accent); color:#000; box-shadow: 0 10px 20px rgba(32, 227, 178, 0.2); margin-top:10px;}
 
-    .eyesWrap{
-      position:absolute;
-      inset:0;
-      display:grid;
-      place-items:center;
-      z-index:1;
-      pointer-events:none;
-      opacity:.95;
-    }
-    .eyes{
-      display:flex;
-      gap:34px;
-      transform: translateY(14px);
-      filter: drop-shadow(0 18px 28px rgba(0,0,0,.35));
-    }
-    .eye{
-      width:120px;
-      height:70px;
-      border-radius: 999px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 45%),
-        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.18);
-      position:relative;
-      overflow:hidden;
-      backdrop-filter: blur(6px);
-    }
-    .eye:before{
-      content:"";
-      position:absolute; inset:-35%;
-      background: radial-gradient(circle at 50% 50%, rgba(0,0,0,.35), transparent 55%);
-      transform: rotate(18deg);
-      opacity:.35;
-    }
-    .iris{
-      position:absolute;
-      width:42px;height:42px;
-      border-radius:50%;
-      top:50%; left:50%;
-      transform: translate(-50%,-50%);
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 42%),
-        radial-gradient(circle at 50% 50%, rgba(32,227,178,.95), rgba(32,227,178,.25) 62%, rgba(0,0,0,.2) 100%);
-      box-shadow: 0 0 24px rgba(32,227,178,.25);
-    }
-    .pupil{
-      position:absolute;
-      width:10px; height:28px;
-      border-radius:999px;
-      background: rgba(0,0,0,.85);
-      top:50%; left:50%;
-      transform: translate(-50%,-50%);
-      box-shadow: 0 0 0 2px rgba(255,255,255,.04);
-    }
-    .shine{
-      position:absolute;
-      width:10px;height:10px;border-radius:50%;
-      background: rgba(255,255,255,.75);
-      top:32%; left:35%;
-      filter: blur(.2px);
-    }
+    /* תוצאות */
+    .resultBox{display:none; margin-top:30px; animation: fadeIn 0.6s ease forwards;}
+    @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+    .diag-title{font-size:1.4rem; color:var(--accent2); margin-bottom:10px; display:block;}
+    .section{background:rgba(255,255,255,0.03); padding:15px; border-radius:15px; margin-bottom:15px; border:1px solid var(--line);}
+    .section h4{margin:0 0 10px; font-size:14px; text-transform:uppercase; color:var(--muted);}
 
-    /* Form */
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    @media (max-width: 680px){ .grid{grid-template-columns:1fr} }
-
-    .field{
-      padding:12px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.18);
-    }
-    .field label{
-      display:block;
-      font-size:12px;
-      color:var(--muted);
-      margin-bottom:8px;
-      user-select:none;
-    }
-    select, input[type="text"], textarea{
-      width:100%;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      color:var(--text);
-      padding:12px 12px;
-      outline:none;
-      font-size:14px;
-    }
-    textarea{min-height:110px; resize:vertical}
-    select:focus, input:focus, textarea:focus{border-color: rgba(32,227,178,.45); box-shadow:0 0 0 3px rgba(32,227,178,.12)}
-
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-start;
-      margin-top:12px;
-    }
-
-    /* Results */
-    .resultBox{
-      border-top:1px solid var(--line);
-      padding:16px 18px 18px;
-      display:none;
-    }
-    .resultBox.show{display:block}
-    .chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
-    .chip{
-      font-size:12px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color: var(--muted);
-    }
-    .section{
-      margin-top:14px;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.16);
-    }
-    .section h4{margin:0 0 8px; font-size:13px}
-    .section ul{margin:0; padding:0 18px; color:var(--text); line-height:1.65}
-    .section li{margin:6px 0}
-    .kpi{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:12px;
-    }
-    .kpi .k{
-      flex:1;
-      min-width:170px;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-    }
-    .k .label{color:var(--muted); font-size:12px}
-    .k .val{font-weight:900; font-size:18px; margin-top:6px}
-    .val.ok{color:var(--ok)}
-    .val.bad{color:var(--danger)}
-    footer{
-      width:min(1100px, 100%);
-      margin:0 auto;
-      padding: 0 18px 26px;
-      color: rgba(255,255,255,.55);
-      font-size:12px;
-      line-height:1.6;
-    }
-    .fine{
-      opacity:.9;
-      border-top:1px solid rgba(255,255,255,.10);
-      padding-top:16px;
-    }
-
-    /* Toggle */
-    .switch{
-      width:44px; height:26px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.06);
-      position:relative;
-      cursor:pointer;
-      flex:0 0 auto;
-    }
-    .switch:after{
-      content:"";
-      position:absolute;
-      top:50%;
-      right:4px;
-      width:18px; height:18px;
-      border-radius:50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,.80);
-      box-shadow: 0 8px 18px rgba(0,0,0,.28);
-      transition: right .18s ease, background .18s ease;
-    }
-    .switch.on{
-      border-color: rgba(32,227,178,.35);
-      background: rgba(32,227,178,.18);
-    }
-    .switch.on:after{
-      right:22px;
-      background: rgba(32,227,178,.95);
-    }
-
-    /* Small helpers */
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
-    .hide{display:none!important}
+    /* עיניים */
+    .eyes-container{display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;}
+    .eyes{display:flex; gap:40px; margin:40px 0;}
+    .eye{ width:100px; height:60px; background:white; border-radius:50%; position:relative; overflow:hidden; }
+    .iris{ position:absolute; width:35px; height:35px; background:radial-gradient(circle, var(--accent), #000 80%); border-radius:50%; top:20%; left:30%; }
+    .pupil{width:10px; height:20px; background:black; border-radius:50%; margin:7px auto;}
   </style>
 </head>
 <body>
+  <div id="bg-slider"></div>
+  <div class="overlay"></div>
   <canvas id="fx"></canvas>
-  <div class="vignette"></div>
 
   <div class="wrap">
     <header>
       <div class="topbar">
-        <div class="brand">
-          <div class="logo" aria-hidden="true"></div>
-          <div>
-            <h1>CatMind</h1>
-            <small>להבין התנהגות חתולים — ולהחזיר שקט לבית</small>
-          </div>
-        </div>
-
-        <div class="controls">
-          <div class="pill" title="מוזיקת רקע (אפשר גם להעלות MP3 מהמחשב)">
-            <label for="audioFile">מוזיקה</label>
-            <input id="audioFile" type="file" accept="audio/*" style="max-width:180px" />
-            <button class="btn" id="playBtn" type="button">Play</button>
-            <button class="btn" id="muteBtn" type="button">Mute</button>
-          </div>
-
-          <div class="pill" title="אפקט חלקיקים ברקע">
-            <label>חלקיקים</label>
-            <div class="switch on" id="fxToggle" role="switch" aria-checked="true" tabindex="0"></div>
-          </div>
-
-          <button class="btn primary" id="demoBtn" type="button">דמו מהיר</button>
-        </div>
+        <div class="brand"><h1>CatMind AI</h1></div>
+        <div style="font-size:12px; color:var(--muted);">גרסה מלאה 2.0</div>
       </div>
     </header>
 
     <main>
-      <!-- Left: Analyzer -->
       <section class="card">
-        <div class="title">
-          <div>
-            <h2>אבחון מהיר + תוכנית פעולה</h2>
-            <p>בחר מצב, גיל וסביבה — וקבל כיוון הסתברותי + צעדים יומיים.</p>
+        <h2>אבחון התנהגות מקיף</h2>
+        <div class="grid">
+          <div class="field">
+            <label>מה הבעיה?</label>
+            <select id="issue">
+              <option value="bite">נשיכות בליטוף</option>
+              <option value="night">יללות/ריצות בלילה</option>
+              <option value="litter">צרכים מחוץ לארגז</option>
+              <option value="aggression">תוקפנות לחיות אחרות</option>
+            </select>
           </div>
-          <div class="badge"><span class="dot"></span>כלי אינטראקטיבי</div>
-        </div>
-
-        <div class="inner">
-          <div class="grid">
-            <div class="field">
-              <label for="issue">מה הבעיה העיקרית?</label>
-              <select id="issue">
-                <option value="bite">נשיכות בזמן ליטוף / משחק</option>
-                <option value="night">יללות / ריצה בלילה</option>
-                <option value="litter">השתנה/צואה מחוץ לארגז</option>
-                <option value="aggression">תוקפנות לחתולים/אנשים</option>
-                <option value="stress">סטרס / מתחבאת / לא אוכלת כרגיל</option>
-                <option value="scratch">שירוט רהיטים</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="age">גיל החתול</label>
-              <select id="age">
-                <option value="kitten">גור (עד שנה)</option>
-                <option value="adult" selected>בוגר (1–7)</option>
-                <option value="senior">מבוגר (7+)</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="home">סביבה</label>
-              <select id="home">
-                <option value="small">דירה קטנה</option>
-                <option value="apt" selected>דירה רגילה</option>
-                <option value="house">בית עם חצר</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="others">יש עוד חיות בבית?</label>
-              <select id="others">
-                <option value="none" selected>לא</option>
-                <option value="cat">כן — חתול נוסף</option>
-                <option value="dog">כן — כלב</option>
-                <option value="multi">כן — כמה חיות</option>
-              </select>
-            </div>
+          <div class="field">
+            <label>גיל החתול</label>
+            <select id="age">
+              <option value="kitten">גור (עד שנה)</option>
+              <option value="adult">בוגר (1-7 שנים)</option>
+              <option value="senior">מבוגר (7+)</option>
+            </select>
           </div>
-
-          <div class="field" style="margin-top:12px">
-            <label for="details">תאר במשפט מה קורה (אופציונלי)</label>
-            <textarea id="details" placeholder="דוגמה: הוא נושך אחרי 10 שניות ליטוף, בעיקר בערב..."></textarea>
+          <div class="field">
+            <label>סביבת מגורים</label>
+            <select id="home">
+              <option value="apt">דירה</option>
+              <option value="garden">בית עם חצר</option>
+            </select>
           </div>
-
-          <div class="actions">
-            <button class="btn primary" id="analyzeBtn" type="button">נתח עכשיו</button>
-            <button class="btn" id="resetBtn" type="button">איפוס</button>
+          <div class="field">
+            <label>חיות נוספות בבית?</label>
+            <select id="others">
+              <option value="no">אין</option>
+              <option value="yes">יש</option>
+            </select>
           </div>
         </div>
+        <div class="field">
+          <label>תאר את המקרה (אופציונלי):</label>
+          <textarea id="details" rows="3" placeholder="תאר את המקרה כאן..."></textarea>
+        </div>
+        <button class="btn primary" id="analyzeBtn">נתח התנהגות עכשיו</button>
 
-        <div class="resultBox" id="resultBox">
-          <div class="kpi">
-            <div class="k">
-              <div class="label">אבחנה מובילה</div>
-              <div class="val ok" id="diagTop">—</div>
-            </div>
-            <div class="k">
-              <div class="label">רמת דחיפות</div>
-              <div class="val" id="urgency">—</div>
-            </div>
-            <div class="k">
-              <div class="label">סבירות (הערכה)</div>
-              <div class="val mono" id="confidence">—</div>
-            </div>
-          </div>
-
-          <div class="chips" id="chips"></div>
-
+        <div id="resultBox" class="resultBox">
+          <span class="diag-title" id="diagTop"></span>
           <div class="section">
-            <h4>מה זה כנראה אומר</h4>
-            <div id="meaning" style="color:var(--muted); line-height:1.7"></div>
+            <h4>מה זה אומר?</h4>
+            <p id="meaning" style="margin:0; line-height:1.6;"></p>
           </div>
-
           <div class="section">
             <h4>תוכנית פעולה ל-72 שעות</h4>
-            <ul id="plan72"></ul>
-          </div>
-
-          <div class="section">
-            <h4>תוכנית שבועית</h4>
-            <ul id="planWeek"></ul>
-          </div>
-
-          <div class="section">
-            <h4>דגלים אדומים (כדאי וטרינר)</h4>
-            <ul id="redFlags"></ul>
+            <ul id="plan72" style="margin:0; padding-right:20px;"></ul>
           </div>
         </div>
       </section>
 
-      <!-- Right: Trailer / Hero -->
-      <aside class="card hero">
-        <div class="heroBg" aria-hidden="true"></div>
-
-        <div class="eyesWrap" aria-hidden="true">
-          <div class="eyes" id="eyes">
-            <div class="eye"><div class="iris" id="irisL"><div class="pupil"></div><div class="shine"></div></div></div>
-            <div class="eye"><div class="iris" id="irisR"><div class="pupil"></div><div class="shine"></div></div></div>
-          </div>
+      <aside class="card eyes-container">
+        <h3>המבט של CatMind</h3>
+        <div class="eyes">
+          <div class="eye"><div class="iris" id="irisL"><div class="pupil"></div></div></div>
+          <div class="eye"><div class="iris" id="irisR"><div class="pupil"></div></div></div>
         </div>
-
-        <div class="inner">
-          <h3>“לקרוא את החתול שלך — בלי ניחושים.”</h3>
-          <p class="sub">
-            במקום עוד רשימת טיפים כללית — אתה מקבל פירוש התנהגותי ברור, צעדים מדויקים,
-            וכלים להפחתת סטרס ושיפור שגרה. (עם או בלי מוזיקה ברקע 😉)
-          </p>
-
-          <div class="kpi" style="margin-top:14px">
-            <div class="k">
-              <div class="label">מיקוד</div>
-              <div class="val">התנהגות</div>
-            </div>
-            <div class="k">
-              <div class="label">תוצאה</div>
-              <div class="val">שקט בבית</div>
-            </div>
-            <div class="k">
-              <div class="label">גישה</div>
-              <div class="val">צעדים קטנים</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="heroFooter">
-          <div class="badge"><span class="dot"></span>עיניים עוקבות אחרי הסמן</div>
-          <div class="badge"><span class="dot" style="background:radial-gradient(circle at 35% 35%, rgba(255,255,255,.55), rgba(255,184,107,.85)); box-shadow:0 0 18px rgba(255,184,107,.22)"></span>Dark + Particles</div>
-        </div>
+        <p style="font-size:12px; font-style:italic;">"הבנה היא המפתח לקשר טוב יותר."</p>
       </aside>
     </main>
-
-    <footer>
-      <div class="fine">
-        <div>הערה: זה כלי הכוונה כללי, לא תחליף לאבחון וטרינרי. אם יש שינוי חד באכילה/שתייה, כאב, דם או הקאות — פונים לוטרינר.</div>
-      </div>
-    </footer>
   </div>
 
-  <audio id="ambient" loop preload="metadata"></audio>
-
   <script>
-    // =========================
-    // Ambient audio (upload + controls)
-    // =========================
-    const ambient = document.getElementById('ambient');
-    const audioFile = document.getElementById('audioFile');
-    const playBtn = document.getElementById('playBtn');
-    const muteBtn = document.getElementById('muteBtn');
-
-    let isPlaying = false;
-    let isMuted = false;
-
-    // Default tiny synthy ambience (generated) fallback:
-    // We'll create a very soft WebAudio drone if no file is loaded.
-    let audioCtx, droneOsc, droneGain;
-    function ensureDrone(){
-      if (audioCtx) return;
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      droneOsc = audioCtx.createOscillator();
-      const osc2 = audioCtx.createOscillator();
-      const lfo = audioCtx.createOscillator();
-      const lfoGain = audioCtx.createGain();
-      droneGain = audioCtx.createGain();
-
-      droneOsc.type = 'sine';
-      droneOsc.frequency.value = 55;      // A1
-      osc2.type = 'triangle';
-      osc2.frequency.value = 110;         // A2
-
-      lfo.type = 'sine';
-      lfo.frequency.value = 0.08;         // slow movement
-      lfoGain.gain.value = 0.18;
-
-      lfo.connect(lfoGain);
-      lfoGain.connect(droneGain.gain);
-
-      droneGain.gain.value = 0.15;
-
-      const merger = audioCtx.createGain();
-      droneOsc.connect(merger);
-      osc2.connect(merger);
-
-      // gentle filter
-      const filter = audioCtx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.value = 320;
-      filter.Q.value = 0.7;
-
-      merger.connect(filter);
-      filter.connect(droneGain);
-      droneGain.connect(audioCtx.destination);
-
-      droneOsc.start();
-      osc2.start();
-      lfo.start();
+    // 1. ניהול הרקע המתחלף (כל 6 שניות)
+    const images = ['bg.png', 'bg2.png', 'bg3.png', 'bg4.png'];
+    let currentIdx = 0;
+    const slider = document.getElementById('bg-slider');
+    function changeBg() {
+      slider.style.backgroundImage = `url('${images[currentIdx]}')`;
+      currentIdx = (currentIdx + 1) % images.length;
     }
+    setInterval(changeBg, 6000);
+    changeBg();
 
-    function setMute(m){
-      isMuted = m;
-      ambient.muted = m;
-      muteBtn.textContent = m ? 'Unmute' : 'Mute';
-      // Drone gain
-      if (droneGain) droneGain.gain.value = m ? 0 : 0.15;
-    }
-
-    async function play(){
-      // Browsers require user gesture; this is called from button click, OK.
-      if (ambient.src){
-        try{
-          await ambient.play();
-          isPlaying = true;
-          playBtn.textContent = 'Pause';
-        }catch(e){
-          // fallback to drone
-          ensureDrone();
-          await audioCtx.resume();
-          isPlaying = true;
-          playBtn.textContent = 'Pause';
-        }
-      } else {
-        ensureDrone();
-        await audioCtx.resume();
-        isPlaying = true;
-        playBtn.textContent = 'Pause';
-      }
-    }
-
-    function pause(){
-      if (ambient.src) ambient.pause();
-      if (audioCtx) audioCtx.suspend();
-      isPlaying = false;
-      playBtn.textContent = 'Play';
-    }
-
-    audioFile.addEventListener('change', () => {
-      const f = audioFile.files && audioFile.files[0];
-      if (!f) return;
-      const url = URL.createObjectURL(f);
-      ambient.src = url;
-      ambient.volume = 0.35;
-      // Auto-play after choosing file (still user gesture)
-      play().then(()=>{}).catch(()=>{});
-    });
-
-    playBtn.addEventListener('click', async () => {
-      if (!isPlaying) await play();
-      else pause();
-    });
-
-    muteBtn.addEventListener('click', () => setMute(!isMuted));
-
-    // Start muted by default (better UX); user can unmute.
-    setMute(true);
-
-    // =========================
-    // Particles background
-    // =========================
+    // 2. חלקיקים (הנקודות הירוקות הזוהרות)
     const canvas = document.getElementById('fx');
-    const ctx = canvas.getContext('2d', { alpha: true });
-    const fxToggle = document.getElementById('fxToggle');
-
-    let fxOn = true;
-    let W = 0, H = 0, DPR = 1;
-    const particles = [];
-    const PCOUNT = 90;
-
-    function resize(){
-      DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-      W = canvas.width = Math.floor(window.innerWidth * DPR);
-      H = canvas.height = Math.floor(window.innerHeight * DPR);
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-    }
-    window.addEventListener('resize', resize, { passive:true });
-    resize();
-
-    function rand(min,max){ return Math.random()*(max-min)+min; }
-
-    function seed(){
-      particles.length = 0;
-      for(let i=0;i<PCOUNT;i++){
-        particles.push({
-          x: rand(0,W),
-          y: rand(0,H),
-          r: rand(0.9*DPR, 2.4*DPR),
-          vx: rand(-0.20, 0.20)*DPR,
-          vy: rand(-0.12, 0.12)*DPR,
-          a: rand(0.08, 0.24),
-          tw: rand(0.002, 0.007),
-          t: rand(0, 1000),
-        });
-      }
-    }
-    seed();
-
-    function draw(){
-      if (!fxOn){
-        ctx.clearRect(0,0,W,H);
-        requestAnimationFrame(draw);
-        return;
-      }
-      ctx.clearRect(0,0,W,H);
-
-      // lines when close
-      for (let i=0;i<particles.length;i++){
-        const p = particles[i];
-        p.t += 1;
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < -40) p.x = W+40;
-        if (p.x > W+40) p.x = -40;
-        if (p.y < -40) p.y = H+40;
-        if (p.y > H+40) p.y = -40;
-
-        const alpha = p.a + Math.sin(p.t*p.tw)*0.06;
-        // dot
-        ctx.beginPath();
-        ctx.fillStyle = rgba(255,255,255,${alpha});
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-        ctx.fill();
-      }
-
-      // connect
-      for (let i=0;i<particles.length;i++){
-        for (let j=i+1;j<particles.length;j++){
-          const a = particles[i], b = particles[j];
-          const dx = a.x-b.x, dy = a.y-b.y;
-          const d2 = dx*dx+dy*dy;
-          const maxD = 170*DPR;
-          if (d2 < maxD*maxD){
-            const d = Math.sqrt(d2);
-            const t = 1 - (d/maxD);
-            // subtle mix of two accents via opacity (without hard colors)
-            ctx.strokeStyle = rgba(255,255,255,${0.10*t});
-            ctx.lineWidth = 1*DPR;
-            ctx.beginPath();
-            ctx.moveTo(a.x,a.y);
-            ctx.lineTo(b.x,b.y);
-            ctx.stroke();
-          }
-        }
-      }
-
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+    window.onresize = resize; resize();
+    const dots = Array(60).fill().map(() => ({ x: Math.random()*w, y: Math.random()*h, vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4, r: Math.random()*2 }));
+    function draw() {
+      ctx.clearRect(0,0,w,h); ctx.fillStyle = "rgba(32, 227, 178, 0.3)";
+      dots.forEach(d => {
+        d.x += d.vx; d.y += d.vy;
+        if(d.x<0 || d.x>w) d.vx*=-1; if(d.y<0 || d.y>h) d.vy*=-1;
+        ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2); ctx.fill();
+      });
       requestAnimationFrame(draw);
     }
     draw();
 
-    function setFx(on){
-      fxOn = on;
-      fxToggle.classList.toggle('on', on);
-      fxToggle.setAttribute('aria-checked', String(on));
-    }
-    fxToggle.addEventListener('click', ()=> setFx(!fxOn));
-    fxToggle.addEventListener('keydown', (e)=>{
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFx(!fxOn); }
-    });
-
-    // =========================
-    // Cat eyes follow cursor
-    // =========================
-    const irisL = document.getElementById('irisL');
-    const irisR = document.getElementById('irisR');
-
-    function moveIris(iris, eyeRect, mx, my){
-      // clamp movement within eye bounds
-      const cx = eyeRect.left + eyeRect.width/2;
-      const cy = eyeRect.top + eyeRect.height/2;
-      const dx = mx - cx;
-      const dy = my - cy;
-      const maxX = eyeRect.width * 0.18;
-      const maxY = eyeRect.height * 0.18;
-
-      const nx = Math.max(-maxX, Math.min(maxX, dx * 0.10));
-      const ny = Math.max(-maxY, Math.min(maxY, dy * 0.10));
-      iris.style.transform = translate(calc(-50% + ${nx}px), calc(-50% + ${ny}px));
-    }
-
-    window.addEventListener('mousemove', (e)=>{
-      const eyes = document.querySelectorAll('.eye');
-      if (eyes.length < 2) return;
-      moveIris(irisL, eyes[0].getBoundingClientRect(), e.clientX, e.clientY);
-      moveIris(irisR, eyes[1].getBoundingClientRect(), e.clientX, e.clientY);
-    }, { passive:true });
-
-    // =========================
-    // Analyzer logic (rule-based)
-    // =========================
-    const issue = document.getElementById('issue');
-    const age = document.getElementById('age');
-    const home = document.getElementById('home');
-    const others = document.getElementById('others');
-    const details = document.getElementById('details');
-
-    const analyzeBtn = document.getElementById('analyzeBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const demoBtn = document.getElementById('demoBtn');
-
-    const resultBox = document.getElementById('resultBox');
-    const diagTop = document.getElementById('diagTop');
-    const urgency = document.getElementById('urgency');
-    const confidence = document.getElementById('confidence');
-    const chips = document.getElementById('chips');
-    const meaning = document.getElementById('meaning');
-    const plan72 = document.getElementById('plan72');
-    const planWeek = document.getElementById('planWeek');
-    const redFlags = document.getElementById('redFlags');
-
-    function li(arr, el){
-      el.innerHTML = '';
-      arr.forEach(t=>{
-        const x = document.createElement('li');
-        x.textContent = t;
-        el.appendChild(x);
+    // 3. עיניים עוקבות אחרי עכבר
+    window.addEventListener('mousemove', (e) => {
+      document.querySelectorAll('.iris').forEach(iris => {
+        const rect = iris.parentElement.getBoundingClientRect();
+        const eyeX = rect.left + rect.width / 2;
+        const eyeY = rect.top + rect.height / 2;
+        const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+        const dist = Math.min(rect.width/4, 15);
+        iris.style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`;
       });
-    }
-
-    function mkChips(list){
-      chips.innerHTML = '';
-      list.forEach(t=>{
-        const c = document.createElement('span');
-        c.className = 'chip';
-        c.textContent = t;
-        chips.appendChild(c);
-      });
-    }
-
-    function scoreModel(){
-      const s = {
-        "Overstimulation בזמן ליטוף": 0,
-        "חוסר העשרה/אנרגיה לא מנוקזת": 0,
-        "סטרס סביבתי/שינויים": 0,
-        "קונפליקט/טריטוריה מול חיות אחרות": 0,
-        "בעיה רפואית אפשרית": 0,
-        "בעיה בארגז/העדפות מצע": 0,
-        "שגרה לא נכונה לפני שינה": 0
-      };
-
-      const i = issue.value, a = age.value, h = home.value, o = others.value;
-      const text = (details.value || '').toLowerCase();
-
-      // Baseline by issue
-      if (i === 'bite'){
-        s["Overstimulation בזמן ליטוף"] += 4;
-        s["חוסר העשרה/אנרגיה לא מנוקזת"] += 2;
-        if (a === 'kitten') s["חוסר העשרה/אנרגיה לא מנוקזת"] += 2;
-        if (text.includes('פתאום') || text.includes('אחרי') || text.includes('10') || text.includes('שניות')) s["Overstimulation בזמן ליטוף"] += 2;
-      }
-
-      if (i === 'night'){
-        s["שגרה לא נכונה לפני שינה"] += 4;
-        s["חוסר העשרה/אנרגיה לא מנוקזת"] += 3;
-        if (a === 'kitten') s["חוסר העשרה/אנרגיה לא מנוקזת"] += 2;
-        if (text.includes('לילה') || text.includes('רץ') || text.includes('משחק')) s["שגרה לא נכונה לפני שינה"] += 1;
-      }
-
-      if (i === 'litter'){
-        s["בעיה בארגז/העדפות מצע"] += 4;
-        s["סטרס סביבתי/שינויים"] += 2;
-        s["בעיה רפואית אפשרית"] += 3; // always consider
-        if (a === 'senior') s["בעיה רפואית אפשרית"] += 2;
-        if (text.includes('דם') || text.includes('כאב') || text.includes('מיילל')) s["בעיה רפואית אפשרית"] += 4;
-      }
-
-      if (i === 'aggression'){
-        s["קונפליקט/טריטוריה מול חיות אחרות"] += 4;
-        s["סטרס סביבתי/שינויים"] += 2;
-        if (o !== 'none') s["קונפליקט/טריטוריה מול חיות אחרות"] += 2;
-      }
-
-      if (i === 'stress'){
-        s["סטרס סביבתי/שינויים"] += 4;
-        s["בעיה רפואית אפשרית"] += 2;
-        if (text.includes('לא אוכל') || text.includes('לא אוכלת') || text.includes('הקיא')) s["בעיה רפואית אפשרית"] += 3;
-      }
-
-      if (i === 'scratch'){
-        s["חוסר העשרה/אנרגיה לא מנוקזת"] += 3;
-        s["סטרס סביבתי/שינויים"] += 1;
-        if (h === 'small') s["חוסר העשרה/אנרגיה לא מנוקזת"] += 2;
-      }
-
-      // Environment modifiers
-      if (h === 'small') s["חוסר העשרה/אנרגיה לא מנוקזת"] += 1;
-      if (o === 'multi') { s["קונפליקט/טריטוריה מול חיות אחרות"] += 2; s["סטרס סביבתי/שינויים"] += 1; }
-
-      // Text hints
-      if (text.includes('חדש') || text.includes('מעבר') || text.includes('שיפוץ')) s["סטרס סביבתי/שינויים"] += 2;
-      if (text.includes('ארגז') || text.includes('חול') || text.includes('ריח')) s["בעיה בארגז/העדפות מצע"] += 2;
-
-      // pick top
-      const entries = Object.entries(s).sort((a,b)=>b[1]-a[1]);
-      const top = entries[0];
-      const second = entries[1];
-
-      const total = entries.reduce((sum, [,v])=>sum+v, 0) || 1;
-      const conf = Math.round((top[1]/total)*100);
-
-      // urgency
-      let urg = "נמוכה";
-      let urgClass = "ok";
-      if (i === 'litter' || s["בעיה רפואית אפשרית"] >= 5){
-        urg = "בינונית–גבוהה";
-        urgClass = "bad";
-      }
-      if ((details.value || '').includes('דם') || (details.value || '').includes('כאב')){
-        urg = "גבוהה";
-        urgClass = "bad";
-      }
-
-      return { top, second, conf, urg, urgClass, scores: entries };
-    }
-
-    function buildOutput(model){
-      const i = issue.value;
-
-      // Display headline
-      diagTop.textContent = model.top[0];
-      urgency.textContent = model.urg;
-      urgency.className = 'val ' + (model.urgClass === 'bad' ? 'bad' : 'ok');
-      confidence.textContent = model.conf + '%';
-
-      // chips
-      const tags = [];
-      tags.push("גיל: " + (age.value==='kitten'?'גור':age.value==='adult'?'בוגר':'מבוגר'));
-      tags.push("סביבה: " + (home.value==='small'?'דירה קטנה':home.value==='apt'?'דירה':'בית+חצר'));
-      tags.push("עוד חיות: " + (others.value==='none'?'לא':others.value==='cat'?'חתול נוסף':others.value==='dog'?'כלב':'כמה חיות'));
-      tags.push("אפשרות שנייה: " + model.second[0]);
-      mkChips(tags);
-
-      // Meaning + plans by top diagnosis
-      let meaningTxt = "";
-      let plan72Arr = [];
-      let planWeekArr = [];
-      let flags = [
-        "ירידה חדה באכילה/שתייה ליותר מ-24 שעות",
-        "דם בשתן/צואה, מאמץ וכאב בשירותים",
-        "הקאות/שלשול מתמשך",
-        "כאב ברור, צליעה, או אפתיה חריגה"
-      ];
-
-      const topKey = model.top[0];
-
-      if (topKey.includes("Overstimulation")){
-        meaningTxt = "נשיכה בזמן ליטוף היא לעיתים קרובות 'עומס חושי' — החתול נהנה, ואז מגיע לסף. סימנים מקדימים: זנב מצליף, עור מתכווץ, אוזניים לאחור, מבט חד.";
-        plan72Arr = [
-          "לעבור לליטוף קצר מאוד (2–5 שניות) ולהפסיק לפני הסימן הראשון.",
-          "להחליף ל'פרס על רוגע' — חטיף קטן אחרי עצירה יזומה.",
-          "להימנע מליטוף באזורים שמציתים תגובה (בטן/גב תחתון) בשלב ראשון.",
-          "להוסיף 2 סשנים קצרים של משחק עם חכה (5–7 דק׳) ביום."
-        ];
-        planWeekArr = [
-          "להאריך ליטוף בהדרגה: 5→8→12 שניות רק אם אין סימנים מקדימים.",
-          "לבנות 'שגרת משחק-אוכל-מנוחה' במיוחד בערב.",
-          "להוסיף משטח גירוד איכותי/מתקן טיפוס כדי לפרוק אנרגיה.",
-          "אם יש ילדים — ללמד 'לא להחזיק/לחבק' עד שההתנהגות נרגעת."
-        ];
-      }
-
-      if (topKey.includes("שגרה לא נכונה")){
-        meaningTxt = "חתולים הם ציידים — אם לא פרקת אנרגיה בערב, הם 'פותחים משמרת' בלילה. לרוב זה שילוב של שעמום + הרגלים שמחזקים יללות (קמים אליהם/מאכילים).";
-        plan72Arr = [
-          "שעתיים לפני שינה: משחק אינטנסיבי 10–15 דק׳ (חכה/מרדף מבוקר).",
-          "אחרי המשחק: ארוחה קטנה (מדמה 'ציד→אכילה→שינה').",
-          "לא לקום ליללות. אם חייבים — מינימום אינטראקציה, בלי אוכל.",
-          "להשאיר צעצועי 'חיפוש מזון' (puzzle feeder) ללילה."
-        ];
-        planWeekArr = [
-          "לקבע 2 משחקים ביום (בוקר קצר + ערב ארוך).",
-          "להוריד חיזוקים ליליים בהדרגה (עקביות = קסם).",
-          "להוסיף גירוי סביבתי: חלון תצפית, מדף טיפוס, קרטונים.",
-          "אם מדובר בחתול בוגר מסורס — לבדוק רוטינה/סטרס ולא רק 'אנרגיה'."
-        ];
-      }
-
-      if (topKey.includes("בעיה בארגז")){
-        meaningTxt = "עשיית צרכים מחוץ לארגז מתחלקת לשניים: בעיית ארגז (מצע/ניקיון/מיקום/כמות) או לחץ, ולעיתים גם עניין רפואי. חשוב לתקן את הסטאפ מהר — לפני שזה מתקבע להרגל.";
-        plan72Arr = [
-          "כלל אצבע: מספר ארגזים = מספר חתולים + 1.",
-          "להציב ארגז נוסף במקום שקט ונגיש (לא ליד מכונת כביסה/רעש).",
-          "לנקות מדי יום. להחליף מצע אם יש ריח חזק/אבק שמפריע.",
-          "להימנע מענישה — זה רק מגביר סטרס ומחמיר."
-        ];
-        planWeekArr = [
-          "לבדוק סוג מצע: הרבה חתולים מעדיפים חול עדין ללא בישום.",
-          "להגדיל ארגז (במיוחד לחתולים גדולים/מבוגרים).",
-          "להוסיף פרומונים (Feliway) אם יש סטרס בבית.",
-          "אם יש מאמץ/כאב/דם — לקבוע וטרינר בהקדם."
-        ];
-        flags.unshift("השתנה תכופה עם מעט שתן/מאמץ — עלול להיות דחוף (בעיקר זכרים).");
-      }
-
-      if (topKey.includes("קונפליקט/טריטוריה")){
-        meaningTxt = "תוקפנות היא הרבה פעמים תחרות על משאבים (מזון, מקומות מסתור, ארגזים) או מפגש מהיר מדי בין חיות. צריך לבנות 'היכרות מחדש' ולעצב טריטוריה חכמה.";
-        plan72Arr = [
-          "להפריד זמנית אם יש עימותים — בטיחות לפני הכול.",
-          "להוסיף משאבים כפולים: מים/אוכל/ארגזים/מקומות גבוהים.",
-          "מפגשים קצרים עם חיזוק חיובי (חטיפים/משחק) דרך מרחק.",
-          "לאפשר נתיבי מילוט (מדפים, מעבר פתוח) כדי שלא ייתקעו."
-        ];
-        planWeekArr = [
-          "עבודה הדרגתית: ריח→ראייה→קרבה — בלי לקפוץ שלבים.",
-          "להאכיל במקביל במרחק בטוח כדי ליצור אסוציאציה חיובית.",
-          "לשקול ייעוץ התנהגותי אם יש נשיכות אמיתיות/פציעות.",
-          "אם מדובר בתוקפנות פתאומית אצל חתול בוגר — לבדוק כאב/רפואי."
-        ];
-      }
-
-      if (topKey.includes("סטרס סביבתי")){
-        meaningTxt = "חתולים מגיבים לשינויים קטנים: אורחים, ריחות, מעבר דירה, עבודות בבית. סטרס נראה כמו הסתתרות, מיעוט משחק, ליקוק יתר, או שינוי שירותים.";
-        plan72Arr = [
-          "ליצור 'אזור בטוח' אחד: מים, אוכל, ארגז, מחבוא, בלי הפרעות.",
-          "להקטין גירויים (רעש/דלתות טריקה) ולהקפיד על שגרה.",
-          "להוסיף מקומות גבוהים ומחבואים (קרטון עובד מצוין).",
-          "להפעיל משחק קצר פעמיים ביום — בלי להכריח."
-        ];
-        planWeekArr = [
-          "להפעיל פרומונים בבית ולבחון השפעה.",
-          "להחזיר שליטה לחתול: אפשרויות (איפה לשבת/להתחבא/לאכול).",
-          "למדוד התקדמות יומית: אוכל, שירותים, משחק, אינטראקציה.",
-          "אם אין שיפור תוך שבוע או יש הידרדרות — וטרינר."
-        ];
-      }
-
-      if (topKey.includes("בעיה רפואית")){
-        meaningTxt = "כשיש שינוי התנהגות חד (במיוחד שירותים/אכילה/כאב) תמיד משאירים מקום לרפואי. האתר יכול לכוון, אבל כאן עדיף בדיקה מקצועית.";
-        plan72Arr = [
-          "לבדוק שתייה/אכילה ושירותים (תדירות, מאמץ, כאב).",
-          "להציע מזון רטוב ומים טריים בכמה נקודות בבית.",
-          "לשמור דגימת שתן/צילום וידאו של ההתנהגות אם אפשר.",
-          "לקבוע וטרינר אם יש מאמץ/דם/כאב או ירידה חדה באכילה."
-        ];
-        planWeekArr = [
-          "לא 'לחכות שיעבור' אם הסימנים נמשכים.",
-          "להפחית סטרס בזמן המתנה: אזור שקט + שגרה קבועה.",
-          "לנהל יומן קצר (מתי, כמה, איפה) — זה עוזר לאבחון.",
-          "להתאים סביבת ארגז/מזון לפי המלצת וטרינר."
-        ];
-        flags = [
-          "דם, כאב, מאמץ בשתן/צואה — מיידי",
-          "חתול זכר שמנסה להשתין ולא מצליח — דחוף מאוד",
-          "אכילה/שתייה כמעט אפס 24 שעות",
-          "קוצר נשימה, חולשה קיצונית, חום"
-        ];
-      }
-
-      // If user selected scratch but top isn't directly matching, add scratch pointers
-      if (issue.value === 'scratch' && !planWeekArr.some(x=>x.includes('גירוד'))){
-        plan72Arr.unshift("להציב משטח גירוד יציב ליד אזור השריטה האהוב, ולתגמל שימוש נכון.");
-        planWeekArr.unshift("לשחק ליד משטח הגירוד ואז להניח חטיף עליו כדי לחזק התנהגות רצויה.");
-      }
-
-      meaning.textContent = meaningTxt;
-      li(plan72Arr, plan72);
-      li(planWeekArr, planWeek);
-      li(flags, redFlags);
-
-      resultBox.classList.add('show');
-      // Smooth scroll to results on mobile
-      resultBox.scrollIntoView({ behavior:'smooth', block:'start' });
-    }
-
-    analyzeBtn.addEventListener('click', ()=>{
-      const model = scoreModel();
-      buildOutput(model);
     });
 
-    resetBtn.addEventListener('click', ()=>{
-      issue.value = 'bite';
-      age.value = 'adult';
-      home.value = 'apt';
-      others.value = 'none';
-      details.value = '';
-      resultBox.classList.remove('show');
-    });
+    // 4. לוגיקת אבחון
+    document.getElementById('analyzeBtn').onclick = () => {
+      const issue = document.getElementById('issue').value;
+      const res = document.getElementById('resultBox');
+      const diag = document.getElementById('diagTop');
+      const mean = document.getElementById('meaning');
+      const plan = document.getElementById('plan72');
 
-    demoBtn.addEventListener('click', ()=>{
-      issue.value = 'bite';
-      age.value = 'adult';
-      home.value = 'apt';
-      others.value = 'none';
-      details.value = 'הוא נושך אחרי כמה שניות ליטוף, בעיקר בערב.';
-      const model = scoreModel();
-      buildOutput(model);
-    });
-
-    // Optional: start particles off for low-power devices
-    // (keep on by default; user can toggle)
+      let r = { t: "", m: "", p: [] };
+      if(issue==='bite'){
+        r.t="גירוי יתר (Overstimulation)";
+        r.m="החתול אוהב את המגע, אבל המערכת העצבית שלו מוצפת. הנשיכה היא בקשה להפסקה.";
+        r.p=["לטף רק בראש ובסנטר", "הפסק כשמנח האוזניים משתנה", "עבור למשחק עם חכה"];
+      } else if(issue==='night'){
+        r.t="חוסר פריקת אנרגיה";
+        r.m="החתול צבר אנרגיה ביום ומחפש 'לצוד' בלילה כשאף אחד לא משחק איתו.";
+        r.p=["משחק אינטנסיבי לפני השינה", "ארוחה כבדה בחצות", "השארת צעצועי לעיסה"];
+      } else if(issue==='litter'){
+        r.t="סטרס סביבתי/רפואי";
+        r.m="החתול מרגיש חוסר ביטחון במיקום הארגז או חווה כאב בזמן עשיית צרכים.";
+        r.p=["ניקוי הארגז פעמיים ביום", "הוספת ארגז נוסף במיקום אחר", "בדיקת וטרינר לשלילת דלקת"];
+      } else {
+        r.t="מתח טריטוריאלי";
+        r.m="נוכחות של חיה אחרת גורמת לו להרגיש מאוים על המשאבים שלו.";
+        r.p=["הפרדת קערות האוכל", "הוספת מקומות גבוהים לטיפוס", "שימוש בפליוויי"];
+      }
+      diag.innerText = "אבחנה: " + r.t;
+      mean.innerText = r.m;
+      plan.innerHTML = r.p.map(s => `<li>${s}</li>`).join('');
+      res.style.display = 'block';
+    };
   </script>
 </body>
 </html>
