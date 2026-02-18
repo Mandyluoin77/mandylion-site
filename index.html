@@ -3,36 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dark Ambient Space</title>
+<title>Mandylion</title>
 
 <style>
 html,body{
     margin:0;
     padding:0;
     height:100%;
-    font-family: system-ui, sans-serif;
-    background: radial-gradient(circle at top, #111827, #050510 70%);
-    color:#e5e7eb;
-    display:flex;
-    align-items:center;
-    justify-content:center;
     overflow:hidden;
+    font-family:system-ui,-apple-system;
+    background:#000;
+    color:#fff;
 }
 
+/* Video Background */
+video{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:blur(6px) brightness(0.4);
+    z-index:-2;
+}
+
+/* Dark Overlay */
+.overlay{
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at center, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+    z-index:-1;
+}
+
+/* Particles Canvas */
+canvas{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+}
+
+/* Center Content */
 .container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
     text-align:center;
-    backdrop-filter: blur(10px);
-    background: rgba(20,20,35,0.6);
-    padding:50px;
-    border-radius:20px;
-    box-shadow:0 0 40px rgba(0,0,0,0.7);
-    max-width:600px;
+    animation:fadeIn 2s ease forwards;
 }
 
 h1{
-    font-size:2.2em;
+    font-size:3em;
+    letter-spacing:3px;
     margin-bottom:20px;
-    letter-spacing:1px;
 }
 
 p{
@@ -41,53 +65,112 @@ p{
 }
 
 button{
-    background:#1f2937;
-    border:1px solid #374151;
-    color:#e5e7eb;
-    padding:12px 25px;
-    border-radius:8px;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.3);
+    color:white;
+    padding:12px 30px;
+    border-radius:30px;
     cursor:pointer;
     transition:0.3s;
 }
 
 button:hover{
-    background:#374151;
+    background:rgba(255,255,255,0.2);
 }
 
-footer{
-    position:absolute;
-    bottom:15px;
-    font-size:0.8em;
-    opacity:0.4;s
+@keyframes fadeIn{
+    from{opacity:0;transform:translate(-50%,-40%);}
+    to{opacity:1;transform:translate(-50%,-50%);}
 }
 </style>
 </head>
 
 <body>
 
+<!-- Background Video -->
+<video autoplay muted loop>
+    <source src="https://cdn.coverr.co/videos/coverr-dark-ocean-1579/1080p.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+<canvas id="particles"></canvas>
+
 <div class="container">
-    <h1>רגע של שקט</h1>
-    <p>נשום עמוק. האט. תן למוזיקה להוביל אותך.</p>
-    <button onclick="toggleAudio()">הפעל / עצור מוזיקה</button>
+    <h1>MANDYLION</h1>
+    <p>תנועה איטית. עומק. נשימה.</p>
+    <button onclick="toggleAudio()">הפעל חוויה</button>
 </div>
 
-<footer>Dark Ambient Experience</footer>
-
 <audio id="bgMusic" loop>
-    <!-- Ambient track (royalty-free sample) -->
     <source src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_6b7e6fef55.mp3?filename=deep-ambient-124008.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+/* Ambient Audio */
 const audio = document.getElementById("bgMusic");
-
 function toggleAudio(){
     if(audio.paused){
+        audio.volume = 0.35;
         audio.play();
     } else {
         audio.pause();
     }
 }
+
+/* Dark Particles */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particlesArray = [];
+
+class Particle{
+    constructor(){
+        this.x = Math.random()*canvas.width;
+        this.y = Math.random()*canvas.height;
+        this.size = Math.random()*1.5;
+        this.speedX = (Math.random()-0.5)*0.3;
+        this.speedY = (Math.random()-0.5)*0.3;
+    }
+    update(){
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x<0 || this.x>canvas.width) this.speedX*=-1;
+        if(this.y<0 || this.y>canvas.height) this.speedY*=-1;
+    }
+    draw(){
+        ctx.fillStyle="rgba(255,255,255,0.3)";
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+        ctx.fill();
+    }
+}
+
+function init(){
+    particlesArray=[];
+    for(let i=0;i<120;i++){
+        particlesArray.push(new Particle());
+    }
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particlesArray.forEach(p=>{
+        p.update();
+        p.draw();
+    });
+    requestAnimationFrame(animate);
+}
+
+init();
+animate();
+
+window.addEventListener("resize",()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+    init();
+});
 </script>
 
 </body>
