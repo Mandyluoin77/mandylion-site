@@ -1,142 +1,86 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>CatMind AI 5.1</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CatMind Clean</title>
 
 <style>
 :root{
- --accent:#f5a85c;
- --glass:rgba(15,20,25,0.7);
- --muted:rgba(255,255,255,.7);
+ --accent:#00d4ff;
+ --bg:#0f1720;
+ --card:#161f2b;
+ --input:#1f2a36;
 }
 
-*{box-sizing:border-box}
-html,body{
+body{
  margin:0;
- height:100%;
  font-family:system-ui;
- background:black;
+ background:var(--bg);
  color:white;
- overflow-x:hidden;
 }
 
-/* BACKGROUND */
-#bg{
- position:fixed; inset:0;
- background-size:cover;
- background-position:center;
- transition:opacity 1.2s ease;
- z-index:-3;
- opacity:1;
-}
-.overlay{
- position:fixed; inset:0;
- background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.85));
- z-index:-2;
-}
-
-/* PARTICLES */
-#fx{
- position:fixed; inset:0;
- z-index:-1;
- pointer-events:none;
-}
-
-/* LAYOUT */
-.wrap{
- position:relative;
- z-index:5;
- max-width:1200px;
- margin:70px auto;
+.container{
+ max-width:900px;
+ margin:60px auto;
  padding:20px;
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:30px;
-}
-@media(max-width:900px){
- .wrap{grid-template-columns:1fr}
 }
 
 .card{
- background:var(--glass);
- backdrop-filter:blur(18px);
+ background:var(--card);
  padding:25px;
- border-radius:25px;
+ border-radius:20px;
+ margin-bottom:25px;
+ box-shadow:0 10px 30px rgba(0,0,0,.4);
 }
 
-/* FORM */
+h2{margin-top:0;color:var(--accent)}
+
 select,textarea{
  width:100%;
  padding:12px;
- border-radius:15px;
+ margin-bottom:12px;
+ border-radius:12px;
  border:none;
- background:rgba(255,255,255,.08);
+ background:var(--input);
  color:white;
- margin-bottom:15px;
 }
+
+textarea{min-height:90px;resize:vertical}
 
 button{
- background:var(--accent);
- border:none;
+ width:100%;
  padding:14px;
- border-radius:40px;
+ border:none;
+ border-radius:30px;
+ background:var(--accent);
+ color:#001018;
  font-weight:bold;
  cursor:pointer;
- width:100%;
  transition:.3s;
 }
-button:hover{opacity:.85}
+button:hover{
+ transform:scale(1.02);
+ box-shadow:0 0 20px var(--accent);
+}
 
-/* RESULT */
 .result{
  margin-top:20px;
- opacity:0;
- transform:translateY(10px);
- transition:.4s;
-}
-.result.show{
- opacity:1;
- transform:translateY(0);
+ display:none;
 }
 
-/* HISTORY */
 .history-item{
- background:rgba(255,255,255,.05);
- padding:15px;
- border-radius:15px;
- margin-bottom:15px;
- font-size:14px;
-}
-.small-btn{
- margin-top:10px;
- font-size:12px;
- padding:8px;
-}
-
-/* SOUND BUTTON */
-.musicBtn{
- position:fixed;
- bottom:25px;
- left:25px;
- background:var(--accent);
- border:none;
- padding:12px 18px;
- border-radius:40px;
- cursor:pointer;
- z-index:10;
+ background:var(--input);
+ padding:12px;
+ border-radius:12px;
+ margin-bottom:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="bg"></div>
-<div class="overlay"></div>
-<canvas id="fx"></canvas>
-
-<div class="wrap">
+<div class="container">
 
 <div class="card">
 <h2>אבחון התנהגות</h2>
@@ -149,7 +93,7 @@ button:hover{opacity:.85}
 
 <textarea id="details" placeholder="תאר את המקרה כאן..."></textarea>
 
-<button onclick="analyze()">נתח עכשיו</button>
+<button id="analyze">נתח עכשיו</button>
 
 <div id="result" class="result">
 <h3 id="diag"></h3>
@@ -158,151 +102,59 @@ button:hover{opacity:.85}
 </div>
 
 <div class="card">
-<h3>היסטוריית אבחונים</h3>
+<h3 style="color:var(--accent)">היסטוריית אבחונים</h3>
 <div id="history"></div>
-<button class="small-btn" onclick="clearHistory()">🗑 מחק הכל</button>
 </div>
 
 </div>
-
-<button class="musicBtn" id="toggleSound">🐾 הפעל גרגור</button>
 
 <script>
+document.getElementById("analyze").addEventListener("click", function(){
 
-/* BACKGROUND */
-const images=['bg.png','bg2.png','bg3.png'];
-let i=0;
-const bg=document.getElementById('bg');
-function changeBg(){
- bg.style.opacity=0;
- setTimeout(()=>{
-  bg.style.backgroundImage=`url('${images[i]}')`;
-  bg.style.opacity=1;
-  i=(i+1)%images.length;
- },700);
-}
-setInterval(changeBg,6000);
-changeBg();
+ const issue = document.getElementById("issue").value;
+ const details = document.getElementById("details").value;
 
-/* PARTICLES */
-const canvas=document.getElementById('fx');
-const ctx=canvas.getContext('2d');
-let w,h;
-function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
-resize();onresize=resize;
-const dots=Array(70).fill().map(()=>({
- x:Math.random()*w,
- y:Math.random()*h,
- vx:(Math.random()-.5)*.3,
- vy:(Math.random()-.5)*.3,
- r:Math.random()*2
-}));
-function draw(){
- ctx.clearRect(0,0,w,h);
- ctx.fillStyle="rgba(245,168,92,.3)";
- dots.forEach(d=>{
-  d.x+=d.vx; d.y+=d.vy;
-  if(d.x<0||d.x>w)d.vx*=-1;
-  if(d.y<0||d.y>h)d.vy*=-1;
-  ctx.beginPath();
-  ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
-  ctx.fill();
- });
- requestAnimationFrame(draw);
-}
-draw();
+ let text = "";
 
-/* ANALYSIS */
-function analyze(){
- const issue=document.getElementById("issue").value;
- const details=document.getElementById("details").value;
- const diag=document.getElementById("diag");
- const meaning=document.getElementById("meaning");
- const result=document.getElementById("result");
-
- let text="";
  if(issue==="bite") text="גירוי יתר — הפסק ליטוף מוקדם יותר.";
  if(issue==="night") text="עודף אנרגיה — משחק לפני השינה.";
  if(issue==="litter") text="סטרס סביבתי — בדוק ניקיון.";
 
- diag.innerText="אבחנה:";
- meaning.innerText=text;
- result.classList.add("show");
+ document.getElementById("diag").innerText = "אבחנה:";
+ document.getElementById("meaning").innerText = text;
+
+ document.getElementById("result").style.display = "block";
 
  saveHistory(text,details);
-}
+});
 
-/* HISTORY */
 function saveHistory(text,details){
- const history=JSON.parse(localStorage.getItem("catHistory"))||[];
+ const history = JSON.parse(localStorage.getItem("catHistory")) || [];
  history.unshift({
-  date:new Date().toLocaleString(),
-  text,
-  details
+   date: new Date().toLocaleString(),
+   text,
+   details
  });
- localStorage.setItem("catHistory",JSON.stringify(history));
+ localStorage.setItem("catHistory", JSON.stringify(history));
  renderHistory();
 }
-function renderHistory(){
- const container=document.getElementById("history");
- const history=JSON.parse(localStorage.getItem("catHistory"))||[];
- container.innerHTML="";
- history.forEach((item,index)=>{
-  container.innerHTML+=`
-   <div class="history-item">
-    <strong>${item.date}</strong><br>
-    ${item.text}<br>
-    <small>${item.details||""}</small>
-    <button class="small-btn" onclick="deleteEntry(${index})">מחק</button>
-   </div>
-  `;
- });
-}
-function deleteEntry(index){
- const history=JSON.parse(localStorage.getItem("catHistory"))||[];
- history.splice(index,1);
- localStorage.setItem("catHistory",JSON.stringify(history));
- renderHistory();
-}
-function clearHistory(){
- localStorage.removeItem("catHistory");
- renderHistory();
-}
-renderHistory();
 
-/* PURR SOUND */
-let audioCtx,masterGain,isPlaying=false;
-function createPurr(){
- audioCtx=new (window.AudioContext||window.webkitAudioContext)();
- masterGain=audioCtx.createGain();
- masterGain.gain.value=0.3;
- masterGain.connect(audioCtx.destination);
- const osc1=audioCtx.createOscillator();
- osc1.type="sine";
- osc1.frequency.value=25;
- const osc2=audioCtx.createOscillator();
- osc2.type="sine";
- osc2.frequency.value=50;
- const gain=audioCtx.createGain();
- gain.gain.value=0.5;
- osc1.connect(gain);
- osc2.connect(gain);
- gain.connect(masterGain);
- osc1.start();
- osc2.start();
+function renderHistory(){
+ const container = document.getElementById("history");
+ const history = JSON.parse(localStorage.getItem("catHistory")) || [];
+ container.innerHTML = "";
+ history.forEach(item=>{
+   container.innerHTML += `
+     <div class="history-item">
+       <strong>${item.date}</strong><br>
+       ${item.text}<br>
+       <small>${item.details || ""}</small>
+     </div>
+   `;
+ });
 }
-document.getElementById("toggleSound").onclick=async function(){
- if(!isPlaying){
-  if(!audioCtx)createPurr();
-  if(audioCtx.state==="suspended")await audioCtx.resume();
-  this.innerText="🔇 השתק";
-  isPlaying=true;
- }else{
-  masterGain.gain.value=0;
-  this.innerText="🐾 הפעל גרגור";
-  isPlaying=false;
- }
-};
+
+renderHistory();
 </script>
 
 </body>
