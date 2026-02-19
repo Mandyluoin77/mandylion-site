@@ -1,233 +1,315 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CatMind AI — האפליקציה המלאה</title>
-  <style>
-    :root{
-      --bg:#070a0f; --text:rgba(255,255,255,.92); --muted:rgba(255,255,255,.68);
-      --line:rgba(255,255,255,.12); --accent:#20e3b2; --accent2:#ffb86b;
-      --danger:#ff5c7a; --ok:#7CFF7A; --radius:20px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%; margin:0; padding:0;}
-    body{
-      color:var(--text);
-      background-color: #000;
-      font-family: system-ui, -apple-system, sans-serif; overflow-x:hidden;
-    }
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CatMind AI 5.0</title>
 
-    /* מנגנון רקע מתחלף */
-    #bg-slider {
-      position: fixed; inset: 0; z-index: -2;
-      background-size: cover; background-position: center;
-      transition: background-image 2s ease-in-out;
-    }
-    .overlay {
-      position: fixed; inset: 0; z-index: -1;
-      background: linear-gradient(rgba(7, 10, 15, 0.7), rgba(7, 10, 15, 0.85));
-    }
+<style>
+:root{
+ --accent:#20e3b2;
+ --glass:rgba(15,20,25,0.65);
+ --muted:rgba(255,255,255,.7);
+}
 
-    #fx{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:0.4;}
-    .wrap{min-height:100%; display:flex; flex-direction:column; position:relative; padding: 20px;}
-    header{padding:20px 0; text-align:center;}
-    .topbar{
-      max-width:1100px; margin:0 auto; width:100%; display:flex; justify-content:space-between; align-items:center;
-      padding:15px 25px; background:rgba(0,0,0,0.4); backdrop-filter:blur(15px); border-radius:100px; border:1px solid var(--line);
-    }
-    .brand h1{margin:0; font-size:22px; color:var(--accent); letter-spacing:1px;}
-    
-    main{max-width:1100px; margin:30px auto; display:grid; grid-template-columns: 1.2fr 0.8fr; gap:25px; width:100%;}
-    @media (max-width: 900px){ main{grid-template-columns:1fr;} }
+*{box-sizing:border-box}
+html,body{
+ margin:0;
+ height:100%;
+ font-family:system-ui,-apple-system,sans-serif;
+ background:black;
+ color:white;
+ overflow-x:hidden;
+}
 
-    .card{
-      background: rgba(15, 20, 25, 0.7); backdrop-filter: blur(20px); border: 1px solid var(--line);
-      border-radius: var(--radius); padding:30px; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-    }
-    h2{margin-top:0; color:var(--accent); font-size:1.5rem;}
-    .grid{display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;}
-    @media (max-width: 500px){ .grid{grid-template-columns:1fr;} }
+/* BACKGROUND */
+#bg{
+ position:fixed; inset:0;
+ background-size:cover;
+ background-position:center;
+ transition:opacity 1.2s ease;
+ z-index:-3;
+}
+.overlay{
+ position:fixed; inset:0;
+ background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.85));
+ z-index:-2;
+}
 
-    .field label{display:block; font-size:12px; color:var(--muted); margin-bottom:8px; font-weight:bold;}
-    select, textarea, input{
-      width:100%; padding:12px; border-radius:12px; border:1px solid var(--line);
-      background: rgba(255,255,255,0.05); color:white; font-size:14px; outline:none;
-    }
+/* LAYOUT */
+.wrap{
+ position:relative;
+ z-index:5;
+ max-width:1200px;
+ margin:70px auto;
+ padding:20px;
+}
 
-    .btn{
-      padding:15px 25px; border-radius:50px; border:none; cursor:pointer; font-weight:bold;
-      transition:0.3s; font-size:16px; width:100%;
-    }
-    .primary{background:var(--accent); color:#000; box-shadow: 0 10px 20px rgba(32, 227, 178, 0.2); margin-top:10px;}
+.topbar{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ background:var(--glass);
+ backdrop-filter:blur(15px);
+ padding:12px 25px;
+ border-radius:100px;
+}
 
-    /* תוצאות */
-    .resultBox{display:none; margin-top:30px; animation: fadeIn 0.6s ease forwards;}
-    @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
-    .diag-title{font-size:1.4rem; color:var(--accent2); margin-bottom:10px; display:block;}
-    .section{background:rgba(255,255,255,0.03); padding:15px; border-radius:15px; margin-bottom:15px; border:1px solid var(--line);}
-    .section h4{margin:0 0 10px; font-size:14px; text-transform:uppercase; color:var(--muted);}
+h1{margin:0;font-size:20px;color:var(--accent)}
 
-    /* עיניים */
-    .eyes-container{display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;}
-    .eyes{display:flex; gap:40px; margin:40px 0;}
-    .eye{ width:100px; height:60px; background:white; border-radius:50%; position:relative; overflow:hidden; }
-    .iris{ position:absolute; width:35px; height:35px; background:radial-gradient(circle, var(--accent), #000 80%); border-radius:50%; top:20%; left:30%; }
-    .pupil{width:10px; height:20px; background:black; border-radius:50%; margin:7px auto;}
-  </style>
+main{
+ margin-top:40px;
+ display:grid;
+ grid-template-columns:1.2fr .8fr;
+ gap:25px;
+}
+@media(max-width:900px){
+ main{grid-template-columns:1fr}
+}
+
+.card{
+ background:var(--glass);
+ backdrop-filter:blur(20px);
+ border-radius:20px;
+ padding:22px;
+}
+
+select,textarea{
+ width:100%;
+ padding:10px;
+ border-radius:12px;
+ border:none;
+ background:rgba(255,255,255,.08);
+ color:white;
+ margin-bottom:12px;
+}
+
+button{
+ background:var(--accent);
+ border:none;
+ padding:12px;
+ border-radius:40px;
+ font-weight:bold;
+ cursor:pointer;
+ width:100%;
+ transition:.3s;
+}
+button:hover{opacity:.85}
+
+.result{
+ margin-top:20px;
+ opacity:0;
+ transform:translateY(10px);
+ transition:.4s;
+}
+.result.show{
+ opacity:1;
+ transform:translateY(0);
+}
+
+.history-item{
+ background:rgba(255,255,255,.05);
+ padding:12px;
+ border-radius:12px;
+ margin-bottom:10px;
+ font-size:14px;
+}
+
+.small-btn{
+ margin-top:6px;
+ font-size:12px;
+ padding:6px;
+}
+
+.musicBtn{
+ position:fixed;
+ bottom:25px;left:25px;
+ background:var(--accent);
+ border:none;
+ padding:12px 18px;
+ border-radius:40px;
+ cursor:pointer;
+}
+</style>
 </head>
+
 <body>
-  <div id="bg-slider"></div>
-  <div class="overlay"></div>
-  <canvas id="fx"></canvas>
 
-  <div class="wrap">
-    <header>
-      <div class="topbar">
-        <div class="brand"><h1>CatMind AI</h1></div>
-        <div style="font-size:12px; color:var(--muted);">גרסה מלאה 2.0</div>
-      </div>
-    </header>
+<div id="bg"></div>
+<div class="overlay"></div>
 
-    <main>
-      <section class="card">
-        <h2>אבחון התנהגות מקיף</h2>
-        <div class="grid">
-          <div class="field">
-            <label>מה הבעיה?</label>
-            <select id="issue">
-              <option value="bite">נשיכות בליטוף</option>
-              <option value="night">יללות/ריצות בלילה</option>
-              <option value="litter">צרכים מחוץ לארגז</option>
-              <option value="aggression">תוקפנות לחיות אחרות</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>גיל החתול</label>
-            <select id="age">
-              <option value="kitten">גור (עד שנה)</option>
-              <option value="adult">בוגר (1-7 שנים)</option>
-              <option value="senior">מבוגר (7+)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>סביבת מגורים</label>
-            <select id="home">
-              <option value="apt">דירה</option>
-              <option value="garden">בית עם חצר</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>חיות נוספות בבית?</label>
-            <select id="others">
-              <option value="no">אין</option>
-              <option value="yes">יש</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <label>תאר את המקרה (אופציונלי):</label>
-          <textarea id="details" rows="3" placeholder="תאר את המקרה כאן..."></textarea>
-        </div>
-        <button class="btn primary" id="analyzeBtn">נתח התנהגות עכשיו</button>
+<div class="wrap">
+ <div class="topbar">
+   <h1>CatMind AI</h1>
+   <div>גרסה 5.0</div>
+ </div>
 
-        <div id="resultBox" class="resultBox">
-          <span class="diag-title" id="diagTop"></span>
-          <div class="section">
-            <h4>מה זה אומר?</h4>
-            <p id="meaning" style="margin:0; line-height:1.6;"></p>
-          </div>
-          <div class="section">
-            <h4>תוכנית פעולה ל-72 שעות</h4>
-            <ul id="plan72" style="margin:0; padding-right:20px;"></ul>
-          </div>
-        </div>
-      </section>
+ <main>
 
-      <aside class="card eyes-container">
-        <h3>המבט של CatMind</h3>
-        <div class="eyes">
-          <div class="eye"><div class="iris" id="irisL"><div class="pupil"></div></div></div>
-          <div class="eye"><div class="iris" id="irisR"><div class="pupil"></div></div></div>
-        </div>
-        <p style="font-size:12px; font-style:italic;">"הבנה היא המפתח לקשר טוב יותר."</p>
-      </aside>
-    </main>
-  </div>
+   <section class="card">
+     <h2>אבחון התנהגות</h2>
 
-  <script>
-    // 1. ניהול הרקע המתחלף (כל 6 שניות)
-    const images = ['bg.png', 'bg2.png', 'bg3.png', 'bg4.png'];
-    let currentIdx = 0;
-    const slider = document.getElementById('bg-slider');
-    function changeBg() {
-      slider.style.backgroundImage = `url('${images[currentIdx]}')`;
-      currentIdx = (currentIdx + 1) % images.length;
-    }
-    setInterval(changeBg, 6000);
-    changeBg();
+     <select id="issue">
+       <option value="bite">נשיכות בליטוף</option>
+       <option value="night">יללות בלילה</option>
+       <option value="litter">צרכים מחוץ לארגז</option>
+     </select>
 
-    // 2. חלקיקים (הנקודות הירוקות הזוהרות)
-    const canvas = document.getElementById('fx');
-    const ctx = canvas.getContext('2d');
-    let w, h;
-    function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-    window.onresize = resize; resize();
-    const dots = Array(60).fill().map(() => ({ x: Math.random()*w, y: Math.random()*h, vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4, r: Math.random()*2 }));
-    function draw() {
-      ctx.clearRect(0,0,w,h); ctx.fillStyle = "rgba(32, 227, 178, 0.3)";
-      dots.forEach(d => {
-        d.x += d.vx; d.y += d.vy;
-        if(d.x<0 || d.x>w) d.vx*=-1; if(d.y<0 || d.y>h) d.vy*=-1;
-        ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2); ctx.fill();
-      });
-      requestAnimationFrame(draw);
-    }
-    draw();
+     <textarea id="details" placeholder="תאר את המקרה כאן..."></textarea>
 
-    // 3. עיניים עוקבות אחרי עכבר
-    window.addEventListener('mousemove', (e) => {
-      document.querySelectorAll('.iris').forEach(iris => {
-        const rect = iris.parentElement.getBoundingClientRect();
-        const eyeX = rect.left + rect.width / 2;
-        const eyeY = rect.top + rect.height / 2;
-        const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
-        const dist = Math.min(rect.width/4, 15);
-        iris.style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`;
-      });
-    });
+     <button id="analyze">נתח עכשיו</button>
 
-    // 4. לוגיקת אבחון
-    document.getElementById('analyzeBtn').onclick = () => {
-      const issue = document.getElementById('issue').value;
-      const res = document.getElementById('resultBox');
-      const diag = document.getElementById('diagTop');
-      const mean = document.getElementById('meaning');
-      const plan = document.getElementById('plan72');
+     <div id="result" class="result">
+       <h3 id="diag"></h3>
+       <p id="meaning"></p>
+     </div>
+   </section>
 
-      let r = { t: "", m: "", p: [] };
-      if(issue==='bite'){
-        r.t="גירוי יתר (Overstimulation)";
-        r.m="החתול אוהב את המגע, אבל המערכת העצבית שלו מוצפת. הנשיכה היא בקשה להפסקה.";
-        r.p=["לטף רק בראש ובסנטר", "הפסק כשמנח האוזניים משתנה", "עבור למשחק עם חכה"];
-      } else if(issue==='night'){
-        r.t="חוסר פריקת אנרגיה";
-        r.m="החתול צבר אנרגיה ביום ומחפש 'לצוד' בלילה כשאף אחד לא משחק איתו.";
-        r.p=["משחק אינטנסיבי לפני השינה", "ארוחה כבדה בחצות", "השארת צעצועי לעיסה"];
-      } else if(issue==='litter'){
-        r.t="סטרס סביבתי/רפואי";
-        r.m="החתול מרגיש חוסר ביטחון במיקום הארגז או חווה כאב בזמן עשיית צרכים.";
-        r.p=["ניקוי הארגז פעמיים ביום", "הוספת ארגז נוסף במיקום אחר", "בדיקת וטרינר לשלילת דלקת"];
-      } else {
-        r.t="מתח טריטוריאלי";
-        r.m="נוכחות של חיה אחרת גורמת לו להרגיש מאוים על המשאבים שלו.";
-        r.p=["הפרדת קערות האוכל", "הוספת מקומות גבוהים לטיפוס", "שימוש בפליוויי"];
-      }
-      diag.innerText = "אבחנה: " + r.t;
-      mean.innerText = r.m;
-      plan.innerHTML = r.p.map(s => `<li>${s}</li>`).join('');
-      res.style.display = 'block';
-    };
-  </script>
+   <aside class="card">
+     <h3>היסטוריית אבחונים</h3>
+     <div id="history"></div>
+     <button class="small-btn" onclick="clearHistory()">🗑 מחק הכל</button>
+   </aside>
+
+ </main>
+</div>
+
+<button class="musicBtn" id="toggleSound">🐾 הפעל גרגור</button>
+
+<script>
+
+/* BACKGROUND */
+const images=['bg.png','bg2.png','bg3.png'];
+let i=0;
+const bg=document.getElementById('bg');
+function changeBg(){
+ bg.style.opacity=0;
+ setTimeout(()=>{
+  bg.style.backgroundImage=`url('${images[i]}')`;
+  bg.style.opacity=1;
+  i=(i+1)%images.length;
+ },700);
+}
+setInterval(changeBg,6000);
+changeBg();
+
+/* DIAGNOSTICS */
+document.getElementById("analyze").onclick=()=>{
+ const issue=document.getElementById("issue").value;
+ const details=document.getElementById("details").value;
+ const diag=document.getElementById("diag");
+ const meaning=document.getElementById("meaning");
+ const result=document.getElementById("result");
+
+ let text="";
+ let color="#20e3b2";
+
+ if(issue==="bite"){
+  text="גירוי יתר — הפסק ליטוף מוקדם יותר.";
+  color="#ffb86b";
+ }
+ if(issue==="night"){
+  text="עודף אנרגיה — משחק לפני השינה.";
+  color="#7CFF7A";
+ }
+ if(issue==="litter"){
+  text="סטרס סביבתי — בדוק ניקיון ומיקום.";
+  color="#ff5c7a";
+ }
+
+ document.documentElement.style.setProperty('--accent',color);
+ diag.innerText="אבחנה:";
+ meaning.innerText=text;
+ result.classList.add("show");
+
+ saveHistory(issue,text,details);
+};
+
+/* HISTORY */
+function saveHistory(issue,text,details){
+ const history=JSON.parse(localStorage.getItem("catHistory"))||[];
+ const entry={
+  date:new Date().toLocaleString(),
+  issue,
+  text,
+  details
+ };
+ history.unshift(entry);
+ localStorage.setItem("catHistory",JSON.stringify(history));
+ renderHistory();
+}
+
+function renderHistory(){
+ const container=document.getElementById("history");
+ const history=JSON.parse(localStorage.getItem("catHistory"))||[];
+ container.innerHTML="";
+ history.forEach((item,index)=>{
+  const div=document.createElement("div");
+  div.className="history-item";
+  div.innerHTML=`
+   <strong>${item.date}</strong><br>
+   ${item.text}<br>
+   <small>${item.details||""}</small>
+   <button class="small-btn" onclick="deleteEntry(${index})">מחק</button>
+  `;
+  container.appendChild(div);
+ });
+}
+
+function deleteEntry(index){
+ const history=JSON.parse(localStorage.getItem("catHistory"))||[];
+ history.splice(index,1);
+ localStorage.setItem("catHistory",JSON.stringify(history));
+ renderHistory();
+}
+
+function clearHistory(){
+ localStorage.removeItem("catHistory");
+ renderHistory();
+}
+
+renderHistory();
+
+/* PURR SOUND */
+let audioCtx,masterGain,isPlaying=false;
+function createPurr(){
+ audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+ masterGain=audioCtx.createGain();
+ masterGain.gain.value=0.3;
+ masterGain.connect(audioCtx.destination);
+
+ const osc1=audioCtx.createOscillator();
+ osc1.type="sine";
+ osc1.frequency.value=25;
+
+ const osc2=audioCtx.createOscillator();
+ osc2.type="sine";
+ osc2.frequency.value=50;
+
+ const gain=audioCtx.createGain();
+ gain.gain.value=0.5;
+
+ osc1.connect(gain);
+ osc2.connect(gain);
+ gain.connect(masterGain);
+
+ osc1.start();
+ osc2.start();
+}
+document.getElementById("toggleSound").onclick=async function(){
+ if(!isPlaying){
+  if(!audioCtx)createPurr();
+  if(audioCtx.state==="suspended")await audioCtx.resume();
+  this.innerText="🔇 השתק";
+  isPlaying=true;
+ }else{
+  masterGain.gain.value=0;
+  this.innerText="🐾 הפעל גרגור";
+  isPlaying=false;
+ }
+};
+
+</script>
+
 </body>
 </html>
