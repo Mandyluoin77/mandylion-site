@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Elite V26 - Pure Edition</title>
+<title>CatMind Elite V26 - Winter Edition</title>
 <style>
 :root {
-  --cold-turquoise: #40e0d0;
-  --deep-turquoise: #00ced1;
-  --dark-winter: #0a1f2f;
-  --panel-frost: rgba(10, 31, 47, 0.70); /* יותר שקוף */
-  --emergency-red: #ff4757;
+  --turquoise: #40e0d0;
+  --deep-blue: #00b7eb;
+  --dark-bg: #0b2537;
+  --panel: rgba(11, 37, 55, 0.65); /* שקיפות גבוהה */
+  --emergency: #ff4757;
 }
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, sans-serif;
   color: #e0ffff;
-  background: linear-gradient(135deg, #0d3d4f, #002b36); /* רקע טורקיז קר נקי */
+  background: linear-gradient(135deg, #0b2537, #001f2e); /* טורקיז-כחול קר, נקי */
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -43,25 +43,25 @@ body {
   gap: 25px;
 }
 .glass-card {
-  background: var(--panel-frost);
-  border: 1px solid rgba(64, 224, 208, 0.12);
+  background: var(--panel);
+  border: 1px solid rgba(64, 224, 208, 0.10);
   border-radius: 28px;
   padding: 32px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.65);
-  backdrop-filter: blur(16px); /* שקיפות גבוהה יותר */
+  box-shadow: 0 20px 60px rgba(0,0,0,0.70);
+  backdrop-filter: blur(18px); /* שקיפות חזקה יותר */
 }
-h2, h3 { color: var(--cold-turquoise); margin-top: 0; border-bottom: 2px solid rgba(64, 224, 208, 0.10); padding-bottom: 12px; }
+h2, h3 { color: var(--turquoise); margin-top: 0; border-bottom: 2px solid rgba(64, 224, 208, 0.08); padding-bottom: 12px; }
 select, textarea, input[type="file"] {
   width: 100%;
   padding: 16px;
   border-radius: 16px;
-  border: 1px solid rgba(224, 255, 255, 0.10);
-  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(224, 255, 255, 0.08);
+  background: rgba(0,0,0,0.40);
   color: #e0ffff;
   font-size: 16px;
   margin-bottom: 16px;
   outline: none;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
 }
 input[type="file"] { padding: 8px; cursor: pointer; }
 button {
@@ -69,7 +69,7 @@ button {
   padding: 18px;
   border: none;
   border-radius: 18px;
-  background: linear-gradient(135deg, #40e0d0, #00ced1);
+  background: linear-gradient(135deg, #40e0d0, #00b7eb);
   color: #000;
   font-weight: bold;
   cursor: pointer;
@@ -85,7 +85,7 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   background: rgba(224,255,255,0.04);
   margin-bottom: 12px;
   border-radius: 16px;
-  border-right: 4px solid var(--cold-turquoise);
+  border-right: 4px solid var(--turquoise);
   transition: 0.3s;
 }
 .info-link:hover { background: rgba(64, 224, 208, 0.08); color: #fff; }
@@ -97,11 +97,11 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   line-height: 1.6;
   font-size: 15px;
 }
-.emergency { border: 2px solid var(--emergency-red); background: rgba(255, 71, 87, 0.08); color: #ff9f9e; }
-.normal { border: 1px solid var(--cold-turquoise); background: rgba(64, 224, 208, 0.05); }
+.emergency { border: 2px solid var(--emergency); background: rgba(255, 71, 87, 0.08); color: #ff9f9e; }
+.normal { border: 1px solid var(--turquoise); background: rgba(64, 224, 208, 0.05); }
 .call-btn {
   display: block;
-  background: var(--emergency-red);
+  background: var(--emergency);
   color: white;
   text-align: center;
   padding: 16px;
@@ -164,8 +164,8 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
             </select>
             <textarea id="issue-desc" rows="4" placeholder="תאר את המקרה בפירוט..."></textarea>
 
-            <!-- העלאת תמונה -->
-            <label for="cat-photo" style="display:block; margin:12px 0 8px; color:#b2f2ff;">העלה תמונה של החתול (עוזר לאבחון מדויק יותר):</label>
+            <!-- העלאת תמונה – כפתור בולט -->
+            <label for="cat-photo" style="display:block; margin:12px 0 8px; color:#b2f2ff; font-weight:bold;">העלה תמונה של החתול (עוזר לאבחון):</label>
             <input type="file" id="cat-photo" accept="image/*">
             <img id="preview-img" src="" alt="תצוגה מקדימה">
 
@@ -195,9 +195,9 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
 </div>
 
 <script>
-// אין תמונות רקע מתחלפות – הסרנו לגמרי
+// אין תמונות רקע – הסרנו לגמרי
 
-// תצוגה מקדימה של תמונה שהועלתה
+// תצוגה מקדימה של תמונה
 document.getElementById('cat-photo').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
@@ -214,13 +214,20 @@ document.getElementById('cat-photo').addEventListener('change', function(e) {
 // אבחון
 function runDiagnostic() {
     const issue = document.getElementById('issue-type').value;
-    const desc = document.getElementById('issue-desc').value.toLowerCase();
+    const desc = document.getElementById('issue-desc').value.trim();
     const result = document.getElementById('result-box');
     const emUI = document.getElementById('emergency-ui');
     const photoUploaded = document.getElementById('cat-photo').files.length > 0;
 
+    if (!issue && !desc && !photoUploaded) {
+        result.style.display = "block";
+        result.className = "normal";
+        result.innerHTML = "<strong>שגיאה:</strong><br>בחר בעיה או תאר את המקרה כדי לקבל אבחנה.";
+        return;
+    }
+
     const redFlags = ["גוסס", "מקיא דם", "דם", "פצוע", "לא זז", "פרכוס", "רעל", "קשיי נשימה", "התעלפות", "חום גבוה", "נפיחות בטן", "דימום מהאף", "חניכיים חיוורות"];
-    const isEmergency = redFlags.some(word => desc.includes(word)) || 
+    const isEmergency = redFlags.some(word => desc.toLowerCase().includes(word)) || 
                        ["התקפי פרכוס", "עיוורון פתאומי", "חוסר קואורדינציה", "נשימה כבדה"].includes(issue);
 
     result.style.display = "block";
