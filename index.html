@@ -9,7 +9,7 @@
   --turquoise: #40e0d0;
   --deep-blue: #00b7eb;
   --dark-bg: #0b2537;
-  --panel: rgba(11, 37, 55, 0.70);
+  --panel: rgba(11, 37, 55, 0.65);
   --emergency: #ff4757;
 }
 body {
@@ -24,12 +24,10 @@ body {
 #cat-view {
   position: fixed;
   inset: 0;
-  background-size: cover;
-  background-position: center;
+  background: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=95&w=2000') center/cover no-repeat;
   z-index: 1;
-  transition: background-image 2.5s ease-in-out;
-  opacity: 0.12;
-  filter: brightness(0.65) contrast(1.1) hue-rotate(170deg);
+  opacity: 0.38;          /* נראות גבוהה מאוד – חתולים בולטים */
+  filter: brightness(1.0) contrast(1.0) saturate(1.15); /* בהיר, צבעוני וברור */
 }
 .main-interface {
   position: relative;
@@ -41,21 +39,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 40px 80px;
+  padding: 60px 120px;
   box-sizing: border-box;
-  gap: 80px;
+  gap: 120px;
 }
 .panel {
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   pointer-events: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
 }
 .glass-card {
   background: var(--panel);
-  border: 1px solid rgba(64, 224, 208, 0.12);
+  border: 1px solid rgba(64, 224, 208, 0.15);
   border-radius: 24px;
   padding: 28px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.70);
@@ -137,28 +132,24 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   z-index: 20;
   color: #b2f2ff;
   font-size: 14px;
-  opacity: 0.8;
+  opacity: 0.85;
   text-align: center;
-  pointer-events: auto;
 }
 .footer-email a {
   color: var(--turquoise);
   text-decoration: none;
   font-weight: bold;
 }
-.footer-email a:hover {
-  text-decoration: underline;
-}
-.bell-control { display: none; }
+.footer-email a:hover { text-decoration: underline; }
 @media (max-width: 1100px) {
   .main-interface { flex-direction: column; padding: 30px; gap: 40px; }
   .panel { max-width: 100%; }
-  .footer-email { position: static; margin: 20px auto 10px; transform: none; }
+  .footer-email { position: static; margin: 20px auto; transform: none; }
 }
 </style>
 </head>
 <body>
-<div id="cat-view" class="bg-cat-viewer"></div>
+<div id="cat-view"></div>
 
 <div class="main-interface">
     <div class="panel">
@@ -232,35 +223,13 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
     </div>
 </div>
 
-<!-- כתובת הדוא"ל שלך בתחתית -->
 <div class="footer-email">
-  פותח על ידי Israel • 
-  <a href="mailto:fadeinto77@gmail.com">fadeinto77@gmail.com</a>
+  Israel • <a href="mailto:fadeinto77@gmail.com">fadeinto77@gmail.com</a>
 </div>
 
 <script>
-// תמונות רקע מתחלפות – חתולים מיוחדים
-const catBackgrounds = [
-    "https://images.unsplash.com/photo-1568152950566-c1bf43f4ab28?auto=format&fit=crop&q=80&w=1600",
-    "https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&q=80&w=1600",
-    "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&q=80&w=1600",
-    "https://images.unsplash.com/photo-1574231164645-d6f0e8553590?auto=format&fit=crop&q=80&w=1600",
-    "https://images.unsplash.com/photo-1533738360245-2a4b6a7e8d7c?auto=format&fit=crop&q=80&w=1600",
-    "https://images.unsplash.com/photo-1606214760789-5e4f8c8b8d7c?auto=format&fit=crop&q=80&w=1600",
-    "https://images.unsplash.com/photo-1583795795923-6e6c6d6c6d6c?auto=format&fit=crop&q=80&w=1600",
-    "https://images.unsplash.com/photo-1617854818583-09e7f077a156?auto=format&fit=crop&q=80&w=1600"
-];
-
-let currentBg = 0;
-const bgElement = document.getElementById('cat-view');
-
-function changeBackground() {
-    bgElement.style.backgroundImage = `url('${catBackgrounds[currentBg]}')`;
-    currentBg = (currentBg + 1) % catBackgrounds.length;
-}
-
-setInterval(changeBackground, 7000);
-changeBackground();
+// תמונת רקע אחת קבועה – מלאה בחתולים (קישור באיכות גבוהה מאוד)
+document.getElementById('cat-view').style.backgroundImage = "url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=95&w=2000')";
 
 // תצוגה מקדימה של תמונה שהועלתה
 document.getElementById('cat-photo').addEventListener('change', function(e) {
@@ -275,7 +244,7 @@ document.getElementById('cat-photo').addEventListener('change', function(e) {
     }
 });
 
-// פונקציית אבחון (ללא שינוי)
+// פונקציית אבחון
 function runDiagnostic() {
     const issue = document.getElementById('issue-type').value;
     const desc = document.getElementById('issue-desc').value.trim();
