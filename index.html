@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Pro V14</title>
+<title>CatMind Soft Edition V15</title>
 
 <style>
 :root {
@@ -19,7 +19,7 @@ body {
   background-size: cover;
   min-height: 100vh;
   display: flex;
-  transition: background-image 1s ease;
+  transition: background-image 1.5s ease-in-out;
   overflow: hidden;
 }
 
@@ -32,7 +32,7 @@ body {
 }
 
 .side-panel {
-  width: 230px;
+  width: 240px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -41,12 +41,11 @@ body {
 
 .card {
   background: var(--glass);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 15px;
   padding: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
 }
 
 h3 { color: var(--primary); font-size: 16px; margin: 0 0 10px 0; border-bottom: 1px solid var(--primary); }
@@ -56,7 +55,7 @@ select, textarea {
   padding: 8px;
   border-radius: 8px;
   border: 1px solid rgba(255,255,255,0.2);
-  background: #111 !important;
+  background: #000 !important;
   color: #fff !important;
   font-size: 14px;
   margin-bottom: 10px;
@@ -102,6 +101,7 @@ button {
   background: var(--primary);
   font-size: 24px;
   cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 
 #diag-result {
@@ -111,6 +111,7 @@ button {
   border-radius: 8px;
   display: none;
   font-size: 13px;
+  border-right: 3px solid var(--primary);
 }
 </style>
 </head>
@@ -127,15 +128,16 @@ button {
                 <option value="צרכים">צרכים מחוץ לארגז</option>
                 <option value="שריטות">שריטות רהיטים</option>
                 <option value="תוקפנות">תוקפנות</option>
+                <option value="צמחים">אכילת צמחים</option>
             </select>
-            <textarea id="txt-desc" rows="3" placeholder="מה קרה לחתול?"></textarea>
+            <textarea id="txt-desc" rows="3" placeholder="תאר את המקרה כאן..."></textarea>
             <button onclick="doAction()">נתח מקרה</button>
             <div id="diag-result"></div>
         </div>
         
         <div class="card">
             <h3>היסטוריה 📜</h3>
-            <div id="hist-box" style="font-size: 12px;"></div>
+            <div id="hist-box" style="font-size: 12px; max-height: 150px; overflow-y: auto;"></div>
         </div>
     </div>
 
@@ -144,7 +146,7 @@ button {
             <h3>קישורים ועזרה 📖</h3>
             <a href="https://www.letlive.org.il/" target="_blank" class="link-item">תנו לחיות לחיות 🏠</a>
             <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="link-item">מדריך גזעים 🐈</a>
-            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="link-item" style="color:red">וטרינר חירום 🚨</a>
+            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="link-item" style="color:#ff4b2b">וטרינר חירום 🚨</a>
         </div>
     </div>
 </div>
@@ -155,16 +157,16 @@ button {
 </div>
 
 <audio id="player-music" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-relaxing.mp3" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// 1. תמונות מתחלפות - לינקים יציבים
+// 1. תמונות מתחלפות
 const catPics = [
-  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=1000&q=80"
+  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1000",
+  "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1000",
+  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1000",
+  "https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1000"
 ];
 let pIdx = 0;
 function rotateBG() {
@@ -174,8 +176,8 @@ function rotateBG() {
 setInterval(rotateBG, 5000);
 rotateBG();
 
-// 2. סאונד - מיאו עדין (צליל של אפליקציה)
-const mSound = new Audio('https://assets.mixkit.co/active_storage/sfx/1006/1006-preview.mp3');
+// 2. סאונד - מיאו חמוד וקצר בלבד
+const mSound = new Audio('https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3');
 const bMusic = document.getElementById('player-music');
 
 function playMusic() {
@@ -184,10 +186,11 @@ function playMusic() {
 
 function playMeowSound() {
     mSound.currentTime = 0;
-    mSound.play();
+    mSound.volume = 0.5;
+    mSound.play().catch(e => console.log("צריך ללחוץ על המסך פעם אחת"));
 }
 
-// 3. אבחון - תיקון התיאור
+// 3. אבחון
 function doAction() {
     const issue = document.getElementById('sel-issue').value;
     const desc = document.getElementById('txt-desc').value;
@@ -195,26 +198,27 @@ function doAction() {
     
     playMeowSound();
 
-    if(desc.length < 2) {
-        alert("בבקשה תכתוב תיאור קצר בתיבה.");
+    if(!desc || desc.length < 2) {
+        alert("בבקשה תאר את המקרה בתיבה.");
         return;
     }
 
     const tips = {
-        "נשיכות": "גירוי יתר. הפסק ליטוף כשהזנב זז.",
-        "יללות": "שעמום. משחק ציד לפני השינה יעזור.",
-        "צרכים": "בדוק ניקיון ארגז או סטרס חדש.",
-        "שריטות": "שים מתקן גירוד ליד המקום שנשרט.",
-        "תוקפנות": "הפרדה והיכרות הדרגתית מחדש."
+        "נשיכות": "גירוי יתר. הפסיקו ליטוף כשהזנב זז.",
+        "יללות": "שעמום. משחק אינטנסיבי לפני השינה יעזור.",
+        "צרכים": "בדקו ניקיון ארגז או סטרס חדש בבית.",
+        "שריטות": "מקמו מתקן גירוד ליד המקום שנשרט.",
+        "תוקפנות": "הפרדה והיכרות הדרגתית מחדש.",
+        "צמחים": "ספקו דשא חתולים ובדקו רעילות צמחים."
     };
 
-    res.innerHTML = `<strong>ניתוח:</strong> ${tips[issue]}`;
+    res.innerHTML = `<strong>אבחנה:</strong> ${tips[issue]}`;
     res.style.display = "block";
     
-    // שמירה להיסטוריה
+    // היסטוריה
     const h = document.getElementById('hist-box');
     const time = new Date().toLocaleTimeString('he-IL');
-    h.innerHTML = `<div>${time}: ${issue}</div>` + h.innerHTML;
+    h.innerHTML = `<div><strong>${time}</strong>: ${issue}</div>` + h.innerHTML;
 }
 </script>
 
