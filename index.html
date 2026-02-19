@@ -3,77 +3,103 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Clean</title>
+<title>CatMind PRO 7.0</title>
 
 <style>
 :root{
  --accent:#00d4ff;
- --bg:#0f1720;
- --card:#161f2b;
- --input:#1f2a36;
+ --danger:#ff4d6d;
+ --bg1:#0f2027;
+ --bg2:#203a43;
+ --bg3:#2c5364;
 }
+
+*{box-sizing:border-box}
 
 body{
  margin:0;
  font-family:system-ui;
- background:var(--bg);
  color:white;
+ background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+ transition:background 2s ease;
+ overflow-x:hidden;
 }
 
 .container{
- max-width:900px;
- margin:60px auto;
+ max-width:1100px;
+ margin:80px auto;
  padding:20px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:40px;
+}
+@media(max-width:900px){
+ .container{grid-template-columns:1fr}
 }
 
 .card{
- background:var(--card);
- padding:25px;
- border-radius:20px;
- margin-bottom:25px;
- box-shadow:0 10px 30px rgba(0,0,0,.4);
+ background:rgba(15,25,35,.7);
+ backdrop-filter:blur(20px);
+ padding:30px;
+ border-radius:25px;
+ box-shadow:0 20px 60px rgba(0,0,0,.5);
 }
 
-h2{margin-top:0;color:var(--accent)}
+h2{color:var(--accent);margin-top:0}
 
 select,textarea{
  width:100%;
- padding:12px;
- margin-bottom:12px;
- border-radius:12px;
+ padding:14px;
+ border-radius:14px;
  border:none;
- background:var(--input);
+ background:rgba(255,255,255,.08);
  color:white;
+ margin-bottom:15px;
+ font-size:14px;
 }
 
-textarea{min-height:90px;resize:vertical}
+textarea{min-height:100px;resize:vertical}
 
 button{
  width:100%;
- padding:14px;
+ padding:16px;
  border:none;
- border-radius:30px;
+ border-radius:40px;
  background:var(--accent);
  color:#001018;
  font-weight:bold;
  cursor:pointer;
  transition:.3s;
 }
-button:hover{
- transform:scale(1.02);
- box-shadow:0 0 20px var(--accent);
-}
+button:hover{transform:scale(1.03)}
 
 .result{
  margin-top:20px;
  display:none;
 }
 
+.result.danger{
+ color:var(--danger);
+ font-weight:bold;
+}
+
 .history-item{
- background:var(--input);
- padding:12px;
- border-radius:12px;
- margin-bottom:10px;
+ background:rgba(255,255,255,.05);
+ padding:15px;
+ border-radius:15px;
+ margin-bottom:15px;
+ font-size:14px;
+}
+
+.musicBtn{
+ position:fixed;
+ bottom:25px;
+ left:25px;
+ background:var(--accent);
+ border:none;
+ padding:12px 18px;
+ border-radius:40px;
+ cursor:pointer;
 }
 </style>
 </head>
@@ -83,7 +109,7 @@ button:hover{
 <div class="container">
 
 <div class="card">
-<h2>אבחון התנהגות</h2>
+<h2>אבחון PRO</h2>
 
 <select id="issue">
 <option value="bite">נשיכות בליטוף</option>
@@ -91,70 +117,131 @@ button:hover{
 <option value="litter">צרכים מחוץ לארגז</option>
 </select>
 
-<textarea id="details" placeholder="תאר את המקרה כאן..."></textarea>
+<textarea id="details" placeholder="תאר את המקרה בחופשיות..."></textarea>
 
-<button id="analyze">נתח עכשיו</button>
+<button onclick="analyze()">נתח חכם</button>
 
-<div id="result" class="result">
-<h3 id="diag"></h3>
-<p id="meaning"></p>
-</div>
+<div id="result" class="result"></div>
+
 </div>
 
 <div class="card">
-<h3 style="color:var(--accent)">היסטוריית אבחונים</h3>
+<h2>היסטוריה</h2>
 <div id="history"></div>
 </div>
 
 </div>
 
+<button class="musicBtn" onclick="toggleSound()">🐾 גרגור</button>
+
 <script>
-document.getElementById("analyze").addEventListener("click", function(){
 
- const issue = document.getElementById("issue").value;
- const details = document.getElementById("details").value;
+/* BACKGROUND LOOP */
+const backgrounds=[
+"linear-gradient(135deg,#0f2027,#203a43,#2c5364)",
+"linear-gradient(135deg,#141e30,#243b55)",
+"linear-gradient(135deg,#1f1c2c,#928dab)"
+];
 
- let text = "";
+let bgIndex=0;
+setInterval(()=>{
+ document.body.style.background=backgrounds[bgIndex];
+ bgIndex=(bgIndex+1)%backgrounds.length;
+},7000);
 
- if(issue==="bite") text="גירוי יתר — הפסק ליטוף מוקדם יותר.";
- if(issue==="night") text="עודף אנרגיה — משחק לפני השינה.";
- if(issue==="litter") text="סטרס סביבתי — בדוק ניקיון.";
 
- document.getElementById("diag").innerText = "אבחנה:";
- document.getElementById("meaning").innerText = text;
+/* AI STYLE ANALYSIS */
+function analyze(){
+ const issue=document.getElementById("issue").value;
+ const details=document.getElementById("details").value.toLowerCase();
+ const result=document.getElementById("result");
 
- document.getElementById("result").style.display = "block";
+ let response="";
+ let emergency=false;
 
- saveHistory(text,details);
-});
+ if(details.includes("dying") ||
+    details.includes("blood") ||
+    details.includes("not breathing") ||
+    details.includes("seizure") ||
+    details.includes("collapse")){
+      emergency=true;
+ }
 
+ if(emergency){
+   response="⚠️ מצב חירום אפשרי. יש לפנות מיד לווטרינר או למיון וטרינרי. אל תחכה.";
+   result.classList.add("danger");
+ }
+ else if(issue==="bite"){
+   response="נראה שמדובר בגירוי יתר. מומלץ לקצר ליטופים ולעבור למשחק.";
+ }
+ else if(issue==="night"){
+   response="עודף אנרגיה. בצע משחק אינטנסיבי לפני השינה.";
+ }
+ else if(issue==="litter"){
+   response="ייתכן סטרס או בעיה רפואית. בדוק ניקיון ומיקום הארגז.";
+ }
+
+ result.innerText=response;
+ result.style.display="block";
+
+ saveHistory(response,details);
+}
+
+
+/* HISTORY */
 function saveHistory(text,details){
- const history = JSON.parse(localStorage.getItem("catHistory")) || [];
+ const history=JSON.parse(localStorage.getItem("catHistoryPRO"))||[];
  history.unshift({
-   date: new Date().toLocaleString(),
-   text,
-   details
+  date:new Date().toLocaleString(),
+  text,
+  details
  });
- localStorage.setItem("catHistory", JSON.stringify(history));
+ localStorage.setItem("catHistoryPRO",JSON.stringify(history));
  renderHistory();
 }
 
 function renderHistory(){
- const container = document.getElementById("history");
- const history = JSON.parse(localStorage.getItem("catHistory")) || [];
- container.innerHTML = "";
+ const container=document.getElementById("history");
+ const history=JSON.parse(localStorage.getItem("catHistoryPRO"))||[];
+ container.innerHTML="";
  history.forEach(item=>{
-   container.innerHTML += `
-     <div class="history-item">
-       <strong>${item.date}</strong><br>
-       ${item.text}<br>
-       <small>${item.details || ""}</small>
-     </div>
-   `;
+  container.innerHTML+=`
+   <div class="history-item">
+    <strong>${item.date}</strong><br>
+    ${item.text}<br>
+    <small>${item.details}</small>
+   </div>
+  `;
  });
 }
-
 renderHistory();
+
+
+/* PURR */
+let audioCtx;
+let isPlaying=false;
+
+function toggleSound(){
+ if(!audioCtx){
+   audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+   const osc1=audioCtx.createOscillator();
+   const osc2=audioCtx.createOscillator();
+   const gain=audioCtx.createGain();
+
+   osc1.frequency.value=25;
+   osc2.frequency.value=50;
+   gain.gain.value=0.3;
+
+   osc1.connect(gain);
+   osc2.connect(gain);
+   gain.connect(audioCtx.destination);
+
+   osc1.start();
+   osc2.start();
+
+   isPlaying=true;
+ }
+}
 </script>
 
 </body>
