@@ -3,205 +3,249 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Super Mini</title>
+<title>CatMind Elite V13</title>
 
 <style>
 :root {
-  --primary: #00e5ff;
-  --glass: rgba(0, 0, 0, 0.4);
+  --primary: #00f2fe;
+  --glass: rgba(0, 0, 0, 0.55);
 }
 
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, sans-serif;
   color: white;
-  background: #0b101b url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=2043') no-repeat center center fixed;
+  background-color: #0b101b;
   background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: background-image 1.5s ease-in-out;
   overflow: hidden;
 }
 
-/* תיבות קטנות במיוחד */
-.main-wrapper {
-  width: 95%;
-  max-width: 600px; 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.app-layout {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  box-sizing: border-box;
 }
 
-@media (max-width: 500px) {
-  .main-wrapper { grid-template-columns: 1fr; }
+.side-panel {
+  width: 220px; /* קטן במיוחד */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
 }
 
 .card {
   background: var(--glass);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 15px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
 }
 
-h3 { color: var(--primary); font-size: 16px; margin: 0 0 10px 0; text-align: center; }
+h3 { color: var(--primary); font-size: 14px; margin: 0 0 8px 0; border-bottom: 1px solid rgba(0,242,254,0.2); }
 
 select, textarea {
   width: 100%;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(10, 10, 10, 0.85) !important;
-  color: white !important;
-  font-size: 13px;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: #fff !important;
+  font-size: 12px;
   margin-bottom: 8px;
+  display: block;
 }
 
 button {
   width: 100%;
   padding: 10px;
   border: none;
-  border-radius: 15px;
+  border-radius: 8px;
   background: var(--primary);
   color: #000;
   font-weight: bold;
-  font-size: 13px;
   cursor: pointer;
-}
-
-#result-display {
-  margin-top: 8px;
-  padding: 8px;
-  background: rgba(0, 229, 255, 0.1);
-  border-radius: 8px;
-  display: none;
   font-size: 12px;
-  border-right: 2px solid var(--primary);
 }
 
-.history-item {
-  font-size: 11px;
+.link-item {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-size: 10px;
+  padding: 4px;
+  margin-bottom: 3px;
   background: rgba(255,255,255,0.05);
-  padding: 6px;
-  border-radius: 6px;
-  margin-bottom: 5px;
+  border-radius: 4px;
 }
+
+.link-item:hover { background: var(--primary); color: #000; }
 
 .controls {
   position: fixed;
   bottom: 15px;
-  left: 15px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
-.circle-btn {
-  width: 45px;
-  height: 45px;
+.btn-float {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: none;
   background: var(--primary);
   font-size: 18px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+#result-box {
+  margin-top: 8px;
+  padding: 8px;
+  background: rgba(0, 242, 254, 0.15);
+  border-radius: 6px;
+  display: none;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.history-item {
+  font-size: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 4px 0;
 }
 </style>
 </head>
 
 <body>
 
-<div class="main-wrapper">
-    <div class="card">
-        <h3>אבחון 🐾</h3>
-        <select id="cat-topic">
-            <option value="נשיכות">נשיכות</option>
-            <option value="יללות">יללות</option>
-            <option value="צרכים">צרכים</option>
-            <option value="תוקפנות">תוקפנות</option>
-        </select>
-        <textarea id="cat-input" rows="2" placeholder="תאר בקצרה..."></textarea>
-        <button onclick="startAnalysis()">נתח עכשיו</button>
-        <div id="result-display"></div>
+<div class="app-layout">
+    <div class="side-panel">
+        <div class="card">
+            <h3>אבחון חכם 🐾</h3>
+            <select id="issue-select">
+                <option value="נשיכות">נשיכות פתאומיות</option>
+                <option value="יללות">יללות בלילה</option>
+                <option value="צרכים">צרכים מחוץ לארגז</option>
+                <option value="שריטות">שריטות רהיטים</option>
+                <option value="תוקפנות">תוקפנות לחתול/אורח</option>
+                <option value="פחד">פחד מרעשים</option>
+                <option value="אכילה">אכילת צמחים</option>
+            </select>
+            <textarea id="case-description" rows="3" placeholder="תאר את המקרה כאן..."></textarea>
+            <button onclick="diagnoseCase()">נתח עכשיו</button>
+            <div id="result-box"></div>
+        </div>
+        
+        <div class="card">
+            <h3>עבר 📜</h3>
+            <div id="history-display"></div>
+        </div>
     </div>
 
-    <div class="card">
-        <h3>עבר 📜</h3>
-        <div id="log-list"></div>
+    <div class="side-panel">
+        <div class="card">
+            <h3>מידע ועזרה 📖</h3>
+            <a href="https://www.letlive.org.il/" target="_blank" class="link-item">תנו לחיות לחיות 🏠</a>
+            <a href="https://www.spca.co.il/" target="_blank" class="link-item">צער בעלי חיים 🐾</a>
+            <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="link-item">מדריך גזעים 🐈</a>
+            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="link-item" style="color:#ff4b2b;">וטרינר חירום 🚨</a>
+        </div>
     </div>
 </div>
 
 <div class="controls">
-    <button class="circle-btn" onclick="toggleMusic()" title="מוזיקת רקע">🎵</button>
-    <button class="circle-btn" onclick="playMeow()" title="מיאו">🐱</button>
+    <button class="btn-float" onclick="toggleMusic()">🎵</button>
+    <button class="btn-float" onclick="playMeow()">🐱</button>
 </div>
 
-<audio id="bg-music" loop>
-    <source src="https://stream.zeno.fm/f3v5u6a2vqquv" type="audio/mpeg">
+<audio id="bg-audio" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// צליל מיאו איכותי
-const meowSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3');
-const bgMusic = document.getElementById('bg-music');
+// החלפת רקעים אוטומטית
+const images = [
+  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=2043",
+  "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1936",
+  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1935",
+  "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1935"
+];
+let currentBg = 0;
+function changeBackground() {
+    document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('${images[currentBg]}')`;
+    currentBg = (currentBg + 1) % images.length;
+}
+setInterval(changeBackground, 5000);
+changeBackground();
+
+// ניהול סאונד
+const meowSound = new Audio('https://www.myinstants.com/media/sounds/meow_3.mp3');
+const bgMusic = document.getElementById('bg-audio');
 
 function toggleMusic() {
-    if (bgMusic.paused) {
-        bgMusic.volume = 0.4;
-        bgMusic.play();
-    } else {
-        bgMusic.pause();
-    }
+    bgMusic.paused ? bgMusic.play() : bgMusic.pause();
 }
 
 function playMeow() {
-    meowSfx.currentTime = 0;
-    meowSfx.play();
+    meowSound.currentTime = 0;
+    meowSound.play();
 }
 
-function startAnalysis() {
-    const topic = document.getElementById('cat-topic').value;
-    const input = document.getElementById('cat-input').value;
-    const display = document.getElementById('result-display');
+// פונקציית האבחון המתוקנת
+function diagnoseCase() {
+    const topic = document.getElementById('issue-select').value;
+    const description = document.getElementById('case-description').value;
+    const resultDiv = document.getElementById('result-box');
     
-    // הפעלת צליל מיאו בלחיצה
     playMeow();
-    
-    if(!input) { return; }
-    
-    const responses = {
-        "נשיכות": "גירוי יתר. הפחיתו מגע באזורים רגישים.",
-        "יללות": "שעמום לילי. שחקו איתו לפני השינה.",
-        "צרכים": "בדקו ניקיון ארגז או שינוי סביבתי.",
-        "תוקפנות": "הפרדה וחיבור הדרגתי דרך ריח."
+
+    if(!description) {
+        alert("נא תאר את המקרה בתיבת הטקסט");
+        return;
+    }
+
+    const database = {
+        "נשיכות": "גירוי יתר. הפסיקו ליטוף ברגע שהזנב זז.",
+        "יללות": "שעמום לילי. שחקו איתו 20 דקות לפני השינה.",
+        "צרכים": "בדקו ניקיון ארגז או סטרס חדש בבית.",
+        "שריטות": "הציבו מתקן גירוד ליד הרהיט הנשרט.",
+        "תוקפנות": "הפרדה זמנית והיכרות הדרגתית מחדש.",
+        "פחד": "צרו מקומות מסתור גבוהים ובטוחים.",
+        "אכילה": "ספקו דשא חתולים; בדקו רעילות צמחים בבית."
     };
 
-    const advice = responses[topic] || "מומלץ להתייעץ עם מומחה.";
-    display.innerHTML = advice;
-    display.style.display = "block";
+    const advice = database[topic] || "מומלץ להתייעץ עם וטרינר.";
+    resultDiv.innerHTML = `<strong>אבחנה:</strong> ${advice}`;
+    resultDiv.style.display = "block";
     
-    addToHistory(topic);
+    saveToHistory(topic);
 }
 
-function addToHistory(topic) {
-    const history = JSON.parse(localStorage.getItem('cat_history_v3') || '[]');
-    history.unshift({ time: new Date().toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'}), topic });
-    localStorage.setItem('cat_history_v3', JSON.stringify(history.slice(0, 3)));
-    updateHistory();
+function saveToHistory(t) {
+    const logs = JSON.parse(localStorage.getItem('cat_v13_logs') || '[]');
+    logs.unshift({ time: new Date().toLocaleTimeString('he-IL'), t });
+    localStorage.setItem('cat_v13_logs', JSON.stringify(logs.slice(0, 4)));
+    updateHistoryUI();
 }
 
-function updateHistory() {
-    const list = document.getElementById('log-list');
-    const history = JSON.parse(localStorage.getItem('cat_history_v3') || '[]');
-    list.innerHTML = history.map(h => `<div class="history-item"><strong>${h.time}</strong>: ${h.topic}</div>`).join('');
+function updateHistoryUI() {
+    const list = document.getElementById('history-display');
+    const logs = JSON.parse(localStorage.getItem('cat_v13_logs') || '[]');
+    list.innerHTML = logs.map(l => `<div class="history-item"><strong>${l.time}</strong>: ${l.t}</div>`).join('');
 }
-
-updateHistory();
+updateHistoryUI();
 </script>
 
 </body>
