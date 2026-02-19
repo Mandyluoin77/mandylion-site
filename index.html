@@ -3,25 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Elite V13</title>
+<title>CatMind Pro V14</title>
 
 <style>
 :root {
   --primary: #00f2fe;
-  --glass: rgba(0, 0, 0, 0.55);
+  --glass: rgba(0, 0, 0, 0.6);
 }
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Segoe UI', Arial, sans-serif;
   color: white;
-  background-color: #0b101b;
+  background: #0b101b no-repeat center center fixed;
   background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
   min-height: 100vh;
   display: flex;
-  transition: background-image 1.5s ease-in-out;
+  transition: background-image 1s ease;
   overflow: hidden;
 }
 
@@ -29,101 +27,90 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 15px;
+  padding: 20px;
   box-sizing: border-box;
 }
 
 .side-panel {
-  width: 220px; /* קטן במיוחד */
+  width: 230px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   z-index: 10;
 }
 
 .card {
   background: var(--glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
 }
 
-h3 { color: var(--primary); font-size: 14px; margin: 0 0 8px 0; border-bottom: 1px solid rgba(0,242,254,0.2); }
+h3 { color: var(--primary); font-size: 16px; margin: 0 0 10px 0; border-bottom: 1px solid var(--primary); }
 
 select, textarea {
   width: 100%;
-  padding: 6px;
-  border-radius: 6px;
+  padding: 8px;
+  border-radius: 8px;
   border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(0, 0, 0, 0.8) !important;
+  background: #111 !important;
   color: #fff !important;
-  font-size: 12px;
-  margin-bottom: 8px;
+  font-size: 14px;
+  margin-bottom: 10px;
   display: block;
 }
 
 button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   background: var(--primary);
   color: #000;
   font-weight: bold;
   cursor: pointer;
-  font-size: 12px;
 }
 
 .link-item {
   display: block;
   color: #fff;
   text-decoration: none;
-  font-size: 10px;
-  padding: 4px;
-  margin-bottom: 3px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 4px;
+  font-size: 12px;
+  padding: 6px;
+  margin-bottom: 5px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 5px;
 }
-
-.link-item:hover { background: var(--primary); color: #000; }
 
 .controls {
   position: fixed;
-  bottom: 15px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 20px;
 }
 
 .btn-float {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: none;
   background: var(--primary);
-  font-size: 18px;
+  font-size: 24px;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-#result-box {
-  margin-top: 8px;
-  padding: 8px;
-  background: rgba(0, 242, 254, 0.15);
-  border-radius: 6px;
+#diag-result {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(0, 242, 254, 0.2);
+  border-radius: 8px;
   display: none;
-  font-size: 11px;
-  line-height: 1.4;
-}
-
-.history-item {
-  font-size: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  padding: 4px 0;
+  font-size: 13px;
 }
 </style>
 </head>
@@ -133,119 +120,102 @@ button {
 <div class="app-layout">
     <div class="side-panel">
         <div class="card">
-            <h3>אבחון חכם 🐾</h3>
-            <select id="issue-select">
-                <option value="נשיכות">נשיכות פתאומיות</option>
+            <h3>אבחון חתולים 🐾</h3>
+            <select id="sel-issue">
+                <option value="נשיכות">נשיכות</option>
                 <option value="יללות">יללות בלילה</option>
                 <option value="צרכים">צרכים מחוץ לארגז</option>
                 <option value="שריטות">שריטות רהיטים</option>
-                <option value="תוקפנות">תוקפנות לחתול/אורח</option>
-                <option value="פחד">פחד מרעשים</option>
-                <option value="אכילה">אכילת צמחים</option>
+                <option value="תוקפנות">תוקפנות</option>
             </select>
-            <textarea id="case-description" rows="3" placeholder="תאר את המקרה כאן..."></textarea>
-            <button onclick="diagnoseCase()">נתח עכשיו</button>
-            <div id="result-box"></div>
+            <textarea id="txt-desc" rows="3" placeholder="מה קרה לחתול?"></textarea>
+            <button onclick="doAction()">נתח מקרה</button>
+            <div id="diag-result"></div>
         </div>
         
         <div class="card">
-            <h3>עבר 📜</h3>
-            <div id="history-display"></div>
+            <h3>היסטוריה 📜</h3>
+            <div id="hist-box" style="font-size: 12px;"></div>
         </div>
     </div>
 
     <div class="side-panel">
         <div class="card">
-            <h3>מידע ועזרה 📖</h3>
+            <h3>קישורים ועזרה 📖</h3>
             <a href="https://www.letlive.org.il/" target="_blank" class="link-item">תנו לחיות לחיות 🏠</a>
-            <a href="https://www.spca.co.il/" target="_blank" class="link-item">צער בעלי חיים 🐾</a>
             <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="link-item">מדריך גזעים 🐈</a>
-            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="link-item" style="color:#ff4b2b;">וטרינר חירום 🚨</a>
+            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="link-item" style="color:red">וטרינר חירום 🚨</a>
         </div>
     </div>
 </div>
 
 <div class="controls">
-    <button class="btn-float" onclick="toggleMusic()">🎵</button>
-    <button class="btn-float" onclick="playMeow()">🐱</button>
+    <button class="btn-float" onclick="playMusic()">🎵</button>
+    <button class="btn-float" onclick="playMeowSound()">🐱</button>
 </div>
 
-<audio id="bg-audio" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+<audio id="player-music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-relaxing.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// החלפת רקעים אוטומטית
-const images = [
-  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=2043",
-  "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1936",
-  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1935",
-  "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1935"
+// 1. תמונות מתחלפות - לינקים יציבים
+const catPics = [
+  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1000&q=80",
+  "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=1000&q=80",
+  "https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&w=1000&q=80",
+  "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=1000&q=80"
 ];
-let currentBg = 0;
-function changeBackground() {
-    document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('${images[currentBg]}')`;
-    currentBg = (currentBg + 1) % images.length;
+let pIdx = 0;
+function rotateBG() {
+    document.body.style.backgroundImage = `url('${catPics[pIdx]}')`;
+    pIdx = (pIdx + 1) % catPics.length;
 }
-setInterval(changeBackground, 5000);
-changeBackground();
+setInterval(rotateBG, 5000);
+rotateBG();
 
-// ניהול סאונד
-const meowSound = new Audio('https://www.myinstants.com/media/sounds/meow_3.mp3');
-const bgMusic = document.getElementById('bg-audio');
+// 2. סאונד - מיאו עדין (צליל של אפליקציה)
+const mSound = new Audio('https://assets.mixkit.co/active_storage/sfx/1006/1006-preview.mp3');
+const bMusic = document.getElementById('player-music');
 
-function toggleMusic() {
-    bgMusic.paused ? bgMusic.play() : bgMusic.pause();
-}
-
-function playMeow() {
-    meowSound.currentTime = 0;
-    meowSound.play();
+function playMusic() {
+    if(bMusic.paused) { bMusic.play(); } else { bMusic.pause(); }
 }
 
-// פונקציית האבחון המתוקנת
-function diagnoseCase() {
-    const topic = document.getElementById('issue-select').value;
-    const description = document.getElementById('case-description').value;
-    const resultDiv = document.getElementById('result-box');
+function playMeowSound() {
+    mSound.currentTime = 0;
+    mSound.play();
+}
+
+// 3. אבחון - תיקון התיאור
+function doAction() {
+    const issue = document.getElementById('sel-issue').value;
+    const desc = document.getElementById('txt-desc').value;
+    const res = document.getElementById('diag-result');
     
-    playMeow();
+    playMeowSound();
 
-    if(!description) {
-        alert("נא תאר את המקרה בתיבת הטקסט");
+    if(desc.length < 2) {
+        alert("בבקשה תכתוב תיאור קצר בתיבה.");
         return;
     }
 
-    const database = {
-        "נשיכות": "גירוי יתר. הפסיקו ליטוף ברגע שהזנב זז.",
-        "יללות": "שעמום לילי. שחקו איתו 20 דקות לפני השינה.",
-        "צרכים": "בדקו ניקיון ארגז או סטרס חדש בבית.",
-        "שריטות": "הציבו מתקן גירוד ליד הרהיט הנשרט.",
-        "תוקפנות": "הפרדה זמנית והיכרות הדרגתית מחדש.",
-        "פחד": "צרו מקומות מסתור גבוהים ובטוחים.",
-        "אכילה": "ספקו דשא חתולים; בדקו רעילות צמחים בבית."
+    const tips = {
+        "נשיכות": "גירוי יתר. הפסק ליטוף כשהזנב זז.",
+        "יללות": "שעמום. משחק ציד לפני השינה יעזור.",
+        "צרכים": "בדוק ניקיון ארגז או סטרס חדש.",
+        "שריטות": "שים מתקן גירוד ליד המקום שנשרט.",
+        "תוקפנות": "הפרדה והיכרות הדרגתית מחדש."
     };
 
-    const advice = database[topic] || "מומלץ להתייעץ עם וטרינר.";
-    resultDiv.innerHTML = `<strong>אבחנה:</strong> ${advice}`;
-    resultDiv.style.display = "block";
+    res.innerHTML = `<strong>ניתוח:</strong> ${tips[issue]}`;
+    res.style.display = "block";
     
-    saveToHistory(topic);
+    // שמירה להיסטוריה
+    const h = document.getElementById('hist-box');
+    const time = new Date().toLocaleTimeString('he-IL');
+    h.innerHTML = `<div>${time}: ${issue}</div>` + h.innerHTML;
 }
-
-function saveToHistory(t) {
-    const logs = JSON.parse(localStorage.getItem('cat_v13_logs') || '[]');
-    logs.unshift({ time: new Date().toLocaleTimeString('he-IL'), t });
-    localStorage.setItem('cat_v13_logs', JSON.stringify(logs.slice(0, 4)));
-    updateHistoryUI();
-}
-
-function updateHistoryUI() {
-    const list = document.getElementById('history-display');
-    const logs = JSON.parse(localStorage.getItem('cat_v13_logs') || '[]');
-    list.innerHTML = logs.map(l => `<div class="history-item"><strong>${l.time}</strong>: ${l.t}</div>`).join('');
-}
-updateHistoryUI();
 </script>
 
 </body>
