@@ -3,271 +3,273 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind PRO 8.0</title>
+<title>CatMind PRO 7.0 - AI Diagnostics & WhatsApp</title>
 
 <style>
-:root{
- --accent:#00d4ff;
- --danger:#ff4d6d;
+:root {
+  --accent: #00d4ff;
+  --danger: #ff4d6d;
+  --success: #25d366;
+  --glass: rgba(0, 0, 0, 0.75);
 }
 
-*{box-sizing:border-box}
+* { box-sizing: border-box; }
 
-body{
- margin:0;
- font-family:system-ui;
- background:#0f1720;
- color:white;
- overflow:hidden;
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: white;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+              url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1350&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  transition: background 2s ease-in-out;
+  min-height: 100vh;
 }
 
-/* BACKGROUND ANIMATION */
-.bg{
- position:fixed;
- inset:0;
- background:radial-gradient(circle at 30% 30%, #203a43, #0f1720);
- animation:bgmove 15s infinite alternate ease-in-out;
- z-index:-3;
-}
-@keyframes bgmove{
- 0%{background-position:0% 0%}
- 100%{background-position:100% 100%}
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
 }
 
-/* PARTICLES */
-canvas{
- position:fixed;
- inset:0;
- z-index:-2;
- pointer-events:none;
+@media(max-width:900px) {
+  .container { grid-template-columns: 1fr; }
 }
 
-.container{
- max-width:1100px;
- margin:80px auto;
- padding:20px;
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:40px;
-}
-@media(max-width:900px){
- .container{grid-template-columns:1fr}
+.card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  padding: 30px;
+  border-radius: 25px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  position: relative;
 }
 
-.card{
- background:rgba(20,30,40,.75);
- backdrop-filter:blur(25px);
- padding:30px;
- border-radius:30px;
- box-shadow:0 25px 80px rgba(0,0,0,.6);
+h2 { color: var(--accent); margin-top: 0; font-size: 28px; }
+
+label { display: block; margin-bottom: 8px; font-weight: bold; opacity: 0.9; }
+
+select, textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 2px solid transparent;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  margin-bottom: 15px;
+  font-size: 16px;
+  outline: none;
 }
 
-h2{color:var(--accent);margin-top:0}
+textarea { min-height: 120px; resize: vertical; }
 
-select,textarea{
- width:100%;
- padding:14px;
- border-radius:16px;
- border:none;
- background:rgba(255,255,255,.08);
- color:white;
- margin-bottom:15px;
+button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 40px;
+  background: var(--accent);
+  color: #001018;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
-textarea{min-height:110px}
+button:hover { transform: scale(1.02); filter: brightness(1.1); }
 
-button{
- width:100%;
- padding:16px;
- border:none;
- border-radius:50px;
- background:var(--accent);
- color:#001018;
- font-weight:bold;
- cursor:pointer;
- transition:.3s;
-}
-button:hover{
- transform:scale(1.05);
- box-shadow:0 0 25px var(--accent);
+.whatsapp-btn {
+  background: var(--success);
+  color: white;
+  display: none; /* יופיע רק אחרי אבחון */
 }
 
-.result{
- margin-top:20px;
- display:none;
- font-size:16px;
+#loading {
+  display: none;
+  text-align: center;
+  margin: 20px 0;
 }
 
-.result.danger{
- color:var(--danger);
- font-weight:bold;
+.paw-icon {
+  font-size: 40px;
+  animation: pulse 1s infinite alternate;
+  display: inline-block;
 }
 
-/* SOUND BUTTON */
-.soundBtn{
- position:fixed;
- bottom:30px;
- left:30px;
- background:var(--accent);
- border:none;
- padding:12px 18px;
- border-radius:50px;
- cursor:pointer;
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.5; }
+  to { transform: scale(1.3); opacity: 1; }
+}
+
+.result {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.08);
+  display: none;
+  border-right: 5px solid var(--accent);
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.history-item {
+  background: rgba(255,255,255,.05);
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border-right: 4px solid var(--accent);
+}
+
+.musicBtn {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  width: auto;
+  padding: 12px 25px;
+  z-index: 100;
 }
 </style>
 </head>
+
 <body>
 
-<div class="bg"></div>
-<canvas id="particles"></canvas>
-
 <div class="container">
+    <div class="card">
+        <h2>אבחון חכם 🐾</h2>
+        
+        <label>בחר נושא:</label>
+        <select id="issue">
+            <option value="נשיכות פתאומיות">נשיכות פתאומיות</option>
+            <option value="יללות בלילה">יללות בלילה</option>
+            <option value="צרכים מחוץ לארגז">צרכים מחוץ לארגז</option>
+            <option value="שינוי בתאבון">שינוי בתאבון</option>
+        </select>
 
-<div class="card">
-<h2>אבחון חכם</h2>
+        <textarea id="details" placeholder="תאר את המקרה..."></textarea>
 
-<select id="issue">
-<option value="bite">נשיכות בליטוף</option>
-<option value="night">יללות בלילה</option>
-<option value="litter">צרכים מחוץ לארגז</option>
-</select>
+        <button onclick="runAnalysis()" id="mainBtn">נתח מקרה</button>
 
-<textarea id="details" placeholder="תאר בחופשיות..."></textarea>
+        <div id="loading">
+            <div class="paw-icon">🐾</div>
+            <p>החתול האלקטרוני מנתח את הנתונים...</p>
+        </div>
 
-<button onclick="analyze()">נתח חכם</button>
+        <div id="result" class="result"></div>
+        
+        <button class="whatsapp-btn" id="waBtn" onclick="sendToWhatsApp()">
+             שלח אבחון לווטרינר 📱
+        </button>
+    </div>
 
-<div id="result" class="result"></div>
+    <div class="card">
+        <h2>היסטוריה 📜</h2>
+        <div id="history"></div>
+    </div>
 </div>
 
-<div class="card">
-<h2>היסטוריה</h2>
-<div id="history"></div>
-</div>
-
-</div>
-
-<button class="soundBtn" onclick="toggleSound()">🐾 גרגור</button>
+<button class="musicBtn" onclick="playMeow()">🐱 מיאו!</button>
 
 <script>
+/* 1. רקעים */
+const backgrounds = [
+  "url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1350&q=80')",
+  "url('https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=1350&q=80')",
+  "url('https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&w=1350&q=80')"
+];
+let bgIndex = 0;
+setInterval(() => {
+  bgIndex = (bgIndex + 1) % backgrounds.length;
+  document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), ${backgrounds[bgIndex]}`;
+}, 10000);
 
-/* PARTICLES ENGINE */
-const canvas=document.getElementById("particles");
-const ctx=canvas.getContext("2d");
-let w,h;
-function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
-resize();onresize=resize;
+/* 2. סאונד */
+const meowSound = new Audio('https://www.socialfiction.org/audio/meow.mp3'); 
+function playMeow() { meowSound.currentTime = 0; meowSound.play(); }
 
-const particles=Array(80).fill().map(()=>({
- x:Math.random()*w,
- y:Math.random()*h,
- vx:(Math.random()-.5)*.3,
- vy:(Math.random()-.5)*.3,
- r:Math.random()*2
-}));
+/* 3. אבחון */
+let lastAnalysis = "";
 
-function animate(){
- ctx.clearRect(0,0,w,h);
- ctx.fillStyle="rgba(0,212,255,.4)";
- particles.forEach(p=>{
-  p.x+=p.vx;
-  p.y+=p.vy;
-  if(p.x<0||p.x>w)p.vx*=-1;
-  if(p.y<0||p.y>h)p.vy*=-1;
-  ctx.beginPath();
-  ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-  ctx.fill();
- });
- requestAnimationFrame(animate);
-}
-animate();
+function runAnalysis() {
+    const res = document.getElementById("result");
+    const load = document.getElementById("loading");
+    const wa = document.getElementById("waBtn");
+    
+    res.style.display = "none";
+    wa.style.display = "none";
+    load.style.display = "block";
+    playMeow();
 
-/* AI ANALYSIS */
-function analyze(){
- const issue=document.getElementById("issue").value;
- const details=document.getElementById("details").value.toLowerCase();
- const result=document.getElementById("result");
-
- let text="";
- let emergency=false;
-
- if(details.includes("dying") ||
-    details.includes("blood") ||
-    details.includes("not breathing") ||
-    details.includes("seizure") ||
-    details.includes("collapse")){
-      emergency=true;
- }
-
- if(emergency){
-   text="⚠️ מצב חירום אפשרי. פנה מיד לווטרינר.";
-   result.classList.add("danger");
- }
- else if(issue==="bite"){
-   text="גירוי יתר — הפסק ליטוף מוקדם יותר.";
- }
- else if(issue==="night"){
-   text="עודף אנרגיה — בצע משחק לפני השינה.";
- }
- else if(issue==="litter"){
-   text="ייתכן סטרס — בדוק ניקיון ומיקום הארגז.";
- }
-
- result.innerText=text;
- result.style.display="block";
-
- saveHistory(text,details);
+    setTimeout(() => {
+        load.style.display = "none";
+        analyze();
+        wa.style.display = "block"; // מראה את כפתור הוואטסאפ בסיום
+    }, 2000);
 }
 
-/* HISTORY */
-function saveHistory(text,details){
- const history=JSON.parse(localStorage.getItem("catHistory8"))||[];
- history.unshift({
-  date:new Date().toLocaleString(),
-  text,
-  details
- });
- localStorage.setItem("catHistory8",JSON.stringify(history));
- renderHistory();
+function analyze() {
+  const issue = document.getElementById("issue").value;
+  const details = document.getElementById("details").value;
+  const result = document.getElementById("result");
+
+  let response = "";
+  const dangerKeywords = ["דם", "נשימה", "גוסס", "פרכוס", "לא אוכל", "התמוטט"];
+  const isEmergency = dangerKeywords.some(word => details.includes(word));
+
+  if (isEmergency) {
+    response = "⚠️ חירום: נראה שישנה בעיה רפואית דחופה. מומלץ לפנות לווטרינר מיד.";
+    result.style.color = "var(--danger)";
+  } else {
+    const advice = {
+      "נשיכות פתאומיות": "זה עשוי להיות 'גירוי יתר'. נסה להפחית מגע באזורים רגישים כמו הבטן.",
+      "יללות בלילה": "החתול זקוק לפריקת אנרגיה. מומלץ משחק אינטנסיבי לפני השינה.",
+      "צרכים מחוץ לארגז": "בדוק את ניקיון הארגז או אם חל שינוי סביבתי שגורם לסטרס.",
+      "שינוי בתאבון": "שינוי כזה מחייב מעקב רפואי אם נמשך מעל יום."
+    };
+    response = advice[issue] || "מומלץ לעקוב אחר ההתנהגות בימים הקרובים.";
+    result.style.color = "white";
+  }
+
+  lastAnalysis = response;
+  result.innerHTML = `<strong>אבחנה:</strong><br>${response}`;
+  result.style.display = "block";
+  saveHistory(response, details);
 }
 
-function renderHistory(){
- const container=document.getElementById("history");
- const history=JSON.parse(localStorage.getItem("catHistory8"))||[];
- container.innerHTML="";
- history.forEach(item=>{
-  container.innerHTML+=`
-   <div style="margin-bottom:15px;background:rgba(255,255,255,.05);padding:15px;border-radius:15px;">
-    <strong>${item.date}</strong><br>
-    ${item.text}<br>
-    <small>${item.details}</small>
-   </div>
-  `;
- });
+/* 4. וואטסאפ */
+function sendToWhatsApp() {
+    const issue = document.getElementById("issue").value;
+    const details = document.getElementById("details").value;
+    const text = `שלום ד"ר, אני מתייעץ לגבי החתול שלי.\n\n*נושא:* ${issue}\n*תיאור:* ${details}\n*אבחון ראשוני מהאפליקציה:* ${lastAnalysis}`;
+    const encodedText = encodeURIComponent(text);
+    window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+}
+
+/* 5. היסטוריה */
+function saveHistory(text, details) {
+  const history = JSON.parse(localStorage.getItem("catHistoryPRO")) || [];
+  history.unshift({ date: new Date().toLocaleString('he-IL'), text, details });
+  localStorage.setItem("catHistoryPRO", JSON.stringify(history.slice(0, 5)));
+  renderHistory();
+}
+
+function renderHistory() {
+  const container = document.getElementById("history");
+  const history = JSON.parse(localStorage.getItem("catHistoryPRO")) || [];
+  container.innerHTML = history.map(item => `
+    <div class="history-item">
+      <strong>${item.date}</strong><br>${item.text}
+    </div>`).join('');
 }
 renderHistory();
-
-/* PURR SOUND */
-let audioCtx;
-let playing=false;
-
-function toggleSound(){
- if(!audioCtx){
-  audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-  const osc1=audioCtx.createOscillator();
-  const osc2=audioCtx.createOscillator();
-  const gain=audioCtx.createGain();
-  osc1.frequency.value=26;
-  osc2.frequency.value=52;
-  gain.gain.value=0.3;
-  osc1.connect(gain);
-  osc2.connect(gain);
-  gain.connect(audioCtx.destination);
-  osc1.start();
-  osc2.start();
-  playing=true;
- }
-}
 </script>
-
 </body>
 </html>
