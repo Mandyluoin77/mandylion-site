@@ -3,273 +3,214 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind PRO 7.0 - AI Diagnostics & WhatsApp</title>
+<title>CatMind PRO 9.0</title>
 
 <style>
 :root {
-  --accent: #00d4ff;
-  --danger: #ff4d6d;
-  --success: #25d366;
-  --glass: rgba(0, 0, 0, 0.75);
+  --primary: #00d4ff;
+  --glass: rgba(0, 0, 0, 0.4); /* שקיפות חזקה כדי לראות את הרקע */
+  --border: rgba(255, 255, 255, 0.2);
 }
-
-* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Segoe UI', system-ui, sans-serif;
   color: white;
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-              url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1350&q=80');
+  background-color: #0b0f19;
+  /* תמונת רקע איכותית */
+  background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=2043');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  transition: background 2s ease-in-out;
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-image 1s ease-in-out;
 }
 
-.container {
-  max-width: 1100px;
-  margin: 40px auto;
-  padding: 20px;
+.main-container {
+  width: 95%;
+  max-width: 800px; /* הקטנה משמעותית של הרוחב */
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  gap: 15px;
+  padding: 10px;
 }
 
-@media(max-width:900px) {
-  .container { grid-template-columns: 1fr; }
+@media (max-width: 768px) {
+  .main-container { grid-template-columns: 1fr; }
 }
 
 .card {
   background: var(--glass);
-  backdrop-filter: blur(20px);
-  padding: 30px;
-  border-radius: 25px;
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 20px 60px rgba(0,0,0,.5);
-  position: relative;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-h2 { color: var(--accent); margin-top: 0; font-size: 28px; }
+h2 {
+  color: var(--primary);
+  margin-top: 0;
+  font-size: 20px;
+  text-align: center;
+}
 
-label { display: block; margin-bottom: 8px; font-weight: bold; opacity: 0.9; }
-
+/* תיקון לרשימה עם רקע לבן */
 select, textarea {
   width: 100%;
-  padding: 14px;
-  border-radius: 14px;
-  border: 2px solid transparent;
-  background: rgba(255,255,255,0.1);
-  color: white;
-  margin-bottom: 15px;
-  font-size: 16px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.7) !important; /* רקע כהה תמיד */
+  color: white !important;
+  margin-bottom: 12px;
+  font-size: 14px;
   outline: none;
 }
 
-textarea { min-height: 120px; resize: vertical; }
+/* עיצוב האופציות בתוך הרשימה */
+select option {
+  background: #1a1a1a;
+  color: white;
+}
 
 button {
   width: 100%;
-  padding: 16px;
+  padding: 12px;
   border: none;
-  border-radius: 40px;
-  background: var(--accent);
-  color: #001018;
+  border-radius: 25px;
+  background: var(--primary);
+  color: #001c2c;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
-  font-size: 18px;
-  margin-bottom: 10px;
 }
 
-button:hover { transform: scale(1.02); filter: brightness(1.1); }
-
-.whatsapp-btn {
-  background: var(--success);
-  color: white;
-  display: none; /* יופיע רק אחרי אבחון */
-}
-
-#loading {
+#result {
+  margin-top: 10px;
+  padding: 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
   display: none;
-  text-align: center;
-  margin: 20px 0;
+  font-size: 13px;
+  border-right: 3px solid var(--primary);
 }
-
-.paw-icon {
-  font-size: 40px;
-  animation: pulse 1s infinite alternate;
-  display: inline-block;
-}
-
-@keyframes pulse {
-  from { transform: scale(1); opacity: 0.5; }
-  to { transform: scale(1.3); opacity: 1; }
-}
-
-.result {
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 15px;
-  background: rgba(255,255,255,0.08);
-  display: none;
-  border-right: 5px solid var(--accent);
-  animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .history-item {
-  background: rgba(255,255,255,.05);
-  padding: 15px;
-  border-radius: 15px;
-  margin-bottom: 15px;
-  font-size: 14px;
-  border-right: 4px solid var(--accent);
+  font-size: 12px;
+  padding: 8px;
+  background: rgba(0,0,0,0.2);
+  margin-bottom: 8px;
+  border-radius: 8px;
 }
 
-.musicBtn {
+.music-btn {
   position: fixed;
-  bottom: 25px;
-  left: 25px;
-  width: auto;
-  padding: 12px 25px;
-  z-index: 100;
+  bottom: 15px;
+  left: 15px;
+  background: var(--primary);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1000;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="main-container">
     <div class="card">
         <h2>אבחון חכם 🐾</h2>
-        
-        <label>בחר נושא:</label>
         <select id="issue">
             <option value="נשיכות פתאומיות">נשיכות פתאומיות</option>
             <option value="יללות בלילה">יללות בלילה</option>
             <option value="צרכים מחוץ לארגז">צרכים מחוץ לארגז</option>
-            <option value="שינוי בתאבון">שינוי בתאבון</option>
+            <option value="שריטות רהיטים">שריטות רהיטים 🛋️</option>
+            <option value="פחד מאורחים">פחד מאורחים 🏃‍♂️</option>
+            <option value="תוקפנות לחתול אחר">תוקפנות לחתול אחר 😼</option>
+            <option value="שינה מרובה מדי">שינה מרובה מדי 💤</option>
+            <option value="אכילת צמחים">אכילת צמחים 🌿</option>
         </select>
+        <textarea id="details" rows="3" placeholder="תאר את המקרה בקצרה..."></textarea>
+        <button onclick="runAnalysis()">נתח עכשיו</button>
 
-        <textarea id="details" placeholder="תאר את המקרה..."></textarea>
-
-        <button onclick="runAnalysis()" id="mainBtn">נתח מקרה</button>
-
-        <div id="loading">
-            <div class="paw-icon">🐾</div>
-            <p>החתול האלקטרוני מנתח את הנתונים...</p>
-        </div>
-
-        <div id="result" class="result"></div>
-        
-        <button class="whatsapp-btn" id="waBtn" onclick="sendToWhatsApp()">
-             שלח אבחון לווטרינר 📱
-        </button>
+        <div id="result"></div>
     </div>
 
     <div class="card">
         <h2>היסטוריה 📜</h2>
-        <div id="history"></div>
+        <div id="history-list"></div>
     </div>
 </div>
 
-<button class="musicBtn" onclick="playMeow()">🐱 מיאו!</button>
+<button class="music-btn" onclick="playMeow()">🐱 מיאו!</button>
 
 <script>
-/* 1. רקעים */
-const backgrounds = [
-  "url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1350&q=80')",
-  "url('https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=1350&q=80')",
-  "url('https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&w=1350&q=80')"
+/* רקעים מתחלפים */
+const images = [
+  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=2043",
+  "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1936",
+  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1935"
 ];
-let bgIndex = 0;
+let idx = 0;
 setInterval(() => {
-  bgIndex = (bgIndex + 1) % backgrounds.length;
-  document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), ${backgrounds[bgIndex]}`;
-}, 10000);
+    idx = (idx + 1) % images.length;
+    document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('${images[idx]}')`;
+}, 8000);
 
-/* 2. סאונד */
-const meowSound = new Audio('https://www.socialfiction.org/audio/meow.mp3'); 
-function playMeow() { meowSound.currentTime = 0; meowSound.play(); }
+/* סאונד - שימוש בלינק חיצוני יציב */
+const meow = new Audio('https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3');
 
-/* 3. אבחון */
-let lastAnalysis = "";
+function playMeow() {
+    meow.currentTime = 0;
+    meow.play().catch(() => alert("לחץ על המסך פעם אחת כדי לאפשר צליל"));
+}
 
 function runAnalysis() {
-    const res = document.getElementById("result");
-    const load = document.getElementById("loading");
-    const wa = document.getElementById("waBtn");
+    const issue = document.getElementById('issue').value;
+    const details = document.getElementById('details').value;
+    const result = document.getElementById('result');
     
-    res.style.display = "none";
-    wa.style.display = "none";
-    load.style.display = "block";
     playMeow();
 
-    setTimeout(() => {
-        load.style.display = "none";
-        analyze();
-        wa.style.display = "block"; // מראה את כפתור הוואטסאפ בסיום
-    }, 2000);
-}
-
-function analyze() {
-  const issue = document.getElementById("issue").value;
-  const details = document.getElementById("details").value;
-  const result = document.getElementById("result");
-
-  let response = "";
-  const dangerKeywords = ["דם", "נשימה", "גוסס", "פרכוס", "לא אוכל", "התמוטט"];
-  const isEmergency = dangerKeywords.some(word => details.includes(word));
-
-  if (isEmergency) {
-    response = "⚠️ חירום: נראה שישנה בעיה רפואית דחופה. מומלץ לפנות לווטרינר מיד.";
-    result.style.color = "var(--danger)";
-  } else {
-    const advice = {
-      "נשיכות פתאומיות": "זה עשוי להיות 'גירוי יתר'. נסה להפחית מגע באזורים רגישים כמו הבטן.",
-      "יללות בלילה": "החתול זקוק לפריקת אנרגיה. מומלץ משחק אינטנסיבי לפני השינה.",
-      "צרכים מחוץ לארגז": "בדוק את ניקיון הארגז או אם חל שינוי סביבתי שגורם לסטרס.",
-      "שינוי בתאבון": "שינוי כזה מחייב מעקב רפואי אם נמשך מעל יום."
+    let advice = "";
+    const db = {
+        "נשיכות פתאומיות": "גירוי יתר. הפסק ליטוף כשהזנב זז.",
+        "יללות בלילה": "שעמום. שחק איתו חצי שעה לפני השינה.",
+        "צרכים מחוץ לארגז": "בדוק ניקיון הארגז או בעיה רפואית.",
+        "שריטות רהיטים": "חסר מתקן גירוד אנכי יציב. מקם אחד ליד הספה.",
+        "פחד מאורחים": "אל תכריחו מגע. תנו לו מקום גבוה להתחבא בו.",
+        "תוקפנות לחתול אחר": "הפרדה וחיבור מחדש דרך ריח ואוכל.",
+        "שינה מרובה מדי": "חתולים ישנים 16 שעות, אך שינוי פתאומי דורש וטרינר.",
+        "אכילת צמחים": "ספק 'דשא חתולים' ובדוק שהצמחים בבית אינם רעילים."
     };
-    response = advice[issue] || "מומלץ לעקוב אחר ההתנהגות בימים הקרובים.";
-    result.style.color = "white";
-  }
 
-  lastAnalysis = response;
-  result.innerHTML = `<strong>אבחנה:</strong><br>${response}`;
-  result.style.display = "block";
-  saveHistory(response, details);
+    advice = db[issue] || "מומלץ להתייעץ עם מאלף חתולים.";
+    result.innerHTML = `<strong>אבחנה:</strong> ${advice}`;
+    result.style.display = "block";
+    saveHistory(issue);
 }
 
-/* 4. וואטסאפ */
-function sendToWhatsApp() {
-    const issue = document.getElementById("issue").value;
-    const details = document.getElementById("details").value;
-    const text = `שלום ד"ר, אני מתייעץ לגבי החתול שלי.\n\n*נושא:* ${issue}\n*תיאור:* ${details}\n*אבחון ראשוני מהאפליקציה:* ${lastAnalysis}`;
-    const encodedText = encodeURIComponent(text);
-    window.open(`https://wa.me/?text=${encodedText}`, '_blank');
-}
-
-/* 5. היסטוריה */
-function saveHistory(text, details) {
-  const history = JSON.parse(localStorage.getItem("catHistoryPRO")) || [];
-  history.unshift({ date: new Date().toLocaleString('he-IL'), text, details });
-  localStorage.setItem("catHistoryPRO", JSON.stringify(history.slice(0, 5)));
-  renderHistory();
+function saveHistory(issue) {
+    const history = JSON.parse(localStorage.getItem('cats_pro') || '[]');
+    history.unshift({ time: new Date().toLocaleTimeString('he-IL'), issue });
+    localStorage.setItem('cats_pro', JSON.stringify(history.slice(0, 4)));
+    renderHistory();
 }
 
 function renderHistory() {
-  const container = document.getElementById("history");
-  const history = JSON.parse(localStorage.getItem("catHistoryPRO")) || [];
-  container.innerHTML = history.map(item => `
-    <div class="history-item">
-      <strong>${item.date}</strong><br>${item.text}
-    </div>`).join('');
+    const list = document.getElementById('history-list');
+    const history = JSON.parse(localStorage.getItem('cats_pro') || '[]');
+    list.innerHTML = history.map(h => `<div class="history-item"><strong>${h.time}</strong>: ${h.issue}</div>`).join('');
 }
 renderHistory();
 </script>
+
 </body>
 </html>
