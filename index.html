@@ -3,36 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Elite V26 - Winter Edition</title>
+<title>CatMind Elite V26 - Pure Edition</title>
 <style>
 :root {
   --cold-turquoise: #40e0d0;
   --deep-turquoise: #00ced1;
   --dark-winter: #0a1f2f;
-  --panel-frost: rgba(10, 31, 47, 0.90);
+  --panel-frost: rgba(10, 31, 47, 0.70); /* יותר שקוף */
   --emergency-red: #ff4757;
 }
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, sans-serif;
   color: #e0ffff;
-  background: linear-gradient(135deg, #0d3d4f, #002b36);
+  background: linear-gradient(135deg, #0d3d4f, #002b36); /* רקע טורקיז קר נקי */
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-}
-.bg-cat-viewer {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-size: cover;
-  background-position: center;
-  z-index: 1;
-  transition: background-image 3.2s ease-in-out;
-  opacity: 0.18;
-  filter: brightness(0.7) contrast(1.1) hue-rotate(170deg);
 }
 .main-interface {
   position: relative;
@@ -55,24 +44,24 @@ body {
 }
 .glass-card {
   background: var(--panel-frost);
-  border: 1px solid rgba(64, 224, 208, 0.18);
+  border: 1px solid rgba(64, 224, 208, 0.12);
   border-radius: 28px;
   padding: 32px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.75);
-  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.65);
+  backdrop-filter: blur(16px); /* שקיפות גבוהה יותר */
 }
-h2, h3 { color: var(--cold-turquoise); margin-top: 0; border-bottom: 2px solid rgba(64, 224, 208, 0.15); padding-bottom: 12px; }
+h2, h3 { color: var(--cold-turquoise); margin-top: 0; border-bottom: 2px solid rgba(64, 224, 208, 0.10); padding-bottom: 12px; }
 select, textarea, input[type="file"] {
   width: 100%;
   padding: 16px;
   border-radius: 16px;
-  border: 1px solid rgba(224, 255, 255, 0.12);
-  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(224, 255, 255, 0.10);
+  background: rgba(0,0,0,0.45);
   color: #e0ffff;
   font-size: 16px;
   margin-bottom: 16px;
   outline: none;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 }
 input[type="file"] { padding: 8px; cursor: pointer; }
 button {
@@ -93,13 +82,13 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   color: #b2f2ff;
   text-decoration: none;
   padding: 16px;
-  background: rgba(224,255,255,0.06);
+  background: rgba(224,255,255,0.04);
   margin-bottom: 12px;
   border-radius: 16px;
   border-right: 4px solid var(--cold-turquoise);
   transition: 0.3s;
 }
-.info-link:hover { background: rgba(64, 224, 208, 0.12); color: #fff; }
+.info-link:hover { background: rgba(64, 224, 208, 0.08); color: #fff; }
 #result-box {
   margin-top: 20px;
   padding: 22px;
@@ -109,7 +98,7 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   font-size: 15px;
 }
 .emergency { border: 2px solid var(--emergency-red); background: rgba(255, 71, 87, 0.08); color: #ff9f9e; }
-.normal { border: 1px solid var(--cold-turquoise); background: rgba(64, 224, 208, 0.06); }
+.normal { border: 1px solid var(--cold-turquoise); background: rgba(64, 224, 208, 0.05); }
 .call-btn {
   display: block;
   background: var(--emergency-red);
@@ -133,7 +122,6 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
 </style>
 </head>
 <body>
-<div id="cat-view" class="bg-cat-viewer"></div>
 <div class="main-interface">
     <div class="panel">
         <div class="glass-card">
@@ -176,10 +164,10 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
             </select>
             <textarea id="issue-desc" rows="4" placeholder="תאר את המקרה בפירוט..."></textarea>
 
-            <!-- אופציה להעלאת תמונה -->
+            <!-- העלאת תמונה -->
             <label for="cat-photo" style="display:block; margin:12px 0 8px; color:#b2f2ff;">העלה תמונה של החתול (עוזר לאבחון מדויק יותר):</label>
             <input type="file" id="cat-photo" accept="image/*">
-            <img id="preview-img" src="" alt="תצוגה מקדימה של התמונה">
+            <img id="preview-img" src="" alt="תצוגה מקדימה">
 
             <button onclick="runDiagnostic()">נתח מקרה</button>
            
@@ -207,26 +195,9 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
 </div>
 
 <script>
-// גלריה חתולים יפים
-const catGallery = [
-    "https://images.unsplash.com/photo-1568152950566-c1bf43f4ab28?w=1200",
-    "https://images.unsplash.com/photo-1513245543132-31f507417b26?w=1200",
-    "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=1200",
-    "https://images.unsplash.com/photo-1574231164645-d6f0e8553590?w=1200",
-    "https://images.unsplash.com/photo-1533738360245-2a4b6a7e8d7c?w=1200",
-    "https://images.unsplash.com/photo-1606214760789-5e4f8c8b8d7c?w=1200"
-];
-let currentIdx = 0;
-const catViewer = document.getElementById('cat-view');
+// אין תמונות רקע מתחלפות – הסרנו לגמרי
 
-function slideShow() {
-    catViewer.style.backgroundImage = `url('${catGallery[currentIdx]}')`;
-    currentIdx = (currentIdx + 1) % catGallery.length;
-}
-setInterval(slideShow, 7000);
-slideShow();
-
-// תצוגה מקדימה של התמונה שהועלתה
+// תצוגה מקדימה של תמונה שהועלתה
 document.getElementById('cat-photo').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
@@ -256,7 +227,7 @@ function runDiagnostic() {
    
     if (isEmergency) {
         result.className = "emergency";
-        result.innerHTML = "<strong>❄️ התראת חירום!</strong><br>נראה מצב רפואי קריטי – פנו לוטרינר מיד." + (photoUploaded ? "<br><em>תמונה הועלתה – תוכל לשלוח אותה לוטרינר.</em>" : "");
+        result.innerHTML = "<strong>❄️ התראת חירום!</strong><br>נראה מצב רפואי קריטי – פנו לוטרינר מיד." + (photoUploaded ? "<br><em>תמונה הועלתה – שלח אותה לוטרינר.</em>" : "");
         emUI.style.display = "block";
     } else {
         result.className = "normal";
@@ -298,8 +269,8 @@ function runDiagnostic() {
             "נשימה כבדה": "לב/ריאות. חירום.",
             "התעלפות": "לב/סוכר. חירום מיידי."
         };
-        let tip = tips[issue] || "תאר יותר פרטים – אפשר להוסיף תמונה";
-        if (photoUploaded) tip += "<br><strong>תמונה הועלתה:</strong> תוכל לשלוח אותה לוטרינר או להוסיף תיאור מדויק יותר.";
+        let tip = tips[issue] || "תאר יותר פרטים – אפשר להעלות תמונה.";
+        if (photoUploaded) tip += "<br><strong>תמונה הועלתה:</strong> ניתן לשלוח אותה לוטרינר או להוסיף תיאור מדויק.";
         result.innerHTML = `<strong>אבחנה:</strong><br>${tip}`;
     }
    
