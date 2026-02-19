@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Exotic Elite V20</title>
+<title>CatMind Zen Emergency V23</title>
 
 <style>
 :root {
   --primary: #a29bfe; 
-  --glass: rgba(15, 15, 20, 0.9);
+  --emergency: #ff7675;
+  --glass: rgba(15, 15, 20, 0.94);
 }
 
 body {
@@ -23,7 +24,6 @@ body {
   overflow: hidden;
 }
 
-/* מסגרת החתול המרכזית - תמיד שלם */
 .cat-viewer {
   position: fixed;
   top: 50%;
@@ -34,26 +34,26 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  transition: background-image 1.5s ease-in-out;
+  transition: background-image 2s ease-in-out;
   z-index: 1;
-  filter: drop-shadow(0 0 20px rgba(162, 155, 254, 0.2));
+  opacity: 0.6;
 }
 
 .app-layout {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 40px;
+  padding: 30px;
   box-sizing: border-box;
   z-index: 10;
   position: relative;
 }
 
 .side-panel {
-  width: 300px;
+  width: 330px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 .card {
@@ -63,85 +63,94 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 25px;
   padding: 20px;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8);
 }
 
-h3 { color: var(--primary); font-size: 19px; margin: 0 0 15px 0; border-bottom: 2px solid rgba(162, 155, 254, 0.2); padding-bottom: 10px; }
+h3 { color: var(--primary); font-size: 19px; margin: 0 0 12px 0; border-bottom: 2px solid rgba(162, 155, 254, 0.2); padding-bottom: 8px; }
 
 select, textarea {
   width: 100%;
   padding: 12px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(0, 0, 0, 0.5) !important;
+  background: rgba(0, 0, 0, 0.6) !important;
   color: #fff !important;
   font-size: 14px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 button {
   width: 100%;
-  padding: 15px;
+  padding: 14px;
   border: none;
   border-radius: 15px;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), #6c5ce7);
   color: #fff;
   font-weight: bold;
   cursor: pointer;
-  font-size: 15px;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
-button:hover { transform: scale(1.03); filter: brightness(1.1); }
+button:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
 .link-item {
   display: block;
   color: #efefef;
   text-decoration: none;
-  font-size: 14px;
-  padding: 12px;
-  margin-bottom: 10px;
+  font-size: 13px;
+  padding: 10px;
+  margin-bottom: 8px;
   background: rgba(255,255,255,0.05);
-  border-radius: 12px;
-  border-right: 5px solid var(--primary);
-  transition: 0.3s;
+  border-radius: 10px;
+  border-right: 4px solid var(--primary);
 }
 
-.link-item:hover { background: rgba(162, 155, 254, 0.2); transform: translateX(-5px); }
+.emergency-list {
+  font-size: 12px;
+  color: #ff9f9e;
+  margin-top: 10px;
+  display: none;
+}
+
+.emergency-list a { color: white; font-weight: bold; text-decoration: none; display: block; margin: 5px 0; }
 
 .controls {
   position: fixed;
-  bottom: 40px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 30px;
+  gap: 20px;
   z-index: 100;
 }
 
 .btn-float {
-  width: 65px;
-  height: 65px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
-  border: 1px solid var(--primary);
+  border: 1px solid rgba(255,255,255,0.2);
   background: var(--glass);
   color: var(--primary);
-  font-size: 26px;
+  font-size: 22px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.btn-float.active { color: #81ecec; border-color: #81ecec; }
+
 #diag-result {
-  margin-top: 15px;
+  margin-top: 12px;
   padding: 15px;
-  background: rgba(162, 155, 254, 0.1);
-  border-radius: 12px;
+  border-radius: 15px;
   display: none;
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.5;
 }
+
+.emergency-alert { background: rgba(255, 118, 117, 0.25) !important; border: 1px solid var(--emergency) !important; }
+.normal-alert { background: rgba(162, 155, 254, 0.15); border: 1px solid var(--primary); }
 </style>
 </head>
 
@@ -152,99 +161,103 @@ button:hover { transform: scale(1.03); filter: brightness(1.1); }
 <div class="app-layout">
     <div class="side-panel">
         <div class="card">
-            <h3>אבחון חכם 🐾</h3>
+            <h3>אבחון חכם V23 🐾</h3>
             <select id="sel-issue">
-                <option value="נשיכות">נשיכות פתאומיות</option>
+                <option value="נשיכות">נשיכות</option>
                 <option value="יללות">יללות בלילה</option>
-                <option value="צרכים">סימון מחוץ לארגז</option>
-                <option value="שריטות">שריטות רהיטים</option>
-                <option value="תוקפנות">תוקפנות לחתול אחר</option>
+                <option value="צרכים">צרכים מחוץ לארגז</option>
+                <option value="שריטות">הרס רהיטים</option>
+                <option value="פחד">סטרס/פחד</option>
             </select>
-            <textarea id="txt-desc" rows="3" placeholder="מה המקרה? (לדוגמה: החתול נושך כשנוגעים לו בבטן)"></textarea>
-            <button onclick="runDiag()">נתח התנהגות</button>
+            <textarea id="txt-desc" rows="3" placeholder="מה המקרה?"></textarea>
+            <button onclick="runZenDiag()">נתח התנהגות</button>
             <div id="diag-result"></div>
+            
+            <div id="emergency-phones" class="emergency-list">
+                <strong>📞 מוקדי חירום 24/7:</strong>
+                <a href="tel:039688988">בית החולים הוטרינרי (בית דגן): 03-968-8988</a>
+                <a href="tel:099544430">חוות דעת (רעננה): 09-954-4430</a>
+                <a href="tel:036241776">מרכז וטרינרי תל אביב: 03-624-1776</a>
+            </div>
         </div>
     </div>
 
     <div class="side-panel">
         <div class="card">
-            <h3>מדריך גזעים מלא 📖</h3>
-            <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="link-item">קטלוג גזעים מלא (עברית) 🐈</a>
-            <a href="https://www.thesprucepets.com/cat-breeds-4162127" target="_blank" class="link-item">מדריך גזעים עולמי (אנגלית) 🌍</a>
+            <h3>מידע וגזעים 📖</h3>
+            <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="link-item">מדריך גזעים מלא 🐈</a>
             <a href="https://he.wikipedia.org/wiki/%D7%A7%D7%A8%D7%A7%D7%9C" target="_blank" class="link-item">הכל על הקרקל 🐆</a>
-            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="link-item" style="color:#ff7675; border-right-color:#ff7675">וטרינר חירום 🚨</a>
+            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="link-item" style="color:var(--emergency)">וטרינר חירום (מידע נוסף) 🚨</a>
         </div>
         
         <div class="card">
             <h3>היסטוריה 📜</h3>
-            <div id="hist-list" style="font-size: 12px; opacity: 0.8; max-height: 120px; overflow-y: auto;"></div>
+            <div id="hist-log" style="font-size: 11px; opacity: 0.7; max-height: 80px; overflow-y: auto;"></div>
         </div>
     </div>
 </div>
 
 <div class="controls">
-    <button class="btn-float" onclick="togglePiano()">🎹</button>
-    <button class="btn-float" onclick="playSoftBell()">🔔</button>
+    <button class="btn-float" id="p-btn" onclick="toggleM('piano')">🎹</button>
+    <button class="btn-float" id="a-btn" onclick="toggleM('ambient')">🌌</button>
+    <button class="btn-float" onclick="bellSfx()">🔔</button>
 </div>
 
-<audio id="piano-music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" type="audio/mpeg">
-</audio>
+<audio id="piano-s" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3"></audio>
+<audio id="ambient-s" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"></audio>
 
 <script>
-// גלריית אקזוטיק (נבדק - אין תרנגולים!)
-const exoticGallery = [
-  "https://images.unsplash.com/photo-1568152950566-c1bf43f4ab28?q=80&w=1000", // מיין קון
-  "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=1000", // קרקל
-  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1000", // סיאמי
-  "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1000", // בנגלי
-  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1000"  // בריטי
+const gallery = [
+    "https://images.unsplash.com/photo-1568152950566-c1bf43f4ab28?q=80&w=1200",
+    "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=1200",
+    "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1200",
+    "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1200"
 ];
-let galleryIdx = 0;
-const mainPic = document.getElementById('cat-main');
+let idx = 0;
+function rot() { document.getElementById('cat-main').style.backgroundImage = `url('${gallery[idx]}')`; idx = (idx + 1) % gallery.length; }
+setInterval(rot, 9000); rot();
 
-function switchCat() {
-    mainPic.style.backgroundImage = `url('${exoticGallery[galleryIdx]}')`;
-    galleryIdx = (galleryIdx + 1) % exoticGallery.length;
-}
-setInterval(switchCat, 7000);
-switchCat();
+const bAudio = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+function bellSfx() { bAudio.currentTime = 0; bAudio.volume = 0.2; bAudio.play(); }
 
-const bell = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
-const piano = document.getElementById('piano-music');
-
-function togglePiano() {
-    piano.volume = 0.2;
-    piano.paused ? piano.play() : piano.pause();
+function toggleM(t) {
+    const p = document.getElementById('piano-s'); const a = document.getElementById('ambient-s');
+    const target = t === 'piano' ? p : a; const btn = document.getElementById(t === 'piano' ? 'p-btn' : 'a-btn');
+    target.volume = 0.15;
+    if(target.paused) { target.play(); btn.classList.add('active'); }
+    else { target.pause(); btn.classList.remove('active'); }
 }
 
-function playSoftBell() {
-    bell.currentTime = 0;
-    bell.volume = 0.3;
-    bell.play();
-}
-
-function runDiag() {
+function runZenDiag() {
     const issue = document.getElementById('sel-issue').value;
-    const desc = document.getElementById('txt-desc').value;
-    const result = document.getElementById('diag-result');
-    
-    playSoftBell();
+    const desc = document.getElementById('txt-desc').value.toLowerCase();
+    const res = document.getElementById('diag-result');
+    const eList = document.getElementById('emergency-phones');
+    bellSfx();
 
-    const responses = {
-        "נשיכות": "נראה שמדובר בגירוי יתר. הפסיקו ליטוף ברגע שהזנב מתחיל לנוע במהירות.",
-        "יללות": "שעמום לילי. שחקו איתו משחק ציד אינטנסיבי של 15 דקות לפני השינה.",
-        "צרכים": "סימון טריטוריה או בעיה רפואית. וודאו שהארגז נקי ושיש לו תצפיות גבוהות.",
-        "שריטות": "חתולים חייבים לגרד. הציבו מתקן גירוד יציב וגבוה ממש ליד הרהיט שהוא אוהב.",
-        "תוקפנות": "הפרדה הדרגתית. תנו לו מרחב בטוח והחזירו אותו לחברה עם חיזוקים חיוביים."
-    };
+    const danger = ["גוסס", "דם", "פצוע", "נשימה", "פרכוס", "הקאה", "רעל", "לא זז"];
+    const isE = danger.some(w => desc.includes(w));
 
-    result.innerHTML = `<strong>אבחנה:</strong><br>${responses[issue]}`;
-    result.style.display = "block";
-    
-    const h = document.getElementById('hist-list');
-    const now = new Date().toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
-    h.innerHTML = `<div>${now} - ${issue}</div>` + h.innerHTML;
+    res.style.display = "block";
+    if(isE) {
+        res.className = "emergency-alert";
+        res.innerHTML = "<strong>🚨 מצב חירום זוהה!</strong><br>התיאור שלך מעיד על סכנה מיידית. התקשר לאחד המוקדים כאן למטה עכשיו.";
+        eList.style.display = "block";
+    } else {
+        res.className = "normal-alert";
+        eList.style.display = "none";
+        const w = {
+            "נשיכות": "גירוי יתר. הפסיקו ליטוף ברגע שהזנב נע במהירות.",
+            "יללות": "שעמום לילי. סדרת משחק של 15 דקות לפני האוכל האחרון תעזור.",
+            "צרכים": "סימון טריטוריה. וודאו שהארגז נקי והציבו נקודות תצפית גבוהות.",
+            "שריטות": "חתולים חייבים לגרד. הציבו מתקן גירוד יציב וגבוה ליד הרהיט.",
+            "פחד": "תנו לו מרחב בטוח ומסתור. אל תכריחו אינטראקציה."
+        };
+        res.innerHTML = `<strong>אבחנה:</strong><br>${w[issue]}`;
+    }
+    const h = document.getElementById('hist-log');
+    const t = new Date().toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
+    h.innerHTML = `<div>${t}: ${isE ? '⚠️ חירום' : issue}</div>` + h.innerHTML;
 }
 </script>
 
