@@ -9,34 +9,46 @@
   --turquoise: #40e0d0;
   --deep-blue: #00b7eb;
   --dark-bg: #0b2537;
-  --panel: rgba(11, 37, 55, 0.65); /* שקיפות גבוהה */
+  --panel: rgba(11, 37, 55, 0.65);
   --emergency: #ff4757;
 }
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, sans-serif;
   color: #e0ffff;
-  background: linear-gradient(135deg, #0b2537, #001f2e); /* טורקיז-כחול קר, נקי */
+  background: linear-gradient(135deg, #0b2537, #001f2e);
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
+  position: relative;
+}
+.bg-cat-viewer {
+  position: fixed;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  transition: background-image 3s ease-in-out;
+  opacity: 0.20;
+  filter: brightness(0.7) contrast(1.1) hue-rotate(170deg);
 }
 .main-interface {
   position: relative;
   z-index: 10;
   width: 100%;
   max-width: 1200px;
-  height: 100vh;
+  min-height: 100vh;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-between;
-  padding: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  padding: 30px;
   box-sizing: border-box;
   pointer-events: none;
 }
 .panel {
-  width: 380px;
+  width: 100%;
+  max-width: 380px;
   pointer-events: auto;
   display: flex;
   flex-direction: column;
@@ -46,34 +58,34 @@ body {
   background: var(--panel);
   border: 1px solid rgba(64, 224, 208, 0.10);
   border-radius: 28px;
-  padding: 32px;
+  padding: 28px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.70);
-  backdrop-filter: blur(18px); /* שקיפות חזקה יותר */
+  backdrop-filter: blur(18px);
 }
 h2, h3 { color: var(--turquoise); margin-top: 0; border-bottom: 2px solid rgba(64, 224, 208, 0.08); padding-bottom: 12px; }
 select, textarea, input[type="file"] {
   width: 100%;
-  padding: 16px;
-  border-radius: 16px;
+  padding: 14px;
+  border-radius: 14px;
   border: 1px solid rgba(224, 255, 255, 0.08);
   background: rgba(0,0,0,0.40);
   color: #e0ffff;
-  font-size: 16px;
-  margin-bottom: 16px;
+  font-size: 15px;
+  margin-bottom: 14px;
   outline: none;
   backdrop-filter: blur(12px);
 }
 input[type="file"] { padding: 8px; cursor: pointer; }
 button {
   width: 100%;
-  padding: 18px;
+  padding: 16px;
   border: none;
-  border-radius: 18px;
+  border-radius: 16px;
   background: linear-gradient(135deg, #40e0d0, #00b7eb);
   color: #000;
   font-weight: bold;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 17px;
   transition: 0.3s;
 }
 button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0.45); }
@@ -81,21 +93,21 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   display: block;
   color: #b2f2ff;
   text-decoration: none;
-  padding: 16px;
+  padding: 14px;
   background: rgba(224,255,255,0.04);
-  margin-bottom: 12px;
-  border-radius: 16px;
+  margin-bottom: 10px;
+  border-radius: 14px;
   border-right: 4px solid var(--turquoise);
   transition: 0.3s;
 }
 .info-link:hover { background: rgba(64, 224, 208, 0.08); color: #fff; }
 #result-box {
   margin-top: 20px;
-  padding: 22px;
-  border-radius: 20px;
+  padding: 20px;
+  border-radius: 18px;
   display: none;
   line-height: 1.6;
-  font-size: 15px;
+  font-size: 14px;
 }
 .emergency { border: 2px solid var(--emergency); background: rgba(255, 71, 87, 0.08); color: #ff9f9e; }
 .normal { border: 1px solid var(--turquoise); background: rgba(64, 224, 208, 0.05); }
@@ -104,24 +116,29 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   background: var(--emergency);
   color: white;
   text-align: center;
-  padding: 16px;
-  border-radius: 16px;
+  padding: 14px;
+  border-radius: 14px;
   text-decoration: none;
   font-weight: bold;
-  margin-top: 16px;
+  margin-top: 14px;
 }
 #preview-img {
   max-width: 100%;
-  max-height: 180px;
+  max-height: 160px;
   border-radius: 12px;
   margin-top: 10px;
   display: none;
   border: 1px solid rgba(64, 224, 208, 0.3);
 }
 .bell-control { display: none; }
+@media (max-width: 900px) {
+  .main-interface { flex-direction: column; padding: 20px; }
+  .panel { max-width: 100%; }
+}
 </style>
 </head>
 <body>
+<div id="cat-view" class="bg-cat-viewer"></div>
 <div class="main-interface">
     <div class="panel">
         <div class="glass-card">
@@ -164,8 +181,7 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
             </select>
             <textarea id="issue-desc" rows="4" placeholder="תאר את המקרה בפירוט..."></textarea>
 
-            <!-- העלאת תמונה – כפתור בולט -->
-            <label for="cat-photo" style="display:block; margin:12px 0 8px; color:#b2f2ff; font-weight:bold;">העלה תמונה של החתול (עוזר לאבחון):</label>
+            <label for="cat-photo" style="display:block; margin:12px 0 8px; color:#b2f2ff; font-weight:bold;">העלה תמונה של החתול:</label>
             <input type="file" id="cat-photo" accept="image/*">
             <img id="preview-img" src="" alt="תצוגה מקדימה">
 
@@ -183,10 +199,10 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
         <div class="glass-card">
             <h3>מדריך וסיוע 📖</h3>
             <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="info-link">מדריך גזעים מלא 🐱</a>
-            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="info-link" style="border-right-color:var(--emergency-red); color:var(--emergency-red)">וטרינר חירום ❄️</a>
+            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="info-link" style="border-right-color:var(--emergency); color:var(--emergency)">וטרינר חירום ❄️</a>
             <a href="https://www.letlive.org.il/" target="_blank" class="info-link">אימוץ ועזרה 🏠</a>
         </div>
-       
+      
         <div class="glass-card" style="flex-grow:1; max-height: 250px;">
             <h3>היסטוריה ❄️</h3>
             <div id="history-log" style="overflow-y:auto; height:150px; font-size:13px; opacity:0.8;"></div>
@@ -195,34 +211,54 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
 </div>
 
 <script>
-// אין תמונות רקע – הסרנו לגמרי
+// תמונות רקע מתחלפות של חתולים מיוחדים / אקזוטיים
+const catBackgrounds = [
+    "https://images.unsplash.com/photo-1568152950566-c1bf43f4ab28?auto=format&fit=crop&q=80", // Maine Coon majestic
+    "https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&q=80", // Siamese elegant
+    "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&q=80", // Bengal wild
+    "https://images.unsplash.com/photo-1574231164645-d6f0e8553590?auto=format&fit=crop&q=80", // Exotic shorthair
+    "https://images.unsplash.com/photo-1533738360245-2a4b6a7e8d7c?auto=format&fit=crop&q=80", // Persian fluffy
+    "https://images.unsplash.com/photo-1606214760789-5e4f8c8b8d7c?auto=format&fit=crop&q=80", // White mystical
+    "https://images.unsplash.com/photo-1583795795923-6e6c6d6c6d6c?auto=format&fit=crop&q=80", // Grey mysterious
+    "https://images.unsplash.com/photo-1617854818583-09e7f077a156?auto=format&fit=crop&q=80"  // Cute tabby
+];
 
-// תצוגה מקדימה של תמונה
+let currentBg = 0;
+const bgElement = document.getElementById('cat-view');
+
+function changeBackground() {
+    bgElement.style.backgroundImage = `url('${catBackgrounds[currentBg]}')`;
+    currentBg = (currentBg + 1) % catBackgrounds.length;
+}
+
+setInterval(changeBackground, 8000);
+changeBackground(); // התחלה מיידית
+
+// תצוגה מקדימה של תמונה שהועלתה
 document.getElementById('cat-photo').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-            const preview = document.getElementById('preview-img');
-            preview.src = e.target.result;
-            preview.style.display = 'block';
+        reader.onload = function(ev) {
+            document.getElementById('preview-img').src = ev.target.result;
+            document.getElementById('preview-img').style.display = 'block';
         };
         reader.readAsDataURL(file);
     }
 });
 
-// אבחון
+// פונקציית אבחון
 function runDiagnostic() {
     const issue = document.getElementById('issue-type').value;
     const desc = document.getElementById('issue-desc').value.trim();
-    const result = document.getElementById('result-box');
-    const emUI = document.getElementById('emergency-ui');
-    const photoUploaded = document.getElementById('cat-photo').files.length > 0;
+    const resultBox = document.getElementById('result-box');
+    const emergencyUI = document.getElementById('emergency-ui');
+    const hasPhoto = document.getElementById('cat-photo').files.length > 0;
 
-    if (!issue && !desc && !photoUploaded) {
-        result.style.display = "block";
-        result.className = "normal";
-        result.innerHTML = "<strong>שגיאה:</strong><br>בחר בעיה או תאר את המקרה כדי לקבל אבחנה.";
+    if (!issue && !desc && !hasPhoto) {
+        resultBox.style.display = "block";
+        resultBox.className = "normal";
+        resultBox.innerHTML = "<strong>שגיאה:</strong><br>בחר בעיה או תאר את המקרה כדי לקבל אבחנה.";
         return;
     }
 
@@ -230,15 +266,15 @@ function runDiagnostic() {
     const isEmergency = redFlags.some(word => desc.toLowerCase().includes(word)) || 
                        ["התקפי פרכוס", "עיוורון פתאומי", "חוסר קואורדינציה", "נשימה כבדה"].includes(issue);
 
-    result.style.display = "block";
-   
+    resultBox.style.display = "block";
+
     if (isEmergency) {
-        result.className = "emergency";
-        result.innerHTML = "<strong>❄️ התראת חירום!</strong><br>נראה מצב רפואי קריטי – פנו לוטרינר מיד." + (photoUploaded ? "<br><em>תמונה הועלתה – שלח אותה לוטרינר.</em>" : "");
-        emUI.style.display = "block";
+        resultBox.className = "emergency";
+        resultBox.innerHTML = "<strong>❄️ התראת חירום!</strong><br>נראה מצב רפואי קריטי – פנו לוטרינר מיד." + (hasPhoto ? "<br><em>תמונה הועלתה – שלח אותה לוטרינר.</em>" : "");
+        emergencyUI.style.display = "block";
     } else {
-        result.className = "normal";
-        emUI.style.display = "none";
+        resultBox.className = "normal";
+        emergencyUI.style.display = "none";
 
         const tips = {
             "נשיכות": "גירוי יתר. עצרו מגע כשהזנב זז מהר. בדקו חתכים.",
@@ -277,13 +313,13 @@ function runDiagnostic() {
             "התעלפות": "לב/סוכר. חירום מיידי."
         };
         let tip = tips[issue] || "תאר יותר פרטים – אפשר להעלות תמונה.";
-        if (photoUploaded) tip += "<br><strong>תמונה הועלתה:</strong> ניתן לשלוח אותה לוטרינר או להוסיף תיאור מדויק.";
-        result.innerHTML = `<strong>אבחנה:</strong><br>${tip}`;
+        if (hasPhoto) tip += "<br><strong>תמונה הועלתה:</strong> ניתן לשלוח אותה לוטרינר או להוסיף תיאור מדויק.";
+        resultBox.innerHTML = `<strong>אבחנה:</strong><br>${tip}`;
     }
-   
+
     const log = document.getElementById('history-log');
     const time = new Date().toLocaleTimeString('he-IL');
-    log.innerHTML = `<div style="padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05)">${time}: ${isEmergency ? '⚠️ חירום' : issue}${photoUploaded ? ' + תמונה' : ''}</div>` + log.innerHTML;
+    log.innerHTML = `<div style="padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05)">${time}: ${isEmergency ? '⚠️ חירום' : issue}${hasPhoto ? ' + תמונה' : ''}</div>` + log.innerHTML;
 }
 </script>
 </body>
