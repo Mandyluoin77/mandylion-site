@@ -9,7 +9,7 @@
   --turquoise: #40e0d0;
   --deep-blue: #00b7eb;
   --dark-bg: #0b2537;
-  --panel: rgba(11, 37, 55, 0.58); /* שקוף יותר כדי שהחתולים יבלטו */
+  --panel: rgba(11, 37, 55, 0.55);
   --emergency: #ff4757;
 }
 body {
@@ -26,8 +26,8 @@ body {
   inset: 0;
   background: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=100&w=3000') center/cover no-repeat;
   z-index: 1;
-  opacity: 0.55;          /* נראות גבוהה מאוד – החתולים בולטים חזק */
-  filter: brightness(1.08) contrast(1.12) saturate(1.25); /* צבעים חיים, בהירים וברורים */
+  opacity: 0.75;          /* הגברנו מאוד – החתולים אמורים להיות מאוד ברורים */
+  filter: brightness(1.12) contrast(1.18) saturate(1.35);
 }
 .main-interface {
   position: relative;
@@ -50,7 +50,7 @@ body {
 }
 .glass-card {
   background: var(--panel);
-  border: 1px solid rgba(64, 224, 208, 0.20);
+  border: 1px solid rgba(64, 224, 208, 0.22);
   border-radius: 24px;
   padding: 28px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.70);
@@ -228,8 +228,8 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
 </div>
 
 <script>
-// תמונת רקע אחת קבועה – מלאה בחתולים (איכות גבוהה מאוד)
-document.getElementById('cat-view').style.backgroundImage = "url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=98&w=2400')";
+// תמונת רקע אחת קבועה – מלאה בחתולים (איכות גבוהה)
+document.getElementById('cat-view').style.backgroundImage = "url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=100&w=3000')";
 
 // תצוגה מקדימה של תמונה שהועלתה
 document.getElementById('cat-photo').addEventListener('change', function(e) {
