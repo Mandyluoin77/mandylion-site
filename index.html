@@ -3,20 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Soft Edition V15</title>
+<title>CatMind Exotic V18</title>
 
 <style>
 :root {
-  --primary: #00f2fe;
-  --glass: rgba(0, 0, 0, 0.6);
+  --primary: #f1c40f; /* זהב אקזוטי */
+  --glass: rgba(0, 0, 0, 0.75);
 }
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: 'Segoe UI', system-ui, sans-serif;
   color: white;
-  background: #0b101b no-repeat center center fixed;
-  background-size: cover;
+  background-color: #050505;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* שומר על החתול שלם במרכז */
   min-height: 100vh;
   display: flex;
   transition: background-image 1.5s ease-in-out;
@@ -27,12 +29,12 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 25px;
   box-sizing: border-box;
 }
 
 .side-panel {
-  width: 240px;
+  width: 260px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -41,52 +43,58 @@ body {
 
 .card {
   background: var(--glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 15px;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(241, 196, 15, 0.2);
+  border-radius: 20px;
   padding: 15px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
 }
 
-h3 { color: var(--primary); font-size: 16px; margin: 0 0 10px 0; border-bottom: 1px solid var(--primary); }
+h3 { color: var(--primary); font-size: 18px; margin: 0 0 12px 0; border-bottom: 1px solid var(--primary); padding-bottom: 5px; }
 
 select, textarea {
   width: 100%;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: #000 !important;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: #111 !important;
   color: #fff !important;
   font-size: 14px;
-  margin-bottom: 10px;
-  display: block;
+  margin-bottom: 12px;
 }
 
 button {
   width: 100%;
   padding: 12px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--primary);
   color: #000;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
 }
+
+button:hover { background: #d4ac0d; transform: scale(1.02); }
 
 .link-item {
   display: block;
-  color: #fff;
+  color: #eee;
   text-decoration: none;
-  font-size: 12px;
-  padding: 6px;
+  font-size: 13px;
+  padding: 8px;
   margin-bottom: 5px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 5px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  border-right: 3px solid var(--primary);
 }
+
+.link-item:hover { background: var(--primary); color: #000; }
 
 .controls {
   position: fixed;
-  bottom: 20px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -94,24 +102,25 @@ button {
 }
 
 .btn-float {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  border: none;
-  background: var(--primary);
+  border: 2px solid var(--primary);
+  background: var(--glass);
+  color: var(--primary);
   font-size: 24px;
   cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  box-shadow: 0 0 15px rgba(241, 196, 15, 0.3);
 }
 
 #diag-result {
-  margin-top: 10px;
-  padding: 10px;
-  background: rgba(0, 242, 254, 0.2);
-  border-radius: 8px;
+  margin-top: 15px;
+  padding: 12px;
+  background: rgba(241, 196, 15, 0.1);
+  border-radius: 10px;
   display: none;
-  font-size: 13px;
-  border-right: 3px solid var(--primary);
+  font-size: 14px;
+  line-height: 1.5;
 }
 </style>
 </head>
@@ -121,104 +130,98 @@ button {
 <div class="app-layout">
     <div class="side-panel">
         <div class="card">
-            <h3>אבחון חתולים 🐾</h3>
+            <h3>אבחון אקזוטי 🐾</h3>
             <select id="sel-issue">
-                <option value="נשיכות">נשיכות</option>
-                <option value="יללות">יללות בלילה</option>
-                <option value="צרכים">צרכים מחוץ לארגז</option>
-                <option value="שריטות">שריטות רהיטים</option>
-                <option value="תוקפנות">תוקפנות</option>
-                <option value="צמחים">אכילת צמחים</option>
+                <option value="נשיכות">נשיכות טריטוריאליות</option>
+                <option value="יללות">יללות/קולות פרא</option>
+                <option value="צרכים">סימון טריטוריה</option>
+                <option value="שריטות">הרס רהיטים/טיפוס</option>
+                <option value="תוקפנות">תוקפנות לבעלי חיים</option>
             </select>
-            <textarea id="txt-desc" rows="3" placeholder="תאר את המקרה כאן..."></textarea>
-            <button onclick="doAction()">נתח מקרה</button>
+            <textarea id="txt-desc" rows="3" placeholder="תאר את התנהגות החתול..."></textarea>
+            <button onclick="runDiag()">נתח עכשיו</button>
             <div id="diag-result"></div>
         </div>
         
         <div class="card">
-            <h3>היסטוריה 📜</h3>
-            <div id="hist-box" style="font-size: 12px; max-height: 150px; overflow-y: auto;"></div>
+            <h3>לוג מקרים 📜</h3>
+            <div id="hist-box" style="font-size: 12px; opacity: 0.8;"></div>
         </div>
     </div>
 
     <div class="side-panel">
         <div class="card">
-            <h3>קישורים ועזרה 📖</h3>
-            <a href="https://www.letlive.org.il/" target="_blank" class="link-item">תנו לחיות לחיות 🏠</a>
-            <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="link-item">מדריך גזעים 🐈</a>
-            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="link-item" style="color:#ff4b2b">וטרינר חירום 🚨</a>
+            <h3>מידע על גזעים נדירים 📖</h3>
+            <a href="https://www.petnet.co.il/cats/breeds/" target="_blank" class="link-item">מדריך גזעים מלא 🐈</a>
+            <a href="https://he.wikipedia.org/wiki/%D7%A7%D7%A8%D7%A7%D7%9C" target="_blank" class="link-item">מידע על הקרקל 🐆</a>
+            <a href="https://www.letlive.org.il/" target="_blank" class="link-item">אימוץ ועזרה 🏠</a>
+            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="link-item" style="color:#ff7675">וטרינר חירום 🚨</a>
         </div>
     </div>
 </div>
 
 <div class="controls">
-    <button class="btn-float" onclick="playMusic()">🎵</button>
-    <button class="btn-float" onclick="playMeowSound()">🐱</button>
+    <button class="btn-float" onclick="toggleMusic()">🎹</button>
+    <button class="btn-float" onclick="playSoftChime()">🔔</button>
 </div>
 
-<audio id="player-music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+<audio id="piano-player" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// 1. תמונות מתחלפות
-const catPics = [
-  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1000",
-  "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1000",
-  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1000",
-  "https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1000"
+// גלריית חתולים אקזוטיים וגזעיים
+const exoticPics = [
+  "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=1200", // קרקל/חתול בר
+  "https://images.unsplash.com/photo-1568152950566-c1bf43f4ab28?q=80&w=1200", // מיין קון
+  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1200", // סיאמי
+  "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1200", // בנגלי
+  "https://images.unsplash.com/photo-1570018144715-431103bd3d70?q=80&w=1200"  // חתול פרא/סרוואל
 ];
-let pIdx = 0;
-function rotateBG() {
-    document.body.style.backgroundImage = `url('${catPics[pIdx]}')`;
-    pIdx = (pIdx + 1) % catPics.length;
+let currentIdx = 0;
+
+function updateBackground() {
+    document.body.style.backgroundImage = `url('${exoticPics[currentIdx]}')`;
+    currentIdx = (currentIdx + 1) % exoticPics.length;
 }
-setInterval(rotateBG, 5000);
-rotateBG();
+setInterval(updateBackground, 7000);
+updateBackground();
 
-// 2. סאונד - מיאו חמוד וקצר בלבד
-const mSound = new Audio('https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3');
-const bMusic = document.getElementById('player-music');
+const chimeSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+const pianoMusic = document.getElementById('piano-player');
 
-function playMusic() {
-    if(bMusic.paused) { bMusic.play(); } else { bMusic.pause(); }
-}
-
-function playMeowSound() {
-    mSound.currentTime = 0;
-    mSound.volume = 0.5;
-    mSound.play().catch(e => console.log("צריך ללחוץ על המסך פעם אחת"));
+function toggleMusic() {
+    pianoMusic.volume = 0.2;
+    pianoMusic.paused ? pianoMusic.play() : pianoMusic.pause();
 }
 
-// 3. אבחון
-function doAction() {
+function playSoftChime() {
+    chimeSfx.currentTime = 0;
+    chimeSfx.volume = 0.3;
+    chimeSfx.play();
+}
+
+function runDiag() {
     const issue = document.getElementById('sel-issue').value;
     const desc = document.getElementById('txt-desc').value;
     const res = document.getElementById('diag-result');
     
-    playMeowSound();
+    playSoftChime();
 
-    if(!desc || desc.length < 2) {
-        alert("בבקשה תאר את המקרה בתיבה.");
-        return;
-    }
-
-    const tips = {
-        "נשיכות": "גירוי יתר. הפסיקו ליטוף כשהזנב זז.",
-        "יללות": "שעמום. משחק אינטנסיבי לפני השינה יעזור.",
-        "צרכים": "בדקו ניקיון ארגז או סטרס חדש בבית.",
-        "שריטות": "מקמו מתקן גירוד ליד המקום שנשרט.",
-        "תוקפנות": "הפרדה והיכרות הדרגתית מחדש.",
-        "צמחים": "ספקו דשא חתולים ובדקו רעילות צמחים."
+    const data = {
+        "נשיכות": "בגזעים אקזוטיים, נשיכות עשויות לנבוע מיצר ציד חזק. מומלץ לספק צעצועי לעיסה עמידים.",
+        "יללות": "חתולים כמו הסיאמי או הבנגלי קולניים מאוד. זהו חלק מהתקשורת הטבעית שלהם.",
+        "צרכים": "סימון טריטוריה נפוץ בגזעים אקזוטיים. וודאו שיש מספיק נקודות תצפית גבוהות בבית.",
+        "שריטות": "גזעים גדולים כמו מיין קון זקוקים למתקני גירוד מאסיביים במיוחד שלא יזוזו.",
+        "תוקפנות": "נדרשת גירוי מנטלי רב. חתולים אלו צריכים 'עבודה' או משחקי חשיבה כדי לא להיות מתוסכלים."
     };
 
-    res.innerHTML = `<strong>אבחנה:</strong> ${tips[issue]}`;
+    res.innerHTML = `<strong>אבחנת מומחה:</strong><br>${data[issue]}`;
     res.style.display = "block";
     
-    // היסטוריה
-    const h = document.getElementById('hist-box');
-    const time = new Date().toLocaleTimeString('he-IL');
-    h.innerHTML = `<div><strong>${time}</strong>: ${issue}</div>` + h.innerHTML;
+    const hist = document.getElementById('hist-box');
+    const time = new Date().toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
+    hist.innerHTML = `<div>${time}: ${issue}</div>` + hist.innerHTML;
 }
 </script>
 
