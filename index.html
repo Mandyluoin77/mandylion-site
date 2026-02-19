@@ -9,7 +9,7 @@
   --turquoise: #40e0d0;
   --deep-blue: #00b7eb;
   --dark-bg: #0b2537;
-  --panel: rgba(11, 37, 55, 0.55);
+  --panel: rgba(11, 37, 55, 0.45);  /* הרבה יותר שקוף */
   --emergency: #ff4757;
 }
 body {
@@ -26,8 +26,8 @@ body {
   inset: 0;
   background: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=100&w=3000') center/cover no-repeat;
   z-index: 1;
-  opacity: 0.75;          /* הגברנו מאוד – החתולים אמורים להיות מאוד ברורים */
-  filter: brightness(1.12) contrast(1.18) saturate(1.35);
+  opacity: 0.75;
+  filter: brightness(1.15) contrast(1.2) saturate(1.4);
 }
 .main-interface {
   position: relative;
@@ -39,47 +39,53 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 50px 120px;
+  padding: 30px 80px;  /* הקטנת padding – יותר מקום לחתולים */
   box-sizing: border-box;
-  gap: 120px;
+  gap: 80px;
 }
 .panel {
   width: 100%;
-  max-width: 420px;
+  max-width: 380px;  /* הקטנת רוחב הפאנלים */
   pointer-events: auto;
 }
 .glass-card {
   background: var(--panel);
-  border: 1px solid rgba(64, 224, 208, 0.22);
-  border-radius: 24px;
-  padding: 28px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.70);
-  backdrop-filter: blur(18px);
+  border: 1px solid rgba(64, 224, 208, 0.25);
+  border-radius: 20px;
+  padding: 20px;  /* הקטנת padding פנימי */
+  box-shadow: 0 15px 50px rgba(0,0,0,0.70);
+  backdrop-filter: blur(16px);
 }
-h2, h3 { color: var(--turquoise); margin-top: 0; border-bottom: 2px solid rgba(64, 224, 208, 0.12); padding-bottom: 10px; }
+h2, h3 {
+  color: var(--turquoise);
+  margin-top: 0;
+  border-bottom: 2px solid rgba(64, 224, 208, 0.12);
+  padding-bottom: 8px;
+  font-size: 1.4rem;  /* הקטנת כותרות */
+}
 select, textarea, input[type="file"] {
   width: 100%;
-  padding: 14px;
-  border-radius: 14px;
+  padding: 10px;
+  border-radius: 10px;
   border: 1px solid rgba(224, 255, 255, 0.12);
   background: rgba(0,0,0,0.50);
   color: #e0ffff;
-  font-size: 15px;
-  margin-bottom: 14px;
+  font-size: 14px;
+  margin-bottom: 10px;
   outline: none;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
 }
-input[type="file"] { padding: 8px; cursor: pointer; }
+input[type="file"] { padding: 6px; cursor: pointer; }
 button {
   width: 100%;
-  padding: 16px;
+  padding: 12px;
   border: none;
-  border-radius: 16px;
+  border-radius: 12px;
   background: linear-gradient(135deg, #40e0d0, #00b7eb);
   color: #000;
   font-weight: bold;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 15px;
   transition: 0.3s;
 }
 button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0.50); }
@@ -87,21 +93,21 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   display: block;
   color: #b2f2ff;
   text-decoration: none;
-  padding: 14px;
+  padding: 10px;
   background: rgba(224,255,255,0.05);
-  margin-bottom: 10px;
-  border-radius: 14px;
+  margin-bottom: 8px;
+  border-radius: 10px;
   border-right: 4px solid var(--turquoise);
-  transition: 0.3s;
+  font-size: 14px;
 }
 .info-link:hover { background: rgba(64, 224, 208, 0.10); color: #fff; }
 #result-box {
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 18px;
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 14px;
   display: none;
-  line-height: 1.6;
-  font-size: 14px;
+  line-height: 1.5;
+  font-size: 13px;
 }
 .emergency { border: 2px solid var(--emergency); background: rgba(255, 71, 87, 0.10); color: #ff9f9e; }
 .normal { border: 1px solid var(--turquoise); background: rgba(64, 224, 208, 0.06); }
@@ -110,28 +116,29 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   background: var(--emergency);
   color: white;
   text-align: center;
-  padding: 14px;
-  border-radius: 14px;
+  padding: 12px;
+  border-radius: 12px;
   text-decoration: none;
   font-weight: bold;
-  margin-top: 14px;
+  margin-top: 12px;
+  font-size: 15px;
 }
 #preview-img {
   max-width: 100%;
-  max-height: 160px;
-  border-radius: 12px;
-  margin-top: 10px;
+  max-height: 140px;
+  border-radius: 10px;
+  margin-top: 8px;
   display: none;
   border: 1px solid rgba(64, 224, 208, 0.35);
 }
 .footer-email {
   position: fixed;
-  bottom: 20px;
+  bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
   color: #b2f2ff;
-  font-size: 14px;
+  font-size: 13px;
   opacity: 0.9;
   text-align: center;
 }
@@ -142,9 +149,9 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
 }
 .footer-email a:hover { text-decoration: underline; }
 @media (max-width: 1100px) {
-  .main-interface { flex-direction: column; padding: 30px; gap: 40px; }
+  .main-interface { flex-direction: column; padding: 20px; gap: 30px; }
   .panel { max-width: 100%; }
-  .footer-email { position: static; margin: 20px auto; transform: none; }
+  .footer-email { position: static; margin: 15px auto; transform: none; }
 }
 </style>
 </head>
@@ -191,9 +198,9 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
                 <option value="נשימה כבדה">נשימה כבדה / פתוחה</option>
                 <option value="התעלפות">התעלפות / אובדן הכרה</option>
             </select>
-            <textarea id="issue-desc" rows="4" placeholder="תאר את המקרה בפירוט..."></textarea>
+            <textarea id="issue-desc" rows="3" placeholder="תאר את המקרה בפירוט..."></textarea>
 
-            <label for="cat-photo" style="display:block; margin:12px 0 8px; color:#b2f2ff; font-weight:bold;">העלה תמונה של החתול:</label>
+            <label for="cat-photo" style="display:block; margin:10px 0 6px; color:#b2f2ff; font-weight:bold; font-size:14px;">העלה תמונה:</label>
             <input type="file" id="cat-photo" accept="image/*">
             <img id="preview-img" src="" alt="תצוגה מקדימה">
 
@@ -202,8 +209,8 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
             <div id="result-box"></div>
            
             <div id="emergency-ui" style="display:none;">
-                <a href="tel:039688988" class="call-btn">📞 התקשר לבית דגן (חירום)</a>
-                <a href="tel:099544430" class="call-btn" style="background:#d63031">📞 התקשר לחוות דעת</a>
+                <a href="tel:039688988" class="call-btn">📞 בית דגן חירום</a>
+                <a href="tel:099544430" class="call-btn" style="background:#d63031">📞 חוות דעת</a>
             </div>
         </div>
     </div>
@@ -211,14 +218,14 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
     <div class="panel">
         <div class="glass-card">
             <h3>מדריך וסיוע 📖</h3>
-            <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="info-link">מדריך גזעים מלא 🐱</a>
-            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="info-link" style="border-right-color:var(--emergency); color:var(--emergency)">וטרינר חירום ❄️</a>
-            <a href="https://www.letlive.org.il/" target="_blank" class="info-link">אימוץ ועזרה 🏠</a>
+            <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="info-link">מדריך גזעים</a>
+            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="info-link" style="border-right-color:var(--emergency); color:var(--emergency)">וטרינר חירום</a>
+            <a href="https://www.letlive.org.il/" target="_blank" class="info-link">אימוץ ועזרה</a>
         </div>
       
-        <div class="glass-card" style="flex-grow:1; max-height: 250px;">
+        <div class="glass-card" style="flex-grow:1; max-height: 220px;">
             <h3>היסטוריה ❄️</h3>
-            <div id="history-log" style="overflow-y:auto; height:150px; font-size:13px; opacity:0.8;"></div>
+            <div id="history-log" style="overflow-y:auto; height:130px; font-size:12px; opacity:0.8;"></div>
         </div>
     </div>
 </div>
@@ -228,10 +235,10 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
 </div>
 
 <script>
-// תמונת רקע אחת קבועה – מלאה בחתולים (איכות גבוהה)
+// תמונת רקע אחת – מלאה חתולים
 document.getElementById('cat-view').style.backgroundImage = "url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=100&w=3000')";
 
-// תצוגה מקדימה של תמונה שהועלתה
+// תצוגה מקדימה
 document.getElementById('cat-photo').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
@@ -244,7 +251,7 @@ document.getElementById('cat-photo').addEventListener('change', function(e) {
     }
 });
 
-// פונקציית אבחון
+// אבחון
 function runDiagnostic() {
     const issue = document.getElementById('issue-type').value;
     const desc = document.getElementById('issue-desc').value.trim();
@@ -255,7 +262,7 @@ function runDiagnostic() {
     if (!issue && !desc && !hasPhoto) {
         resultBox.style.display = "block";
         resultBox.className = "normal";
-        resultBox.innerHTML = "<strong>שגיאה:</strong><br>בחר בעיה או תאר את המקרה כדי לקבל אבחנה.";
+        resultBox.innerHTML = "<strong>שגיאה:</strong><br>בחר בעיה או תאר את המקרה.";
         return;
     }
 
@@ -267,31 +274,30 @@ function runDiagnostic() {
 
     if (isEmergency) {
         resultBox.className = "emergency";
-        resultBox.innerHTML = "<strong>❄️ התראת חירום!</strong><br>נראה מצב רפואי קריטי – פנו לוטרינר מיד." + (hasPhoto ? "<br><em>תמונה הועלתה – שלח אותה לוטרינר.</em>" : "");
+        resultBox.innerHTML = "<strong>❄️ חירום!</strong><br>פנה לוטרינר מיד." + (hasPhoto ? "<br>שלח תמונה לוטרינר." : "");
         emergencyUI.style.display = "block";
     } else {
         resultBox.className = "normal";
         emergencyUI.style.display = "none";
-
         const tips = {
-            "נשיכות": "גירוי יתר. עצרו מגע כשהזנב זז מהר. בדקו חתכים.",
-            "יללות": "שעמום/כאב. משחק ציד + בדקו שיניים/אוזניים.",
-            "צרכים": "סימון או בעיה רפואית. ארגז נקי + בדיקת שתן.",
-            "שריטות": "טבעי. עמוד גירוד גבוה + צעצועים.",
-            "פחד": "תנו זמן. השתמשו בפינוקים להתקרבות.",
-            "הקאות": "אם תכוף – חסימה/מחלה. וטרינר.",
-            "שלשולים": "תזונה/מתח. אם דם – חירום.",
-            "עצירות": "מים + סיבים. מעל 48 שעות – וטרינר.",
-            "דם בשתן": "דלקת/אבנים. חירום מיידי.",
-            "שתן מחוץ לארגז": "רפואי או סימון. בדקו שתן.",
-            "עיניים דומעות": "אלרגיה/דלקת. נקו + וטרינר אם מוגלה.",
-            "עיטוש": "נגיף/אלרגיה. הפרשות צהובות – אנטיביוטיקה.",
+            "נשיכות": "גירוי יתר. עצרו מגע. בדקו חתכים.",
+            "יללות": "שעמום/כאב. משחק + בדיקה.",
+            "צרכים": "סימון או רפואי. בדיקת שתן.",
+            "שריטות": "טבעי. עמוד גירוד + צעצועים.",
+            "פחד": "זמן + פינוקים.",
+            "הקאות": "תכוף → וטרינר.",
+            "שלשולים": "תזונה. דם → חירום.",
+            "עצירות": "מים + סיבים. מעל 48 שעות → וטרינר.",
+            "דם בשתן": "דלקת/אבנים. חירום.",
+            "שתן מחוץ לארגז": "רפואי/סימון. בדוק שתן.",
+            "עיניים דומעות": "אלרגיה/דלקת. נקו + וטרינר.",
+            "עיטוש": "נגיף/אלרגיה. מוגלה → אנטיביוטיקה.",
             "שיעול": "כדור שיער/דלקת. צילום אם ממושך.",
-            "חום": "זיהום. מדדו + וטרינר.",
-            "חוסר תיאבון": "כאב/מחלה. מעל 24 שעות – וטרינר.",
-            "עייפות": "אנמיה/זיהום. בדקו חניכיים.",
+            "חום": "זיהום. מדוד + וטרינר.",
+            "חוסר תיאבון": "כאב/מחלה. מעל 24 שעות → וטרינר.",
+            "עייפות": "אנמיה/זיהום. בדוק חניכיים.",
             "צליעה": "פציעה/פרקים. מנוחה + וטרינר.",
-            "נפיחות": "גזים/חסימה. חירום אם בטן קשה.",
+            "נפיחות": "גזים/חסימה. חירום אם קשה.",
             "פרווה דהויה": "תזונה/טפילים. בדיקות דם.",
             "גירוד": "פרעושים/אלרגיה. טיפול חיצוני.",
             "פצעים": "זיהום/גזזת. נקו + אנטיביוטיקה.",
@@ -309,14 +315,14 @@ function runDiagnostic() {
             "נשימה כבדה": "לב/ריאות. חירום.",
             "התעלפות": "לב/סוכר. חירום מיידי."
         };
-        let tip = tips[issue] || "תאר יותר פרטים – אפשר להעלות תמונה.";
-        if (hasPhoto) tip += "<br><strong>תמונה הועלתה:</strong> ניתן לשלוח אותה לוטרינר או להוסיף תיאור מדויק.";
+        let tip = tips[issue] || "תאר יותר – אפשר תמונה.";
+        if (hasPhoto) tip += "<br><strong>תמונה הועלתה</strong> – שלח לוטרינר.";
         resultBox.innerHTML = `<strong>אבחנה:</strong><br>${tip}`;
     }
 
     const log = document.getElementById('history-log');
     const time = new Date().toLocaleTimeString('he-IL');
-    log.innerHTML = `<div style="padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05)">${time}: ${isEmergency ? '⚠️ חירום' : issue}${hasPhoto ? ' + תמונה' : ''}</div>` + log.innerHTML;
+    log.innerHTML = `<div style="padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05)">${time}: ${isEmergency ? '⚠️ חירום' : issue}${hasPhoto ? ' + תמונה' : ''}</div>` + log.innerHTML;
 }
 </script>
 </body>
