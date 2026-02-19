@@ -3,19 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Elite V26 - Pure Edition</title>
+<title>CatMind Elite V26 - Winter Edition</title>
 <style>
 :root {
-  --neon-blue: #00d2ff;
-  --dark-bg: #0a001f;
-  --panel-bg: rgba(25, 10, 50, 0.92);
+  --cold-turquoise: #40e0d0;
+  --deep-turquoise: #00ced1;
+  --dark-winter: #0a1f2f;
+  --panel-frost: rgba(10, 31, 47, 0.90);
   --emergency-red: #ff4757;
 }
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, sans-serif;
-  color: #fff;
-  background: linear-gradient(135deg, #4b0082, #2e003e);
+  color: #e0ffff;
+  background: linear-gradient(135deg, #0d3d4f, #002b36);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -29,9 +30,9 @@ body {
   background-size: cover;
   background-position: center;
   z-index: 1;
-  transition: background-image 2.5s ease-in-out;
-  opacity: 0.25;
-  filter: brightness(0.6) contrast(1.2);
+  transition: background-image 3.2s ease-in-out;
+  opacity: 0.18;
+  filter: brightness(0.7) contrast(1.1) hue-rotate(170deg);
 }
 .main-interface {
   position: relative;
@@ -53,51 +54,52 @@ body {
   gap: 25px;
 }
 .glass-card {
-  background: var(--panel-bg);
-  border: 1px solid rgba(0, 210, 255, 0.15);
+  background: var(--panel-frost);
+  border: 1px solid rgba(64, 224, 208, 0.18);
   border-radius: 28px;
   padding: 32px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.85);
-  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.75);
+  backdrop-filter: blur(14px);
 }
-h2, h3 { color: var(--neon-blue); margin-top: 0; border-bottom: 2px solid rgba(0, 210, 255, 0.12); padding-bottom: 12px; }
-select, textarea {
+h2, h3 { color: var(--cold-turquoise); margin-top: 0; border-bottom: 2px solid rgba(64, 224, 208, 0.15); padding-bottom: 12px; }
+select, textarea, input[type="file"] {
   width: 100%;
   padding: 16px;
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(0,0,0,0.6);
-  color: #fff;
+  border: 1px solid rgba(224, 255, 255, 0.12);
+  background: rgba(0,0,0,0.55);
+  color: #e0ffff;
   font-size: 16px;
   margin-bottom: 16px;
   outline: none;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
 }
+input[type="file"] { padding: 8px; cursor: pointer; }
 button {
   width: 100%;
   padding: 18px;
   border: none;
   border-radius: 18px;
-  background: linear-gradient(135deg, #7b2cbf, #3a0ca3);
-  color: #fff;
+  background: linear-gradient(135deg, #40e0d0, #00ced1);
+  color: #000;
   font-weight: bold;
   cursor: pointer;
   font-size: 18px;
   transition: 0.3s;
 }
-button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(123,44,191,0.5); }
+button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0.45); }
 .info-link {
   display: block;
-  color: #ccc;
+  color: #b2f2ff;
   text-decoration: none;
   padding: 16px;
-  background: rgba(255,255,255,0.04);
+  background: rgba(224,255,255,0.06);
   margin-bottom: 12px;
   border-radius: 16px;
-  border-right: 4px solid var(--neon-blue);
+  border-right: 4px solid var(--cold-turquoise);
   transition: 0.3s;
 }
-.info-link:hover { background: rgba(0, 210, 255, 0.08); color: #fff; }
+.info-link:hover { background: rgba(64, 224, 208, 0.12); color: #fff; }
 #result-box {
   margin-top: 20px;
   padding: 22px;
@@ -107,7 +109,7 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(123,44,191,0.5)
   font-size: 15px;
 }
 .emergency { border: 2px solid var(--emergency-red); background: rgba(255, 71, 87, 0.08); color: #ff9f9e; }
-.normal { border: 1px solid var(--neon-blue); background: rgba(0, 210, 255, 0.05); }
+.normal { border: 1px solid var(--cold-turquoise); background: rgba(64, 224, 208, 0.06); }
 .call-btn {
   display: block;
   background: var(--emergency-red);
@@ -119,6 +121,14 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(123,44,191,0.5)
   font-weight: bold;
   margin-top: 16px;
 }
+#preview-img {
+  max-width: 100%;
+  max-height: 180px;
+  border-radius: 12px;
+  margin-top: 10px;
+  display: none;
+  border: 1px solid rgba(64, 224, 208, 0.3);
+}
 .bell-control { display: none; }
 </style>
 </head>
@@ -127,15 +137,13 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(123,44,191,0.5)
 <div class="main-interface">
     <div class="panel">
         <div class="glass-card">
-            <h2>אבחון חכם V26 🐾</h2>
+            <h2>אבחון חכם V26 ❄️</h2>
             <select id="issue-type">
                 <option value="נשיכות">נשיכות</option>
                 <option value="יללות">יללות בלילה</option>
                 <option value="צרכים">צרכים מחוץ לארגז</option>
                 <option value="שריטות">שריטות והרס</option>
                 <option value="פחד">סטרס והסתתרות</option>
-
-                <!-- בעיות בריאותיות – חדש! -->
                 <option value="הקאות">הקאות תכופות</option>
                 <option value="שלשולים">שלשולים / צואה רכה</option>
                 <option value="עצירות">עצירות / קושי ביציאה</option>
@@ -167,6 +175,12 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(123,44,191,0.5)
                 <option value="התעלפות">התעלפות / אובדן הכרה</option>
             </select>
             <textarea id="issue-desc" rows="4" placeholder="תאר את המקרה בפירוט..."></textarea>
+
+            <!-- אופציה להעלאת תמונה -->
+            <label for="cat-photo" style="display:block; margin:12px 0 8px; color:#b2f2ff;">העלה תמונה של החתול (עוזר לאבחון מדויק יותר):</label>
+            <input type="file" id="cat-photo" accept="image/*">
+            <img id="preview-img" src="" alt="תצוגה מקדימה של התמונה">
+
             <button onclick="runDiagnostic()">נתח מקרה</button>
            
             <div id="result-box"></div>
@@ -180,31 +194,27 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(123,44,191,0.5)
     <div class="panel">
         <div class="glass-card">
             <h3>מדריך וסיוע 📖</h3>
-            <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="info-link">מדריך גזעים מלא 🐆</a>
-            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="info-link" style="border-right-color:var(--emergency-red); color:var(--emergency-red)">וטרינר חירום 🚨</a>
+            <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="info-link">מדריך גזעים מלא 🐱</a>
+            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="info-link" style="border-right-color:var(--emergency-red); color:var(--emergency-red)">וטרינר חירום ❄️</a>
             <a href="https://www.letlive.org.il/" target="_blank" class="info-link">אימוץ ועזרה 🏠</a>
         </div>
        
         <div class="glass-card" style="flex-grow:1; max-height: 250px;">
-            <h3>היסטוריה 📜</h3>
+            <h3>היסטוריה ❄️</h3>
             <div id="history-log" style="overflow-y:auto; height:150px; font-size:13px; opacity:0.8;"></div>
         </div>
     </div>
 </div>
 
 <script>
-// גלריה של חתולים יפים בלבד – ללא תרנגולים, ללא מוזיקה
+// גלריה חתולים יפים
 const catGallery = [
     "https://images.unsplash.com/photo-1568152950566-c1bf43f4ab28?w=1200",
     "https://images.unsplash.com/photo-1513245543132-31f507417b26?w=1200",
     "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=1200",
     "https://images.unsplash.com/photo-1574231164645-d6f0e8553590?w=1200",
     "https://images.unsplash.com/photo-1533738360245-2a4b6a7e8d7c?w=1200",
-    "https://images.unsplash.com/photo-1606214760789-5e4f8c8b8d7c?w=1200",
-    "https://images.unsplash.com/photo-1583795795923-6e6c6d6c6d6c?w=1200",
-    "https://images.unsplash.com/photo-1617854818583-09e7f077a156?w=1200",
-    "https://images.unsplash.com/photo-1589666560263-0f38da47b5e0?w=1200",
-    "https://images.unsplash.com/photo-1596854403339-2a1b3a6d8f3c?w=1200"
+    "https://images.unsplash.com/photo-1606214760789-5e4f8c8b8d7c?w=1200"
 ];
 let currentIdx = 0;
 const catViewer = document.getElementById('cat-view');
@@ -213,16 +223,31 @@ function slideShow() {
     catViewer.style.backgroundImage = `url('${catGallery[currentIdx]}')`;
     currentIdx = (currentIdx + 1) % catGallery.length;
 }
-setInterval(slideShow, 7000); // כל 7 שניות תמונה חדשה
+setInterval(slideShow, 7000);
 slideShow();
 
-// פונקציית אבחון עם אבחנות מורחבות
+// תצוגה מקדימה של התמונה שהועלתה
+document.getElementById('cat-photo').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('preview-img');
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// אבחון
 function runDiagnostic() {
     const issue = document.getElementById('issue-type').value;
     const desc = document.getElementById('issue-desc').value.toLowerCase();
     const result = document.getElementById('result-box');
     const emUI = document.getElementById('emergency-ui');
-   
+    const photoUploaded = document.getElementById('cat-photo').files.length > 0;
+
     const redFlags = ["גוסס", "מקיא דם", "דם", "פצוע", "לא זז", "פרכוס", "רעל", "קשיי נשימה", "התעלפות", "חום גבוה", "נפיחות בטן", "דימום מהאף", "חניכיים חיוורות"];
     const isEmergency = redFlags.some(word => desc.includes(word)) || 
                        ["התקפי פרכוס", "עיוורון פתאומי", "חוסר קואורדינציה", "נשימה כבדה"].includes(issue);
@@ -231,55 +256,56 @@ function runDiagnostic() {
    
     if (isEmergency) {
         result.className = "emergency";
-        result.innerHTML = "<strong>🚨 התראת חירום!</strong><br>נראה מצב רפואי קריטי – נא לפנות לוטרינר מיד בלי להמתין.";
+        result.innerHTML = "<strong>❄️ התראת חירום!</strong><br>נראה מצב רפואי קריטי – פנו לוטרינר מיד." + (photoUploaded ? "<br><em>תמונה הועלתה – תוכל לשלוח אותה לוטרינר.</em>" : "");
         emUI.style.display = "block";
     } else {
         result.className = "normal";
         emUI.style.display = "none";
 
         const tips = {
-            "נשיכות": "גירוי יתר או כאב. עצרו מגע כשהזנב זז מהר. בדקו חתכים בפה.",
-            "יללות": "שעמום, כאב או דרישה. נסו משחק ציד לפני שינה + בדקו שיניים/אוזניים.",
-            "צרכים": "סימון טריטוריה או בעיה רפואית. שמרו ארגז נקי + בדקו שתן/צואה.",
-            "שריטות": "טבעי. ספקו עמוד גירוד גבוה + צעצועי גירוד.",
-            "פחד": "תנו זמן להתרגל. אל תשלפו בכוח – השתמשו בפינוקים.",
-            "הקאות": "אם פעם-פעמיים – שיער/אכילה מהירה. אם תכוף – וטרינר (סיכון לחסימה).",
-            "שלשולים": "תזונה/מתח. אם מעל יומיים או דם – וטרינר מיד.",
-            "עצירות": "חוסר נוזלים/סיבים. הוסיפו מים + שמן דגים. אם מעל 48 שעות – וטרינר.",
-            "דם בשתן": "דלקת בדרכי שתן / אבנים. חירום – פנו מיד.",
-            "שתן מחוץ לארגז": "רפואי או התנהגותי. בדקו שתן + נקו אזורים בספריי אנזים.",
-            "עיניים דומעות": "אלרגיה / דלקת. נקו בעדינות + וטרינר אם מוגלה.",
-            "עיטוש": "נגיף / אלרגיה. אם הפרשות צהובות – אנטיביוטיקה.",
-            "שיעול": "כדור שיער / דלקת. אם ממושך – צילום חזה.",
-            "חום": "זיהום / דלקת. מדדו + וטרינר מיד.",
-            "חוסר תיאבון": "כאב / מתח / מחלה. אם מעל 24 שעות – וטרינר.",
-            "עייפות": "אנמיה / כאב / זיהום. בדקו חניכיים + וטרינר.",
-            "צליעה": "פציעה / פרקים. מנוחה + וטרינר אם לא עובר.",
-            "נפיחות": "גזים / חסימה / גידול. חירום אם בטן קשה.",
-            "פרווה דהויה": "תזונה / טפילים / בלוטת התריס. בדקו דם.",
-            "גירוד": "פרעושים / אלרגיה / גזזת. טיפול חיצוני + וטרינר.",
-            "פצעים": "זיהום / גזזת. נקו + אנטיביוטיקה.",
-            "אוזניים": "קרדית / זיהום. נקו + טיפות.",
-            "שיניים": "אבנית / שבר. ניקוי שיניים מקצועי.",
-            "התקפי פרכוס": "אפילפסיה / רעל. חירום – וטרינר מיד.",
-            "שתן מוגבר": "סוכרת / כליות. בדיקות דם + שתן.",
-            "צמא מוגבר": "סוכרת / כליות / היפרתירואיד. חירום אם + ירידה במשקל.",
-            "הקאות צהובות": "כבד / כיס מרה. וטרינר מיד.",
-            "דימום מהאף": "זיהום / גוף זר / גידול. וטרינר.",
-            "חניכיים חיוורות": "אנמיה / דימום פנימי. חירום.",
-            "בטן רגישה": "גזים / דלקת מעיים. וטרינר אם כואב.",
-            "עיוורון פתאומי": "לחץ דם / רשתית. חירום.",
-            "חוסר קואורדינציה": "אוזן / מוח / רעל. וטרינר מיד.",
-            "נשימה כבדה": "לב / ריאות / כאב. חירום.",
-            "התעלפות": "לב / סוכר / רעל. חירום מיידי."
+            "נשיכות": "גירוי יתר. עצרו מגע כשהזנב זז מהר. בדקו חתכים.",
+            "יללות": "שעמום/כאב. משחק ציד + בדקו שיניים/אוזניים.",
+            "צרכים": "סימון או בעיה רפואית. ארגז נקי + בדיקת שתן.",
+            "שריטות": "טבעי. עמוד גירוד גבוה + צעצועים.",
+            "פחד": "תנו זמן. השתמשו בפינוקים להתקרבות.",
+            "הקאות": "אם תכוף – חסימה/מחלה. וטרינר.",
+            "שלשולים": "תזונה/מתח. אם דם – חירום.",
+            "עצירות": "מים + סיבים. מעל 48 שעות – וטרינר.",
+            "דם בשתן": "דלקת/אבנים. חירום מיידי.",
+            "שתן מחוץ לארגז": "רפואי או סימון. בדקו שתן.",
+            "עיניים דומעות": "אלרגיה/דלקת. נקו + וטרינר אם מוגלה.",
+            "עיטוש": "נגיף/אלרגיה. הפרשות צהובות – אנטיביוטיקה.",
+            "שיעול": "כדור שיער/דלקת. צילום אם ממושך.",
+            "חום": "זיהום. מדדו + וטרינר.",
+            "חוסר תיאבון": "כאב/מחלה. מעל 24 שעות – וטרינר.",
+            "עייפות": "אנמיה/זיהום. בדקו חניכיים.",
+            "צליעה": "פציעה/פרקים. מנוחה + וטרינר.",
+            "נפיחות": "גזים/חסימה. חירום אם בטן קשה.",
+            "פרווה דהויה": "תזונה/טפילים. בדיקות דם.",
+            "גירוד": "פרעושים/אלרגיה. טיפול חיצוני.",
+            "פצעים": "זיהום/גזזת. נקו + אנטיביוטיקה.",
+            "אוזניים": "קרדית/זיהום. נקו + טיפות.",
+            "שיניים": "אבנית/שבר. ניקוי מקצועי.",
+            "התקפי פרכוס": "אפילפסיה/רעל. חירום.",
+            "שתן מוגבר": "סוכרת/כליות. בדיקות.",
+            "צמא מוגבר": "סוכרת/היפרתירואיד. חירום.",
+            "הקאות צהובות": "כבד/כיס מרה. וטרינר.",
+            "דימום מהאף": "זיהום/גוף זר. וטרינר.",
+            "חניכיים חיוורות": "אנמיה/דימום. חירום.",
+            "בטן רגישה": "גזים/דלקת. וטרינר אם כואב.",
+            "עיוורון פתאומי": "לחץ דם/רשתית. חירום.",
+            "חוסר קואורדינציה": "אוזן/מוח. וטרינר.",
+            "נשימה כבדה": "לב/ריאות. חירום.",
+            "התעלפות": "לב/סוכר. חירום מיידי."
         };
-        result.innerHTML = `<strong>אבחנה:</strong><br>${tips[issue] || "נסו לתת יותר פרטים – אפשר להוסיף תיאור מפורט"}`;
+        let tip = tips[issue] || "תאר יותר פרטים – אפשר להוסיף תמונה";
+        if (photoUploaded) tip += "<br><strong>תמונה הועלתה:</strong> תוכל לשלוח אותה לוטרינר או להוסיף תיאור מדויק יותר.";
+        result.innerHTML = `<strong>אבחנה:</strong><br>${tip}`;
     }
    
-    // עדכון היסטוריה
     const log = document.getElementById('history-log');
     const time = new Date().toLocaleTimeString('he-IL');
-    log.innerHTML = `<div style="padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05)">${time}: ${isEmergency ? '⚠️ חירום' : issue}</div>` + log.innerHTML;
+    log.innerHTML = `<div style="padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05)">${time}: ${isEmergency ? '⚠️ חירום' : issue}${photoUploaded ? ' + תמונה' : ''}</div>` + log.innerHTML;
 }
 </script>
 </body>
