@@ -9,7 +9,7 @@
   --turquoise: #40e0d0;
   --deep-blue: #00b7eb;
   --dark-bg: #0b2537;
-  --panel: rgba(11, 37, 55, 0.60); /* יותר שקוף כדי שהחתולים יבלטו */
+  --panel: rgba(11, 37, 55, 0.58); /* שקוף יותר כדי שהחתולים יבלטו */
   --emergency: #ff4757;
 }
 body {
@@ -24,10 +24,10 @@ body {
 #cat-view {
   position: fixed;
   inset: 0;
-  background: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=98&w=2400') center/cover no-repeat;
+  background: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=100&w=3000') center/cover no-repeat;
   z-index: 1;
-  opacity: 0.48;          /* נראות גבוהה מאוד – חתולים מאוד ברורים */
-  filter: brightness(1.05) contrast(1.1) saturate(1.2); /* צבעים חיים + בהיר */
+  opacity: 0.55;          /* נראות גבוהה מאוד – החתולים בולטים חזק */
+  filter: brightness(1.08) contrast(1.12) saturate(1.25); /* צבעים חיים, בהירים וברורים */
 }
 .main-interface {
   position: relative;
@@ -39,9 +39,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 50px 110px;
+  padding: 50px 120px;
   box-sizing: border-box;
-  gap: 110px;
+  gap: 120px;
 }
 .panel {
   width: 100%;
@@ -50,7 +50,7 @@ body {
 }
 .glass-card {
   background: var(--panel);
-  border: 1px solid rgba(64, 224, 208, 0.18);
+  border: 1px solid rgba(64, 224, 208, 0.20);
   border-radius: 24px;
   padding: 28px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.70);
@@ -228,7 +228,7 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
 </div>
 
 <script>
-// תמונת רקע אחת קבועה – מלאה בחתולים (איכות גבוהה + בהירות מלאה)
+// תמונת רקע אחת קבועה – מלאה בחתולים (איכות גבוהה מאוד)
 document.getElementById('cat-view').style.backgroundImage = "url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=98&w=2400')";
 
 // תצוגה מקדימה של תמונה שהועלתה
