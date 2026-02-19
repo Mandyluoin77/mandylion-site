@@ -3,15 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind PRO 7.0</title>
+<title>CatMind PRO 8.0</title>
 
 <style>
 :root{
  --accent:#00d4ff;
  --danger:#ff4d6d;
- --bg1:#0f2027;
- --bg2:#203a43;
- --bg3:#2c5364;
 }
 
 *{box-sizing:border-box}
@@ -19,10 +16,30 @@
 body{
  margin:0;
  font-family:system-ui;
+ background:#0f1720;
  color:white;
- background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
- transition:background 2s ease;
- overflow-x:hidden;
+ overflow:hidden;
+}
+
+/* BACKGROUND ANIMATION */
+.bg{
+ position:fixed;
+ inset:0;
+ background:radial-gradient(circle at 30% 30%, #203a43, #0f1720);
+ animation:bgmove 15s infinite alternate ease-in-out;
+ z-index:-3;
+}
+@keyframes bgmove{
+ 0%{background-position:0% 0%}
+ 100%{background-position:100% 100%}
+}
+
+/* PARTICLES */
+canvas{
+ position:fixed;
+ inset:0;
+ z-index:-2;
+ pointer-events:none;
 }
 
 .container{
@@ -38,11 +55,11 @@ body{
 }
 
 .card{
- background:rgba(15,25,35,.7);
- backdrop-filter:blur(20px);
+ background:rgba(20,30,40,.75);
+ backdrop-filter:blur(25px);
  padding:30px;
- border-radius:25px;
- box-shadow:0 20px 60px rgba(0,0,0,.5);
+ border-radius:30px;
+ box-shadow:0 25px 80px rgba(0,0,0,.6);
 }
 
 h2{color:var(--accent);margin-top:0}
@@ -50,32 +67,35 @@ h2{color:var(--accent);margin-top:0}
 select,textarea{
  width:100%;
  padding:14px;
- border-radius:14px;
+ border-radius:16px;
  border:none;
  background:rgba(255,255,255,.08);
  color:white;
  margin-bottom:15px;
- font-size:14px;
 }
 
-textarea{min-height:100px;resize:vertical}
+textarea{min-height:110px}
 
 button{
  width:100%;
  padding:16px;
  border:none;
- border-radius:40px;
+ border-radius:50px;
  background:var(--accent);
  color:#001018;
  font-weight:bold;
  cursor:pointer;
  transition:.3s;
 }
-button:hover{transform:scale(1.03)}
+button:hover{
+ transform:scale(1.05);
+ box-shadow:0 0 25px var(--accent);
+}
 
 .result{
  margin-top:20px;
  display:none;
+ font-size:16px;
 }
 
 .result.danger{
@@ -83,33 +103,28 @@ button:hover{transform:scale(1.03)}
  font-weight:bold;
 }
 
-.history-item{
- background:rgba(255,255,255,.05);
- padding:15px;
- border-radius:15px;
- margin-bottom:15px;
- font-size:14px;
-}
-
-.musicBtn{
+/* SOUND BUTTON */
+.soundBtn{
  position:fixed;
- bottom:25px;
- left:25px;
+ bottom:30px;
+ left:30px;
  background:var(--accent);
  border:none;
  padding:12px 18px;
- border-radius:40px;
+ border-radius:50px;
  cursor:pointer;
 }
 </style>
 </head>
-
 <body>
+
+<div class="bg"></div>
+<canvas id="particles"></canvas>
 
 <div class="container">
 
 <div class="card">
-<h2>אבחון PRO</h2>
+<h2>אבחון חכם</h2>
 
 <select id="issue">
 <option value="bite">נשיכות בליטוף</option>
@@ -117,12 +132,11 @@ button:hover{transform:scale(1.03)}
 <option value="litter">צרכים מחוץ לארגז</option>
 </select>
 
-<textarea id="details" placeholder="תאר את המקרה בחופשיות..."></textarea>
+<textarea id="details" placeholder="תאר בחופשיות..."></textarea>
 
 <button onclick="analyze()">נתח חכם</button>
 
 <div id="result" class="result"></div>
-
 </div>
 
 <div class="card">
@@ -132,31 +146,48 @@ button:hover{transform:scale(1.03)}
 
 </div>
 
-<button class="musicBtn" onclick="toggleSound()">🐾 גרגור</button>
+<button class="soundBtn" onclick="toggleSound()">🐾 גרגור</button>
 
 <script>
 
-/* BACKGROUND LOOP */
-const backgrounds=[
-"linear-gradient(135deg,#0f2027,#203a43,#2c5364)",
-"linear-gradient(135deg,#141e30,#243b55)",
-"linear-gradient(135deg,#1f1c2c,#928dab)"
-];
+/* PARTICLES ENGINE */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+let w,h;
+function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
+resize();onresize=resize;
 
-let bgIndex=0;
-setInterval(()=>{
- document.body.style.background=backgrounds[bgIndex];
- bgIndex=(bgIndex+1)%backgrounds.length;
-},7000);
+const particles=Array(80).fill().map(()=>({
+ x:Math.random()*w,
+ y:Math.random()*h,
+ vx:(Math.random()-.5)*.3,
+ vy:(Math.random()-.5)*.3,
+ r:Math.random()*2
+}));
 
+function animate(){
+ ctx.clearRect(0,0,w,h);
+ ctx.fillStyle="rgba(0,212,255,.4)";
+ particles.forEach(p=>{
+  p.x+=p.vx;
+  p.y+=p.vy;
+  if(p.x<0||p.x>w)p.vx*=-1;
+  if(p.y<0||p.y>h)p.vy*=-1;
+  ctx.beginPath();
+  ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+  ctx.fill();
+ });
+ requestAnimationFrame(animate);
+}
+animate();
 
-/* AI STYLE ANALYSIS */
+/* AI ANALYSIS */
 function analyze(){
  const issue=document.getElementById("issue").value;
  const details=document.getElementById("details").value.toLowerCase();
  const result=document.getElementById("result");
 
- let response="";
+ let text="";
  let emergency=false;
 
  if(details.includes("dying") ||
@@ -168,45 +199,44 @@ function analyze(){
  }
 
  if(emergency){
-   response="⚠️ מצב חירום אפשרי. יש לפנות מיד לווטרינר או למיון וטרינרי. אל תחכה.";
+   text="⚠️ מצב חירום אפשרי. פנה מיד לווטרינר.";
    result.classList.add("danger");
  }
  else if(issue==="bite"){
-   response="נראה שמדובר בגירוי יתר. מומלץ לקצר ליטופים ולעבור למשחק.";
+   text="גירוי יתר — הפסק ליטוף מוקדם יותר.";
  }
  else if(issue==="night"){
-   response="עודף אנרגיה. בצע משחק אינטנסיבי לפני השינה.";
+   text="עודף אנרגיה — בצע משחק לפני השינה.";
  }
  else if(issue==="litter"){
-   response="ייתכן סטרס או בעיה רפואית. בדוק ניקיון ומיקום הארגז.";
+   text="ייתכן סטרס — בדוק ניקיון ומיקום הארגז.";
  }
 
- result.innerText=response;
+ result.innerText=text;
  result.style.display="block";
 
- saveHistory(response,details);
+ saveHistory(text,details);
 }
-
 
 /* HISTORY */
 function saveHistory(text,details){
- const history=JSON.parse(localStorage.getItem("catHistoryPRO"))||[];
+ const history=JSON.parse(localStorage.getItem("catHistory8"))||[];
  history.unshift({
   date:new Date().toLocaleString(),
   text,
   details
  });
- localStorage.setItem("catHistoryPRO",JSON.stringify(history));
+ localStorage.setItem("catHistory8",JSON.stringify(history));
  renderHistory();
 }
 
 function renderHistory(){
  const container=document.getElementById("history");
- const history=JSON.parse(localStorage.getItem("catHistoryPRO"))||[];
+ const history=JSON.parse(localStorage.getItem("catHistory8"))||[];
  container.innerHTML="";
  history.forEach(item=>{
   container.innerHTML+=`
-   <div class="history-item">
+   <div style="margin-bottom:15px;background:rgba(255,255,255,.05);padding:15px;border-radius:15px;">
     <strong>${item.date}</strong><br>
     ${item.text}<br>
     <small>${item.details}</small>
@@ -216,30 +246,25 @@ function renderHistory(){
 }
 renderHistory();
 
-
-/* PURR */
+/* PURR SOUND */
 let audioCtx;
-let isPlaying=false;
+let playing=false;
 
 function toggleSound(){
  if(!audioCtx){
-   audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-   const osc1=audioCtx.createOscillator();
-   const osc2=audioCtx.createOscillator();
-   const gain=audioCtx.createGain();
-
-   osc1.frequency.value=25;
-   osc2.frequency.value=50;
-   gain.gain.value=0.3;
-
-   osc1.connect(gain);
-   osc2.connect(gain);
-   gain.connect(audioCtx.destination);
-
-   osc1.start();
-   osc2.start();
-
-   isPlaying=true;
+  audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  const osc1=audioCtx.createOscillator();
+  const osc2=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+  osc1.frequency.value=26;
+  osc2.frequency.value=52;
+  gain.gain.value=0.3;
+  osc1.connect(gain);
+  osc2.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc1.start();
+  osc2.start();
+  playing=true;
  }
 }
 </script>
