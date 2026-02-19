@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Exotic V18</title>
+<title>CatMind Exotic Elite V20</title>
 
 <style>
 :root {
-  --primary: #f1c40f; /* זהב אקזוטי */
-  --glass: rgba(0, 0, 0, 0.75);
+  --primary: #a29bfe; 
+  --glass: rgba(15, 15, 20, 0.9);
 }
 
 body {
@@ -16,212 +16,235 @@ body {
   font-family: 'Segoe UI', system-ui, sans-serif;
   color: white;
   background-color: #050505;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain; /* שומר על החתול שלם במרכז */
   min-height: 100vh;
   display: flex;
-  transition: background-image 1.5s ease-in-out;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+}
+
+/* מסגרת החתול המרכזית - תמיד שלם */
+.cat-viewer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 550px;
+  height: 550px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: background-image 1.5s ease-in-out;
+  z-index: 1;
+  filter: drop-shadow(0 0 20px rgba(162, 155, 254, 0.2));
 }
 
 .app-layout {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 25px;
+  padding: 40px;
   box-sizing: border-box;
+  z-index: 10;
+  position: relative;
 }
 
 .side-panel {
-  width: 260px;
+  width: 300px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  z-index: 10;
+  gap: 20px;
 }
 
 .card {
   background: var(--glass);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(241, 196, 15, 0.2);
-  border-radius: 20px;
-  padding: 15px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.6);
 }
 
-h3 { color: var(--primary); font-size: 18px; margin: 0 0 12px 0; border-bottom: 1px solid var(--primary); padding-bottom: 5px; }
+h3 { color: var(--primary); font-size: 19px; margin: 0 0 15px 0; border-bottom: 2px solid rgba(162, 155, 254, 0.2); padding-bottom: 10px; }
 
 select, textarea {
   width: 100%;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 12px;
+  border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.1);
-  background: #111 !important;
+  background: rgba(0, 0, 0, 0.5) !important;
   color: #fff !important;
   font-size: 14px;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
 
 button {
   width: 100%;
-  padding: 12px;
+  padding: 15px;
   border: none;
-  border-radius: 12px;
+  border-radius: 15px;
   background: var(--primary);
-  color: #000;
+  color: #fff;
   font-weight: bold;
   cursor: pointer;
+  font-size: 15px;
   transition: 0.3s;
 }
 
-button:hover { background: #d4ac0d; transform: scale(1.02); }
+button:hover { transform: scale(1.03); filter: brightness(1.1); }
 
 .link-item {
   display: block;
-  color: #eee;
+  color: #efefef;
   text-decoration: none;
-  font-size: 13px;
-  padding: 8px;
-  margin-bottom: 5px;
+  font-size: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
   background: rgba(255,255,255,0.05);
-  border-radius: 8px;
-  border-right: 3px solid var(--primary);
+  border-radius: 12px;
+  border-right: 5px solid var(--primary);
+  transition: 0.3s;
 }
 
-.link-item:hover { background: var(--primary); color: #000; }
+.link-item:hover { background: rgba(162, 155, 254, 0.2); transform: translateX(-5px); }
 
 .controls {
   position: fixed;
-  bottom: 25px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 20px;
+  gap: 30px;
+  z-index: 100;
 }
 
 .btn-float {
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
-  border: 2px solid var(--primary);
+  border: 1px solid var(--primary);
   background: var(--glass);
   color: var(--primary);
-  font-size: 24px;
+  font-size: 26px;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(241, 196, 15, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #diag-result {
   margin-top: 15px;
-  padding: 12px;
-  background: rgba(241, 196, 15, 0.1);
-  border-radius: 10px;
+  padding: 15px;
+  background: rgba(162, 155, 254, 0.1);
+  border-radius: 12px;
   display: none;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 </style>
 </head>
 
 <body>
 
+<div id="cat-main" class="cat-viewer"></div>
+
 <div class="app-layout">
     <div class="side-panel">
         <div class="card">
-            <h3>אבחון אקזוטי 🐾</h3>
+            <h3>אבחון חכם 🐾</h3>
             <select id="sel-issue">
-                <option value="נשיכות">נשיכות טריטוריאליות</option>
-                <option value="יללות">יללות/קולות פרא</option>
-                <option value="צרכים">סימון טריטוריה</option>
-                <option value="שריטות">הרס רהיטים/טיפוס</option>
-                <option value="תוקפנות">תוקפנות לבעלי חיים</option>
+                <option value="נשיכות">נשיכות פתאומיות</option>
+                <option value="יללות">יללות בלילה</option>
+                <option value="צרכים">סימון מחוץ לארגז</option>
+                <option value="שריטות">שריטות רהיטים</option>
+                <option value="תוקפנות">תוקפנות לחתול אחר</option>
             </select>
-            <textarea id="txt-desc" rows="3" placeholder="תאר את התנהגות החתול..."></textarea>
-            <button onclick="runDiag()">נתח עכשיו</button>
+            <textarea id="txt-desc" rows="3" placeholder="מה המקרה? (לדוגמה: החתול נושך כשנוגעים לו בבטן)"></textarea>
+            <button onclick="runDiag()">נתח התנהגות</button>
             <div id="diag-result"></div>
-        </div>
-        
-        <div class="card">
-            <h3>לוג מקרים 📜</h3>
-            <div id="hist-box" style="font-size: 12px; opacity: 0.8;"></div>
         </div>
     </div>
 
     <div class="side-panel">
         <div class="card">
-            <h3>מידע על גזעים נדירים 📖</h3>
-            <a href="https://www.petnet.co.il/cats/breeds/" target="_blank" class="link-item">מדריך גזעים מלא 🐈</a>
-            <a href="https://he.wikipedia.org/wiki/%D7%A7%D7%A8%D7%A7%D7%9C" target="_blank" class="link-item">מידע על הקרקל 🐆</a>
-            <a href="https://www.letlive.org.il/" target="_blank" class="link-item">אימוץ ועזרה 🏠</a>
-            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="link-item" style="color:#ff7675">וטרינר חירום 🚨</a>
+            <h3>מדריך גזעים מלא 📖</h3>
+            <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="link-item">קטלוג גזעים מלא (עברית) 🐈</a>
+            <a href="https://www.thesprucepets.com/cat-breeds-4162127" target="_blank" class="link-item">מדריך גזעים עולמי (אנגלית) 🌍</a>
+            <a href="https://he.wikipedia.org/wiki/%D7%A7%D7%A8%D7%A7%D7%9C" target="_blank" class="link-item">הכל על הקרקל 🐆</a>
+            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="link-item" style="color:#ff7675; border-right-color:#ff7675">וטרינר חירום 🚨</a>
+        </div>
+        
+        <div class="card">
+            <h3>היסטוריה 📜</h3>
+            <div id="hist-list" style="font-size: 12px; opacity: 0.8; max-height: 120px; overflow-y: auto;"></div>
         </div>
     </div>
 </div>
 
 <div class="controls">
-    <button class="btn-float" onclick="toggleMusic()">🎹</button>
-    <button class="btn-float" onclick="playSoftChime()">🔔</button>
+    <button class="btn-float" onclick="togglePiano()">🎹</button>
+    <button class="btn-float" onclick="playSoftBell()">🔔</button>
 </div>
 
-<audio id="piano-player" loop>
+<audio id="piano-music" loop>
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// גלריית חתולים אקזוטיים וגזעיים
-const exoticPics = [
-  "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=1200", // קרקל/חתול בר
-  "https://images.unsplash.com/photo-1568152950566-c1bf43f4ab28?q=80&w=1200", // מיין קון
-  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1200", // סיאמי
-  "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1200", // בנגלי
-  "https://images.unsplash.com/photo-1570018144715-431103bd3d70?q=80&w=1200"  // חתול פרא/סרוואל
+// גלריית אקזוטיק (נבדק - אין תרנגולים!)
+const exoticGallery = [
+  "https://images.unsplash.com/photo-1568152950566-c1bf43f4ab28?q=80&w=1000", // מיין קון
+  "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=1000", // קרקל
+  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1000", // סיאמי
+  "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1000", // בנגלי
+  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1000"  // בריטי
 ];
-let currentIdx = 0;
+let galleryIdx = 0;
+const mainPic = document.getElementById('cat-main');
 
-function updateBackground() {
-    document.body.style.backgroundImage = `url('${exoticPics[currentIdx]}')`;
-    currentIdx = (currentIdx + 1) % exoticPics.length;
+function switchCat() {
+    mainPic.style.backgroundImage = `url('${exoticGallery[galleryIdx]}')`;
+    galleryIdx = (galleryIdx + 1) % exoticGallery.length;
 }
-setInterval(updateBackground, 7000);
-updateBackground();
+setInterval(switchCat, 7000);
+switchCat();
 
-const chimeSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
-const pianoMusic = document.getElementById('piano-player');
+const bell = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+const piano = document.getElementById('piano-music');
 
-function toggleMusic() {
-    pianoMusic.volume = 0.2;
-    pianoMusic.paused ? pianoMusic.play() : pianoMusic.pause();
+function togglePiano() {
+    piano.volume = 0.2;
+    piano.paused ? piano.play() : piano.pause();
 }
 
-function playSoftChime() {
-    chimeSfx.currentTime = 0;
-    chimeSfx.volume = 0.3;
-    chimeSfx.play();
+function playSoftBell() {
+    bell.currentTime = 0;
+    bell.volume = 0.3;
+    bell.play();
 }
 
 function runDiag() {
     const issue = document.getElementById('sel-issue').value;
     const desc = document.getElementById('txt-desc').value;
-    const res = document.getElementById('diag-result');
+    const result = document.getElementById('diag-result');
     
-    playSoftChime();
+    playSoftBell();
 
-    const data = {
-        "נשיכות": "בגזעים אקזוטיים, נשיכות עשויות לנבוע מיצר ציד חזק. מומלץ לספק צעצועי לעיסה עמידים.",
-        "יללות": "חתולים כמו הסיאמי או הבנגלי קולניים מאוד. זהו חלק מהתקשורת הטבעית שלהם.",
-        "צרכים": "סימון טריטוריה נפוץ בגזעים אקזוטיים. וודאו שיש מספיק נקודות תצפית גבוהות בבית.",
-        "שריטות": "גזעים גדולים כמו מיין קון זקוקים למתקני גירוד מאסיביים במיוחד שלא יזוזו.",
-        "תוקפנות": "נדרשת גירוי מנטלי רב. חתולים אלו צריכים 'עבודה' או משחקי חשיבה כדי לא להיות מתוסכלים."
+    const responses = {
+        "נשיכות": "נראה שמדובר בגירוי יתר. הפסיקו ליטוף ברגע שהזנב מתחיל לנוע במהירות.",
+        "יללות": "שעמום לילי. שחקו איתו משחק ציד אינטנסיבי של 15 דקות לפני השינה.",
+        "צרכים": "סימון טריטוריה או בעיה רפואית. וודאו שהארגז נקי ושיש לו תצפיות גבוהות.",
+        "שריטות": "חתולים חייבים לגרד. הציבו מתקן גירוד יציב וגבוה ממש ליד הרהיט שהוא אוהב.",
+        "תוקפנות": "הפרדה הדרגתית. תנו לו מרחב בטוח והחזירו אותו לחברה עם חיזוקים חיוביים."
     };
 
-    res.innerHTML = `<strong>אבחנת מומחה:</strong><br>${data[issue]}`;
-    res.style.display = "block";
+    result.innerHTML = `<strong>אבחנה:</strong><br>${responses[issue]}`;
+    result.style.display = "block";
     
-    const hist = document.getElementById('hist-box');
-    const time = new Date().toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
-    hist.innerHTML = `<div>${time}: ${issue}</div>` + hist.innerHTML;
+    const h = document.getElementById('hist-list');
+    const now = new Date().toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
+    h.innerHTML = `<div>${now} - ${issue}</div>` + h.innerHTML;
 }
 </script>
 
