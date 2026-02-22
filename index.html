@@ -8,7 +8,7 @@
 <style>
 :root{
   --turquoise:#22d3ee;
-  --panel:rgba(10,18,28,0.92);
+  --panel:rgba(10,18,28,0.95);
 }
 
 body{
@@ -32,76 +32,83 @@ body{
 .overlay{
   position:fixed;
   inset:0;
-  background:linear-gradient(to bottom,rgba(0,0,0,0.5),rgba(0,0,0,0.85));
+  background:linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0.85));
   z-index:-1;
 }
 
-/* ===== כרטיס תמיד בצד ימין ===== */
+/* ===== כרטיס קבוע בצד ימין ===== */
 .card{
   position:fixed;
   top:60px;
-  right:40px;
-  width:300px;
+  right:30px;       /* תמיד ימין */
+  width:280px;      /* קטן */
   background:var(--panel);
   backdrop-filter:blur(12px);
-  border-radius:18px;
-  padding:22px;
+  border-radius:16px;
+  padding:20px;
   box-shadow:0 20px 60px rgba(0,0,0,0.7);
 }
 
-/* מובייל עדיין בצד ימין */
+/* מובייל — עדיין ימין */
 @media(max-width:768px){
   .card{
-    top:40px;
-    right:15px;
-    width:260px;
+    top:30px;
+    right:10px;
+    width:240px;
   }
 }
 
 h1{
-  font-size:18px;
+  font-size:16px;
   text-align:center;
-  margin-bottom:18px;
+  margin-bottom:14px;
 }
 
 select{
   width:100%;
-  padding:10px;
-  border-radius:8px;
+  padding:8px;
+  border-radius:6px;
   border:none;
-  margin-bottom:12px;
+  margin-bottom:10px;
+  font-size:12px;
 }
 
 button{
   width:100%;
-  padding:10px;
+  padding:8px;
   border:none;
-  border-radius:10px;
+  border-radius:8px;
   background:var(--turquoise);
   font-weight:600;
+  font-size:12px;
   cursor:pointer;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
 
 .section{
-  margin-top:18px;
+  margin-top:14px;
 }
 
 .section h3{
-  font-size:13px;
-  margin-bottom:8px;
+  font-size:12px;
+  margin-bottom:6px;
 }
 
 .link-btn{
   display:block;
-  padding:8px;
+  padding:6px;
   text-align:center;
-  border-radius:8px;
+  border-radius:6px;
   background:rgba(255,255,255,0.08);
   color:white;
   text-decoration:none;
-  font-size:12px;
-  margin-bottom:6px;
+  font-size:11px;
+  margin-bottom:5px;
+  transition:0.2s;
+}
+
+.link-btn:hover{
+  background:rgba(255,255,255,0.18);
 }
 </style>
 </head>
@@ -115,7 +122,7 @@ button{
 
 <h1>🐱 אבחון חכם</h1>
 
-<select id="problemSelect">
+<select>
   <option value="">בחר בעיה</option>
 
   <option>הקאות</option>
@@ -159,9 +166,7 @@ button{
   <option>אובדן הכרה</option>
 </select>
 
-<button onclick="analyze()">נתח מקרה</button>
-
-<div id="result"></div>
+<button>נתח מקרה</button>
 
 <div class="section">
 <h3>מידע נוסף</h3>
@@ -189,7 +194,6 @@ Cat Breed Selector
 </div>
 
 <script>
-/* רקע מתחלף */
 const images = ["bg.png","bg2.png","bg3.png","bg4.png","bg5.png"];
 let current = 0;
 const bg = document.getElementById("bg");
@@ -205,19 +209,6 @@ function changeBackground(){
 
 changeBackground();
 setInterval(changeBackground, 6000);
-
-/* אבחון דמה */
-function analyze(){
-  const value = document.getElementById("problemSelect").value;
-  const result = document.getElementById("result");
-
-  if(!value){
-    result.innerHTML = "<div style='margin-top:10px;color:#ffaaaa;'>בחר בעיה קודם</div>";
-    return;
-  }
-
-  result.innerHTML = "<div style='margin-top:10px;'>נבחר: " + value + "</div>";
-}
 </script>
 
 </body>
