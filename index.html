@@ -3,117 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CatMind Elite</title>
+<title>CatMind Elite PRO</title>
 
 <style>
 :root{
-  --primary:#36d1c4;
-  --glass:rgba(12,20,30,0.85);
+  --turquoise:#22d3ee;
+  --panel:rgba(12,20,30,0.85);
 }
-
-*{box-sizing:border-box;}
 
 body{
   margin:0;
   font-family:'Segoe UI',system-ui,sans-serif;
   color:white;
   min-height:100vh;
-  background:black;
-  padding:80px 20px 40px;
+  overflow-x:hidden;
+  background:#000;
 }
 
-/* רקע מתחלף */
+/* ===== רקע מתחלף ===== */
 #bg{
   position:fixed;
   inset:0;
   background-size:cover;
   background-position:center;
+  z-index:-2;
+  transition:opacity 1s ease-in-out;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.55),rgba(0,0,0,0.85));
   z-index:-1;
-  transition:background-image 1s ease-in-out;
 }
 
-/* מרכז אופקי בלבד */
-.wrapper{
-  max-width:1200px;
-  margin:0 auto;
+/* ===== מבנה ===== */
+.container{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding-top:80px;
+  padding-bottom:80px;
 }
 
-/* כרטיס */
 .card{
-  max-width:480px;
-  margin:0 auto;
-  background:var(--glass);
-  backdrop-filter:blur(10px);
-  border-radius:22px;
+  width:100%;
+  max-width:460px;
+  background:var(--panel);
+  backdrop-filter:blur(14px);
+  border-radius:24px;
   padding:32px;
-  box-shadow:0 0 60px rgba(0,0,0,0.6);
+  box-shadow:0 30px 80px rgba(0,0,0,0.6);
 }
 
 h1{
   text-align:center;
-  margin:0 0 20px;
-  font-size:24px;
-}
-
-h2{
-  text-align:center;
-  font-size:18px;
-  margin:30px 0 15px;
+  margin-bottom:25px;
+  font-size:26px;
 }
 
 select, textarea{
   width:100%;
   padding:14px;
-  border-radius:16px;
+  border-radius:12px;
   border:none;
-  margin-bottom:14px;
-  font-size:14px;
+  margin-bottom:16px;
+  font-size:15px;
 }
 
 button{
   width:100%;
   padding:14px;
-  border-radius:16px;
   border:none;
-  background:linear-gradient(45deg,#36d1c4,#00bcd4);
-  color:white;
-  font-weight:bold;
+  border-radius:14px;
+  background:var(--turquoise);
+  color:black;
+  font-weight:600;
+  font-size:16px;
   cursor:pointer;
-  margin-bottom:14px;
-  transition:0.2s;
+  transition:0.3s;
 }
 
 button:hover{
-  opacity:0.9;
+  opacity:0.85;
 }
 
-/* לינקים */
+.error{
+  margin-top:14px;
+  background:rgba(255,0,0,0.12);
+  border:1px solid rgba(255,0,0,0.4);
+  padding:12px;
+  border-radius:10px;
+  text-align:center;
+  color:#ff9c9c;
+}
+
+.section{
+  margin-top:30px;
+}
+
+.section h3{
+  margin-bottom:14px;
+}
+
 .link-btn{
   display:block;
-  text-decoration:none;
-  background:rgba(255,255,255,0.08);
-  padding:14px;
-  border-radius:16px;
-  margin-bottom:10px;
-  color:white;
   text-align:center;
-  transition:0.2s;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.08);
+  color:white;
+  text-decoration:none;
+  transition:0.3s;
 }
 
 .link-btn:hover{
-  background:rgba(255,255,255,0.18);
-}
-
-.footer-email{
-  text-align:center;
-  margin-top:30px;
-  font-weight:bold;
-  color:#00e5ff;
-  font-size:16px;
-}
-
-@media(max-width:480px){
-  body{padding-top:60px;}
+  background:rgba(255,255,255,0.15);
 }
 </style>
 </head>
@@ -121,120 +127,86 @@ button:hover{
 <body>
 
 <div id="bg"></div>
+<div class="overlay"></div>
 
-<div class="wrapper">
+<div class="container">
 <div class="card">
 
-<h1>🐱 אבחון חכם</h1>
+<h1>אבחון חכם 🐱</h1>
 
-<select id="issueSelect">
+<select id="problemSelect">
 <option>בחר בעיה</option>
 <option>הקאות</option>
-<option>שלשול</option>
-<option>עצירות</option>
 <option>חוסר תיאבון</option>
-<option>ירידה במשקל</option>
-<option>עלייה חריגה במשקל</option>
-<option>עייפות קיצונית</option>
-<option>חוסר אנרגיה</option>
-<option>קושי בנשימה</option>
-<option>שיעול</option>
-<option>התעטשויות תכופות</option>
-<option>הפרשות מהאף</option>
-<option>הפרשות מהעיניים</option>
-<option>עין אדומה / נפוחה</option>
-<option>גירודים מרובים</option>
-<option>נשירת שיער חריגה</option>
-<option>פצעים בעור</option>
-<option>נפיחות בגוף</option>
-<option>צליעה</option>
-<option>כאבים בזמן הליכה</option>
-<option>חוסר שימוש בארגז חול</option>
-<option>השתנה תכופה</option>
-<option>דם בשתן</option>
-<option>שינויים בהתנהגות</option>
-<option>אגרסיביות פתאומית</option>
-<option>יללות חריגות</option>
-<option>רעידות</option>
-<option>פרכוסים</option>
-<option>הרעלה אפשרית</option>
-<option>בליעת חפץ זר</option>
+<option>עייפות</option>
+<option>שלשול</option>
+<option>גירוד קיצוני</option>
+<option>נשירת שיער</option>
+<option>עיניים דומעות</option>
 <option>חום גבוה</option>
-<option>אובדן הכרה</option>
+<option>קושי בנשימה</option>
+<option>שינוי בהתנהגות</option>
+<option>צליעה</option>
+<option>פצעים בעור</option>
+<option>השתנה מחוץ לארגז</option>
 </select>
 
-<button>נתח מקרה</button>
+<button onclick="analyze()">נתח מקרה</button>
 
-<h2>🧠 אבחון AI מתקדם</h2>
+<div id="result"></div>
 
-<textarea id="aiInput" placeholder="תאר את מצב החתול..."></textarea>
+<div class="section">
+<h3>מידע נוסף 📚</h3>
+<a class="link-btn" href="#">Browse All Breeds</a>
+<a class="link-btn" href="#">Cat Breed Selector</a>
+</div>
 
-<button onclick="analyzeAI()">נתח AI</button>
-
-<div id="aiResult" style="margin-top:10px;"></div>
-
-<h2>📚 מידע נוסף</h2>
-
-<a class="link-btn" target="_blank" href="https://www.whiskas.in/cat-breeds">
-Browse All Breeds
-</a>
-
-<a class="link-btn" target="_blank" href="https://www.whiskas.in/cat-breeds">
-Cat Breed Selector
-</a>
-
-<h2>🏥 וטרינרים מומלצים</h2>
-
-<a class="link-btn" target="_blank" href="https://www.talisteinvet.co.il/">
-ד"ר טלי שטיין
-</a>
-
-<a class="link-btn" target="_blank" href="https://easy.co.il/page/3056876">
-ד"ר תמר פלידל
-</a>
-
-<a class="link-btn" target="_blank" href="https://www.doctorvet.co.il/">
-🚑 וטרינר חירום 24/7
-</a>
-
-<div class="footer-email">
-fadeinto77@gmail.com
+<div class="section">
+<h3>וטרינרים מומלצים 🏥</h3>
+<a class="link-btn" href="#">ד"ר טלי ששון</a>
+<a class="link-btn" href="#">ד"ר תמר פלד</a>
 </div>
 
 </div>
 </div>
 
 <script>
-/* רקע מתחלף */
-const images=["bg.png","bg2.png","bg3.png","bg4.png"];
-let index=0;
-const bg=document.getElementById("bg");
+/* ===== רקעים מתחלפים ===== */
+const images = [
+  "bg.png",
+  "bg2.png",
+  "bg3.png",
+  "bg4.png",
+  "bg5.png",
+  "bg6.png"
+];
 
-function changeBg(){
-  bg.style.backgroundImage=`url('${images[index]}')`;
-  index=(index+1)%images.length;
+let current = 0;
+const bg = document.getElementById("bg");
+
+function changeBackground(){
+  bg.style.opacity = 0;
+  setTimeout(()=>{
+    bg.style.backgroundImage = `url('${images[current]}')`;
+    bg.style.opacity = 1;
+    current = (current + 1) % images.length;
+  }, 500);
 }
-changeBg();
-setInterval(changeBg,5000);
 
-/* AI */
-async function analyzeAI(){
-  const text=document.getElementById("aiInput").value;
-  const result=document.getElementById("aiResult");
-  result.innerHTML="⏳ מנתח...";
+changeBackground();
+setInterval(changeBackground, 6000);
 
-  try{
-    const response=await fetch("https://catmind-ai-server.onrender.com/analyze",{
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body:JSON.stringify({ text })
-    });
+/* ===== דמה אבחון זמני ===== */
+function analyze(){
+  const problem = document.getElementById("problemSelect").value;
+  const result = document.getElementById("result");
 
-    const data=await response.json();
-    result.innerHTML=data.result || "לא התקבלה תשובה.";
-  }catch(e){
-    result.innerHTML="❌ שגיאה בחיבור לשרת.";
+  if(problem === "בחר בעיה"){
+    result.innerHTML = `<div class="error">בחר בעיה קודם ❌</div>`;
+    return;
   }
+
+  result.innerHTML = `<div style="margin-top:15px;">המערכת מוכנה לחיבור AI עבור: ${problem}</div>`;
 }
 </script>
 
