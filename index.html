@@ -8,7 +8,7 @@
 <style>
 :root{
   --turquoise:#22d3ee;
-  --panel:rgba(12,20,30,0.85);
+  --panel:rgba(12,20,30,0.92);
 }
 
 body{
@@ -16,11 +16,11 @@ body{
   font-family:'Segoe UI',system-ui,sans-serif;
   color:white;
   min-height:100vh;
-  overflow-x:hidden;
   background:#000;
+  overflow-x:hidden;
 }
 
-/* ===== רקע מתחלף ===== */
+/* ===== רקע ===== */
 #bg{
   position:fixed;
   inset:0;
@@ -33,88 +33,121 @@ body{
 .overlay{
   position:fixed;
   inset:0;
-  background:linear-gradient(to bottom,rgba(0,0,0,0.55),rgba(0,0,0,0.85));
+  background:linear-gradient(to bottom,rgba(0,0,0,0.45),rgba(0,0,0,0.85));
   z-index:-1;
 }
 
-/* ===== מבנה ===== */
-.container{
+/* ===== דסקטופ ===== */
+.layout{
   display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  padding-top:80px;
-  padding-bottom:80px;
+  justify-content:flex-end;
+  padding:80px 6%;
 }
 
 .card{
   width:100%;
-  max-width:460px;
+  max-width:380px;
   background:var(--panel);
   backdrop-filter:blur(14px);
-  border-radius:24px;
-  padding:32px;
+  border-radius:22px;
+  padding:28px;
   box-shadow:0 30px 80px rgba(0,0,0,0.6);
+}
+
+/* ===== כפתור מובייל ===== */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:10;
+  background:var(--turquoise);
+  border:none;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* ===== מובייל ===== */
+@media(max-width:768px){
+
+  .layout{
+    padding:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .card{
+    position:fixed;
+    top:0;
+    right:-100%;
+    height:100%;
+    width:85%;
+    max-width:320px;
+    border-radius:0;
+    transition:0.4s ease;
+    overflow-y:auto;
+  }
+
+  .card.active{
+    right:0;
+  }
 }
 
 h1{
   text-align:center;
-  margin-bottom:25px;
-  font-size:26px;
+  margin-bottom:22px;
+  font-size:20px;
 }
 
-select, textarea{
+select{
   width:100%;
-  padding:14px;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  margin-bottom:14px;
+  font-size:14px;
+}
+
+button.action{
+  width:100%;
+  padding:12px;
+  border:none;
   border-radius:12px;
-  border:none;
-  margin-bottom:16px;
-  font-size:15px;
-}
-
-button{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:14px;
   background:var(--turquoise);
   color:black;
   font-weight:600;
-  font-size:16px;
+  font-size:14px;
   cursor:pointer;
   transition:0.3s;
 }
 
-button:hover{
+button.action:hover{
   opacity:0.85;
 }
 
-.error{
-  margin-top:14px;
-  background:rgba(255,0,0,0.12);
-  border:1px solid rgba(255,0,0,0.4);
-  padding:12px;
-  border-radius:10px;
-  text-align:center;
-  color:#ff9c9c;
-}
-
 .section{
-  margin-top:30px;
+  margin-top:24px;
 }
 
 .section h3{
-  margin-bottom:14px;
+  margin-bottom:12px;
+  font-size:14px;
 }
 
 .link-btn{
   display:block;
   text-align:center;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:12px;
+  padding:10px;
+  margin-bottom:8px;
+  border-radius:10px;
   background:rgba(255,255,255,0.08);
   color:white;
   text-decoration:none;
+  font-size:13px;
   transition:0.3s;
 }
 
@@ -129,12 +162,14 @@ button:hover{
 <div id="bg"></div>
 <div class="overlay"></div>
 
-<div class="container">
-<div class="card">
+<button class="menu-btn" onclick="toggleMenu()">☰ תפריט</button>
+
+<div class="layout">
+<div class="card" id="sideMenu">
 
 <h1>אבחון חכם 🐱</h1>
 
-<select id="problemSelect">
+<select>
 <option>בחר בעיה</option>
 <option>הקאות</option>
 <option>חוסר תיאבון</option>
@@ -151,14 +186,12 @@ button:hover{
 <option>השתנה מחוץ לארגז</option>
 </select>
 
-<button onclick="analyze()">נתח מקרה</button>
-
-<div id="result"></div>
+<button class="action">נתח מקרה</button>
 
 <div class="section">
 <h3>מידע נוסף 📚</h3>
-<a class="link-btn" href="#">Browse All Breeds</a>
-<a class="link-btn" href="#">Cat Breed Selector</a>
+<a class="link-btn" href="https://www.google.com" target="_blank">Browse All Breeds</a>
+<a class="link-btn" href="https://www.wikipedia.org" target="_blank">Cat Breed Selector</a>
 </div>
 
 <div class="section">
@@ -171,16 +204,8 @@ button:hover{
 </div>
 
 <script>
-/* ===== רקעים מתחלפים ===== */
-const images = [
-  "bg.png",
-  "bg2.png",
-  "bg3.png",
-  "bg4.png",
-  "bg5.png",
-  "bg6.png"
-];
-
+/* רקע מתחלף */
+const images = ["bg.png","bg2.png","bg3.png","bg4.png","bg5.png","bg6.png"];
 let current = 0;
 const bg = document.getElementById("bg");
 
@@ -196,17 +221,9 @@ function changeBackground(){
 changeBackground();
 setInterval(changeBackground, 6000);
 
-/* ===== דמה אבחון זמני ===== */
-function analyze(){
-  const problem = document.getElementById("problemSelect").value;
-  const result = document.getElementById("result");
-
-  if(problem === "בחר בעיה"){
-    result.innerHTML = `<div class="error">בחר בעיה קודם ❌</div>`;
-    return;
-  }
-
-  result.innerHTML = `<div style="margin-top:15px;">המערכת מוכנה לחיבור AI עבור: ${problem}</div>`;
+/* תפריט מובייל */
+function toggleMenu(){
+  document.getElementById("sideMenu").classList.toggle("active");
 }
 </script>
 
