@@ -8,7 +8,7 @@
 <style>
 :root{
   --turquoise:#40e0d0;
-  --panel:rgba(11,37,55,0.42);
+  --panel:rgba(11,37,55,0.55);
   --emergency:#ff4757;
 }
 
@@ -17,8 +17,7 @@ body{
   font-family:'Segoe UI',system-ui,sans-serif;
   color:#e0ffff;
   background:#0b2537;
-  min-height:100vh;
-  overflow-x:hidden;
+  overflow:hidden;
 }
 
 /* ===== רקע חתולים ===== */
@@ -29,43 +28,69 @@ body{
   overflow:hidden;
 }
 
-#cat-view::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to left,
-    rgba(0,0,0,0.65) 0%,
-    rgba(0,0,0,0.35) 35%,
-    rgba(0,0,0,0.1) 60%,
-    rgba(0,0,0,0) 80%);
-}
-
 .cat-bg{
   position:absolute;
   inset:0;
   background-size:cover;
   background-position:center;
-  opacity:0;
+  opacity:.85;
   transition:opacity 2s ease-in-out;
   animation:kenburns 30s ease-in-out infinite alternate;
 }
 
-.cat-bg.active{ opacity:.8; }
-
 @keyframes kenburns{
   0%{ transform:scale(1); }
-  100%{ transform:scale(1.08) translate(-2%,-2%); }
+  100%{ transform:scale(1.08); }
 }
 
-/* ===== פאנל צד ימין ===== */
+/* ===== Desktop Panel ===== */
+@media(min-width:769px){
+
 .main-interface{
-  position:relative;
-  z-index:10;
+  position:absolute;
+  right:80px;
+  top:80px;
   width:380px;
-  margin:70px 80px 140px auto;
+  z-index:10;
 }
 
-/* כרטיסים */
+}
+
+/* ===== Mobile Bottom Sheet ===== */
+@media(max-width:768px){
+
+.main-interface{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:60vh;
+  background:var(--panel);
+  backdrop-filter:blur(20px);
+  border-radius:20px 20px 0 0;
+  z-index:10;
+  transition:height .35s ease;
+  display:flex;
+  flex-direction:column;
+}
+
+.drag-handle{
+  width:60px;
+  height:6px;
+  background:#999;
+  border-radius:10px;
+  margin:12px auto;
+}
+
+.sheet-content{
+  flex:1;
+  overflow-y:auto;
+  padding:0 20px 30px 20px;
+}
+
+}
+
+/* ===== Cards ===== */
 .glass-card{
   background:var(--panel);
   border:1px solid rgba(64,224,208,.25);
@@ -73,19 +98,11 @@ body{
   padding:20px;
   backdrop-filter:blur(16px);
   margin-bottom:22px;
-  transition:.3s ease;
-}
-
-.glass-card.emergency-highlight{
-  border:2px solid var(--emergency);
-  box-shadow:0 0 35px rgba(255,71,87,.6);
 }
 
 h2,h3{
   color:var(--turquoise);
   margin-top:0;
-  border-bottom:1px solid rgba(64,224,208,.15);
-  padding-bottom:6px;
 }
 
 select,textarea{
@@ -106,93 +123,42 @@ button{
   background:linear-gradient(135deg,#40e0d0,#00b7eb);
   color:#000;
   font-weight:bold;
-  cursor:pointer;
 }
 
-#result-box{
-  margin-top:15px;
-  padding:14px;
-  border-radius:14px;
-  display:none;
-  font-size:13px;
-}
-
-.emergency{
-  border:2px solid var(--emergency);
-  background:rgba(255,71,87,.1);
-  color:#ff9f9e;
-}
-
-.normal{
-  border:1px solid var(--turquoise);
-  background:rgba(64,224,208,.06);
-}
-
-.call-btn{
-  display:block;
-  background:var(--emergency);
-  color:white;
-  text-align:center;
-  padding:11px;
-  border-radius:12px;
-  text-decoration:none;
-  margin-top:10px;
-}
-
-/* קישורים */
-.link-btn{
+.link-btn,.map-btn{
   display:block;
   margin-top:10px;
   padding:11px;
   border-radius:14px;
   text-decoration:none;
   font-weight:bold;
+  text-align:center;
+}
+
+.link-btn{
   background:rgba(64,224,208,0.08);
   border:1px solid rgba(64,224,208,0.25);
   color:#40e0d0;
-  text-align:center;
-}
-
-.link-btn:hover{
-  background:linear-gradient(135deg,#40e0d0,#00b7eb);
-  color:#000;
 }
 
 .map-btn{
-  display:block;
-  margin-top:12px;
-  padding:12px;
-  border-radius:14px;
-  text-decoration:none;
-  font-weight:bold;
-  text-align:center;
   background:linear-gradient(135deg,#ffa502,#ff6b00);
   color:#000;
 }
 
-/* אימייל */
 .footer-email{
   position:fixed;
   bottom:18px;
   right:30px;
-  font-size:14px;
+  font-size:13px;
   background:rgba(0,0,0,.35);
-  padding:8px 16px;
+  padding:7px 14px;
   border-radius:20px;
+  z-index:20;
 }
 
-.footer-email a{
-  color:#40e0d0;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-/* מובייל */
 @media(max-width:768px){
-  .main-interface{
-    width:90%;
-    margin:30px auto 140px auto;
-  }
+  .footer-email{ display:none; }
 }
 </style>
 </head>
@@ -200,43 +166,29 @@ button{
 <body>
 
 <div id="cat-view">
-  <div class="cat-bg" id="bg1"></div>
-  <div class="cat-bg" id="bg2"></div>
+  <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&q=100&w=3000')"></div>
 </div>
 
-<div class="main-interface">
+<div class="main-interface" id="sheet">
+
+<div class="drag-handle"></div>
+
+<div class="sheet-content">
 
 <div class="glass-card">
 <h2>אבחון חכם 🐈</h2>
-
-<select id="issue-type">
-<option value="">בחר בעיה</option>
+<select>
+<option>בחר בעיה</option>
 <option>דם בשתן</option>
 <option>נשימה כבדה</option>
 <option>התקפי פרכוס</option>
-<option>עיוורון פתאומי</option>
-<option>התעלפות</option>
-<option>שיעול</option>
-<option>חום גבוה</option>
 </select>
-
-<textarea id="issue-desc" rows="3" placeholder="תאר את המקרה..."></textarea>
-<button onclick="runDiagnostic()">נתח מקרה</button>
-
-<div id="result-box"></div>
-<div id="emergency-ui" style="display:none;">
-<a href="tel:039688988" class="call-btn">📞 חירום וטרינרי</a>
-</div>
+<textarea rows="3" placeholder="תאר את המקרה..."></textarea>
+<button>נתח מקרה</button>
 </div>
 
-<div class="glass-card" id="info-card">
-<h3>מידע נוסף</h3>
-
-<a href="https://www.purina.co.il/find-a-pet/cat-breeds" target="_blank" class="link-btn">
-Browse All Breeds
-</a>
-
-<h3 style="margin-top:14px;">וטרינרים מומלצים</h3>
+<div class="glass-card">
+<h3>וטרינרים מומלצים</h3>
 
 <a href="https://www.talisteinvet.co.il/" target="_blank" class="link-btn">
 🐾 ד"ר טלי שטיין
@@ -257,65 +209,30 @@ Browse All Breeds
 </div>
 
 </div>
+</div>
 
 <div class="footer-email">
 Israel • <a href="mailto:fadeinto77@gmail.com">fadeinto77@gmail.com</a>
 </div>
 
 <script>
-const catImages=[
-"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&q=100&w=3000",
-"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=100&w=3000"
-];
+// ===== Drag Sheet =====
+const sheet=document.getElementById('sheet');
+let startY=0;
+let startHeight=0;
 
-let current=0;
-let showingFirst=true;
-const bg1=document.getElementById("bg1");
-const bg2=document.getElementById("bg2");
+sheet.addEventListener('touchstart',e=>{
+  startY=e.touches[0].clientY;
+  startHeight=sheet.offsetHeight;
+});
 
-function switchBackground(){
- current=(current+1)%catImages.length;
- const next=catImages[current];
- if(showingFirst){
-  bg2.style.backgroundImage=`url('${next}')`;
-  bg2.classList.add("active");
-  bg1.classList.remove("active");
- }else{
-  bg1.style.backgroundImage=`url('${next}')`;
-  bg1.classList.add("active");
-  bg2.classList.remove("active");
- }
- showingFirst=!showingFirst;
-}
-bg1.style.backgroundImage=`url('${catImages[0]}')`;
-bg1.classList.add("active");
-setInterval(switchBackground,8000);
-
-function runDiagnostic(){
- const issue=document.getElementById('issue-type').value;
- const desc=document.getElementById('issue-desc').value.toLowerCase();
- const resultBox=document.getElementById('result-box');
- const emergencyUI=document.getElementById('emergency-ui');
- const infoCard=document.getElementById('info-card');
-
- const redFlags=["דם","פרכוס","התעלפות","נשימה כבדה"];
- const isEmergency=redFlags.some(w=>desc.includes(w)) ||
-                   ["דם בשתן","נשימה כבדה","התקפי פרכוס","עיוורון פתאומי"].includes(issue);
-
- resultBox.style.display="block";
-
- if(isEmergency){
-  resultBox.className="emergency";
-  resultBox.innerHTML="⚠ מצב חירום — פנה מיד לוטרינר.";
-  emergencyUI.style.display="block";
-  infoCard.classList.add("emergency-highlight");
- }else{
-  resultBox.className="normal";
-  resultBox.innerHTML="לא מוגדר כחירום אך מומלץ מעקב.";
-  emergencyUI.style.display="none";
-  infoCard.classList.remove("emergency-highlight");
- }
-}
+sheet.addEventListener('touchmove',e=>{
+  const delta=startY-e.touches[0].clientY;
+  let newHeight=startHeight+delta;
+  if(newHeight<200) newHeight=200;
+  if(newHeight>window.innerHeight-40) newHeight=window.innerHeight-40;
+  sheet.style.height=newHeight+'px';
+});
 </script>
 
 </body>
