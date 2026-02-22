@@ -8,7 +8,7 @@
 <style>
 :root{
   --turquoise:#40e0d0;
-  --panel:rgba(11,37,55,0.45);
+  --panel:rgba(11,37,55,0.42);
   --emergency:#ff4757;
 }
 
@@ -16,26 +16,28 @@ body{
   margin:0;
   font-family:'Segoe UI',system-ui,sans-serif;
   color:#e0ffff;
-  background:linear-gradient(135deg,#0b2537,#001f2e);
+  background:#0b2537;
   min-height:100vh;
   overflow-x:hidden;
 }
 
-/* רקע */
+/* ===== רקע חתולים ===== */
 #cat-view{
   position:fixed;
   inset:0;
   z-index:1;
   overflow:hidden;
 }
+
 #cat-view::after{
   content:"";
   position:absolute;
   inset:0;
-  background:radial-gradient(circle at center,
-    rgba(0,0,0,0.25) 0%,
-    rgba(0,0,0,0.55) 70%,
-    rgba(0,0,0,0.7) 100%);
+  background:linear-gradient(to left,
+    rgba(0,0,0,0.65) 0%,
+    rgba(0,0,0,0.35) 35%,
+    rgba(0,0,0,0.1) 60%,
+    rgba(0,0,0,0) 80%);
 }
 
 .cat-bg{
@@ -47,56 +49,58 @@ body{
   transition:opacity 2s ease-in-out;
   animation:kenburns 30s ease-in-out infinite alternate;
 }
-.cat-bg.active{ opacity:.75; }
+
+.cat-bg.active{ opacity:.8; }
 
 @keyframes kenburns{
   0%{ transform:scale(1); }
-  100%{ transform:scale(1.12) translate(-2%,-2%); }
+  100%{ transform:scale(1.08) translate(-2%,-2%); }
 }
 
-/* ממשק */
+/* ===== פאנל צד ימין ===== */
 .main-interface{
   position:relative;
   z-index:10;
-  max-width:520px;
-  margin:40px auto 120px auto;
+  width:380px;
+  margin:70px 80px 140px auto;
 }
 
+/* כרטיסים */
 .glass-card{
   background:var(--panel);
   border:1px solid rgba(64,224,208,.25);
   border-radius:20px;
-  padding:22px;
-  backdrop-filter:blur(18px);
-  margin-bottom:25px;
-  transition:all .3s ease;
+  padding:20px;
+  backdrop-filter:blur(16px);
+  margin-bottom:22px;
+  transition:.3s ease;
 }
 
 .glass-card.emergency-highlight{
   border:2px solid var(--emergency);
-  box-shadow:0 0 40px rgba(255,71,87,.6);
+  box-shadow:0 0 35px rgba(255,71,87,.6);
 }
 
 h2,h3{
   color:var(--turquoise);
   margin-top:0;
-  border-bottom:2px solid rgba(64,224,208,.12);
-  padding-bottom:8px;
+  border-bottom:1px solid rgba(64,224,208,.15);
+  padding-bottom:6px;
 }
 
 select,textarea{
   width:100%;
   padding:10px;
   border-radius:10px;
-  border:1px solid rgba(224,255,255,.12);
-  background:rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(0,0,0,.45);
   color:#e0ffff;
   margin-bottom:10px;
 }
 
 button{
   width:100%;
-  padding:12px;
+  padding:11px;
   border:none;
   border-radius:12px;
   background:linear-gradient(135deg,#40e0d0,#00b7eb);
@@ -107,7 +111,7 @@ button{
 
 #result-box{
   margin-top:15px;
-  padding:15px;
+  padding:14px;
   border-radius:14px;
   display:none;
   font-size:13px;
@@ -129,21 +133,21 @@ button{
   background:var(--emergency);
   color:white;
   text-align:center;
-  padding:12px;
+  padding:11px;
   border-radius:12px;
   text-decoration:none;
-  margin-top:12px;
+  margin-top:10px;
 }
 
 /* קישורים */
 .link-btn{
   display:block;
   margin-top:10px;
-  padding:12px;
+  padding:11px;
   border-radius:14px;
   text-decoration:none;
   font-weight:bold;
-  background:rgba(64,224,208,0.1);
+  background:rgba(64,224,208,0.08);
   border:1px solid rgba(64,224,208,0.25);
   color:#40e0d0;
   text-align:center;
@@ -157,36 +161,38 @@ button{
 .map-btn{
   display:block;
   margin-top:12px;
-  padding:13px;
+  padding:12px;
   border-radius:14px;
   text-decoration:none;
   font-weight:bold;
   text-align:center;
   background:linear-gradient(135deg,#ffa502,#ff6b00);
   color:#000;
-  box-shadow:0 0 25px rgba(255,165,2,.5);
-}
-
-.map-btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 40px rgba(255,165,2,.9);
 }
 
 /* אימייל */
 .footer-email{
   position:fixed;
   bottom:18px;
-  left:50%;
-  transform:translateX(-50%);
+  right:30px;
   font-size:14px;
   background:rgba(0,0,0,.35);
-  padding:8px 18px;
+  padding:8px 16px;
   border-radius:20px;
 }
+
 .footer-email a{
   color:#40e0d0;
-  font-weight:bold;
   text-decoration:none;
+  font-weight:bold;
+}
+
+/* מובייל */
+@media(max-width:768px){
+  .main-interface{
+    width:90%;
+    margin:30px auto 140px auto;
+  }
 }
 </style>
 </head>
@@ -226,13 +232,11 @@ button{
 <div class="glass-card" id="info-card">
 <h3>מידע נוסף</h3>
 
-<a href="https://www.purina.co.il/find-a-pet/cat-breeds"
-   target="_blank"
-   class="link-btn">
-   Browse All Breeds
+<a href="https://www.purina.co.il/find-a-pet/cat-breeds" target="_blank" class="link-btn">
+Browse All Breeds
 </a>
 
-<h3 style="margin-top:15px;">וטרינרים מומלצים</h3>
+<h3 style="margin-top:14px;">וטרינרים מומלצים</h3>
 
 <a href="https://www.talisteinvet.co.il/" target="_blank" class="link-btn">
 🐾 ד"ר טלי שטיין
@@ -242,13 +246,11 @@ button{
 🐾 ד"ר תמר פלידל
 </a>
 
-<a href="https://www.doctorvet.co.il/" target="_blank" class="link-btn" style="background:rgba(255,71,87,0.12);border-color:rgba(255,71,87,0.4);color:#ff4757;">
+<a href="https://www.doctorvet.co.il/" target="_blank" class="link-btn" style="color:#ff4757;border-color:#ff4757;">
 🆘 וטרינר חירום
 </a>
 
-<a href="https://www.google.com/maps/search/%D7%95%D7%98%D7%A8%D7%99%D7%A0%D7%A8+%D7%A7%D7%A8%D7%95%D7%91+%D7%90%D7%9C%D7%99/"
-   target="_blank"
-   class="map-btn">
+<a href="https://www.google.com/maps/search/%D7%95%D7%98%D7%A8%D7%99%D7%A0%D7%A8+%D7%A7%D7%A8%D7%95%D7%91+%D7%90%D7%9C%D7%99/" target="_blank" class="map-btn">
 📍 מצא וטרינר קרוב אליי
 </a>
 
