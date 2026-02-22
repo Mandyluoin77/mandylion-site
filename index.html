@@ -8,7 +8,7 @@
 <style>
 :root{
   --primary:#36d1c4;
-  --glass:rgba(15,25,35,0.78);
+  --glass:rgba(12,20,30,0.85);
 }
 
 *{box-sizing:border-box;}
@@ -18,10 +18,11 @@ body{
   font-family:'Segoe UI',system-ui,sans-serif;
   color:white;
   min-height:100vh;
-  padding:60px 20px 40px;
   background:black;
+  padding:80px 20px 40px;
 }
 
+/* רקע מתחלף */
 #bg{
   position:fixed;
   inset:0;
@@ -31,76 +32,88 @@ body{
   transition:background-image 1s ease-in-out;
 }
 
+/* מרכז אופקי בלבד */
 .wrapper{
   max-width:1200px;
   margin:0 auto;
 }
 
+/* כרטיס */
 .card{
-  max-width:420px;
+  max-width:480px;
   margin:0 auto;
   background:var(--glass);
   backdrop-filter:blur(10px);
-  border-radius:18px;
-  padding:25px;
+  border-radius:22px;
+  padding:32px;
   box-shadow:0 0 60px rgba(0,0,0,0.6);
 }
 
 h1{
   text-align:center;
   margin:0 0 20px;
+  font-size:24px;
+}
+
+h2{
+  text-align:center;
+  font-size:18px;
+  margin:30px 0 15px;
 }
 
 select, textarea{
   width:100%;
-  padding:12px;
-  border-radius:12px;
+  padding:14px;
+  border-radius:16px;
   border:none;
-  margin-bottom:12px;
+  margin-bottom:14px;
   font-size:14px;
 }
 
 button{
   width:100%;
-  padding:12px;
-  border-radius:12px;
+  padding:14px;
+  border-radius:16px;
   border:none;
   background:linear-gradient(45deg,#36d1c4,#00bcd4);
   color:white;
   font-weight:bold;
   cursor:pointer;
-  margin-bottom:12px;
+  margin-bottom:14px;
+  transition:0.2s;
 }
 
-.section{
-  margin-top:25px;
-  text-align:center;
+button:hover{
+  opacity:0.9;
 }
 
+/* לינקים */
 .link-btn{
   display:block;
   text-decoration:none;
-  background:rgba(255,255,255,0.1);
-  padding:10px;
-  border-radius:12px;
+  background:rgba(255,255,255,0.08);
+  padding:14px;
+  border-radius:16px;
   margin-bottom:10px;
   color:white;
+  text-align:center;
   transition:0.2s;
 }
 
 .link-btn:hover{
-  background:rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.18);
 }
 
 .footer-email{
   text-align:center;
-  margin-top:20px;
+  margin-top:30px;
   font-weight:bold;
   color:#00e5ff;
+  font-size:16px;
 }
 
 @media(max-width:480px){
-  body{padding-top:40px;}
+  body{padding-top:60px;}
 }
 </style>
 </head>
@@ -114,28 +127,53 @@ button{
 
 <h1>🐱 אבחון חכם</h1>
 
-<select>
+<select id="issueSelect">
 <option>בחר בעיה</option>
 <option>הקאות</option>
-<option>חוסר תיאבון</option>
-<option>עייפות</option>
 <option>שלשול</option>
+<option>עצירות</option>
+<option>חוסר תיאבון</option>
+<option>ירידה במשקל</option>
+<option>עלייה חריגה במשקל</option>
+<option>עייפות קיצונית</option>
+<option>חוסר אנרגיה</option>
+<option>קושי בנשימה</option>
+<option>שיעול</option>
+<option>התעטשויות תכופות</option>
+<option>הפרשות מהאף</option>
+<option>הפרשות מהעיניים</option>
+<option>עין אדומה / נפוחה</option>
+<option>גירודים מרובים</option>
+<option>נשירת שיער חריגה</option>
+<option>פצעים בעור</option>
+<option>נפיחות בגוף</option>
+<option>צליעה</option>
+<option>כאבים בזמן הליכה</option>
+<option>חוסר שימוש בארגז חול</option>
+<option>השתנה תכופה</option>
+<option>דם בשתן</option>
+<option>שינויים בהתנהגות</option>
+<option>אגרסיביות פתאומית</option>
+<option>יללות חריגות</option>
+<option>רעידות</option>
+<option>פרכוסים</option>
+<option>הרעלה אפשרית</option>
+<option>בליעת חפץ זר</option>
+<option>חום גבוה</option>
+<option>אובדן הכרה</option>
 </select>
 
 <button>נתח מקרה</button>
 
-<div class="section">
-<h1 style="font-size:18px;">🧠 אבחון AI מתקדם</h1>
+<h2>🧠 אבחון AI מתקדם</h2>
 
 <textarea id="aiInput" placeholder="תאר את מצב החתול..."></textarea>
 
 <button onclick="analyzeAI()">נתח AI</button>
 
 <div id="aiResult" style="margin-top:10px;"></div>
-</div>
 
-<div class="section">
-<h1 style="font-size:18px;">📚 מידע נוסף</h1>
+<h2>📚 מידע נוסף</h2>
 
 <a class="link-btn" target="_blank" href="https://www.whiskas.in/cat-breeds">
 Browse All Breeds
@@ -144,10 +182,8 @@ Browse All Breeds
 <a class="link-btn" target="_blank" href="https://www.whiskas.in/cat-breeds">
 Cat Breed Selector
 </a>
-</div>
 
-<div class="section">
-<h1 style="font-size:18px;">🏥 וטרינרים מומלצים</h1>
+<h2>🏥 וטרינרים מומלצים</h2>
 
 <a class="link-btn" target="_blank" href="https://www.talisteinvet.co.il/">
 ד"ר טלי שטיין
@@ -160,7 +196,6 @@ Cat Breed Selector
 <a class="link-btn" target="_blank" href="https://www.doctorvet.co.il/">
 🚑 וטרינר חירום 24/7
 </a>
-</div>
 
 <div class="footer-email">
 fadeinto77@gmail.com
@@ -170,6 +205,7 @@ fadeinto77@gmail.com
 </div>
 
 <script>
+/* רקע מתחלף */
 const images=["bg.png","bg2.png","bg3.png","bg4.png"];
 let index=0;
 const bg=document.getElementById("bg");
@@ -181,6 +217,7 @@ function changeBg(){
 changeBg();
 setInterval(changeBg,5000);
 
+/* AI */
 async function analyzeAI(){
   const text=document.getElementById("aiInput").value;
   const result=document.getElementById("aiResult");
