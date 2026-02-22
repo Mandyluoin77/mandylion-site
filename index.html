@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Elite V26 - Winter Edition</title>
+<title>CatMind Elite V26 - Pure Cats Edition</title>
+
 <style>
 :root {
   --turquoise: #40e0d0;
   --deep-blue: #00b7eb;
   --dark-bg: #0b2537;
-  --panel: rgba(11, 37, 55, 0.45);  /* הרבה יותר שקוף */
+  --panel: rgba(11, 37, 55, 0.45);
   --emergency: #ff4757;
 }
+
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, sans-serif;
@@ -21,14 +23,17 @@ body {
   overflow: hidden;
   position: relative;
 }
+
+/* רק חתול — ללא כלבים */
 #cat-view {
   position: fixed;
   inset: 0;
-  background: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=100&w=3000') center/cover no-repeat;
+  background: url('https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&q=100&w=3000') center/cover no-repeat;
   z-index: 1;
   opacity: 0.75;
-  filter: brightness(1.15) contrast(1.2) saturate(1.4);
+  filter: brightness(1.1) contrast(1.15) saturate(1.25);
 }
+
 .main-interface {
   position: relative;
   z-index: 10;
@@ -39,30 +44,33 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 30px 80px;  /* הקטנת padding – יותר מקום לחתולים */
+  padding: 30px 80px;
   box-sizing: border-box;
   gap: 80px;
 }
+
 .panel {
   width: 100%;
-  max-width: 380px;  /* הקטנת רוחב הפאנלים */
-  pointer-events: auto;
+  max-width: 380px;
 }
+
 .glass-card {
   background: var(--panel);
   border: 1px solid rgba(64, 224, 208, 0.25);
   border-radius: 20px;
-  padding: 20px;  /* הקטנת padding פנימי */
+  padding: 20px;
   box-shadow: 0 15px 50px rgba(0,0,0,0.70);
   backdrop-filter: blur(16px);
 }
+
 h2, h3 {
   color: var(--turquoise);
   margin-top: 0;
   border-bottom: 2px solid rgba(64, 224, 208, 0.12);
   padding-bottom: 8px;
-  font-size: 1.4rem;  /* הקטנת כותרות */
+  font-size: 1.4rem;
 }
+
 select, textarea, input[type="file"] {
   width: 100%;
   padding: 10px;
@@ -73,9 +81,8 @@ select, textarea, input[type="file"] {
   font-size: 14px;
   margin-bottom: 10px;
   outline: none;
-  backdrop-filter: blur(10px);
 }
-input[type="file"] { padding: 6px; cursor: pointer; }
+
 button {
   width: 100%;
   padding: 12px;
@@ -88,19 +95,12 @@ button {
   font-size: 15px;
   transition: 0.3s;
 }
-button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0.50); }
-.info-link {
-  display: block;
-  color: #b2f2ff;
-  text-decoration: none;
-  padding: 10px;
-  background: rgba(224,255,255,0.05);
-  margin-bottom: 8px;
-  border-radius: 10px;
-  border-right: 4px solid var(--turquoise);
-  font-size: 14px;
+
+button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 25px rgba(64, 224, 208, 0.50);
 }
-.info-link:hover { background: rgba(64, 224, 208, 0.10); color: #fff; }
+
 #result-box {
   margin-top: 15px;
   padding: 15px;
@@ -109,8 +109,18 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   line-height: 1.5;
   font-size: 13px;
 }
-.emergency { border: 2px solid var(--emergency); background: rgba(255, 71, 87, 0.10); color: #ff9f9e; }
-.normal { border: 1px solid var(--turquoise); background: rgba(64, 224, 208, 0.06); }
+
+.emergency {
+  border: 2px solid var(--emergency);
+  background: rgba(255, 71, 87, 0.10);
+  color: #ff9f9e;
+}
+
+.normal {
+  border: 1px solid var(--turquoise);
+  background: rgba(64, 224, 208, 0.06);
+}
+
 .call-btn {
   display: block;
   background: var(--emergency);
@@ -121,8 +131,8 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   text-decoration: none;
   font-weight: bold;
   margin-top: 12px;
-  font-size: 15px;
 }
+
 #preview-img {
   max-width: 100%;
   max-height: 140px;
@@ -131,199 +141,87 @@ button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(64, 224, 208, 0
   display: none;
   border: 1px solid rgba(64, 224, 208, 0.35);
 }
-.footer-email {
-  position: fixed;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-  color: #b2f2ff;
-  font-size: 13px;
-  opacity: 0.9;
-  text-align: center;
-}
-.footer-email a {
-  color: var(--turquoise);
-  text-decoration: none;
-  font-weight: bold;
-}
-.footer-email a:hover { text-decoration: underline; }
-@media (max-width: 1100px) {
-  .main-interface { flex-direction: column; padding: 20px; gap: 30px; }
-  .panel { max-width: 100%; }
-  .footer-email { position: static; margin: 15px auto; transform: none; }
-}
 </style>
 </head>
+
 <body>
+
 <div id="cat-view"></div>
 
 <div class="main-interface">
-    <div class="panel">
-        <div class="glass-card">
-            <h2>אבחון חכם V26 ❄️</h2>
-            <select id="issue-type">
-                <option value="נשיכות">נשיכות</option>
-                <option value="יללות">יללות בלילה</option>
-                <option value="צרכים">צרכים מחוץ לארגז</option>
-                <option value="שריטות">שריטות והרס</option>
-                <option value="פחד">סטרס והסתתרות</option>
-                <option value="הקאות">הקאות תכופות</option>
-                <option value="שלשולים">שלשולים / צואה רכה</option>
-                <option value="עצירות">עצירות / קושי ביציאה</option>
-                <option value="דם בשתן">דם בשתן / השתנה כואבת</option>
-                <option value="שתן מחוץ לארגז">שתן מחוץ לארגז (רפואי)</option>
-                <option value="עיניים דומעות">עיניים דומעות / אדומות</option>
-                <option value="עיטוש">עיטוש תכוף / הפרשות אף</option>
-                <option value="שיעול">שיעול / קשיי נשימה</option>
-                <option value="חום">חום גבוה / רעד</option>
-                <option value="חוסר תיאבון">חוסר תיאבון / ירידה במשקל</option>
-                <option value="עייפות">עייפות קיצונית / חולשה</option>
-                <option value="צליעה">צליעה / כאב ברגליים</option>
-                <option value="נפיחות">נפיחות בבטן / פנים</option>
-                <option value="פרווה דהויה">פרווה דהויה / נושרת המון</option>
-                <option value="גירוד">גירוד חזק / נשיכות עצמיות</option>
-                <option value="פצעים">פצעים / כיבים בעור</option>
-                <option value="אוזניים">אוזניים מלוכלכות / ריח רע</option>
-                <option value="שיניים">ריח פה חזק / שיניים שבורות</option>
-                <option value="התקפי פרכוס">התקפי פרכוס / רעד לא רצוני</option>
-                <option value="שתן מוגבר">שתן מוגבר / שתייה מרובה</option>
-                <option value="צמא מוגבר">צמא מוגבר + ירידה במשקל</option>
-                <option value="הקאות צהובות">הקאות צהובות / כתומות</option>
-                <option value="דימום מהאף">דימום מהאף / חניכיים</option>
-                <option value="חניכיים חיוורות">חניכיים חיוורות / חולשה</option>
-                <option value="בטן רגישה">בטן רגישה / כאב מגע</option>
-                <option value="עיוורון פתאומי">עיוורון פתאומי / בלבול</option>
-                <option value="חוסר קואורדינציה">חוסר קואורדינציה / מעידות</option>
-                <option value="נשימה כבדה">נשימה כבדה / פתוחה</option>
-                <option value="התעלפות">התעלפות / אובדן הכרה</option>
-            </select>
-            <textarea id="issue-desc" rows="3" placeholder="תאר את המקרה בפירוט..."></textarea>
+  <div class="panel">
+    <div class="glass-card">
+      <h2>אבחון חתולים 🐈</h2>
 
-            <label for="cat-photo" style="display:block; margin:10px 0 6px; color:#b2f2ff; font-weight:bold; font-size:14px;">העלה תמונה:</label>
-            <input type="file" id="cat-photo" accept="image/*">
-            <img id="preview-img" src="" alt="תצוגה מקדימה">
+      <select id="issue-type">
+        <option value="">בחר בעיה</option>
+        <option value="הקאות">הקאות</option>
+        <option value="שלשולים">שלשולים</option>
+        <option value="דם בשתן">דם בשתן</option>
+        <option value="נשימה כבדה">נשימה כבדה</option>
+        <option value="עייפות">עייפות קיצונית</option>
+      </select>
 
-            <button onclick="runDiagnostic()">נתח מקרה</button>
-           
-            <div id="result-box"></div>
-           
-            <div id="emergency-ui" style="display:none;">
-                <a href="tel:039688988" class="call-btn">📞 בית דגן חירום</a>
-                <a href="tel:099544430" class="call-btn" style="background:#d63031">📞 חוות דעת</a>
-            </div>
-        </div>
+      <textarea id="issue-desc" rows="3" placeholder="תאר את המקרה..."></textarea>
+
+      <input type="file" id="cat-photo" accept="image/*">
+      <img id="preview-img">
+
+      <button onclick="runDiagnostic()">בדוק</button>
+
+      <div id="result-box"></div>
+
+      <div id="emergency-ui" style="display:none;">
+        <a href="tel:039688988" class="call-btn">📞 חירום וטרינרי</a>
+      </div>
     </div>
-
-    <div class="panel">
-        <div class="glass-card">
-            <h3>מדריך וסיוע 📖</h3>
-            <a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="info-link">מדריך גזעים</a>
-            <a href="https://www.vetcenter.co.il/emergency" target="_blank" class="info-link" style="border-right-color:var(--emergency); color:var(--emergency)">וטרינר חירום</a>
-            <a href="https://www.letlive.org.il/" target="_blank" class="info-link">אימוץ ועזרה</a>
-        </div>
-      
-        <div class="glass-card" style="flex-grow:1; max-height: 220px;">
-            <h3>היסטוריה ❄️</h3>
-            <div id="history-log" style="overflow-y:auto; height:130px; font-size:12px; opacity:0.8;"></div>
-        </div>
-    </div>
-</div>
-
-<div class="footer-email">
-  Israel • <a href="mailto:fadeinto77@gmail.com">fadeinto77@gmail.com</a>
+  </div>
 </div>
 
 <script>
-// תמונת רקע אחת – מלאה חתולים
-document.getElementById('cat-view').style.backgroundImage = "url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=100&w=3000')";
-
-// תצוגה מקדימה
 document.getElementById('cat-photo').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(ev) {
-            document.getElementById('preview-img').src = ev.target.result;
-            document.getElementById('preview-img').style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-    }
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const img = document.getElementById('preview-img');
+    img.src = ev.target.result;
+    img.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
 });
 
-// אבחון
 function runDiagnostic() {
-    const issue = document.getElementById('issue-type').value;
-    const desc = document.getElementById('issue-desc').value.trim();
-    const resultBox = document.getElementById('result-box');
-    const emergencyUI = document.getElementById('emergency-ui');
-    const hasPhoto = document.getElementById('cat-photo').files.length > 0;
+  const issue = document.getElementById('issue-type').value;
+  const desc = document.getElementById('issue-desc').value.toLowerCase();
+  const resultBox = document.getElementById('result-box');
+  const emergencyUI = document.getElementById('emergency-ui');
 
-    if (!issue && !desc && !hasPhoto) {
-        resultBox.style.display = "block";
-        resultBox.className = "normal";
-        resultBox.innerHTML = "<strong>שגיאה:</strong><br>בחר בעיה או תאר את המקרה.";
-        return;
-    }
-
-    const redFlags = ["גוסס", "מקיא דם", "דם", "פצוע", "לא זז", "פרכוס", "רעל", "קשיי נשימה", "התעלפות", "חום גבוה", "נפיחות בטן", "דימום מהאף", "חניכיים חיוורות"];
-    const isEmergency = redFlags.some(word => desc.toLowerCase().includes(word)) || 
-                       ["התקפי פרכוס", "עיוורון פתאומי", "חוסר קואורדינציה", "נשימה כבדה"].includes(issue);
-
+  if (!issue && !desc) {
     resultBox.style.display = "block";
+    resultBox.className = "normal";
+    resultBox.innerHTML = "בחר בעיה או תאר מצב.";
+    return;
+  }
 
-    if (isEmergency) {
-        resultBox.className = "emergency";
-        resultBox.innerHTML = "<strong>❄️ חירום!</strong><br>פנה לוטרינר מיד." + (hasPhoto ? "<br>שלח תמונה לוטרינר." : "");
-        emergencyUI.style.display = "block";
-    } else {
-        resultBox.className = "normal";
-        emergencyUI.style.display = "none";
-        const tips = {
-            "נשיכות": "גירוי יתר. עצרו מגע. בדקו חתכים.",
-            "יללות": "שעמום/כאב. משחק + בדיקה.",
-            "צרכים": "סימון או רפואי. בדיקת שתן.",
-            "שריטות": "טבעי. עמוד גירוד + צעצועים.",
-            "פחד": "זמן + פינוקים.",
-            "הקאות": "תכוף → וטרינר.",
-            "שלשולים": "תזונה. דם → חירום.",
-            "עצירות": "מים + סיבים. מעל 48 שעות → וטרינר.",
-            "דם בשתן": "דלקת/אבנים. חירום.",
-            "שתן מחוץ לארגז": "רפואי/סימון. בדוק שתן.",
-            "עיניים דומעות": "אלרגיה/דלקת. נקו + וטרינר.",
-            "עיטוש": "נגיף/אלרגיה. מוגלה → אנטיביוטיקה.",
-            "שיעול": "כדור שיער/דלקת. צילום אם ממושך.",
-            "חום": "זיהום. מדוד + וטרינר.",
-            "חוסר תיאבון": "כאב/מחלה. מעל 24 שעות → וטרינר.",
-            "עייפות": "אנמיה/זיהום. בדוק חניכיים.",
-            "צליעה": "פציעה/פרקים. מנוחה + וטרינר.",
-            "נפיחות": "גזים/חסימה. חירום אם קשה.",
-            "פרווה דהויה": "תזונה/טפילים. בדיקות דם.",
-            "גירוד": "פרעושים/אלרגיה. טיפול חיצוני.",
-            "פצעים": "זיהום/גזזת. נקו + אנטיביוטיקה.",
-            "אוזניים": "קרדית/זיהום. נקו + טיפות.",
-            "שיניים": "אבנית/שבר. ניקוי מקצועי.",
-            "התקפי פרכוס": "אפילפסיה/רעל. חירום.",
-            "שתן מוגבר": "סוכרת/כליות. בדיקות.",
-            "צמא מוגבר": "סוכרת/היפרתירואיד. חירום.",
-            "הקאות צהובות": "כבד/כיס מרה. וטרינר.",
-            "דימום מהאף": "זיהום/גוף זר. וטרינר.",
-            "חניכיים חיוורות": "אנמיה/דימום. חירום.",
-            "בטן רגישה": "גזים/דלקת. וטרינר אם כואב.",
-            "עיוורון פתאומי": "לחץ דם/רשתית. חירום.",
-            "חוסר קואורדינציה": "אוזן/מוח. וטרינר.",
-            "נשימה כבדה": "לב/ריאות. חירום.",
-            "התעלפות": "לב/סוכר. חירום מיידי."
-        };
-        let tip = tips[issue] || "תאר יותר – אפשר תמונה.";
-        if (hasPhoto) tip += "<br><strong>תמונה הועלתה</strong> – שלח לוטרינר.";
-        resultBox.innerHTML = `<strong>אבחנה:</strong><br>${tip}`;
-    }
+  const emergencyWords = ["דם", "פרכוס", "לא זז", "התעלפות", "נשימה כבדה"];
+  const isEmergency = emergencyWords.some(w => desc.includes(w)) ||
+                      ["דם בשתן", "נשימה כבדה"].includes(issue);
 
-    const log = document.getElementById('history-log');
-    const time = new Date().toLocaleTimeString('he-IL');
-    log.innerHTML = `<div style="padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05)">${time}: ${isEmergency ? '⚠️ חירום' : issue}${hasPhoto ? ' + תמונה' : ''}</div>` + log.innerHTML;
+  resultBox.style.display = "block";
+
+  if (isEmergency) {
+    resultBox.className = "emergency";
+    resultBox.innerHTML = "⚠ מצב חירום — פנה מיד לוטרינר.";
+    emergencyUI.style.display = "block";
+  } else {
+    resultBox.className = "normal";
+    emergencyUI.style.display = "none";
+    resultBox.innerHTML = "מצב אינו מוגדר כחירום, אך מומלץ מעקב ובדיקה.";
+  }
 }
 </script>
+
 </body>
 </html>
