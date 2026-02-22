@@ -8,19 +8,19 @@
 <style>
 :root{
   --turquoise:#40e0d0;
-  --panel:rgba(11,37,55,0.55);
+  --panel:rgba(11,37,55,0.65);
   --emergency:#ff4757;
 }
 
 body{
   margin:0;
   font-family:'Segoe UI',system-ui,sans-serif;
-  color:#e0ffff;
-  background:#0b2537;
   overflow:hidden;
+  background:#0b2537;
+  color:#e0ffff;
 }
 
-/* ===== רקע חתולים ===== */
+/* ===== רקע ===== */
 #cat-view{
   position:fixed;
   inset:0;
@@ -31,19 +31,25 @@ body{
 .cat-bg{
   position:absolute;
   inset:0;
-  background-size:cover;
-  background-position:center;
-  opacity:.85;
-  transition:opacity 2s ease-in-out;
-  animation:kenburns 30s ease-in-out infinite alternate;
+  background:url("https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&q=100&w=3000") center/cover no-repeat;
+  animation:kenburns 25s ease-in-out infinite alternate;
 }
 
 @keyframes kenburns{
-  0%{ transform:scale(1); }
-  100%{ transform:scale(1.08); }
+  0%{transform:scale(1);}
+  100%{transform:scale(1.08);}
 }
 
-/* ===== Desktop Panel ===== */
+/* Overlay */
+#overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0);
+  z-index:5;
+  transition:background .6s ease;
+}
+
+/* ===== Desktop ===== */
 @media(min-width:769px){
 
 .main-interface{
@@ -63,41 +69,44 @@ body{
   position:fixed;
   left:0;
   right:0;
-  bottom:0;
-  height:60vh;
+  bottom:-100%;
+  height:65vh;
   background:var(--panel);
   backdrop-filter:blur(20px);
-  border-radius:20px 20px 0 0;
+  border-radius:22px 22px 0 0;
   z-index:10;
-  transition:height .35s ease;
   display:flex;
   flex-direction:column;
+  transition:bottom .6s cubic-bezier(.22,1,.36,1);
+}
+
+.main-interface.open{
+  bottom:0;
 }
 
 .drag-handle{
-  width:60px;
+  width:70px;
   height:6px;
-  background:#999;
+  background:#aaa;
   border-radius:10px;
-  margin:12px auto;
+  margin:14px auto;
 }
 
 .sheet-content{
   flex:1;
   overflow-y:auto;
-  padding:0 20px 30px 20px;
+  padding:0 20px 40px 20px;
 }
 
 }
 
-/* ===== Cards ===== */
+/* Cards */
 .glass-card{
-  background:var(--panel);
-  border:1px solid rgba(64,224,208,.25);
+  background:rgba(11,37,55,0.75);
+  border:1px solid rgba(64,224,208,.3);
   border-radius:20px;
   padding:20px;
-  backdrop-filter:blur(16px);
-  margin-bottom:22px;
+  margin-bottom:20px;
 }
 
 h2,h3{
@@ -110,14 +119,14 @@ select,textarea{
   padding:10px;
   border-radius:10px;
   border:1px solid rgba(255,255,255,.1);
-  background:rgba(0,0,0,.45);
-  color:#e0ffff;
+  background:rgba(0,0,0,.5);
+  color:#fff;
   margin-bottom:10px;
 }
 
 button{
   width:100%;
-  padding:11px;
+  padding:12px;
   border:none;
   border-radius:12px;
   background:linear-gradient(135deg,#40e0d0,#00b7eb);
@@ -128,7 +137,7 @@ button{
 .link-btn,.map-btn{
   display:block;
   margin-top:10px;
-  padding:11px;
+  padding:12px;
   border-radius:14px;
   text-decoration:none;
   font-weight:bold;
@@ -136,8 +145,8 @@ button{
 }
 
 .link-btn{
-  background:rgba(64,224,208,0.08);
-  border:1px solid rgba(64,224,208,0.25);
+  background:rgba(64,224,208,0.1);
+  border:1px solid rgba(64,224,208,0.3);
   color:#40e0d0;
 }
 
@@ -146,19 +155,20 @@ button{
   color:#000;
 }
 
+/* Email desktop only */
 .footer-email{
   position:fixed;
   bottom:18px;
   right:30px;
   font-size:13px;
   background:rgba(0,0,0,.35);
-  padding:7px 14px;
+  padding:8px 16px;
   border-radius:20px;
   z-index:20;
 }
 
 @media(max-width:768px){
-  .footer-email{ display:none; }
+  .footer-email{display:none;}
 }
 </style>
 </head>
@@ -166,8 +176,10 @@ button{
 <body>
 
 <div id="cat-view">
-  <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&q=100&w=3000')"></div>
+  <div class="cat-bg"></div>
 </div>
+
+<div id="overlay"></div>
 
 <div class="main-interface" id="sheet">
 
@@ -188,7 +200,7 @@ button{
 </div>
 
 <div class="glass-card">
-<h3>וטרינרים מומלצים</h3>
+<h3>וטרינרים</h3>
 
 <a href="https://www.talisteinvet.co.il/" target="_blank" class="link-btn">
 🐾 ד"ר טלי שטיין
@@ -216,22 +228,34 @@ Israel • <a href="mailto:fadeinto77@gmail.com">fadeinto77@gmail.com</a>
 </div>
 
 <script>
-// ===== Drag Sheet =====
-const sheet=document.getElementById('sheet');
-let startY=0;
-let startHeight=0;
+// פתיחה חלקה
+const sheet=document.getElementById("sheet");
+const overlay=document.getElementById("overlay");
 
-sheet.addEventListener('touchstart',e=>{
-  startY=e.touches[0].clientY;
-  startHeight=sheet.offsetHeight;
+window.addEventListener("load",()=>{
+  if(window.innerWidth<=768){
+    setTimeout(()=>{
+      sheet.classList.add("open");
+      overlay.style.background="rgba(0,0,0,0.35)";
+    },300);
+  }
 });
 
-sheet.addEventListener('touchmove',e=>{
+// Drag
+let startY=0;
+let startBottom=0;
+
+sheet.addEventListener("touchstart",e=>{
+  startY=e.touches[0].clientY;
+  startBottom=parseInt(getComputedStyle(sheet).bottom);
+});
+
+sheet.addEventListener("touchmove",e=>{
   const delta=startY-e.touches[0].clientY;
-  let newHeight=startHeight+delta;
-  if(newHeight<200) newHeight=200;
-  if(newHeight>window.innerHeight-40) newHeight=window.innerHeight-40;
-  sheet.style.height=newHeight+'px';
+  let newBottom=startBottom+delta;
+  if(newBottom>0)newBottom=0;
+  if(newBottom<-300)newBottom=-300;
+  sheet.style.bottom=newBottom+"px";
 });
 </script>
 
