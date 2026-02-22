@@ -36,12 +36,12 @@ body{
   z-index:-1;
 }
 
-/* ===== כרטיס קבוע בצד ימין ===== */
+/* ===== כרטיס בצד ימין ===== */
 .card{
   position:fixed;
   top:60px;
-  right:30px;       /* תמיד ימין */
-  width:280px;      /* קטן */
+  right:30px;
+  width:280px;
   background:var(--panel);
   backdrop-filter:blur(12px);
   border-radius:16px;
@@ -49,7 +49,7 @@ body{
   box-shadow:0 20px 60px rgba(0,0,0,0.7);
 }
 
-/* מובייל — עדיין ימין */
+/* מובייל עדיין בצד ימין */
 @media(max-width:768px){
   .card{
     top:30px;
@@ -124,7 +124,6 @@ button{
 
 <select>
   <option value="">בחר בעיה</option>
-
   <option>הקאות</option>
   <option>שלשול</option>
   <option>עצירות</option>
@@ -133,35 +132,28 @@ button{
   <option>עלייה חריגה במשקל</option>
   <option>עייפות קיצונית</option>
   <option>חוסר אנרגיה</option>
-
   <option>קושי בנשימה</option>
   <option>שיעול</option>
   <option>התעטשויות תכופות</option>
   <option>הפרשות מהאף</option>
   <option>הפרשות מהעיניים</option>
   <option>עין אדומה / נפוחה</option>
-
   <option>גירודים מרובים</option>
   <option>נשירת שיער חריגה</option>
   <option>פצעים בעור</option>
   <option>נפיחות בגוף</option>
-
   <option>צליעה</option>
   <option>כאבים בזמן הליכה</option>
-
   <option>חוסר שימוש בארגז חול</option>
   <option>השתנה תכופה</option>
   <option>דם בשתן</option>
-
   <option>שינויים בהתנהגות</option>
   <option>אגרסיביות פתאומית</option>
   <option>יללות חריגות</option>
-
   <option>רעידות</option>
   <option>פרכוסים</option>
   <option>הרעלה אפשרית</option>
   <option>בליעת חפץ זר</option>
-
   <option>חום גבוה</option>
   <option>אובדן הכרה</option>
 </select>
@@ -169,26 +161,31 @@ button{
 <button>נתח מקרה</button>
 
 <div class="section">
-<h3>מידע נוסף</h3>
-<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">
-Browse All Breeds
-</a>
-<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">
-Cat Breed Selector
-</a>
+  <h3>מידע נוסף</h3>
+  <a class="link-btn"
+     href="https://www.whiskas.in/cat-breeds"
+     target="_blank">
+     Browse All Breeds
+  </a>
 </div>
 
 <div class="section">
-<h3>וטרינרים מומלצים</h3>
-<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">
-ד"ר טלי שטיין
-</a>
-<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">
-ד"ר תמר פלידל
-</a>
-<a class="link-btn" href="https://www.doctorvet.co.il/" target="_blank">
-🚑 וטרינר חירום 24/7
-</a>
+  <h3>וטרינרים מומלצים</h3>
+  <a class="link-btn"
+     href="https://www.talisteinvet.co.il/"
+     target="_blank">
+     ד"ר טלי שטיין
+  </a>
+  <a class="link-btn"
+     href="https://easy.co.il/page/3056876"
+     target="_blank">
+     ד"ר תמר פלידל
+  </a>
+  <a class="link-btn"
+     href="https://www.doctorvet.co.il/"
+     target="_blank">
+     🚑 וטרינר חירום 24/7
+  </a>
 </div>
 
 </div>
