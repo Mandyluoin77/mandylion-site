@@ -3,223 +3,311 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind Elite V26 - Pure Cats Edition</title>
+<title>CatMind Elite V26 PRO</title>
 
 <style>
-:root {
-  --turquoise: #40e0d0;
-  --deep-blue: #00b7eb;
-  --dark-bg: #0b2537;
-  --panel: rgba(11, 37, 55, 0.45);
-  --emergency: #ff4757;
+:root{
+  --turquoise:#40e0d0;
+  --panel:rgba(11,37,55,0.45);
+  --emergency:#ff4757;
 }
 
-body {
-  margin: 0;
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  color: #e0ffff;
-  background: linear-gradient(135deg, #0b2537, #001f2e);
-  min-height: 100vh;
-  overflow: hidden;
-  position: relative;
+body{
+  margin:0;
+  font-family:'Segoe UI',system-ui,sans-serif;
+  color:#e0ffff;
+  background:linear-gradient(135deg,#0b2537,#001f2e);
+  min-height:100vh;
+  overflow:hidden;
 }
 
-/* רק חתול — ללא כלבים */
-#cat-view {
-  position: fixed;
-  inset: 0;
-  background: url('https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&q=100&w=3000') center/cover no-repeat;
-  z-index: 1;
-  opacity: 0.75;
-  filter: brightness(1.1) contrast(1.15) saturate(1.25);
+/* רקע */
+#cat-view{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  overflow:hidden;
+}
+#cat-view::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at center,
+    rgba(0,0,0,0.2) 0%,
+    rgba(0,0,0,0.45) 60%,
+    rgba(0,0,0,0.65) 100%);
 }
 
-.main-interface {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  max-width: 1400px;
-  min-height: 100vh;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 30px 80px;
-  box-sizing: border-box;
-  gap: 80px;
+.cat-bg{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  transition:opacity 2s ease-in-out;
+  animation:kenburns 30s ease-in-out infinite alternate;
+}
+.cat-bg.active{ opacity:.75; }
+
+@keyframes kenburns{
+  0%{ transform:scale(1); }
+  100%{ transform:scale(1.12) translate(-2%,-2%); }
 }
 
-.panel {
-  width: 100%;
-  max-width: 380px;
+/* ממשק */
+.main-interface{
+  position:relative;
+  z-index:10;
+  max-width:1400px;
+  margin:auto;
+  display:flex;
+  gap:60px;
+  padding:30px 60px;
 }
 
-.glass-card {
-  background: var(--panel);
-  border: 1px solid rgba(64, 224, 208, 0.25);
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 15px 50px rgba(0,0,0,0.70);
-  backdrop-filter: blur(16px);
+.panel{max-width:420px;width:100%;}
+
+.glass-card{
+  background:var(--panel);
+  border:1px solid rgba(64,224,208,.25);
+  border-radius:20px;
+  padding:22px;
+  backdrop-filter:blur(18px);
+  margin-bottom:25px;
+  transition:all .3s ease;
 }
 
-h2, h3 {
-  color: var(--turquoise);
-  margin-top: 0;
-  border-bottom: 2px solid rgba(64, 224, 208, 0.12);
-  padding-bottom: 8px;
-  font-size: 1.4rem;
+/* הדגשת חירום */
+.glass-card.emergency-highlight{
+  border:2px solid var(--emergency);
+  box-shadow:0 0 40px rgba(255,71,87,.6);
+  animation:pulse 1.2s infinite alternate;
 }
 
-select, textarea, input[type="file"] {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(224, 255, 255, 0.12);
-  background: rgba(0,0,0,0.50);
-  color: #e0ffff;
-  font-size: 14px;
-  margin-bottom: 10px;
-  outline: none;
+@keyframes pulse{
+  from{ box-shadow:0 0 20px rgba(255,71,87,.4); }
+  to{ box-shadow:0 0 45px rgba(255,71,87,.9); }
 }
 
-button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #40e0d0, #00b7eb);
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 15px;
-  transition: 0.3s;
+h2,h3{
+  color:var(--turquoise);
+  margin-top:0;
+  border-bottom:2px solid rgba(64,224,208,.12);
+  padding-bottom:8px;
 }
 
-button:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 25px rgba(64, 224, 208, 0.50);
+select,textarea{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid rgba(224,255,255,.12);
+  background:rgba(0,0,0,.5);
+  color:#e0ffff;
+  margin-bottom:10px;
 }
 
-#result-box {
-  margin-top: 15px;
-  padding: 15px;
-  border-radius: 14px;
-  display: none;
-  line-height: 1.5;
-  font-size: 13px;
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#40e0d0,#00b7eb);
+  color:#000;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.emergency {
-  border: 2px solid var(--emergency);
-  background: rgba(255, 71, 87, 0.10);
-  color: #ff9f9e;
+#result-box{
+  margin-top:15px;
+  padding:15px;
+  border-radius:14px;
+  display:none;
+  font-size:13px;
 }
 
-.normal {
-  border: 1px solid var(--turquoise);
-  background: rgba(64, 224, 208, 0.06);
+.emergency{
+  border:2px solid var(--emergency);
+  background:rgba(255,71,87,.1);
+  color:#ff9f9e;
 }
 
-.call-btn {
-  display: block;
-  background: var(--emergency);
-  color: white;
-  text-align: center;
-  padding: 12px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 12px;
+.normal{
+  border:1px solid var(--turquoise);
+  background:rgba(64,224,208,.06);
 }
 
-#preview-img {
-  max-width: 100%;
-  max-height: 140px;
-  border-radius: 10px;
-  margin-top: 8px;
-  display: none;
-  border: 1px solid rgba(64, 224, 208, 0.35);
+.call-btn{
+  display:block;
+  background:var(--emergency);
+  color:white;
+  text-align:center;
+  padding:12px;
+  border-radius:12px;
+  text-decoration:none;
+  margin-top:12px;
 }
+
+.breeds-btn{
+  display:block;
+  margin-top:15px;
+  text-align:center;
+  padding:12px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:bold;
+  background:linear-gradient(135deg,#40e0d0,#00b7eb);
+  color:#000;
+}
+
+.vet-link{
+  display:block;
+  margin-top:10px;
+  padding:12px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:bold;
+  background:rgba(64,224,208,0.08);
+  border:1px solid rgba(64,224,208,0.25);
+  color:#40e0d0;
+}
+
+.footer-email{
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:14px;
+  background:rgba(0,0,0,.35);
+  padding:8px 18px;
+  border-radius:20px;
+}
+.footer-email a{ color:#40e0d0; font-weight:bold; text-decoration:none; }
 </style>
 </head>
 
 <body>
 
-<div id="cat-view"></div>
+<div id="cat-view">
+  <div class="cat-bg" id="bg1"></div>
+  <div class="cat-bg" id="bg2"></div>
+</div>
 
 <div class="main-interface">
-  <div class="panel">
-    <div class="glass-card">
-      <h2>אבחון חתולים 🐈</h2>
 
-      <select id="issue-type">
-        <option value="">בחר בעיה</option>
-        <option value="הקאות">הקאות</option>
-        <option value="שלשולים">שלשולים</option>
-        <option value="דם בשתן">דם בשתן</option>
-        <option value="נשימה כבדה">נשימה כבדה</option>
-        <option value="עייפות">עייפות קיצונית</option>
-      </select>
+<div class="panel">
+<div class="glass-card">
+<h2>אבחון חכם 🐈</h2>
 
-      <textarea id="issue-desc" rows="3" placeholder="תאר את המקרה..."></textarea>
+<select id="issue-type">
+<option value="">בחר בעיה</option>
+<option>דם בשתן</option>
+<option>נשימה כבדה</option>
+<option>התקפי פרכוס</option>
+<option>עיוורון פתאומי</option>
+<option>התעלפות</option>
+<option>שיעול</option>
+<option>חום גבוה</option>
+</select>
 
-      <input type="file" id="cat-photo" accept="image/*">
-      <img id="preview-img">
+<textarea id="issue-desc" rows="3" placeholder="תאר את המקרה..."></textarea>
+<button onclick="runDiagnostic()">נתח מקרה</button>
 
-      <button onclick="runDiagnostic()">בדוק</button>
+<div id="result-box"></div>
+<div id="emergency-ui" style="display:none;">
+<a href="tel:039688988" class="call-btn">📞 חירום וטרינרי</a>
+</div>
 
-      <div id="result-box"></div>
+</div>
+</div>
 
-      <div id="emergency-ui" style="display:none;">
-        <a href="tel:039688988" class="call-btn">📞 חירום וטרינרי</a>
-      </div>
-    </div>
-  </div>
+<div class="panel">
+
+<div class="glass-card">
+<h3>מידע נוסף</h3>
+<a href="https://www.purina.co.il/cats/cat-breeds" target="_blank" class="breeds-btn">
+Browse All Breeds
+</a>
+</div>
+
+<div class="glass-card" id="vet-card">
+<h3 id="vet-title">וטרינרים מומלצים</h3>
+
+<a href="https://www.talisteinvet.co.il/" target="_blank" class="vet-link">
+🐾 ד"ר טלי שטיין
+</a>
+
+<a href="https://easy.co.il/page/3056876" target="_blank" class="vet-link">
+🏥 חוות דעת ב-Easy
+</a>
+</div>
+
+</div>
+
+</div>
+
+<div class="footer-email">
+Israel • <a href="mailto:fadeinto77@gmail.com">fadeinto77@gmail.com</a>
 </div>
 
 <script>
-document.getElementById('cat-photo').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
+const catImages=[
+"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&q=100&w=3000",
+"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=100&w=3000"
+];
 
-  const reader = new FileReader();
-  reader.onload = function(ev) {
-    const img = document.getElementById('preview-img');
-    img.src = ev.target.result;
-    img.style.display = 'block';
-  };
-  reader.readAsDataURL(file);
-});
+let current=0;
+let showingFirst=true;
+const bg1=document.getElementById("bg1");
+const bg2=document.getElementById("bg2");
 
-function runDiagnostic() {
-  const issue = document.getElementById('issue-type').value;
-  const desc = document.getElementById('issue-desc').value.toLowerCase();
-  const resultBox = document.getElementById('result-box');
-  const emergencyUI = document.getElementById('emergency-ui');
+function switchBackground(){
+ current=(current+1)%catImages.length;
+ const next=catImages[current];
+ if(showingFirst){
+  bg2.style.backgroundImage=`url('${next}')`;
+  bg2.classList.add("active");
+  bg1.classList.remove("active");
+ }else{
+  bg1.style.backgroundImage=`url('${next}')`;
+  bg1.classList.add("active");
+  bg2.classList.remove("active");
+ }
+ showingFirst=!showingFirst;
+}
+bg1.style.backgroundImage=`url('${catImages[0]}')`;
+bg1.classList.add("active");
+setInterval(switchBackground,8000);
 
-  if (!issue && !desc) {
-    resultBox.style.display = "block";
-    resultBox.className = "normal";
-    resultBox.innerHTML = "בחר בעיה או תאר מצב.";
-    return;
-  }
+function runDiagnostic(){
+ const issue=document.getElementById('issue-type').value;
+ const desc=document.getElementById('issue-desc').value.toLowerCase();
+ const resultBox=document.getElementById('result-box');
+ const emergencyUI=document.getElementById('emergency-ui');
+ const vetCard=document.getElementById('vet-card');
+ const vetTitle=document.getElementById('vet-title');
 
-  const emergencyWords = ["דם", "פרכוס", "לא זז", "התעלפות", "נשימה כבדה"];
-  const isEmergency = emergencyWords.some(w => desc.includes(w)) ||
-                      ["דם בשתן", "נשימה כבדה"].includes(issue);
+ const redFlags=["דם","פרכוס","התעלפות","נשימה כבדה"];
+ const isEmergency=redFlags.some(w=>desc.includes(w)) ||
+                   ["דם בשתן","נשימה כבדה","התקפי פרכוס","עיוורון פתאומי"].includes(issue);
 
-  resultBox.style.display = "block";
+ resultBox.style.display="block";
 
-  if (isEmergency) {
-    resultBox.className = "emergency";
-    resultBox.innerHTML = "⚠ מצב חירום — פנה מיד לוטרינר.";
-    emergencyUI.style.display = "block";
-  } else {
-    resultBox.className = "normal";
-    emergencyUI.style.display = "none";
-    resultBox.innerHTML = "מצב אינו מוגדר כחירום, אך מומלץ מעקב ובדיקה.";
-  }
+ if(isEmergency){
+  resultBox.className="emergency";
+  resultBox.innerHTML="⚠ מצב חירום — מומלץ לפנות עכשיו לוטרינר.";
+  emergencyUI.style.display="block";
+
+  vetCard.classList.add("emergency-highlight");
+  vetTitle.innerText="⚠ מומלץ לפנות עכשיו";
+  vetCard.scrollIntoView({behavior:"smooth", block:"center"});
+
+ }else{
+  resultBox.className="normal";
+  resultBox.innerHTML="לא מוגדר כחירום אך מומלץ מעקב.";
+  emergencyUI.style.display="none";
+  vetCard.classList.remove("emergency-highlight");
+  vetTitle.innerText="וטרינרים מומלצים";
+ }
 }
 </script>
 
