@@ -1,80 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CatMind AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CatMind Elite</title>
 
 <style>
+:root{
+  --primary:#36d1c4;
+  --bg-dark:rgba(10,20,30,0.75);
+}
+
+*{
+  box-sizing:border-box;
+}
+
 body{
   margin:0;
-  font-family:Segoe UI, sans-serif;
-  background:#000;
-  color:#fff;
+  font-family:'Segoe UI',system-ui,sans-serif;
+  color:white;
+  background:black;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding:60px 15px;
   overflow-x:hidden;
 }
 
+/* רקע מתחלף */
 #bg{
   position:fixed;
   inset:0;
   background-size:cover;
   background-position:center;
   z-index:-1;
-  transition:opacity 1s ease-in-out;
+  transition:background-image 1.2s ease-in-out;
 }
 
-.panel{
-  width:420px;
-  max-width:90%;
-  margin:40px auto;
-  background:rgba(0,0,0,.75);
+/* כרטיס מרכזי */
+.card{
+  width:100%;
+  max-width:420px;
+  background:var(--bg-dark);
+  backdrop-filter:blur(10px);
+  border-radius:18px;
   padding:25px;
-  border-radius:20px;
-  backdrop-filter:blur(15px);
+  box-shadow:0 0 50px rgba(0,0,0,0.6);
 }
 
-h2,h3{
+/* כותרת */
+h1{
+  margin:0 0 20px 0;
   text-align:center;
-  margin-top:0;
+  font-size:22px;
 }
 
-select,textarea,button{
+/* select */
+select, textarea{
   width:100%;
   padding:12px;
   border-radius:12px;
   border:none;
-  margin-top:10px;
+  margin-bottom:12px;
+  font-size:14px;
 }
 
 button{
-  background:#40e0d0;
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  background:linear-gradient(45deg,#36d1c4,#00bcd4);
+  color:white;
   font-weight:bold;
   cursor:pointer;
+  margin-bottom:12px;
+  transition:0.2s;
 }
 
-#result,
-#aiResult{
-  margin-top:15px;
-  padding:12px;
-  background:#111;
-  border-radius:12px;
-  font-size:14px;
-  line-height:1.6;
+button:hover{
+  opacity:0.9;
 }
 
-.footer{
-  position:fixed;
-  bottom:15px;
-  left:50%;
-  transform:translateX(-50%);
+.section{
+  margin-top:25px;
+  text-align:center;
+}
+
+.footer-email{
+  text-align:center;
+  margin-top:25px;
   font-weight:bold;
-  color:#00ffff;
-  font-size:14px;
+  color:#00e5ff;
+  font-size:15px;
 }
 
-@media(max-width:768px){
-  .panel{
-    margin:20px auto 120px auto;
+/* רספונסיבי */
+@media(max-width:480px){
+  body{
+    padding-top:40px;
   }
 }
 </style>
@@ -84,110 +109,66 @@ button{
 
 <div id="bg"></div>
 
-<div class="panel">
-<h2>אבחון חכם 🐈</h2>
+<div class="card">
 
-<select id="issue">
-<option value="הקאות">הקאות</option>
-<option value="שלשולים">שלשולים</option>
-<option value="דם בשתן">דם בשתן</option>
-<option value="חוסר תיאבון">חוסר תיאבון</option>
-<option value="צליעה">צליעה</option>
-<option value="עייפות קיצונית">עייפות קיצונית</option>
-<option value="נשימה כבדה">נשימה כבדה</option>
-<option value="פרכוס">פרכוס</option>
+<h1>🐱 אבחון חכם</h1>
+
+<select>
+<option>בחר בעיה</option>
+<option>הקאות</option>
+<option>חוסר תיאבון</option>
+<option>עייפות</option>
+<option>שלשול</option>
 </select>
 
-<button onclick="runDiagnostic()">נתח מקרה</button>
+<button>נתח מקרה</button>
 
-<div id="result"></div>
+<div class="section">
+<h1 style="font-size:18px;">🧠 אבחון AI מתקדם</h1>
 
-<hr style="margin:30px 0;border:1px solid rgba(255,255,255,0.1);">
+<textarea id="aiInput" placeholder="תאר את מצב החתול..."></textarea>
 
-<h3>אבחון AI מתקדם 🧠</h3>
+<button onclick="analyzeAI()">נתח AI</button>
 
-<textarea id="aiInput" rows="4"
-placeholder="תאר בפירוט את מצב החתול..."></textarea>
-
-<button onclick="runAI()">נתח עם AI</button>
-
-<div id="aiResult"></div>
-
+<div id="aiResult" style="margin-top:10px;"></div>
 </div>
 
-<div class="footer">
+<div class="footer-email">
 fadeinto77@gmail.com
 </div>
 
-<script>
-/* תמונות מתחלפות */
-const images=[
-"https://images.unsplash.com/photo-1543852786-1cf6624b9987",
-"https://images.unsplash.com/photo-1518791841217-8f162f1e1131",
-"https://images.unsplash.com/photo-1494256997604-768d1f608cac"
-];
+</div>
 
+<script>
+/* רקע מתחלף */
+const images=["bg.png","bg2.png","bg3.png","bg4.png"];
 let index=0;
 const bg=document.getElementById("bg");
 
 function changeBg(){
-  bg.style.opacity=0;
-  setTimeout(()=>{
-    bg.style.backgroundImage=`url(${images[index]})`;
-    bg.style.opacity=1;
-    index=(index+1)%images.length;
-  },500);
+  bg.style.backgroundImage=`url('${images[index]}')`;
+  index=(index+1)%images.length;
 }
-
 changeBg();
-setInterval(changeBg,8000);
+setInterval(changeBg,5000);
 
-/* אבחון רגיל */
-function runDiagnostic(){
-  const issue=document.getElementById("issue").value;
-  const result=document.getElementById("result");
-
-  const tips={
-    "הקאות":"אם תכופות או עם דם – פנה לוטרינר מיד.",
-    "שלשולים":"אם נמשך מעל 24 שעות – בדיקה רפואית.",
-    "דם בשתן":"חשד לדלקת או חסימה – מצב חירום.",
-    "חוסר תיאבון":"מעל 24 שעות ללא אוכל – וטרינר.",
-    "צליעה":"בדוק פציעה או שבר.",
-    "עייפות קיצונית":"בדיקת דם מומלצת.",
-    "נשימה כבדה":"חירום – פנה מיד.",
-    "פרכוס":"חירום רפואי."
-  };
-
-  result.innerHTML=tips[issue] || "נדרש מידע נוסף.";
-}
-
-/* AI אמיתי */
-async function runAI(){
-  const input=document.getElementById("aiInput").value.trim();
+/* AI */
+async function analyzeAI(){
+  const text=document.getElementById("aiInput").value;
   const result=document.getElementById("aiResult");
-
-  if(input.length<10){
-    result.innerHTML="נא להזין תיאור מפורט יותר.";
-    return;
-  }
-
-  result.innerHTML="מנתח באמצעות AI...";
+  result.innerHTML="⏳ מנתח...";
 
   try{
-    const response=await fetch(
-      "https://catmind-ai-server.onrender.com/analyze",
-      {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body:JSON.stringify({text:input})
-      }
-    );
+    const response=await fetch("https://catmind-ai-server.onrender.com/analyze",{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({ text })
+    });
 
     const data=await response.json();
-    result.innerHTML=data.result;
-
-  }catch(err){
-    result.innerHTML="שגיאה בחיבור לשרת.";
+    result.innerHTML=data.result || "לא התקבלה תשובה.";
+  }catch(e){
+    result.innerHTML="❌ שגיאה בחיבור לשרת.";
   }
 }
 </script>
