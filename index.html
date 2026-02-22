@@ -8,55 +8,49 @@
 <style>
 :root{
   --primary:#36d1c4;
-  --bg-dark:rgba(10,20,30,0.75);
+  --glass:rgba(15,25,35,0.78);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box;}
 
 body{
   margin:0;
   font-family:'Segoe UI',system-ui,sans-serif;
   color:white;
-  background:black;
   min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  padding:60px 15px;
-  overflow-x:hidden;
+  padding:60px 20px 40px;
+  background:black;
 }
 
-/* רקע מתחלף */
 #bg{
   position:fixed;
   inset:0;
   background-size:cover;
   background-position:center;
   z-index:-1;
-  transition:background-image 1.2s ease-in-out;
+  transition:background-image 1s ease-in-out;
 }
 
-/* כרטיס מרכזי */
+.wrapper{
+  max-width:1200px;
+  margin:0 auto;
+}
+
 .card{
-  width:100%;
   max-width:420px;
-  background:var(--bg-dark);
+  margin:0 auto;
+  background:var(--glass);
   backdrop-filter:blur(10px);
   border-radius:18px;
   padding:25px;
-  box-shadow:0 0 50px rgba(0,0,0,0.6);
+  box-shadow:0 0 60px rgba(0,0,0,0.6);
 }
 
-/* כותרת */
 h1{
-  margin:0 0 20px 0;
   text-align:center;
-  font-size:22px;
+  margin:0 0 20px;
 }
 
-/* select */
 select, textarea{
   width:100%;
   padding:12px;
@@ -76,11 +70,6 @@ button{
   font-weight:bold;
   cursor:pointer;
   margin-bottom:12px;
-  transition:0.2s;
-}
-
-button:hover{
-  opacity:0.9;
 }
 
 .section{
@@ -88,19 +77,30 @@ button:hover{
   text-align:center;
 }
 
-.footer-email{
-  text-align:center;
-  margin-top:25px;
-  font-weight:bold;
-  color:#00e5ff;
-  font-size:15px;
+.link-btn{
+  display:block;
+  text-decoration:none;
+  background:rgba(255,255,255,0.1);
+  padding:10px;
+  border-radius:12px;
+  margin-bottom:10px;
+  color:white;
+  transition:0.2s;
 }
 
-/* רספונסיבי */
+.link-btn:hover{
+  background:rgba(255,255,255,0.2);
+}
+
+.footer-email{
+  text-align:center;
+  margin-top:20px;
+  font-weight:bold;
+  color:#00e5ff;
+}
+
 @media(max-width:480px){
-  body{
-    padding-top:40px;
-  }
+  body{padding-top:40px;}
 }
 </style>
 </head>
@@ -109,6 +109,7 @@ button:hover{
 
 <div id="bg"></div>
 
+<div class="wrapper">
 <div class="card">
 
 <h1>🐱 אבחון חכם</h1>
@@ -133,14 +134,42 @@ button:hover{
 <div id="aiResult" style="margin-top:10px;"></div>
 </div>
 
+<div class="section">
+<h1 style="font-size:18px;">📚 מידע נוסף</h1>
+
+<a class="link-btn" target="_blank" href="https://www.whiskas.in/cat-breeds">
+Browse All Breeds
+</a>
+
+<a class="link-btn" target="_blank" href="https://www.whiskas.in/cat-breeds">
+Cat Breed Selector
+</a>
+</div>
+
+<div class="section">
+<h1 style="font-size:18px;">🏥 וטרינרים מומלצים</h1>
+
+<a class="link-btn" target="_blank" href="https://www.talisteinvet.co.il/">
+ד"ר טלי שטיין
+</a>
+
+<a class="link-btn" target="_blank" href="https://easy.co.il/page/3056876">
+ד"ר תמר פלידל
+</a>
+
+<a class="link-btn" target="_blank" href="https://www.doctorvet.co.il/">
+🚑 וטרינר חירום 24/7
+</a>
+</div>
+
 <div class="footer-email">
 fadeinto77@gmail.com
 </div>
 
 </div>
+</div>
 
 <script>
-/* רקע מתחלף */
 const images=["bg.png","bg2.png","bg3.png","bg4.png"];
 let index=0;
 const bg=document.getElementById("bg");
@@ -152,7 +181,6 @@ function changeBg(){
 changeBg();
 setInterval(changeBg,5000);
 
-/* AI */
 async function analyzeAI(){
   const text=document.getElementById("aiInput").value;
   const result=document.getElementById("aiResult");
