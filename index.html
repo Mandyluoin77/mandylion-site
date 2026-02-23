@@ -201,7 +201,7 @@ async function analyze() {
     const response = await fetch("https://catmind-ai-server.onrender.com/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // שימוש ב-'text' כדי להתאים למה שהשרת מצפה
+      // תיקון קריטי: שולחים שדה בשם 'text' (לא prompt)
       body: JSON.stringify({
         text: `החתול שלי סובל מ: ${problem}. תן הסבר קצר ומה כדאי לעשות.`
       })
@@ -213,20 +213,16 @@ async function analyze() {
       throw new Error(data.error || "Server error");
     }
 
-    // שימוש ב-'data.result' במקום 'data.output'
+    // תיקון קריטי: ניגשים לשדה בשם 'result' שחוזר מהשרת
     if (data.result) {
-        resultBox.innerHTML = `
-          <div style="background: rgba(255,255,255,0.08); padding: 10px; border-radius: 10px; margin-top: 10px;">
-            ${data.result}
-          </div>
-        `;
+        resultBox.innerHTML = `<div style="background: rgba(255,255,255,0.08); padding: 10px; border-radius: 10px; margin-top: 10px;">${data.result}</div>`;
     } else {
-        resultBox.innerHTML = "לא התקבלה תשובה תקינה מהשרת.";
+        resultBox.innerHTML = "לא התקבלה תשובה מהשרת.";
     }
 
   } catch (error) {
     resultBox.innerHTML = "❌ שגיאה בחיבור לשרת";
-    console.error(error);
+    console.error("Error details:", error);
   }
 }
 
