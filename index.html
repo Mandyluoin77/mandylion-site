@@ -200,10 +200,8 @@ async function analyze() {
   try {
     const response = await fetch("https://catmind-ai-server.onrender.com/generate", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      // כאן התיקון: שולחים 'text' כפי שהשרת מצפה
+      headers: { "Content-Type": "application/json" },
+      // תיקון המפתח ל-text
       body: JSON.stringify({
         text: `החתול שלי סובל מ: ${problem}. תן הסבר קצר ומה כדאי לעשות.`
       })
@@ -215,13 +213,16 @@ async function analyze() {
       throw new Error(data.error || "Server error");
     }
 
-    // כאן התיקון הקריטי: קוראים ל-result במקום output
-    // הוספתי רק רקע קטן כדי שהטקסט יהיה קריא, בלי לשנות את המבנה המקורי
-    resultBox.innerHTML = `
-      <div style="background: rgba(255,255,255,0.08); padding: 10px; border-radius: 10px; margin-top: 10px;">
-        ${data.result}
-      </div>
-    `;
+    // תיקון השדה ל-result
+    if (data.result) {
+        resultBox.innerHTML = `
+          <div style="background: rgba(255,255,255,0.08); padding: 10px; border-radius: 10px; margin-top: 10px;">
+            ${data.result}
+          </div>
+        `;
+    } else {
+        resultBox.innerHTML = "לא התקבלה תשובה מה-AI.";
+    }
 
   } catch (error) {
     resultBox.innerHTML = "❌ שגיאה בחיבור לשרת";
