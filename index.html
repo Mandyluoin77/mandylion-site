@@ -19,7 +19,6 @@ body{
   min-height:100vh;
 }
 
-/* ===== רקע ===== */
 #bg{
   position:fixed;
   inset:0;
@@ -36,7 +35,6 @@ body{
   z-index:-1;
 }
 
-/* ===== כרטיס בצד ימין ===== */
 .card{
   position:fixed;
   top:60px;
@@ -136,25 +134,20 @@ button{
   <option>ירידה במשקל</option>
   <option>עלייה חריגה במשקל</option>
   <option>עייפות קיצונית</option>
-  <option>חוסר אנרגיה</option>
   <option>קושי בנשימה</option>
   <option>שיעול</option>
   <option>התעטשויות תכופות</option>
   <option>הפרשות מהאף</option>
   <option>הפרשות מהעיניים</option>
-  <option>עין אדומה / נפוחה</option>
   <option>גירודים מרובים</option>
   <option>נשירת שיער חריגה</option>
   <option>פצעים בעור</option>
   <option>נפיחות בגוף</option>
   <option>צליעה</option>
-  <option>כאבים בזמן הליכה</option>
   <option>חוסר שימוש בארגז חול</option>
-  <option>השתנה תכופה</option>
   <option>דם בשתן</option>
   <option>שינויים בהתנהגות</option>
   <option>אגרסיביות פתאומית</option>
-  <option>יללות חריגות</option>
   <option>רעידות</option>
   <option>פרכוסים</option>
   <option>הרעלה אפשרית</option>
@@ -206,17 +199,21 @@ async function analyze() {
   resultBox.innerHTML = "⏳ מנתח בעיה...";
 
   try {
-    const response = await fetch("https://catmind-ai-server.onrender.com/analyze", {
+    const response = await fetch("https://catmind-ai-server.onrender.com/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        text: `החתול שלי סובל מ: ${problem}. מה זה יכול להיות?`
+        prompt: `החתול שלי סובל מ: ${problem}. תן הסבר אפשרי ומה כדאי לעשות.`
       })
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Server error");
+    }
 
     resultBox.innerHTML = `
       <div style="
@@ -225,12 +222,13 @@ async function analyze() {
         border-radius: 10px;
         margin-top: 10px;
       ">
-        ${data.result}
+        ${data.output}
       </div>
     `;
 
   } catch (error) {
     resultBox.innerHTML = "❌ שגיאה בחיבור לשרת";
+    console.error(error);
   }
 }
 
