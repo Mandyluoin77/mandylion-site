@@ -4,73 +4,219 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CatMind</title>
+
 <style>
-:root{ --turquoise:#22d3ee; --panel:rgba(10,18,28,0.95); }
-body{ margin:0; font-family:'Segoe UI',system-ui,sans-serif; background:#000; color:white; min-height:100vh; }
-#bg{ position:fixed; inset:0; background-size:cover; background-position:center; z-index:-2; transition:opacity 1s ease; }
-.overlay{ position:fixed; inset:0; background:linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0.85)); z-index:-1; }
-.card{ position:fixed; top:60px; right:30px; width:280px; background:var(--panel); backdrop-filter:blur(12px); border-radius:16px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,0.7); }
-h1{ font-size:16px; text-align:center; margin-bottom:14px; }
-select, button{ width:100%; padding:8px; border-radius:6px; border:none; margin-bottom:10px; font-size:12px; }
-button{ background:var(--turquoise); font-weight:600; cursor:pointer; }
-.section{ margin-top:14px; }
-.section h3{ font-size:12px; margin-bottom:6px; }
-.link-btn{ display:block; padding:6px; text-align:center; border-radius:6px; background:rgba(255,255,255,0.08); color:white; text-decoration:none; font-size:11px; margin-bottom:5px; }
-#result{ margin-top:10px; font-size:13px; line-height:1.6; }
+:root{
+  --turquoise:#22d3ee;
+  --panel:rgba(10,18,28,0.95);
+}
+
+body{
+  margin:0;
+  font-family:'Segoe UI',system-ui,sans-serif;
+  background:#000;
+  color:white;
+  min-height:100vh;
+}
+
+#bg{
+  position:fixed;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  z-index:-2;
+  transition:opacity 1s ease;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0.85));
+  z-index:-1;
+}
+
+.card{
+  position:fixed;
+  top:60px;
+  right:30px;
+  width:280px;
+  background:var(--panel);
+  backdrop-filter:blur(12px);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.7);
+}
+
+@media(max-width:768px){
+  .card{
+    top:30px;
+    right:10px;
+    width:240px;
+  }
+}
+
+h1{
+  font-size:16px;
+  text-align:center;
+  margin-bottom:14px;
+}
+
+select{
+  width:100%;
+  padding:8px;
+  border-radius:6px;
+  border:none;
+  margin-bottom:10px;
+  font-size:12px;
+  background: #1e293b;
+  color: white;
+}
+
+button{
+  width:100%;
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  background:var(--turquoise);
+  font-weight:600;
+  font-size:12px;
+  cursor:pointer;
+  margin-bottom:14px;
+}
+
+.section{
+  margin-top:14px;
+}
+
+.section h3{
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+.link-btn{
+  display:block;
+  padding:6px;
+  text-align:center;
+  border-radius:6px;
+  background:rgba(255,255,255,0.08);
+  color:white;
+  text-decoration:none;
+  font-size:11px;
+  margin-bottom:5px;
+  transition:0.2s;
+}
+
+#result{
+  margin-top:10px;
+  font-size:13px;
+  line-height:1.6;
+  white-space: pre-wrap;
+}
 </style>
 </head>
+
 <body>
-<div id="bg"></div><div class="overlay"></div>
+
+<div id="bg"></div>
+<div class="overlay"></div>
+
 <div class="card">
+
 <h1>🐱 אבחון חכם</h1>
+
 <select id="problem">
   <option value="">בחר בעיה</option>
-  <option>הקאות</option><option>שלשול</option><option>עצירות</option><option>חוסר תיאבון</option>
-  <option>ירידה במשקל</option><option>עלייה חריגה במשקל</option><option>עייפות קיצונית</option>
-  <option>קושי בנשימה</option><option>שיעול</option><option>התעטשויות תכופות</option>
-  <option>הפרשות מהאף</option><option>הפרשות מהעיניים</option><option>גירודים מרובים</option>
-  <option>נשירת שיער חריגה</option><option>פצעים בעור</option><option>נפיחות בגוף</option>
-  <option>צליעה</option><option>חוסר שימוש בארגז חול</option><option>דם בשתן</option>
-  <option>שינויים בהתנהגות</option><option>אגרסיביות פתאומית</option><option>רעידות</option>
-  <option>פרכוסים</option><option>הרעלה אפשרית</option><option>בליעת חפץ זר</option>
-  <option>חום גבוה</option><option>אובדן הכרה</option>
+  <option>הקאות</option>
+  <option>שלשול</option>
+  <option>עצירות</option>
+  <option>חוסר תיאבון</option>
+  <option>ירידה במשקל</option>
+  <option>עלייה חריגה במשקל</option>
+  <option>עייפות קיצונית</option>
+  <option>קושי בנשימה</option>
+  <option>שיעול</option>
+  <option>התעטשויות תכופות</option>
+  <option>הפרשות מהאף</option>
+  <option>הפרשות מהעיניים</option>
+  <option>גירודים מרובים</option>
+  <option>נשירת שיער חריגה</option>
+  <option>פצעים בעור</option>
+  <option>נפיחות בגוף</option>
+  <option>צליעה</option>
+  <option>חוסר שימוש בארגז חול</option>
+  <option>דם בשתן</option>
+  <option>שינויים בהתנהגות</option>
+  <option>אגרסיביות פתאומית</option>
+  <option>רעידות</option>
+  <option>פרכוסים</option>
+  <option>הרעלה אפשרית</option>
+  <option>בליעת חפץ זר</option>
+  <option>חום גבוה</option>
+  <option>אובדן הכרה</option>
 </select>
+
 <button onclick="analyze()">נתח מקרה</button>
+
 <div id="result"></div>
+
 <div class="section">
   <h3>מידע נוסף</h3>
   <a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
 </div>
+
 <div class="section">
   <h3>וטרינרים מומלצים</h3>
   <a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
   <a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
 </div>
+
 </div>
+
 <script>
 async function analyze() {
   const problem = document.getElementById("problem").value;
   const resultBox = document.getElementById("result");
-  if (!problem) { resultBox.innerHTML = "⚠ אנא בחר בעיה"; return; }
+
+  if (!problem) {
+    resultBox.innerHTML = "⚠ אנא בחר בעיה תחילה";
+    return;
+  }
+
   resultBox.innerHTML = "⏳ מנתח בעיה...";
+
   try {
+    // התיקון: פנייה לכתובת /generate כפי שמופיע בשרת שלך
     const response = await fetch("https://catmind-ai-server.onrender.com/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // תיקון: שליחת 'text' במקום 'prompt'
-      body: JSON.stringify({ text: `החתול שלי סובל מ: ${problem}. תן הסבר קצר ומה כדאי לעשות.` })
+      body: JSON.stringify({
+        text: `החתול שלי סובל מ: ${problem}. תן הסבר קצר ומה כדאי לעשות.`
+      })
     });
+
     const data = await response.json();
-    // תיקון: קבלת 'result' במקום 'output'
-    resultBox.innerHTML = data.result || "לא התקבלה תשובה";
+
+    if (!response.ok) {
+      throw new Error(data.error || "Server error");
+    }
+
+    // התיקון: קבלת data.result כפי שהשרת מחזיר
+    if (data.result) {
+        resultBox.innerHTML = data.result;
+    } else {
+        resultBox.innerHTML = "❌ לא התקבלה תשובה תקינה מה-AI.";
+    }
+
   } catch (error) {
-    resultBox.innerHTML = "❌ שגיאה בחיבור";
+    resultBox.innerHTML = "❌ שגיאה בחיבור לשרת. נסה שוב בעוד רגע.";
     console.error(error);
   }
 }
+
 const images = ["bg.png","bg2.png","bg3.png","bg4.png"];
 let current = 0;
 const bg = document.getElementById("bg");
+
 function changeBackground(){
   bg.style.opacity = 0;
   setTimeout(()=>{
@@ -79,8 +225,10 @@ function changeBackground(){
     current = (current + 1) % images.length;
   }, 400);
 }
+
 changeBackground();
 setInterval(changeBackground, 6000);
 </script>
+
 </body>
 </html>
