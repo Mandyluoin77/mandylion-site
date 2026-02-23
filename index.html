@@ -3,20 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CatMind AI</title>
+    <title>CatMind - אבחון חכם לחתולים</title>
     <style>
-        :root { --turquoise: #22d3ee; --panel: rgba(10, 18, 28, 0.95); }
-        body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background: #000; color: white; min-height: 100vh; overflow-x: hidden; }
-        #bg { position: fixed; inset: 0; background-size: cover; background-position: center; z-index: -2; transition: opacity 1s ease; }
-        .overlay { position: fixed; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.85)); z-index: -1; }
-        .card { position: fixed; top: 60px; right: 30px; width: 280px; background: var(--panel); backdrop-filter: blur(12px); border-radius: 16px; padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); }
-        h1 { font-size: 16px; text-align: center; margin-bottom: 14px; }
-        select { width: 100%; padding: 8px; border-radius: 6px; border: none; margin-bottom: 10px; font-size: 12px; background: #1e293b; color: white; }
-        button { width: 100%; padding: 10px; border: none; border-radius: 8px; background: var(--turquoise); font-weight: 600; font-size: 13px; cursor: pointer; margin-bottom: 14px; color: black; }
-        .section { margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
-        .section h3 { font-size: 12px; margin-bottom: 6px; color: var(--turquoise); }
-        .link-btn { display: block; padding: 6px; text-align: center; border-radius: 6px; background: rgba(255, 255, 255, 0.08); color: white; text-decoration: none; font-size: 11px; margin-bottom: 5px; }
-        #resultContainer { margin-top: 10px; font-size: 13px; line-height: 1.6; min-height: 40px; color: #e2e8f0; white-space: pre-wrap; }
+        :root { 
+            --turquoise: #22d3ee; 
+            --panel: rgba(10, 18, 28, 0.95); 
+        }
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #000; 
+            color: white; 
+            min-height: 100vh; 
+            overflow-x: hidden;
+        }
+        #bg { 
+            position: fixed; 
+            inset: 0; 
+            background-size: cover; 
+            background-position: center; 
+            z-index: -2; 
+            transition: opacity 1s ease-in-out; 
+        }
+        .overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.85)); 
+            z-index: -1; 
+        }
+        .card { 
+            position: fixed; 
+            top: 60px; 
+            right: 30px; 
+            width: 280px; 
+            background: var(--panel); 
+            backdrop-filter: blur(12px); 
+            border-radius: 16px; 
+            padding: 20px; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7); 
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        @media (max-width: 768px) {
+            .card { top: 30px; right: 10px; left: 10px; width: auto; }
+        }
+        h1 { font-size: 18px; text-align: center; margin-bottom: 20px; color: var(--turquoise); }
+        select { 
+            width: 100%; 
+            padding: 10px; 
+            border-radius: 8px; 
+            border: 1px solid rgba(255,255,255,0.2); 
+            margin-bottom: 12px; 
+            font-size: 14px; 
+            background: #1e293b; 
+            color: white; 
+            outline: none;
+        }
+        button { 
+            width: 100%; 
+            padding: 12px; 
+            border: none; 
+            border-radius: 8px; 
+            background: var(--turquoise); 
+            font-weight: 700; 
+            font-size: 14px; 
+            cursor: pointer; 
+            margin-bottom: 15px; 
+            color: #08121c; 
+            transition: transform 0.1s;
+        }
+        button:active { transform: scale(0.98); }
+        .section { margin-top: 18px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; }
+        .section h3 { font-size: 13px; margin-bottom: 8px; color: var(--turquoise); opacity: 0.9; }
+        .link-btn { 
+            display: block; 
+            padding: 8px; 
+            text-align: center; 
+            border-radius: 6px; 
+            background: rgba(255, 255, 255, 0.08); 
+            color: white; 
+            text-decoration: none; 
+            font-size: 12px; 
+            margin-bottom: 6px; 
+            transition: background 0.3s;
+        }
+        .link-btn:hover { background: rgba(255, 255, 255, 0.15); }
+        #resultContainer { 
+            margin-top: 10px; 
+            font-size: 13px; 
+            line-height: 1.6; 
+            min-height: 50px; 
+            color: #cbd5e1; 
+            white-space: pre-wrap;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -27,8 +108,8 @@
     <div class="card">
         <h1>🐱 אבחון חכם</h1>
         
-        <select id="problemInput">
-            <option value="">בחר בעיה</option>
+        <select id="mainSymptom">
+            <option value="">בחר בעיה מהרשימה</option>
             <option value="Vomiting">הקאות</option>
             <option value="Diarrhea">שלשול</option>
             <option value="Constipation">עצירות</option>
@@ -58,7 +139,7 @@
             <option value="Loss of consciousness">אובדן הכרה</option>
         </select>
 
-        <button onclick="startAnalysis()">נתח מקרה</button>
+        <button onclick="executeAnalysis()">נתח מקרה</button>
         
         <div id="resultContainer"></div>
 
@@ -75,58 +156,36 @@
     </div>
 
     <script>
-        async function startAnalysis() {
-            const val = document.getElementById("problemInput").value;
-            const resBox = document.getElementById("resultContainer");
+        async function executeAnalysis() {
+            const selectedSymptom = document.getElementById("mainSymptom").value;
+            const resultBox = document.getElementById("resultContainer");
             
-            if (!val) {
-                resBox.innerHTML = "⚠ בחר בעיה מהרשימה";
+            if (!selectedSymptom) {
+                resultBox.innerHTML = "⚠ אנא בחר בעיה לפני הניתוח.";
                 return;
             }
 
-            resBox.innerHTML = "⏳ Analyzing data...";
+            resultBox.innerHTML = "⏳ מנתח נתונים מול השרת...";
 
             try {
-                // Pointing to /generate as required by the server
+                // Pointing to /generate as required by your Render server
                 const response = await fetch("https://catmind-ai-server.onrender.com/generate", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ 
-                        text: "Cat symptom: " + val 
+                        text: "Cat symptom for analysis: " + selectedSymptom 
                     })
                 });
 
                 const data = await response.json();
 
-                // Displaying 'result' field from server response
+                // Displaying 'result' from AI
                 if (data.result) {
-                    resBox.innerHTML = data.result;
+                    resultBox.innerHTML = data.result;
                 } else {
-                    resBox.innerHTML = "Server response error.";
+                    resultBox.innerHTML = "לא התקבלה תשובה תקינה מהשרת.";
                 }
 
             } catch (err) {
-                resBox.innerHTML = "❌ Connection Error";
-                console.error("Fetch Error:", err);
-            }
-        }
-
-        // Background rotation logic
-        const bgImgs = ["bg.png", "bg2.png", "bg3.png", "bg4.png"];
-        let idx = 0;
-        const bgDiv = document.getElementById("bg");
-
-        function cycleBackground() {
-            bgDiv.style.opacity = 0;
-            setTimeout(() => {
-                bgDiv.style.backgroundImage = `url('${bgImgs[idx]}')`;
-                bgDiv.style.opacity = 1;
-                idx = (idx + 1) % bgImgs.length;
-            }, 400);
-        }
-
-        cycleBackground();
-        setInterval(cycleBackground, 6000);
-    </script>
-</body>
-</html>
+                resultBox.innerHTML = "❌ שגיאה בחיבור: וודא שהשרת ב-Render פעיל.";
+                console.
