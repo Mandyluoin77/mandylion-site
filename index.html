@@ -10,10 +10,9 @@ body{ margin:0; font-family:'Segoe UI',system-ui,sans-serif; background:#000; co
 #bg{ position:fixed; inset:0; background-size:cover; background-position:center; z-index:-2; transition:opacity 1s ease; }
 .overlay{ position:fixed; inset:0; background:linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0.85)); z-index:-1; }
 .card{ position:fixed; top:60px; right:30px; width:280px; background:var(--panel); backdrop-filter:blur(12px); border-radius:16px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,0.7); }
-@media(max-width:768px){ .card{ top:30px; right:10px; width:240px; } }
 h1{ font-size:16px; text-align:center; margin-bottom:14px; }
-select{ width:100%; padding:8px; border-radius:6px; border:none; margin-bottom:10px; font-size:12px; background:#1e293b; color:white; }
-button{ width:100%; padding:8px; border:none; border-radius:8px; background:var(--turquoise); font-weight:600; font-size:12px; cursor:pointer; margin-bottom:14px; }
+select, button{ width:100%; padding:8px; border-radius:6px; border:none; margin-bottom:10px; font-size:12px; }
+button{ background:var(--turquoise); font-weight:600; cursor:pointer; }
 .section{ margin-top:14px; }
 .section h3{ font-size:12px; margin-bottom:6px; }
 .link-btn{ display:block; padding:6px; text-align:center; border-radius:6px; background:rgba(255,255,255,0.08); color:white; text-decoration:none; font-size:11px; margin-bottom:5px; }
@@ -55,15 +54,14 @@ async function analyze() {
   if (!problem) { resultBox.innerHTML = "⚠ אנא בחר בעיה תחילה"; return; }
   resultBox.innerHTML = "⏳ מנתח בעיה...";
   try {
-    // התיקון הקריטי: פנייה ל-generate במקום analyze
+    // התיקון הקריטי: שינוי הסיומת מ-analyze ל-generate
     const response = await fetch("https://catmind-ai-server.onrender.com/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: `החתול שלי סובל מ: ${problem}. תן הסבר קצר ומה כדאי לעשות.` })
     });
     const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "Server error");
-    // התיקון הקריטי: שימוש ב-data.result
+    // התיקון הקריטי: קבלת result מהשרת
     resultBox.innerHTML = data.result || "❌ לא התקבלה תשובה";
   } catch (error) {
     resultBox.innerHTML = "❌ שגיאה בחיבור לשרת";
