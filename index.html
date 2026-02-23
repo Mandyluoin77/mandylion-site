@@ -68,16 +68,19 @@ select{
   border:none;
   margin-bottom:10px;
   font-size:12px;
+  background: #1e293b;
+  color: white;
 }
 
 button{
   width:100%;
-  padding:8px;
+  padding:10px;
   border:none;
   border-radius:8px;
   background:var(--turquoise);
-  font-weight:600;
-  font-size:12px;
+  color: #000;
+  font-weight:700;
+  font-size:13px;
   cursor:pointer;
   margin-bottom:14px;
 }
@@ -104,14 +107,13 @@ button{
   transition:0.2s;
 }
 
-.link-btn:hover{
-  background:rgba(255,255,255,0.18);
-}
-
 #result{
   margin-top:10px;
   font-size:13px;
   line-height:1.6;
+  max-height: 300px;
+  overflow-y: auto;
+  white-space: pre-wrap;
 }
 </style>
 </head>
@@ -122,67 +124,35 @@ button{
 <div class="overlay"></div>
 
 <div class="card">
+  <h1>🐱 אבחון חכם</h1>
 
-<h1>🐱 אבחון חכם</h1>
+  <select id="problem">
+    <option value="">בחר בעיה</option>
+    <option>הקאות</option>
+    <option>שלשול</option>
+    <option>עצירות</option>
+    <option>חוסר תיאבון</option>
+    <option>ירידה במשקל</option>
+    <option>עייפות קיצונית</option>
+    <option>קושי בנשימה</option>
+    <option>גירודים מרובים</option>
+    <option>דם בשתן</option>
+  </select>
 
-<select id="problem">
-  <option value="">בחר בעיה</option>
-  <option>הקאות</option>
-  <option>שלשול</option>
-  <option>עצירות</option>
-  <option>חוסר תיאבון</option>
-  <option>ירידה במשקל</option>
-  <option>עלייה חריגה במשקל</option>
-  <option>עייפות קיצונית</option>
-  <option>קושי בנשימה</option>
-  <option>שיעול</option>
-  <option>התעטשויות תכופות</option>
-  <option>הפרשות מהאף</option>
-  <option>הפרשות מהעיניים</option>
-  <option>גירודים מרובים</option>
-  <option>נשירת שיער חריגה</option>
-  <option>פצעים בעור</option>
-  <option>נפיחות בגוף</option>
-  <option>צליעה</option>
-  <option>חוסר שימוש בארגז חול</option>
-  <option>דם בשתן</option>
-  <option>שינויים בהתנהגות</option>
-  <option>אגרסיביות פתאומית</option>
-  <option>רעידות</option>
-  <option>פרכוסים</option>
-  <option>הרעלה אפשרית</option>
-  <option>בליעת חפץ זר</option>
-  <option>חום גבוה</option>
-  <option>אובדן הכרה</option>
-</select>
+  <button onclick="analyze()">נתח מקרה</button>
 
-<button onclick="analyze()">נתח מקרה</button>
+  <div id="result"></div>
 
-<div id="result"></div>
+  <div class="section">
+    <h3>מידע נוסף</h3>
+    <a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
+  </div>
 
-<div class="section">
-  <h3>מידע נוסף</h3>
-  <a class="link-btn"
-     href="https://www.whiskas.in/cat-breeds"
-     target="_blank">
-     Browse All Breeds
-  </a>
-</div>
-
-<div class="section">
-  <h3>וטרינרים מומלצים</h3>
-  <a class="link-btn"
-     href="https://www.talisteinvet.co.il/"
-     target="_blank">
-     ד"ר טלי שטיין
-  </a>
-  <a class="link-btn"
-     href="https://easy.co.il/page/3056876"
-     target="_blank">
-     ד"ר תמר פלידל
-  </a>
-</div>
-
+  <div class="section">
+    <h3>וטרינרים מומלצים</h3>
+    <a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
+    <a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
+  </div>
 </div>
 
 <script>
@@ -198,43 +168,39 @@ async function analyze() {
   resultBox.innerHTML = "⏳ מנתח בעיה...";
 
   try {
-    // קריאה לשרת ב-Render
     const response = await fetch("https://catmind-ai-server.onrender.com/generate", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      // שימוש ב-'text' כפי שהשרת מצפה
-      body: JSON.stringify({
-        text: `החתול שלי סובל מ: ${problem}. תן הסבר אפשרי ומה כדאי לעשות.`
+      headers: { "Content-Type": "application/json" },
+      // שולחים 'text' כי זה מה שהשרת מצפה לו
+      body: JSON.stringify({ 
+        text: `החתול שלי סובל מ: ${problem}. תן הסבר קצר ומה כדאי לעשות.` 
       })
     });
 
-    const data = await response.json();
-
     if (!response.ok) {
-      throw new Error(data.error || "Server error");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Server error");
     }
 
-    // הצגת התוצאה מתוך השדה 'result' שהשרת מחזיר
-    resultBox.innerHTML = `
-      <div style="
-        background: rgba(255,255,255,0.08);
-        padding: 10px;
-        border-radius: 10px;
-        margin-top: 10px;
-      ">
-        ${data.result}
-      </div>
-    `;
+    const data = await response.json();
+
+    // כאן התיקון הקריטי: משתמשים ב-data.result
+    if (data.result) {
+      resultBox.innerHTML = `
+        <div style="background:rgba(34,211,238,0.1); padding:10px; border-radius:8px; border-right:3px solid var(--turquoise);">
+          ${data.result}
+        </div>`;
+    } else {
+      resultBox.innerHTML = "❌ לא התקבלה תשובה תקינה מהשרת.";
+    }
 
   } catch (error) {
-    resultBox.innerHTML = "❌ שגיאה בחיבור לשרת. וודא שהשרת ב-Render פעיל.";
-    console.error(error);
+    resultBox.innerHTML = "❌ שגיאה: " + error.message;
+    console.error("Error details:", error);
   }
 }
 
-/* קוד רקעים מתחלפים */
+/* רקעים מתחלפים */
 const images = ["bg.png","bg2.png","bg3.png","bg4.png"];
 let current = 0;
 const bg = document.getElementById("bg");
@@ -247,7 +213,6 @@ function changeBackground(){
     current = (current + 1) % images.length;
   }, 400);
 }
-
 changeBackground();
 setInterval(changeBackground, 6000);
 </script>
