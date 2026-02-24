@@ -19,39 +19,35 @@ margin:0;
 font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
 color:#fff;
 overflow:hidden;
-}
 
-/* ===== רקע מלא רוחב ===== */
-body::before{
-content:"";
-position:fixed;
-inset:0;
-background-size:cover;        /* ממלא מסך */
-background-position:center;   /* ממורכז */
+/* רקע יחיד בלבד */
+background-size:cover;
+background-position:center;
 background-repeat:no-repeat;
-z-index:-2;
 transition:background-image 1s ease-in-out;
 }
 
-body::after{
-content:"";
+/* שכבת כהות עדינה */
+.overlay{
 position:fixed;
 inset:0;
-background:linear-gradient(to left, rgba(0,0,0,0.75), rgba(0,0,0,0.2));
-z-index:-1;
+background:linear-gradient(to left, rgba(0,0,0,0.75), rgba(0,0,0,0.25));
+z-index:0;
+pointer-events:none;
 }
 
-/* ===== כרטיס אבחנה שקוף ===== */
+/* כרטיס */
 .card{
 position:fixed;
 top:40px;
 right:50px;
-width:300px;
-background:rgba(10,20,35,0.55); /* שקיפות */
-backdrop-filter:blur(10px);
+width:320px;
+background:rgba(10,20,35,0.55);
+backdrop-filter:blur(12px);
 border-radius:18px;
-padding:18px;
+padding:20px;
 border:1px solid rgba(255,255,255,0.08);
+z-index:1;
 }
 
 @media(max-width:900px){
@@ -67,7 +63,7 @@ width:auto;
 h1{
 text-align:center;
 font-size:18px;
-margin-bottom:16px;
+margin-bottom:18px;
 color:var(--turquoise);
 }
 
@@ -76,7 +72,7 @@ width:100%;
 padding:10px;
 border-radius:10px;
 border:1px solid rgba(255,255,255,0.15);
-margin-bottom:12px;
+margin-bottom:14px;
 background:rgba(30,41,59,0.8);
 color:#fff;
 font-size:13px;
@@ -90,50 +86,50 @@ border:none;
 background:var(--turquoise);
 font-weight:700;
 cursor:pointer;
-margin-bottom:14px;
+margin-bottom:16px;
 color:#06131c;
 font-size:13px;
 }
 
-/* אזור אבחנה */
 #resultContainer{
 background:rgba(0,0,0,0.45);
 border-radius:10px;
-padding:12px;
-min-height:80px;
+padding:14px;
+min-height:90px;
 border:1px dashed rgba(34,211,238,0.4);
 font-size:12px;
 line-height:1.6;
-word-wrap:break-word;
 }
 
 .section{
 border-top:1px solid rgba(255,255,255,0.1);
-padding-top:10px;
-margin-top:12px;
+padding-top:12px;
+margin-top:14px;
 }
 
 .section h3{
 color:var(--turquoise);
 font-size:13px;
-margin-bottom:8px;
+margin-bottom:10px;
 }
 
 .link-btn{
 display:block;
 text-align:center;
-padding:8px;
-border-radius:8px;
+padding:9px;
+border-radius:9px;
 background:rgba(255,255,255,0.12);
 color:#fff;
 text-decoration:none;
 font-size:12px;
-margin-bottom:8px;
+margin-bottom:9px;
 }
 </style>
 </head>
 
 <body>
+
+<div class="overlay"></div>
 
 <div class="card">
 <h1>🐱 אבחון חכם</h1>
@@ -144,10 +140,8 @@ margin-bottom:8px;
 <option value="Diarrhea">שלשול</option>
 <option value="Constipation">עצירות</option>
 <option value="Loss of appetite">חוסר תיאבון</option>
-<option value="Weight loss">ירידה במשקל</option>
 <option value="Breathing difficulty">קושי בנשימה</option>
 <option value="Coughing">שיעול</option>
-<option value="Frequent sneezing">התעטשויות</option>
 <option value="Eye discharge">הפרשות עיניים</option>
 <option value="Limping">צליעה</option>
 <option value="High fever">חום גבוה</option>
@@ -173,7 +167,7 @@ margin-bottom:8px;
 
 <script>
 
-/* תמונות הרקע שלך */
+/* תמונות שלך בלבד */
 const images=[
 "bg.png","bg2.png","bg3.png","bg4.png",
 "bg5.png","bg6.png","bg7.png","bg8.png",
@@ -183,10 +177,6 @@ const images=[
 let i=0;
 
 function rotate(){
-document.body.style.setProperty(
-'--bg-image',
-`url(${images[i]})`
-);
 document.body.style.backgroundImage=`url(${images[i]})`;
 i=(i+1)%images.length;
 }
