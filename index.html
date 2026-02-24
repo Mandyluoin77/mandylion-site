@@ -8,7 +8,6 @@
 <style>
 :root{
 --turquoise:#22d3ee;
---panel:rgba(8,20,35,0.78);
 }
 
 *{
@@ -18,39 +17,40 @@ box-sizing:border-box;
 body{
 margin:0;
 font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
-background:#000;
 color:#fff;
-overflow:hidden; /* אין גלילה */
+overflow:hidden;
 }
 
-/* ===== רקע לא נחתך ===== */
-#bg{
+/* ===== רקע מלא רוחב ===== */
+body::before{
+content:"";
 position:fixed;
 inset:0;
-width:100%;
-height:100%;
-object-fit:contain; /* לא חותך תמונות */
-background:#000;
+background-size:cover;        /* ממלא מסך */
+background-position:center;   /* ממורכז */
+background-repeat:no-repeat;
 z-index:-2;
+transition:background-image 1s ease-in-out;
 }
 
-.overlay{
+body::after{
+content:"";
 position:fixed;
 inset:0;
-background:rgba(0,0,0,0.45);
+background:linear-gradient(to left, rgba(0,0,0,0.75), rgba(0,0,0,0.2));
 z-index:-1;
 }
 
-/* ===== כרטיס ===== */
+/* ===== כרטיס אבחנה שקוף ===== */
 .card{
 position:fixed;
-top:30px;
-right:40px;
-width:260px;
-background:var(--panel);
-backdrop-filter:blur(6px);
-border-radius:14px;
-padding:14px;
+top:40px;
+right:50px;
+width:300px;
+background:rgba(10,20,35,0.55); /* שקיפות */
+backdrop-filter:blur(10px);
+border-radius:18px;
+padding:18px;
 border:1px solid rgba(255,255,255,0.08);
 }
 
@@ -66,78 +66,74 @@ width:auto;
 
 h1{
 text-align:center;
-font-size:15px;
-margin-bottom:12px;
+font-size:18px;
+margin-bottom:16px;
 color:var(--turquoise);
 }
 
 select{
 width:100%;
-padding:8px;
-border-radius:8px;
+padding:10px;
+border-radius:10px;
 border:1px solid rgba(255,255,255,0.15);
-margin-bottom:10px;
-background:rgba(30,41,59,0.9);
+margin-bottom:12px;
+background:rgba(30,41,59,0.8);
 color:#fff;
-font-size:12px;
+font-size:13px;
 }
 
 button{
 width:100%;
-padding:8px;
-border-radius:8px;
+padding:10px;
+border-radius:10px;
 border:none;
 background:var(--turquoise);
 font-weight:700;
 cursor:pointer;
-margin-bottom:10px;
+margin-bottom:14px;
 color:#06131c;
-font-size:12px;
+font-size:13px;
 }
 
-/* אזור אבחנה ללא גלילה */
+/* אזור אבחנה */
 #resultContainer{
-background:rgba(0,0,0,0.55);
-border-radius:8px;
-padding:8px;
-min-height:60px;
+background:rgba(0,0,0,0.45);
+border-radius:10px;
+padding:12px;
+min-height:80px;
 border:1px dashed rgba(34,211,238,0.4);
-font-size:11px;
-line-height:1.4;
+font-size:12px;
+line-height:1.6;
 word-wrap:break-word;
 }
 
-/* כותרות */
 .section{
 border-top:1px solid rgba(255,255,255,0.1);
-padding-top:8px;
-margin-top:8px;
+padding-top:10px;
+margin-top:12px;
 }
 
 .section h3{
 color:var(--turquoise);
-font-size:11px;
-margin-bottom:6px;
+font-size:13px;
+margin-bottom:8px;
 }
 
 .link-btn{
 display:block;
 text-align:center;
-padding:6px;
-border-radius:6px;
-background:rgba(255,255,255,0.1);
+padding:8px;
+border-radius:8px;
+background:rgba(255,255,255,0.12);
 color:#fff;
 text-decoration:none;
-font-size:11px;
-margin-bottom:6px;
+font-size:12px;
+margin-bottom:8px;
 }
 </style>
 </head>
 
 <body>
-
-<img id="bg">
-<div class="overlay"></div>
 
 <div class="card">
 <h1>🐱 אבחון חכם</h1>
@@ -149,28 +145,13 @@ margin-bottom:6px;
 <option value="Constipation">עצירות</option>
 <option value="Loss of appetite">חוסר תיאבון</option>
 <option value="Weight loss">ירידה במשקל</option>
-<option value="Abnormal weight gain">עלייה חריגה במשקל</option>
-<option value="Extreme fatigue">עייפות קיצונית</option>
 <option value="Breathing difficulty">קושי בנשימה</option>
 <option value="Coughing">שיעול</option>
-<option value="Frequent sneezing">התעטשויות תכופות</option>
-<option value="Nasal discharge">הפרשות מהאף</option>
-<option value="Eye discharge">הפרשות מהעיניים</option>
-<option value="Excessive itching">גירודים מרובים</option>
-<option value="Abnormal hair loss">נשירת שיער חריגה</option>
-<option value="Skin sores">פצעים בעור</option>
-<option value="Swelling">נפיחות בגוף</option>
+<option value="Frequent sneezing">התעטשויות</option>
+<option value="Eye discharge">הפרשות עיניים</option>
 <option value="Limping">צליעה</option>
-<option value="Not using litter box">חוסר שימוש בארגז חול</option>
-<option value="Blood in urine">דם בשתן</option>
-<option value="Behavioral changes">שינויים בהתנהגות</option>
-<option value="Sudden aggression">אגרסיביות פתאומית</option>
-<option value="Trembling">רעידות</option>
-<option value="Seizures">פרכוסים</option>
-<option value="Possible poisoning">הרעלה אפשרית</option>
-<option value="Swallowed foreign object">בליעת חפץ זר</option>
 <option value="High fever">חום גבוה</option>
-<option value="Loss of consciousness">אובדן הכרה</option>
+<option value="Seizures">פרכוסים</option>
 </select>
 
 <button onclick="executeAnalysis()">נתח מקרה</button>
@@ -192,7 +173,7 @@ margin-bottom:6px;
 
 <script>
 
-/* רקעים */
+/* תמונות הרקע שלך */
 const images=[
 "bg.png","bg2.png","bg3.png","bg4.png",
 "bg5.png","bg6.png","bg7.png","bg8.png",
@@ -200,12 +181,16 @@ const images=[
 ];
 
 let i=0;
-const bg=document.getElementById("bg");
 
 function rotate(){
-bg.src=images[i];
+document.body.style.setProperty(
+'--bg-image',
+`url(${images[i]})`
+);
+document.body.style.backgroundImage=`url(${images[i]})`;
 i=(i+1)%images.length;
 }
+
 rotate();
 setInterval(rotate,6000);
 
