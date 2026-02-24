@@ -6,110 +6,122 @@
 <title>CatMind – אבחון חכם 🐱</title>
 
 <style>
-:root{
-  --panel: rgba(8,18,30,0.92);
-  --accent: #22d3ee;
+:root {
+  --panel: rgba(10,18,28,0.92);
+  --turquoise: #22d3ee;
 }
 
-body{
-  margin:0;
-  font-family:"Segoe UI",Tahoma,sans-serif;
-  background:#000;
-  color:#fff;
-  overflow-x:hidden;
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #000;
+  color: white;
+  overflow-x: hidden;
 }
 
-/* ================= BACKGROUND ================= */
+/* =======================
+   Background System
+======================= */
 
-#bg{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  background:#000;
-  overflow:hidden;
+#bg-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #000;
 }
 
-.bg-img{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-position:center;
-  opacity:0;
-  transition:opacity 1.5s ease-in-out;
+.bg-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* דסקטופ */
+  object-position: center;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
 }
 
-.bg-img.active{
-  opacity:1;
+.bg-img.active {
+  opacity: 1;
 }
 
-.overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to bottom,
-      rgba(0,0,0,0.35),
-      rgba(0,0,0,0.75)
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.35),
+    rgba(0,0,0,0.75)
   );
 }
 
-/* ================= PANEL ================= */
+/* =======================
+   Main Panel
+======================= */
 
-.container{
-  max-width:720px;
-  margin:70px auto;
-  padding:30px;
-  background:var(--panel);
-  border-radius:20px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 25px 60px rgba(0,0,0,0.6);
+.container {
+  max-width: 720px;
+  margin: 60px auto;
+  padding: 30px;
+  background: var(--panel);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
 
-h1{
-  text-align:center;
-  margin-top:0;
+h1 {
+  text-align: center;
+  margin-top: 0;
 }
 
-textarea{
-  width:100%;
-  min-height:100px;
-  padding:14px;
-  border-radius:12px;
-  border:none;
-  font-size:16px;
-  margin-top:20px;
+textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  margin-top: 15px;
 }
 
-button{
-  width:100%;
-  padding:15px;
-  border-radius:14px;
-  border:none;
-  margin-top:18px;
-  background:var(--accent);
-  font-weight:bold;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.3s;
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 15px;
+  background: var(--turquoise);
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-button:hover{
-  transform:translateY(-2px);
+button:hover {
+  transform: translateY(-2px);
 }
 
-.result{
-  margin-top:20px;
-  padding:20px;
-  border-radius:16px;
-  background:rgba(0,0,0,0.85);
-  white-space:pre-wrap;
-  line-height:1.6;
+.result-box {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.8);
+  line-height: 1.6;
+  white-space: pre-wrap;
 }
 
-/* ===== Mobile ===== */
+/* =======================
+   Mobile Fix
+======================= */
 
-@media (max-width:768px){
-  .container{
-    margin:20px;
-    padding:20px;
+@media (max-width: 768px) {
+  .bg-img {
+    object-fit: contain;      /* לא חותך חתול */
+    object-position: top center;
+  }
+
+  .container {
+    margin: 20px;
+    padding: 20px;
   }
 }
 </style>
@@ -117,97 +129,91 @@ button:hover{
 
 <body>
 
-<div id="bg">
+<!-- ===== Background ===== -->
+<div id="bg-container">
   <img class="bg-img active">
   <img class="bg-img">
   <div class="overlay"></div>
 </div>
 
+<!-- ===== UI ===== -->
 <div class="container">
-  <h1>🐱 אבחון חכם</h1>
+  <h1>אבחון חכם 🐱</h1>
 
-  <textarea id="input" placeholder="תאר סימפטומים של החתול..."></textarea>
+  <textarea id="symptomInput" placeholder="תאר סימפטומים של החתול..."></textarea>
 
-  <button onclick="send()">נתח מקרה</button>
+  <button onclick="sendToServer()">נתח מקרה</button>
 
-  <div class="result" id="resultBox"></div>
+  <div class="result-box" id="resultBox"></div>
 </div>
 
 <script>
-/* ================= BACKGROUND SYSTEM ================= */
+/* =======================
+   Background Images
+======================= */
 
 const images = [
- "bg.png","bg2.png","bg3.png","bg4.png",
- "bg5.png","bg6.png","bg7.png","bg8.png",
- "bg9.png","bg10.png","bg11.png","bg12.png"
+  "bg.png",
+  "bg2.png",
+  "bg3.png",
+  "bg4.png",
+  "bg5.png",
+  "bg6.png",
+  "bg7.png",
+  "bg8.png",
+  "bg9.png",
+  "bg10.png",
+  "bg11.png",
+  "bg12.png"
 ];
 
 const layers = document.querySelectorAll(".bg-img");
-let currentLayer = 0;
-let imgIndex = 0;
+let current = 0;
+let imageIndex = 0;
 
-/* preload */
-images.forEach(src=>{
-  const i = new Image();
-  i.src = src;
+images.forEach(src => {
+  const img = new Image();
+  img.src = src;
 });
 
-function setFit(img){
-  const screenRatio = window.innerWidth / window.innerHeight;
+function changeBackground() {
+  const nextLayer = layers[(current + 1) % 2];
 
-  const temp = new Image();
-  temp.src = img.src;
-  temp.onload = ()=>{
-    const imgRatio = temp.width / temp.height;
+  nextLayer.src = images[imageIndex];
+  nextLayer.classList.add("active");
+  layers[current].classList.remove("active");
 
-    if(Math.abs(screenRatio - imgRatio) < 0.2){
-      img.style.objectFit = "cover";
-    }else{
-      img.style.objectFit = "contain";
-    }
-  };
+  current = (current + 1) % 2;
+  imageIndex = (imageIndex + 1) % images.length;
 }
 
-function changeBg(){
-  const next = layers[(currentLayer+1)%2];
-  next.src = images[imgIndex];
-  setFit(next);
+changeBackground();
+setInterval(changeBackground, 9000);
 
-  next.classList.add("active");
-  layers[currentLayer].classList.remove("active");
+/* =======================
+   Server Call
+======================= */
 
-  currentLayer = (currentLayer+1)%2;
-  imgIndex = (imgIndex+1)%images.length;
-}
+async function sendToServer() {
+  const text = document.getElementById("symptomInput").value;
+  const resultBox = document.getElementById("resultBox");
 
-changeBg();
-setInterval(changeBg,9000);
+  resultBox.innerHTML = "טוען...";
 
-window.addEventListener("resize",()=>{
-  setFit(layers[currentLayer]);
-});
-
-/* ================= SERVER CALL ================= */
-
-async function send(){
-  const text = document.getElementById("input").value;
-  const box = document.getElementById("resultBox");
-  box.innerHTML="טוען...";
-
-  try{
-    const res = await fetch(
+  try {
+    const response = await fetch(
       "https://catmind-ai-server.onrender.com/generate",
       {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({text})
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text })
       }
     );
 
-    const data = await res.json();
-    box.innerHTML = data.result || "שגיאה בניתוח";
-  }catch(e){
-    box.innerHTML="שגיאת שרת";
+    const data = await response.json();
+    resultBox.innerHTML = data.result || "שגיאה בניתוח";
+  } catch (err) {
+    resultBox.innerHTML = "שגיאת שרת";
   }
 }
 </script>
