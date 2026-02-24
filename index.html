@@ -1,231 +1,222 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CatMind - אבחון חכם לחתולים</title>
-    <style>
-        :root { 
-            --turquoise: #22d3ee; 
-            --panel: rgba(10, 18, 28, 0.95); 
-        }
-        body { 
-            margin: 0; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: #000; 
-            color: white; 
-            min-height: 100vh; 
-            overflow-x: hidden;
-        }
-        #bg { 
-            position: fixed; 
-            inset: 0; 
-            background-size: cover; 
-            background-position: center; 
-            z-index: -2; 
-            transition: background-image 1.5s ease-in-out; 
-        }
-        .overlay { 
-            position: fixed; 
-            inset: 0; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.85)); 
-            z-index: -1; 
-        }
-        .card { 
-            position: fixed; 
-            top: 40px; 
-            right: 30px; 
-            width: 300px; 
-            background: var(--panel); 
-            backdrop-filter: blur(12px); 
-            border-radius: 16px; 
-            padding: 20px; 
-            box-shadow: 0 20px 60px rgba(0,0,0,0.7); 
-            border: 1px solid rgba(255,255,255,0.1);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        @media (max-width: 768px) {
-            .card { top: 20px; right: 10px; left: 10px; width: auto; position: relative; }
-        }
-        h1 { font-size: 18px; text-align: center; margin-bottom: 20px; color: var(--turquoise); }
-        select { 
-            width: 100%; 
-            padding: 10px; 
-            border-radius: 8px; 
-            border: 1px solid rgba(255,255,255,0.2); 
-            margin-bottom: 12px; 
-            font-size: 14px; 
-            background: #1e293b; 
-            color: white; 
-            outline: none;
-        }
-        button { 
-            width: 100%; 
-            padding: 12px; 
-            border: none; 
-            border-radius: 8px; 
-            background: var(--turquoise); 
-            font-weight: 700; 
-            font-size: 14px; 
-            cursor: pointer; 
-            margin-bottom: 15px; 
-            color: #08121c; 
-            transition: 0.2s;
-        }
-        button:disabled { background: #475569; opacity: 0.7; }
-        
-        #resultContainer { 
-            margin-top: 10px; 
-            font-size: 13px; 
-            line-height: 1.6; 
-            min-height: 50px; 
-            color: #cbd5e1; 
-            white-space: pre-wrap;
-            border-radius: 8px;
-            background: rgba(0,0,0,0.3);
-            padding: 12px;
-            border: 1px dashed rgba(34, 211, 238, 0.3);
-        }
-        .section { margin-top: 18px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; }
-        .section h3 { font-size: 13px; margin-bottom: 8px; color: var(--turquoise); opacity: 0.9; }
-        .link-btn { 
-            display: block; 
-            padding: 8px; 
-            text-align: center; 
-            border-radius: 6px; 
-            background: rgba(255, 255, 255, 0.08); 
-            color: white; 
-            text-decoration: none; 
-            font-size: 12px; 
-            margin-bottom: 6px; 
-            transition: 0.3s;
-        }
-        .link-btn:hover { background: rgba(255, 255, 255, 0.15); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CatMind – אבחון חכם 🐱</title>
+
+<style>
+:root {
+  --panel: rgba(10,18,28,0.92);
+  --turquoise: #22d3ee;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #000;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* =======================
+   Background System
+======================= */
+
+#bg-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #000;
+}
+
+.bg-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* דסקטופ */
+  object-position: center;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.bg-img.active {
+  opacity: 1;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.35),
+    rgba(0,0,0,0.75)
+  );
+}
+
+/* =======================
+   Main Panel
+======================= */
+
+.container {
+  max-width: 720px;
+  margin: 60px auto;
+  padding: 30px;
+  background: var(--panel);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+h1 {
+  text-align: center;
+  margin-top: 0;
+}
+
+textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 15px;
+  background: var(--turquoise);
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+.result-box {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.8);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* =======================
+   Mobile Fix
+======================= */
+
+@media (max-width: 768px) {
+  .bg-img {
+    object-fit: contain;      /* לא חותך חתול */
+    object-position: top center;
+  }
+
+  .container {
+    margin: 20px;
+    padding: 20px;
+  }
+}
+</style>
 </head>
+
 <body>
 
-    <div id="bg"></div>
-    <div class="overlay"></div>
+<!-- ===== Background ===== -->
+<div id="bg-container">
+  <img class="bg-img active">
+  <img class="bg-img">
+  <div class="overlay"></div>
+</div>
 
-    <div class="card">
-        <h1>🐱 אבחון חכם</h1>
-        
-        <select id="mainSymptom">
-            <option value="">בחר בעיה מהרשימה</option>
-            <option value="Vomiting">הקאות</option>
-            <option value="Diarrhea">שלשול</option>
-            <option value="Constipation">עצירות</option>
-            <option value="Loss of appetite">חוסר תיאבון</option>
-            <option value="Weight loss">ירידה במשקל</option>
-            <option value="Abnormal weight gain">עלייה חריגה במשקל</option>
-            <option value="Extreme fatigue">עייפות קיצונית</option>
-            <option value="Breathing difficulty">קושי בנשימה</option>
-            <option value="Coughing">שיעול</option>
-            <option value="Frequent sneezing">התעטשויות תכופות</option>
-            <option value="Nasal discharge">הפרשות מהאף</option>
-            <option value="Eye discharge">הפרשות מהעיניים</option>
-            <option value="Excessive itching">גירודים מרובים</option>
-            <option value="Abnormal hair loss">נשירת שיער חריגה</option>
-            <option value="Skin sores">פצעים בעור</option>
-            <option value="Swelling">נפיחות בגוף</option>
-            <option value="Limping">צליעה</option>
-            <option value="Not using litter box">חוסר שימוש בארגז חול</option>
-            <option value="Blood in urine">דם בשתן</option>
-            <option value="Behavioral changes">שינויים בהתנהגות</option>
-            <option value="Sudden aggression">אגרסיביות פתאומית</option>
-            <option value="Trembling">רעידות</option>
-            <option value="Seizures">פרכוסים</option>
-            <option value="Possible poisoning">הרעלה אפשרית</option>
-            <option value="Swallowed foreign object">בליעת חפץ זר</option>
-            <option value="High fever">חום גבוה</option>
-            <option value="Loss of consciousness">אובדן הכרה</option>
-        </select>
+<!-- ===== UI ===== -->
+<div class="container">
+  <h1>אבחון חכם 🐱</h1>
 
-        <button id="analyzeBtn" onclick="executeAnalysis()">נתח מקרה</button>
-        
-        <div id="resultContainer">האבחנה תופיע כאן...</div>
+  <textarea id="symptomInput" placeholder="תאר סימפטומים של החתול..."></textarea>
 
-        <div class="section">
-            <h3>מידע נוסף</h3>
-            <a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
-        </div>
+  <button onclick="sendToServer()">נתח מקרה</button>
 
-        <div class="section">
-            <h3>וטרינרים מומלצים</h3>
-            <a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
-            <a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
-        </div>
-    </div>
+  <div class="result-box" id="resultBox"></div>
+</div>
 
-    <script>
-        // --- 1. רקעים מתחלפים (נשמר בדיוק כפי שהיה) ---
-        const backgroundImages = [
-            'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba',
-            'https://images.unsplash.com/photo-1495360010541-f48722b34f7d',
-            'https://images.unsplash.com/photo-1519052537078-e6302a4968d4',
-            'https://images.unsplash.com/photo-1511044568932-338cba0ad803'
-        ];
+<script>
+/* =======================
+   Background Images
+======================= */
 
-        let bgIndex = 0;
-        const bgElement = document.getElementById("bg");
+const images = [
+  "bg.png",
+  "bg2.png",
+  "bg3.png",
+  "bg4.png",
+  "bg5.png",
+  "bg6.png",
+  "bg7.png",
+  "bg8.png",
+  "bg9.png",
+  "bg10.png",
+  "bg11.png",
+  "bg12.png"
+];
 
-        function rotateBackground() {
-            bgElement.style.backgroundImage = `url('${backgroundImages[bgIndex]}')`;
-            bgIndex = (bgIndex + 1) % backgroundImages.length;
-        }
+const layers = document.querySelectorAll(".bg-img");
+let current = 0;
+let imageIndex = 0;
 
-        rotateBackground();
-        setInterval(rotateBackground, 5000);
+images.forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
 
-        // --- 2. פונקציית אבחון מתוקנת ---
-        async function executeAnalysis() {
-            const select = document.getElementById("mainSymptom");
-            const resultBox = document.getElementById("resultContainer");
-            const btn = document.getElementById("analyzeBtn");
-            const selectedText = select.options[select.selectedIndex].text;
-            
-            if (!select.value) {
-                resultBox.innerHTML = "⚠ אנא בחר בעיה לפני הניתוח.";
-                return;
-            }
+function changeBackground() {
+  const nextLayer = layers[(current + 1) % 2];
 
-            btn.disabled = true;
-            btn.innerText = "מעבד...";
-            resultBox.innerHTML = "⏳ השרת מתעורר... זה לוקח כ-50 שניות בחיבור ראשון.";
+  nextLayer.src = images[imageIndex];
+  nextLayer.classList.add("active");
+  layers[current].classList.remove("active");
 
-            try {
-                // הוספת מנגנון AbortController למניעת קריסה בזמן המתנה ארוך
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 90000); // המתנה של 90 שניות
+  current = (current + 1) % 2;
+  imageIndex = (imageIndex + 1) % images.length;
+}
 
-                const response = await fetch("https://catmind-ai-server.onrender.com/generate", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ text: "נתח סימפטום: " + selectedText }),
-                    signal: controller.signal
-                });
+changeBackground();
+setInterval(changeBackground, 9000);
 
-                clearTimeout(timeoutId);
+/* =======================
+   Server Call
+======================= */
 
-                if (!response.ok) throw new Error("Server error");
+async function sendToServer() {
+  const text = document.getElementById("symptomInput").value;
+  const resultBox = document.getElementById("resultBox");
 
-                const data = await response.json();
-                resultBox.innerHTML = "<b>תוצאה:</b><br>" + (data.result || "לא התקבלה תשובה.");
+  resultBox.innerHTML = "טוען...";
 
-            } catch (err) {
-                if (err.name === 'AbortError') {
-                    resultBox.innerHTML = "❌ השרת לא הספיק להתעורר בזמן. נסה ללחוץ שוב כעת.";
-                } else {
-                    resultBox.innerHTML = "❌ שגיאה בחיבור לשרת. וודא שהוא מופעל ב-Render.";
-                }
-                console.error("Fetch error:", err);
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "נתח מקרה";
-            }
-        }
-    </script>
+  try {
+    const response = await fetch(
+      "https://catmind-ai-server.onrender.com/generate",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text })
+      }
+    );
+
+    const data = await response.json();
+    resultBox.innerHTML = data.result || "שגיאה בניתוח";
+  } catch (err) {
+    resultBox.innerHTML = "שגיאת שרת";
+  }
+}
+</script>
+
 </body>
 </html>
