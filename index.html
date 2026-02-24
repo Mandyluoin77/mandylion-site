@@ -3,211 +3,263 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CatMind – אבחון חכם 🐱</title>
+<title>CatMind - אבחון חכם לחתולים</title>
 
 <style>
-:root{
-  --panel: rgba(8,18,30,0.94);
-  --accent: #22d3ee;
+:root {
+    --turquoise: #22d3ee;
+    --panel: rgba(8, 20, 35, 0.96);
 }
 
-body{
-  margin:0;
-  font-family:"Segoe UI",Tahoma,sans-serif;
-  background:#000;
-  color:#fff;
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000;
+    color: white;
+    overflow-x: hidden;
 }
 
-/* ===== Background ===== */
+/* רקע */
 
-#bg{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  overflow:hidden;
+#bg {
+    position: fixed;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2;
+    transition: background-image 1.2s ease-in-out;
 }
 
-.bg-img{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  opacity:0;
-  transition:opacity 1.5s ease-in-out;
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        to left,
+        rgba(0,0,0,0.85),
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.9)
+    );
+    z-index: -1;
 }
 
-.bg-img.active{
-  opacity:1;
+/* כרטיס צד */
+
+.card {
+    position: fixed;
+    top: 60px;
+    right: 60px;
+    width: min(360px, 92vw);
+    background: var(--panel);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 35px 100px rgba(0,0,0,0.75);
+    border: 1px solid rgba(255,255,255,0.06);
+    backdrop-filter: blur(16px);
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
 }
 
-.overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.45);
+@media (max-width: 900px) {
+    .card {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin: 20px;
+    }
 }
 
-/* ===== Layout ===== */
-
-.wrapper{
-  min-height:100vh;
-  display:flex;
-  justify-content:flex-end; /* פאנל בצד ימין */
-  align-items:center;
-  padding:40px;
-  box-sizing:border-box;
+h1 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 22px;
+    color: var(--turquoise);
 }
 
-.panel{
-  width:420px;
-  max-width:95%;
-  background:var(--panel);
-  border-radius:22px;
-  padding:30px;
-  box-shadow:0 25px 60px rgba(0,0,0,0.6);
-  backdrop-filter:blur(12px);
+select {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    margin-bottom: 18px;
+    font-size: 14px;
+    background: #1e293b;
+    color: white;
 }
 
-h1{
-  text-align:center;
-  margin-top:0;
+button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: var(--turquoise);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 18px;
+    color: #06131c;
 }
 
-textarea{
-  width:100%;
-  min-height:110px;
-  padding:14px;
-  border-radius:12px;
-  border:none;
-  font-size:16px;
-  margin-top:20px;
-  resize:vertical;
+button:disabled {
+    background: #475569;
+    opacity: 0.7;
 }
 
-button{
-  width:100%;
-  padding:15px;
-  border-radius:14px;
-  border:none;
-  margin-top:18px;
-  background:var(--accent);
-  font-weight:bold;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.3s;
+#resultContainer {
+    background: rgba(0,0,0,0.4);
+    border-radius: 12px;
+    padding: 14px;
+    min-height: 80px;
+    margin-bottom: 20px;
+    border: 1px dashed rgba(34,211,238,0.4);
+    font-size: 13px;
+    line-height: 1.6;
 }
 
-button:hover{
-  transform:translateY(-2px);
+.section {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 16px;
+    margin-top: 18px;
 }
 
-.result{
-  margin-top:20px;
-  padding:18px;
-  border-radius:14px;
-  background:rgba(0,0,0,0.85);
-  white-space:pre-wrap;
-  line-height:1.6;
+.section h3 {
+    color: var(--turquoise);
+    font-size: 14px;
+    margin-bottom: 12px;
 }
 
-/* ===== Mobile ===== */
+.link-btn {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.08);
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    margin-bottom: 10px;
+    transition: 0.25s;
+}
 
-@media (max-width:768px){
-  .wrapper{
-    justify-content:center;
-    padding:20px;
-  }
-
-  .panel{
-    width:100%;
-  }
+.link-btn:hover {
+    background: rgba(255,255,255,0.15);
 }
 </style>
 </head>
 
 <body>
 
-<div id="bg">
-  <img class="bg-img active">
-  <img class="bg-img">
-  <div class="overlay"></div>
+<div id="bg"></div>
+<div class="overlay"></div>
+
+<div class="card">
+<h1>🐱 אבחון חכם</h1>
+
+<select id="mainSymptom">
+<option value="">בחר בעיה מהרשימה</option>
+<option value="Vomiting">הקאות</option>
+<option value="Diarrhea">שלשול</option>
+<option value="Constipation">עצירות</option>
+<option value="Loss of appetite">חוסר תיאבון</option>
+<option value="Weight loss">ירידה במשקל</option>
+<option value="Abnormal weight gain">עלייה חריגה במשקל</option>
+<option value="Extreme fatigue">עייפות קיצונית</option>
+<option value="Breathing difficulty">קושי בנשימה</option>
+<option value="Coughing">שיעול</option>
+<option value="Frequent sneezing">התעטשויות תכופות</option>
+<option value="Nasal discharge">הפרשות מהאף</option>
+<option value="Eye discharge">הפרשות מהעיניים</option>
+<option value="Excessive itching">גירודים מרובים</option>
+<option value="Abnormal hair loss">נשירת שיער חריגה</option>
+<option value="Skin sores">פצעים בעור</option>
+<option value="Swelling">נפיחות בגוף</option>
+<option value="Limping">צליעה</option>
+<option value="Not using litter box">חוסר שימוש בארגז חול</option>
+<option value="Blood in urine">דם בשתן</option>
+<option value="Behavioral changes">שינויים בהתנהגות</option>
+<option value="Sudden aggression">אגרסיביות פתאומית</option>
+<option value="Trembling">רעידות</option>
+<option value="Seizures">פרכוסים</option>
+<option value="Possible poisoning">הרעלה אפשרית</option>
+<option value="Swallowed foreign object">בליעת חפץ זר</option>
+<option value="High fever">חום גבוה</option>
+<option value="Loss of consciousness">אובדן הכרה</option>
+</select>
+
+<button id="analyzeBtn" onclick="executeAnalysis()">נתח מקרה</button>
+
+<div id="resultContainer">האבחנה תופיע כאן...</div>
+
+<div class="section">
+<h3>מידע נוסף</h3>
+<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">
+Browse All Breeds
+</a>
 </div>
 
-<div class="wrapper">
-  <div class="panel">
-    <h1>🐱 אבחון חכם</h1>
+<div class="section">
+<h3>וטרינרים מומלצים</h3>
+<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">
+ד"ר טלי שטיין
+</a>
+<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">
+ד"ר תמר פלידל
+</a>
+</div>
 
-    <textarea id="input" placeholder="תאר סימפטומים של החתול..."></textarea>
-
-    <button onclick="send()">נתח מקרה</button>
-
-    <div class="result" id="resultBox"></div>
-  </div>
 </div>
 
 <script>
-
-/* ===== Background Rotation ===== */
-
 const images = [
- "bg.png","bg2.png","bg3.png","bg4.png",
- "bg5.png","bg6.png","bg7.png","bg8.png",
- "bg9.png","bg10.png","bg11.png","bg12.png"
+'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba',
+'https://images.unsplash.com/photo-1495360010541-f48722b34f7d',
+'https://images.unsplash.com/photo-1519052537078-e6302a4968d4',
+'https://images.unsplash.com/photo-1511044568932-338cba0ad803'
 ];
 
-const layers = document.querySelectorAll(".bg-img");
-let currentLayer = 0;
-let imgIndex = 0;
+let i = 0;
+const bg = document.getElementById("bg");
 
-images.forEach(src=>{
-  const i = new Image();
-  i.src = src;
-});
-
-function changeBg(){
-  const next = layers[(currentLayer+1)%2];
-  next.src = images[imgIndex];
-  next.classList.add("active");
-  layers[currentLayer].classList.remove("active");
-
-  currentLayer = (currentLayer+1)%2;
-  imgIndex = (imgIndex+1)%images.length;
+function rotate() {
+    bg.style.backgroundImage = `url('${images[i]}')`;
+    i = (i + 1) % images.length;
 }
 
-changeBg();
-setInterval(changeBg,9000);
+rotate();
+setInterval(rotate, 6000);
 
-/* ===== Server Call ===== */
+async function executeAnalysis() {
+    const select = document.getElementById("mainSymptom");
+    const resultBox = document.getElementById("resultContainer");
+    const btn = document.getElementById("analyzeBtn");
+    const selectedText = select.options[select.selectedIndex].text;
 
-async function send(){
-  const text = document.getElementById("input").value;
-  const box = document.getElementById("resultBox");
+    if (!select.value) {
+        resultBox.innerHTML = "⚠ אנא בחר בעיה לפני הניתוח.";
+        return;
+    }
 
-  if(!text){
-    box.innerHTML = "נא להזין תיאור.";
-    return;
-  }
+    btn.disabled = true;
+    btn.innerText = "מעבד...";
+    resultBox.innerHTML = "⏳ השרת מתעורר...";
 
-  box.innerHTML="טוען...";
+    try {
+        const response = await fetch("https://catmind-ai-server.onrender.com/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: "נתח סימפטום: " + selectedText })
+        });
 
-  try{
-    const res = await fetch(
-      "https://catmind-ai-server.onrender.com/generate",
-      {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({text})
-      }
-    );
+        const data = await response.json();
+        resultBox.innerHTML = data.result || "לא התקבלה תשובה.";
 
-    const data = await res.json();
-    box.innerHTML = data.result || "שגיאה בניתוח";
-  }
-  catch(e){
-    box.innerHTML="שגיאת שרת";
-  }
+    } catch (err) {
+        resultBox.innerHTML = "❌ שגיאה בחיבור לשרת.";
+    } finally {
+        btn.disabled = false;
+        btn.innerText = "נתח מקרה";
+    }
 }
-
 </script>
 
 </body>
