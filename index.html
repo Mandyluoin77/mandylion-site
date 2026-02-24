@@ -8,7 +8,7 @@
 <style>
 :root{
 --turquoise:#22d3ee;
---panel:rgba(8,20,35,0.92);
+--panel:rgba(8,20,35,0.75); /* שקיפות אמיתית */
 }
 
 body{
@@ -16,71 +16,76 @@ margin:0;
 font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
 background:#000;
 color:#fff;
+overflow-x:hidden;
 }
 
-/* רקע */
+/* ===== רקע ===== */
+
 #bg{
 position:fixed;
 inset:0;
-background-size:cover;
-background-position:center center;
-background-repeat:no-repeat;
+width:100%;
+height:100%;
+object-fit:cover; /* ממלא מסך */
 z-index:-2;
-transition:background-image 0.8s ease-in-out;
 }
 
 .overlay{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,0.65);
+background:rgba(0,0,0,0.45); /* כהות עדינה */
 z-index:-1;
 }
 
-/* כרטיס */
+/* ===== כרטיס ===== */
+
 .card{
 position:fixed;
-top:60px;
-right:60px;
-width:340px;
+top:40px;
+right:50px;
+width:300px;
+max-height:90vh;
+overflow-y:auto;
 background:var(--panel);
+backdrop-filter:blur(10px); /* אפקט זכוכית עדין */
 border-radius:18px;
-padding:22px;
-box-shadow:0 20px 60px rgba(0,0,0,0.7);
-border:1px solid rgba(255,255,255,0.06);
+padding:20px;
+border:1px solid rgba(255,255,255,0.1);
 }
 
 /* מובייל */
 @media(max-width:900px){
 .card{
 position:relative;
-margin:20px;
-right:auto;
 top:auto;
+right:auto;
+margin:20px;
 width:auto;
+max-height:none;
 }
 }
 
 h1{
 text-align:center;
-font-size:20px;
-margin-bottom:18px;
+font-size:19px;
+margin-bottom:16px;
 color:var(--turquoise);
 }
 
 select{
 width:100%;
-padding:12px;
+padding:11px;
 border-radius:10px;
 border:1px solid rgba(255,255,255,0.15);
 margin-bottom:14px;
-background:#1e293b;
+background:rgba(30,41,59,0.9);
 color:#fff;
 font-size:14px;
 }
 
 button{
 width:100%;
-padding:12px;
+padding:11px;
 border-radius:10px;
 border:none;
 background:var(--turquoise);
@@ -92,18 +97,18 @@ font-size:14px;
 }
 
 #resultContainer{
-background:rgba(0,0,0,0.45);
+background:rgba(0,0,0,0.55); /* שקיפות חלקית */
 border-radius:10px;
 padding:12px;
 min-height:70px;
 margin-bottom:16px;
-border:1px dashed rgba(34,211,238,0.4);
+border:1px dashed rgba(34,211,238,0.5);
 font-size:13px;
 line-height:1.5;
 }
 
 .section{
-border-top:1px solid rgba(255,255,255,0.08);
+border-top:1px solid rgba(255,255,255,0.1);
 padding-top:14px;
 margin-top:14px;
 }
@@ -117,20 +122,25 @@ margin-bottom:10px;
 .link-btn{
 display:block;
 text-align:center;
-padding:10px;
+padding:9px;
 border-radius:8px;
-background:rgba(255,255,255,0.08);
+background:rgba(255,255,255,0.1);
 color:#fff;
 text-decoration:none;
 font-size:13px;
 margin-bottom:8px;
+transition:0.2s;
+}
+
+.link-btn:hover{
+background:rgba(255,255,255,0.18);
 }
 </style>
 </head>
 
 <body>
 
-<div id="bg"></div>
+<img id="bg">
 <div class="overlay"></div>
 
 <div class="card">
@@ -168,6 +178,7 @@ margin-bottom:8px;
 </select>
 
 <button onclick="executeAnalysis()">נתח מקרה</button>
+
 <div id="resultContainer">האבחנה תופיע כאן...</div>
 
 <div class="section">
@@ -185,8 +196,8 @@ margin-bottom:8px;
 
 <script>
 
-/* רשימת התמונות שלך */
-const images = [
+/* התמונות שלך */
+const images=[
 "bg.png",
 "bg2.png",
 "bg3.png",
@@ -203,15 +214,15 @@ const images = [
 
 /* preload */
 images.forEach(src=>{
-const img = new Image();
-img.src = src;
+const img=new Image();
+img.src=src;
 });
 
 let i=0;
 const bg=document.getElementById("bg");
 
 function rotate(){
-bg.style.backgroundImage=`url('${images[i]}')`;
+bg.src=images[i];
 i=(i+1)%images.length;
 }
 
