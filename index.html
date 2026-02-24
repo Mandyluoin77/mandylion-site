@@ -20,14 +20,14 @@ font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
 color:#fff;
 overflow:hidden;
 
-/* רקע יחיד בלבד */
+/* רקע */
 background-size:cover;
-background-position:center;
+background-position:center top; /* חיתוך מלמטה בלבד */
 background-repeat:no-repeat;
 transition:background-image 1s ease-in-out;
 }
 
-/* שכבת כהות עדינה */
+/* שכבת כהות */
 .overlay{
 position:fixed;
 inset:0;
@@ -41,11 +41,11 @@ pointer-events:none;
 position:fixed;
 top:40px;
 right:50px;
-width:320px;
+width:340px;
 background:rgba(10,20,35,0.55);
-backdrop-filter:blur(12px);
-border-radius:18px;
-padding:20px;
+backdrop-filter:blur(14px);
+border-radius:20px;
+padding:22px;
 border:1px solid rgba(255,255,255,0.08);
 z-index:1;
 }
@@ -62,67 +62,67 @@ width:auto;
 
 h1{
 text-align:center;
-font-size:18px;
-margin-bottom:18px;
+font-size:20px;
+margin-bottom:20px;
 color:var(--turquoise);
 }
 
 select{
 width:100%;
-padding:10px;
-border-radius:10px;
+padding:12px;
+border-radius:12px;
 border:1px solid rgba(255,255,255,0.15);
-margin-bottom:14px;
-background:rgba(30,41,59,0.8);
+margin-bottom:16px;
+background:rgba(30,41,59,0.85);
 color:#fff;
-font-size:13px;
+font-size:14px;
 }
 
 button{
 width:100%;
-padding:10px;
-border-radius:10px;
+padding:12px;
+border-radius:12px;
 border:none;
 background:var(--turquoise);
 font-weight:700;
 cursor:pointer;
-margin-bottom:16px;
+margin-bottom:18px;
 color:#06131c;
-font-size:13px;
+font-size:14px;
 }
 
 #resultContainer{
 background:rgba(0,0,0,0.45);
-border-radius:10px;
-padding:14px;
-min-height:90px;
+border-radius:12px;
+padding:16px;
+min-height:100px;
 border:1px dashed rgba(34,211,238,0.4);
-font-size:12px;
-line-height:1.6;
+font-size:13px;
+line-height:1.7;
 }
 
 .section{
 border-top:1px solid rgba(255,255,255,0.1);
-padding-top:12px;
-margin-top:14px;
+padding-top:14px;
+margin-top:16px;
 }
 
 .section h3{
 color:var(--turquoise);
-font-size:13px;
+font-size:14px;
 margin-bottom:10px;
 }
 
 .link-btn{
 display:block;
 text-align:center;
-padding:9px;
-border-radius:9px;
+padding:10px;
+border-radius:10px;
 background:rgba(255,255,255,0.12);
 color:#fff;
 text-decoration:none;
-font-size:12px;
-margin-bottom:9px;
+font-size:13px;
+margin-bottom:10px;
 }
 </style>
 </head>
@@ -140,12 +140,29 @@ margin-bottom:9px;
 <option value="Diarrhea">שלשול</option>
 <option value="Constipation">עצירות</option>
 <option value="Loss of appetite">חוסר תיאבון</option>
+<option value="Weight loss">ירידה במשקל</option>
+<option value="Abnormal weight gain">עלייה חריגה במשקל</option>
+<option value="Extreme fatigue">עייפות קיצונית</option>
 <option value="Breathing difficulty">קושי בנשימה</option>
 <option value="Coughing">שיעול</option>
-<option value="Eye discharge">הפרשות עיניים</option>
+<option value="Frequent sneezing">התעטשויות תכופות</option>
+<option value="Nasal discharge">הפרשות מהאף</option>
+<option value="Eye discharge">הפרשות מהעיניים</option>
+<option value="Excessive itching">גירודים מרובים</option>
+<option value="Abnormal hair loss">נשירת שיער חריגה</option>
+<option value="Skin sores">פצעים בעור</option>
+<option value="Swelling">נפיחות בגוף</option>
 <option value="Limping">צליעה</option>
-<option value="High fever">חום גבוה</option>
+<option value="Not using litter box">חוסר שימוש בארגז חול</option>
+<option value="Blood in urine">דם בשתן</option>
+<option value="Behavioral changes">שינויים בהתנהגות</option>
+<option value="Sudden aggression">אגרסיביות פתאומית</option>
+<option value="Trembling">רעידות</option>
 <option value="Seizures">פרכוסים</option>
+<option value="Possible poisoning">הרעלה אפשרית</option>
+<option value="Swallowed foreign object">בליעת חפץ זר</option>
+<option value="High fever">חום גבוה</option>
+<option value="Loss of consciousness">אובדן הכרה</option>
 </select>
 
 <button onclick="executeAnalysis()">נתח מקרה</button>
@@ -167,7 +184,6 @@ margin-bottom:9px;
 
 <script>
 
-/* תמונות שלך בלבד */
 const images=[
 "bg.png","bg2.png","bg3.png","bg4.png",
 "bg5.png","bg6.png","bg7.png","bg8.png",
@@ -184,7 +200,6 @@ i=(i+1)%images.length;
 rotate();
 setInterval(rotate,6000);
 
-/* אבחון */
 async function executeAnalysis(){
 const select=document.getElementById("mainSymptom");
 const result=document.getElementById("resultContainer");
