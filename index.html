@@ -7,7 +7,7 @@
 
 <style>
 :root{
-  --panel: rgba(8,18,30,0.92);
+  --panel: rgba(8,18,30,0.94);
   --accent: #22d3ee;
 }
 
@@ -16,7 +16,6 @@ body{
   font-family:"Segoe UI",Tahoma,sans-serif;
   background:#000;
   color:#fff;
-  overflow-x:hidden;
 }
 
 /* ===== Background ===== */
@@ -26,7 +25,6 @@ body{
   inset:0;
   z-index:-1;
   overflow:hidden;
-  background:#000;
 }
 
 .bg-img{
@@ -46,23 +44,28 @@ body{
 .overlay{
   position:absolute;
   inset:0;
-  background:linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.35),
-    rgba(0,0,0,0.75)
-  );
+  background:rgba(0,0,0,0.45);
 }
 
-/* ===== Main Panel ===== */
+/* ===== Layout ===== */
 
-.container{
-  max-width:720px;
-  margin:70px auto;
-  padding:30px;
+.wrapper{
+  min-height:100vh;
+  display:flex;
+  justify-content:flex-end; /* פאנל בצד ימין */
+  align-items:center;
+  padding:40px;
+  box-sizing:border-box;
+}
+
+.panel{
+  width:420px;
+  max-width:95%;
   background:var(--panel);
-  border-radius:20px;
-  backdrop-filter:blur(10px);
+  border-radius:22px;
+  padding:30px;
   box-shadow:0 25px 60px rgba(0,0,0,0.6);
+  backdrop-filter:blur(12px);
 }
 
 h1{
@@ -100,8 +103,8 @@ button:hover{
 
 .result{
   margin-top:20px;
-  padding:20px;
-  border-radius:16px;
+  padding:18px;
+  border-radius:14px;
   background:rgba(0,0,0,0.85);
   white-space:pre-wrap;
   line-height:1.6;
@@ -110,9 +113,13 @@ button:hover{
 /* ===== Mobile ===== */
 
 @media (max-width:768px){
-  .container{
-    margin:20px;
+  .wrapper{
+    justify-content:center;
     padding:20px;
+  }
+
+  .panel{
+    width:100%;
   }
 }
 </style>
@@ -120,22 +127,22 @@ button:hover{
 
 <body>
 
-<!-- Background -->
 <div id="bg">
   <img class="bg-img active">
   <img class="bg-img">
   <div class="overlay"></div>
 </div>
 
-<!-- UI -->
-<div class="container">
-  <h1>🐱 אבחון חכם</h1>
+<div class="wrapper">
+  <div class="panel">
+    <h1>🐱 אבחון חכם</h1>
 
-  <textarea id="input" placeholder="תאר סימפטומים של החתול..."></textarea>
+    <textarea id="input" placeholder="תאר סימפטומים של החתול..."></textarea>
 
-  <button onclick="send()">נתח מקרה</button>
+    <button onclick="send()">נתח מקרה</button>
 
-  <div class="result" id="resultBox"></div>
+    <div class="result" id="resultBox"></div>
+  </div>
 </div>
 
 <script>
@@ -152,7 +159,6 @@ const layers = document.querySelectorAll(".bg-img");
 let currentLayer = 0;
 let imgIndex = 0;
 
-// preload
 images.forEach(src=>{
   const i = new Image();
   i.src = src;
@@ -160,7 +166,6 @@ images.forEach(src=>{
 
 function changeBg(){
   const next = layers[(currentLayer+1)%2];
-
   next.src = images[imgIndex];
   next.classList.add("active");
   layers[currentLayer].classList.remove("active");
@@ -183,7 +188,7 @@ async function send(){
     return;
   }
 
-  box.innerHTML = "טוען...";
+  box.innerHTML="טוען...";
 
   try{
     const res = await fetch(
@@ -199,7 +204,7 @@ async function send(){
     box.innerHTML = data.result || "שגיאה בניתוח";
   }
   catch(e){
-    box.innerHTML = "שגיאת שרת";
+    box.innerHTML="שגיאת שרת";
   }
 }
 
