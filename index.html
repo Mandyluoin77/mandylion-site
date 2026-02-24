@@ -6,143 +6,125 @@
 <title>CatMind - אבחון חכם לחתולים</title>
 
 <style>
-:root {
-    --turquoise: #22d3ee;
-    --panel: rgba(8, 20, 35, 0.96);
+:root{
+    --turquoise:#22d3ee;
+    --panel:rgba(8,20,35,0.95);
 }
 
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #000;
-    color: white;
-    overflow-x: hidden;
+body{
+    margin:0;
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background:#000;
+    color:white;
 }
 
-/* רקע */
+/* ===== רקע בלי חיתוך ===== */
 
-#bg {
-    position: fixed;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: -2;
-    transition: background-image 1.2s ease-in-out;
+#bg{
+    position:fixed;
+    inset:0;
+    background-size:contain;     /* לא חותך */
+    background-position:center;
+    background-repeat:no-repeat;
+    background-color:#000;       /* שחור מסביב */
+    z-index:-2;
 }
 
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(
-        to left,
-        rgba(0,0,0,0.85),
-        rgba(0,0,0,0.55),
-        rgba(0,0,0,0.9)
-    );
-    z-index: -1;
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.65);
+    z-index:-1;
 }
 
-/* כרטיס צד */
+/* ===== כרטיס ===== */
 
-.card {
-    position: fixed;
-    top: 60px;
-    right: 60px;
-    width: min(360px, 92vw);
-    background: var(--panel);
-    border-radius: 20px;
-    padding: 24px;
-    box-shadow: 0 35px 100px rgba(0,0,0,0.75);
-    border: 1px solid rgba(255,255,255,0.06);
-    backdrop-filter: blur(16px);
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
+.card{
+    position:fixed;
+    top:50px;
+    right:50px;
+    width:320px;
+    background:var(--panel);
+    border-radius:16px;
+    padding:18px;
+    border:1px solid rgba(255,255,255,0.08);
 }
 
-@media (max-width: 900px) {
-    .card {
-        position: relative;
-        top: auto;
-        right: auto;
-        margin: 20px;
+/* מובייל */
+@media(max-width:900px){
+    .card{
+        position:relative;
+        margin:20px;
+        right:auto;
+        top:auto;
+        width:auto;
     }
 }
 
-h1 {
-    text-align: center;
-    font-size: 22px;
-    margin-bottom: 22px;
-    color: var(--turquoise);
+h1{
+    text-align:center;
+    font-size:18px;
+    margin-bottom:16px;
+    color:var(--turquoise);
 }
 
-select {
-    width: 100%;
-    padding: 14px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.15);
-    margin-bottom: 18px;
-    font-size: 14px;
-    background: #1e293b;
-    color: white;
+select{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.15);
+    margin-bottom:12px;
+    font-size:13px;
+    background:#1e293b;
+    color:white;
 }
 
-button {
-    width: 100%;
-    padding: 14px;
-    border-radius: 12px;
-    border: none;
-    background: var(--turquoise);
-    font-weight: 700;
-    font-size: 15px;
-    cursor: pointer;
-    margin-bottom: 18px;
-    color: #06131c;
+button{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+    background:var(--turquoise);
+    font-weight:700;
+    font-size:13px;
+    cursor:pointer;
+    margin-bottom:12px;
+    color:#06131c;
 }
 
-button:disabled {
-    background: #475569;
-    opacity: 0.7;
+#resultContainer{
+    background:rgba(0,0,0,0.4);
+    border-radius:8px;
+    padding:10px;
+    min-height:60px;
+    margin-bottom:14px;
+    border:1px dashed rgba(34,211,238,0.4);
+    font-size:12px;
+    line-height:1.5;
 }
 
-#resultContainer {
-    background: rgba(0,0,0,0.4);
-    border-radius: 12px;
-    padding: 14px;
-    min-height: 80px;
-    margin-bottom: 20px;
-    border: 1px dashed rgba(34,211,238,0.4);
-    font-size: 13px;
-    line-height: 1.6;
+.section{
+    border-top:1px solid rgba(255,255,255,0.08);
+    padding-top:12px;
+    margin-top:12px;
 }
 
-.section {
-    border-top: 1px solid rgba(255,255,255,0.08);
-    padding-top: 16px;
-    margin-top: 18px;
+.section h3{
+    color:var(--turquoise);
+    font-size:12px;
+    margin-bottom:8px;
 }
 
-.section h3 {
-    color: var(--turquoise);
-    font-size: 14px;
-    margin-bottom: 12px;
-}
-
-.link-btn {
-    display: block;
-    text-align: center;
-    padding: 12px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.08);
-    color: white;
-    text-decoration: none;
-    font-size: 13px;
-    margin-bottom: 10px;
-    transition: 0.25s;
-}
-
-.link-btn:hover {
-    background: rgba(255,255,255,0.15);
+.link-btn{
+    display:block;
+    text-align:center;
+    padding:8px;
+    border-radius:6px;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    text-decoration:none;
+    font-size:12px;
+    margin-bottom:6px;
 }
 </style>
 </head>
@@ -192,73 +174,65 @@ button:disabled {
 
 <div class="section">
 <h3>מידע נוסף</h3>
-<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">
-Browse All Breeds
-</a>
+<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
 </div>
 
 <div class="section">
 <h3>וטרינרים מומלצים</h3>
-<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">
-ד"ר טלי שטיין
-</a>
-<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">
-ד"ר תמר פלידל
-</a>
+<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
+<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
 </div>
 
 </div>
 
 <script>
-const images = [
+const images=[
 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba',
 'https://images.unsplash.com/photo-1495360010541-f48722b34f7d',
-'https://images.unsplash.com/photo-1519052537078-e6302a4968d4',
-'https://images.unsplash.com/photo-1511044568932-338cba0ad803'
+'https://images.unsplash.com/photo-1519052537078-e6302a4968d4'
 ];
 
-let i = 0;
-const bg = document.getElementById("bg");
+let i=0;
+const bg=document.getElementById("bg");
 
-function rotate() {
-    bg.style.backgroundImage = `url('${images[i]}')`;
-    i = (i + 1) % images.length;
+function rotate(){
+bg.style.backgroundImage=`url('${images[i]}')`;
+i=(i+1)%images.length;
 }
 
 rotate();
-setInterval(rotate, 6000);
+setInterval(rotate,6000);
 
-async function executeAnalysis() {
-    const select = document.getElementById("mainSymptom");
-    const resultBox = document.getElementById("resultContainer");
-    const btn = document.getElementById("analyzeBtn");
-    const selectedText = select.options[select.selectedIndex].text;
+async function executeAnalysis(){
+const select=document.getElementById("mainSymptom");
+const resultBox=document.getElementById("resultContainer");
+const btn=document.getElementById("analyzeBtn");
+const selectedText=select.options[select.selectedIndex].text;
 
-    if (!select.value) {
-        resultBox.innerHTML = "⚠ אנא בחר בעיה לפני הניתוח.";
-        return;
-    }
+if(!select.value){
+resultBox.innerHTML="⚠ אנא בחר בעיה לפני הניתוח.";
+return;
+}
 
-    btn.disabled = true;
-    btn.innerText = "מעבד...";
-    resultBox.innerHTML = "⏳ השרת מתעורר...";
+btn.disabled=true;
+btn.innerText="מעבד...";
+resultBox.innerHTML="⏳ השרת מתעורר...";
 
-    try {
-        const response = await fetch("https://catmind-ai-server.onrender.com/generate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text: "נתח סימפטום: " + selectedText })
-        });
-
-        const data = await response.json();
-        resultBox.innerHTML = data.result || "לא התקבלה תשובה.";
-
-    } catch (err) {
-        resultBox.innerHTML = "❌ שגיאה בחיבור לשרת.";
-    } finally {
-        btn.disabled = false;
-        btn.innerText = "נתח מקרה";
-    }
+try{
+const response=await fetch("https://catmind-ai-server.onrender.com/generate",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({text:"נתח סימפטום: "+selectedText})
+});
+const data=await response.json();
+resultBox.innerHTML=data.result||"לא התקבלה תשובה.";
+}catch{
+resultBox.innerHTML="❌ שגיאה בחיבור לשרת.";
+}
+finally{
+btn.disabled=false;
+btn.innerText="נתח מקרה";
+}
 }
 </script>
 
