@@ -16,11 +16,10 @@ margin:0;
 font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
 background:#000;
 color:#fff;
-overflow:hidden; /* אין גלילה בכלל */
+overflow:hidden;
 }
 
-/* ===== רקע ===== */
-
+/* רקע */
 #bg{
 position:fixed;
 inset:0;
@@ -37,17 +36,16 @@ background:rgba(0,0,0,0.45);
 z-index:-1;
 }
 
-/* ===== כרטיס מוקטן ===== */
-
+/* כרטיס */
 .card{
 position:fixed;
 top:30px;
 right:40px;
-width:260px;          /* קטן יותר */
+width:260px;
 background:var(--panel);
 backdrop-filter:blur(8px);
 border-radius:16px;
-padding:14px;         /* פחות ריווח */
+padding:14px;
 border:1px solid rgba(255,255,255,0.08);
 }
 
@@ -140,36 +138,36 @@ margin-bottom:6px;
 
 <select id="mainSymptom">
 <option value="">בחר בעיה מהרשימה</option>
-<option>הקאות</option>
-<option>שלשול</option>
-<option>עצירות</option>
-<option>חוסר תיאבון</option>
-<option>ירידה במשקל</option>
-<option>עלייה חריגה במשקל</option>
-<option>עייפות קיצונית</option>
-<option>קושי בנשימה</option>
-<option>שיעול</option>
-<option>התעטשויות תכופות</option>
-<option>הפרשות מהאף</option>
-<option>הפרשות מהעיניים</option>
-<option>גירודים מרובים</option>
-<option>נשירת שיער חריגה</option>
-<option>פצעים בעור</option>
-<option>נפיחות בגוף</option>
-<option>צליעה</option>
-<option>חוסר שימוש בארגז חול</option>
-<option>דם בשתן</option>
-<option>שינויים בהתנהגות</option>
-<option>אגרסיביות פתאומית</option>
-<option>רעידות</option>
-<option>פרכוסים</option>
-<option>הרעלה אפשרית</option>
-<option>בליעת חפץ זר</option>
-<option>חום גבוה</option>
-<option>אובדן הכרה</option>
+<option value="Vomiting">הקאות</option>
+<option value="Diarrhea">שלשול</option>
+<option value="Constipation">עצירות</option>
+<option value="Loss of appetite">חוסר תיאבון</option>
+<option value="Weight loss">ירידה במשקל</option>
+<option value="Abnormal weight gain">עלייה חריגה במשקל</option>
+<option value="Extreme fatigue">עייפות קיצונית</option>
+<option value="Breathing difficulty">קושי בנשימה</option>
+<option value="Coughing">שיעול</option>
+<option value="Frequent sneezing">התעטשויות תכופות</option>
+<option value="Nasal discharge">הפרשות מהאף</option>
+<option value="Eye discharge">הפרשות מהעיניים</option>
+<option value="Excessive itching">גירודים מרובים</option>
+<option value="Abnormal hair loss">נשירת שיער חריגה</option>
+<option value="Skin sores">פצעים בעור</option>
+<option value="Swelling">נפיחות בגוף</option>
+<option value="Limping">צליעה</option>
+<option value="Not using litter box">חוסר שימוש בארגז חול</option>
+<option value="Blood in urine">דם בשתן</option>
+<option value="Behavioral changes">שינויים בהתנהגות</option>
+<option value="Sudden aggression">אגרסיביות פתאומית</option>
+<option value="Trembling">רעידות</option>
+<option value="Seizures">פרכוסים</option>
+<option value="Possible poisoning">הרעלה אפשרית</option>
+<option value="Swallowed foreign object">בליעת חפץ זר</option>
+<option value="High fever">חום גבוה</option>
+<option value="Loss of consciousness">אובדן הכרה</option>
 </select>
 
-<button>נתח מקרה</button>
+<button onclick="executeAnalysis()">נתח מקרה</button>
 
 <div id="resultContainer">האבחנה תופיע כאן...</div>
 
@@ -187,6 +185,8 @@ margin-bottom:6px;
 </div>
 
 <script>
+
+/* רקעים */
 const images=[
 "bg.png","bg2.png","bg3.png","bg4.png",
 "bg5.png","bg6.png","bg7.png","bg8.png",
@@ -203,6 +203,35 @@ i=(i+1)%images.length;
 
 rotate();
 setInterval(rotate,6000);
+
+/* פונקציית אבחון חזרה */
+async function executeAnalysis(){
+const select=document.getElementById("mainSymptom");
+const result=document.getElementById("resultContainer");
+
+if(!select.value){
+result.innerHTML="⚠ אנא בחר בעיה לפני הניתוח.";
+return;
+}
+
+result.innerHTML="⏳ מעבד...";
+
+try{
+const response=await fetch("https://catmind-ai-server.onrender.com/generate",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({text:"נתח סימפטום: "+select.value})
+});
+
+const data=await response.json();
+result.innerHTML=data.result || "לא התקבלה תשובה.";
+
+}catch(err){
+result.innerHTML="❌ שגיאה בחיבור לשרת.";
+console.error(err);
+}
+}
+
 </script>
 
 </body>
