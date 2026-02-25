@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CatMind</title>
+<title>CatMind AI</title>
 
 <style>
 :root{ --turquoise:#22d3ee; }
@@ -18,65 +18,68 @@ color:#fff;
 background:#020617;
 }
 
-/* ===== רקע ללא חיתוך ===== */
+/* ===== רקע AI כהה עם קומפוזיציה שמאלית ===== */
 .bg-wrapper{
 position:fixed;
 inset:0;
+z-index:0;
+background:#020617;
 display:flex;
 align-items:center;
-justify-content:center;
-z-index:0;
-background:radial-gradient(circle at center,#0f172a 0%,#020617 80%);
+justify-content:flex-start; /* תמיד שמאל */
 }
 
 .bg-wrapper img{
-width:100%;
 height:100%;
+width:auto;
 object-fit:contain;
-object-position:center;
+object-position:left center;
 transition:opacity 1s ease;
+filter:brightness(0.75) contrast(1.1);
 }
 
-/* כהות */
+/* שכבת כהות מתקדמת */
 .overlay{
 position:fixed;
 inset:0;
-background:linear-gradient(to left,rgba(0,0,0,0.8),rgba(0,0,0,0.2));
+background:
+linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 35%, rgba(0,0,0,0.2) 70%);
 z-index:1;
 }
 
-/* כרטיס */
+/* ===== כרטיס ימין ===== */
 .card{
 position:fixed;
 top:50%;
 right:90px;
 transform:translateY(-50%);
-width:340px;
-max-height:85vh;
+width:360px;
+max-height:88vh;
 display:flex;
 flex-direction:column;
-background:rgba(10,20,35,0.65);
-backdrop-filter:blur(22px);
-border-radius:20px;
-padding:22px;
+background:rgba(10,20,35,0.75);
+backdrop-filter:blur(25px);
+border-radius:22px;
+padding:24px;
 border:1px solid rgba(255,255,255,0.12);
-box-shadow:0 25px 60px rgba(0,0,0,0.6);
+box-shadow:0 30px 80px rgba(0,0,0,0.7);
 z-index:2;
 overflow:hidden;
 }
 
 h1{
 text-align:center;
-font-size:18px;
-margin-bottom:15px;
+font-size:19px;
+margin-bottom:18px;
 color:var(--turquoise);
+letter-spacing:0.5px;
 }
 
 select{
 width:100%;
-padding:11px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,0.15);
+padding:12px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,0.2);
 margin-bottom:14px;
 background:#1e293b;
 color:#fff;
@@ -85,27 +88,33 @@ font-size:13px;
 
 button{
 width:100%;
-padding:12px;
-border-radius:12px;
+padding:13px;
+border-radius:14px;
 border:none;
 background:var(--turquoise);
 font-weight:700;
 cursor:pointer;
-margin-bottom:14px;
+margin-bottom:16px;
 color:#06131c;
 font-size:14px;
+transition:0.2s;
 }
 
+button:hover{ transform:scale(1.03); }
+
+/* אזור אבחנה */
 #resultContainer{
 flex:1;
 overflow-y:auto;
-background:rgba(5,15,25,0.92);
-border-radius:14px;
-padding:16px;
+background:rgba(5,15,25,0.95);
+border-radius:16px;
+padding:18px;
 border:1px solid rgba(34,211,238,0.6);
+box-shadow:0 0 30px rgba(34,211,238,0.15), inset 0 0 30px rgba(0,0,0,0.6);
 font-size:13px;
-line-height:1.7;
+line-height:1.75;
 color:#e6f7ff;
+transition:opacity 0.3s ease;
 }
 
 .section{
@@ -124,7 +133,7 @@ margin-bottom:8px;
 display:block;
 text-align:center;
 padding:10px;
-border-radius:10px;
+border-radius:12px;
 background:rgba(255,255,255,0.12);
 color:#fff;
 text-decoration:none;
@@ -140,13 +149,13 @@ transition:0.3s;
 <body>
 
 <div class="bg-wrapper">
-<img id="bgImage" src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920">
+<img id="bgImage" src="">
 </div>
 
 <div class="overlay"></div>
 
 <div class="card">
-<h1>🐱 אבחון חכם</h1>
+<h1>🐱 CatMind AI</h1>
 
 <select id="mainSymptom">
 <option value="">בחר בעיה מהרשימה</option>
@@ -197,26 +206,38 @@ transition:0.3s;
 </div>
 
 <script>
-const images=[
-"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920",
-"https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?q=80&w=1920",
-"https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920",
-"https://images.unsplash.com/photo-1574158622682-e40e69881006?q=80&w=1920"
+const images = [
+"https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?q=80&w=1600",
+"https://images.unsplash.com/photo-1615789591457-74a63395c990?q=80&w=1600",
+"https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=1600",
+"https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?q=80&w=1600",
+"https://images.unsplash.com/photo-1559239115-ce6b3d09e4e2?q=80&w=1600",
+"https://images.unsplash.com/photo-1589883661923-6476cb0ae9f2?q=80&w=1600"
 ];
 
-let i=0;
-const img=document.getElementById("bgImage");
+let currentIndex = Math.floor(Math.random()*images.length);
+const img = document.getElementById("bgImage");
+img.src = images[currentIndex];
+
+images.forEach(src=>{ const preload=new Image(); preload.src=src; });
+
+function getNextIndex(){
+let next;
+do{ next=Math.floor(Math.random()*images.length); }
+while(next===currentIndex);
+return next;
+}
 
 function rotate(){
 img.style.opacity=0;
 setTimeout(()=>{
-i=(i+1)%images.length;
-img.src=images[i];
+currentIndex=getNextIndex();
+img.src=images[currentIndex];
 img.style.opacity=1;
-},500);
+},600);
 }
 
-setInterval(rotate,6000);
+setInterval(rotate,9000);
 
 async function executeAnalysis(){
 const select=document.getElementById("mainSymptom");
