@@ -18,19 +18,20 @@ color:#fff;
 background:#020617;
 }
 
-/* ===== רקע ===== */
-.bg{
+/* שתי שכבות לרקע כדי לבצע fade אמיתי */
+.bg-layer{
 position:fixed;
 inset:0;
-z-index:0;
 background-size:cover;
 background-position:left center;
 background-repeat:no-repeat;
-transition:background-image 1s ease;
+transition:opacity 1.2s ease;
 filter:brightness(0.75) contrast(1.05);
+z-index:0;
 }
 
-/* כהות */
+#bg2{ opacity:0; }
+
 .overlay{
 position:fixed;
 inset:0;
@@ -41,7 +42,6 @@ rgba(0,0,0,0.15) 75%);
 z-index:1;
 }
 
-/* כרטיס */
 .card{
 position:fixed;
 top:50%;
@@ -137,7 +137,8 @@ transition:0.3s;
 
 <body>
 
-<div class="bg" id="bg"></div>
+<div id="bg1" class="bg-layer"></div>
+<div id="bg2" class="bg-layer"></div>
 <div class="overlay"></div>
 
 <div class="card">
@@ -192,26 +193,49 @@ transition:0.3s;
 </div>
 
 <script>
-const images = [];
+const images=[];
 for(let i=1;i<=40;i++){
 images.push(`https://source.unsplash.com/1920x1080/?cat,dark&sig=${i}`);
 }
 
-let currentIndex = Math.floor(Math.random()*images.length);
-const bg = document.getElementById("bg");
-bg.style.backgroundImage = `url(${images[currentIndex]})`;
+/* preload */
+images.forEach(src=>{
+const img=new Image();
+img.src=src;
+});
+
+let currentIndex=Math.floor(Math.random()*images.length);
+let activeLayer=1;
+
+const bg1=document.getElementById("bg1");
+const bg2=document.getElementById("bg2");
+
+bg1.style.backgroundImage=`url(${images[currentIndex]})`;
 
 function next(){
 let nextIndex;
 do{
-nextIndex = Math.floor(Math.random()*images.length);
-}while(nextIndex === currentIndex);
+nextIndex=Math.floor(Math.random()*images.length);
+}while(nextIndex===currentIndex);
 
-currentIndex = nextIndex;
-bg.style.backgroundImage = `url(${images[currentIndex]})`;
+currentIndex=nextIndex;
+
+const nextImage=images[currentIndex];
+
+if(activeLayer===1){
+bg2.style.backgroundImage=`url(${nextImage})`;
+bg2.style.opacity=1;
+bg1.style.opacity=0;
+activeLayer=2;
+}else{
+bg1.style.backgroundImage=`url(${nextImage})`;
+bg1.style.opacity=1;
+bg2.style.opacity=0;
+activeLayer=1;
+}
 }
 
-setInterval(next, 8000);
+setInterval(next,8000);
 
 async function executeAnalysis(){
 const select=document.getElementById("mainSymptom");
