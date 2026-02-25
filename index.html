@@ -6,258 +6,150 @@
 <title>CatMind AI</title>
 
 <style>
-:root{ --turquoise:#22d3ee; }
 
-*{box-sizing:border-box;margin:0;padding:0;}
-
-body{
-height:100vh;
-overflow:hidden;
-font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
-color:#fff;
-background:#020617;
+/* ===== Reset ===== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-/* שכבות רקע */
-.bg-layer{
-position:fixed;
-inset:0;
-background-size:cover;
-background-position:left center;
-background-repeat:no-repeat;
-transition:opacity 1.2s ease;
-filter:brightness(0.75) contrast(1.05);
-z-index:0;
+html,body{
+  height:100%;
+  overflow-x:hidden;
+  font-family:Segoe UI, Arial, sans-serif;
+  background: radial-gradient(circle at center,#02121f 0%,#000814 100%);
+  color:white;
 }
 
-#bg2{opacity:0;}
-
-.overlay{
-position:fixed;
-inset:0;
-background:linear-gradient(to right,
-rgba(0,0,0,0.85) 0%,
-rgba(0,0,0,0.55) 45%,
-rgba(0,0,0,0.15) 75%);
-z-index:1;
+/* ===== Center Layout ===== */
+.wrapper{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:30px 15px;
 }
 
+/* ===== Card ===== */
 .card{
-position:fixed;
-top:50%;
-right:90px;
-transform:translateY(-50%);
-width:360px;
-max-height:88vh;
-display:flex;
-flex-direction:column;
-background:rgba(10,20,35,0.85);
-backdrop-filter:blur(25px);
-border-radius:22px;
-padding:24px;
-border:1px solid rgba(255,255,255,0.12);
-box-shadow:0 30px 80px rgba(0,0,0,0.7);
-z-index:2;
-overflow:hidden;
+  width:100%;
+  max-width:420px;
+  background:rgba(10,25,45,0.75);
+  backdrop-filter:blur(14px);
+  border-radius:24px;
+  padding:28px;
+  box-shadow:0 0 40px rgba(0,255,255,0.15);
 }
 
-h1{
-text-align:center;
-font-size:19px;
-margin-bottom:18px;
-color:var(--turquoise);
+/* ===== Title ===== */
+.card h1{
+  text-align:center;
+  color:#38e0ff;
+  margin-bottom:25px;
+  font-size:26px;
 }
 
+/* ===== Select ===== */
 select{
-width:100%;
-padding:12px;
-border-radius:14px;
-border:1px solid rgba(255,255,255,0.2);
-margin-bottom:14px;
-background:#1e293b;
-color:#fff;
-font-size:13px;
+  width:100%;
+  padding:12px;
+  border-radius:14px;
+  border:none;
+  margin-bottom:15px;
+  background:#243447;
+  color:white;
+  font-size:15px;
 }
 
-button{
-width:100%;
-padding:13px;
-border-radius:14px;
-border:none;
-background:var(--turquoise);
-font-weight:700;
-cursor:pointer;
-margin-bottom:16px;
-color:#06131c;
-font-size:14px;
+/* ===== Button ===== */
+.btn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(90deg,#00d2ff,#3a7bd5);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+  margin-bottom:20px;
 }
 
-#resultContainer{
-flex:1;
-overflow-y:auto;
-background:rgba(5,15,25,0.95);
-border-radius:16px;
-padding:18px;
-border:1px solid rgba(34,211,238,0.6);
-font-size:13px;
-line-height:1.75;
-color:#e6f7ff;
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 20px rgba(0,210,255,0.6);
 }
 
-.section{
-border-top:1px solid rgba(255,255,255,0.1);
-padding-top:14px;
-margin-top:16px;
+/* ===== Result Box ===== */
+.result{
+  background:rgba(0,0,0,0.45);
+  border-radius:14px;
+  padding:16px;
+  font-size:14px;
+  line-height:1.7;
+  min-height:120px;
+  max-height:220px;
+  overflow-y:auto;
+  scrollbar-width:thin;
 }
 
-.section h3{
-color:var(--turquoise);
-font-size:13px;
-margin-bottom:8px;
+/* ===== Scrollbar (Chrome) ===== */
+.result::-webkit-scrollbar{
+  width:6px;
+}
+.result::-webkit-scrollbar-thumb{
+  background:#00d2ff;
+  border-radius:10px;
 }
 
-.link-btn{
-display:block;
-text-align:center;
-padding:10px;
-border-radius:12px;
-background:rgba(255,255,255,0.12);
-color:#fff;
-text-decoration:none;
-font-size:12px;
-margin-bottom:8px;
-transition:0.3s;
-}
-
-.link-btn:hover{ background:rgba(255,255,255,0.25); }
 </style>
 </head>
-
 <body>
 
-<div id="bg1" class="bg-layer"></div>
-<div id="bg2" class="bg-layer"></div>
-<div class="overlay"></div>
+<div class="wrapper">
+  <div class="card">
+    <h1>CatMind AI 😺</h1>
 
-<div class="card">
-<h1>🐱 CatMind AI</h1>
+    <select id="problemSelect">
+      <option value="">בחר בעיה מהתפריט</option>
+      <option value="hair">נשירת שיער</option>
+      <option value="vomit">הקאות</option>
+      <option value="aggressive">התנהגות תוקפנית</option>
+    </select>
 
-<select id="mainSymptom">
-<option value="">בחר בעיה מהרשימה</option>
-<option value="Vomiting">הקאות</option>
-<option value="Diarrhea">שלשול</option>
-<option value="Constipation">עצירות</option>
-<option value="Loss of appetite">חוסר תיאבון</option>
-<option value="Weight loss">ירידה במשקל</option>
-<option value="Abnormal weight gain">עלייה חריגה במשקל</option>
-<option value="Extreme fatigue">עייפות קיצונית</option>
-<option value="Breathing difficulty">קושי בנשימה</option>
-<option value="Coughing">שיעול</option>
-<option value="Frequent sneezing">התעטשויות תכופות</option>
-<option value="Nasal discharge">הפרשות מהאף</option>
-<option value="Eye discharge">הפרשות מהעיניים</option>
-<option value="Excessive itching">גירודים מרובים</option>
-<option value="Abnormal hair loss">נשירת שיער חריגה</option>
-<option value="Skin sores">פצעים בעור</option>
-<option value="Swelling">נפיחות בגוף</option>
-<option value="Limping">צליעה</option>
-<option value="Not using litter box">חוסר שימוש בארגז חול</option>
-<option value="Blood in urine">דם בשתן</option>
-<option value="Behavioral changes">שינויים בהתנהגות</option>
-<option value="Sudden aggression">אגרסיביות פתאומית</option>
-<option value="Trembling">רעידות</option>
-<option value="Seizures">פרכוסים</option>
-<option value="Possible poisoning">הרעלה אפשרית</option>
-<option value="Swallowed foreign object">בליעת חפץ זר</option>
-<option value="High fever">חום גבוה</option>
-<option value="Loss of consciousness">אובדן הכרה</option>
-</select>
+    <button class="btn" onclick="analyzeCase()">נתח מקרה</button>
 
-<button onclick="executeAnalysis()">נתח מקרה</button>
-
-<div id="resultContainer">האבחנה תופיע כאן...</div>
-
-<div class="section">
-<h3>מידע נוסף</h3>
-<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
-</div>
-
-<div class="section">
-<h3>וטרינרים מומלצים</h3>
-<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד\"ר טלי שטיין</a>
-<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד\"ר תמר פלידל</a>
-</div>
-
+    <div class="result" id="resultBox">
+      האבחנה תופיע כאן...
+    </div>
+  </div>
 </div>
 
 <script>
-const images = [
-"https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?w=1920",
-"https://images.unsplash.com/photo-1615789591457-74a63395c990?w=1920",
-"https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=1920",
-"https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?w=1920",
-"https://images.unsplash.com/photo-1559239115-ce6b3d09e4e2?w=1920",
-"https://images.unsplash.com/photo-1589883661923-6476cb0ae9f2?w=1920",
-"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=1920",
-"https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=1920",
-"https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?w=1920"
-];
 
-let index = 0;
-let active = 1;
+function analyzeCase(){
+  const value = document.getElementById("problemSelect").value;
+  const result = document.getElementById("resultBox");
 
-const bg1 = document.getElementById("bg1");
-const bg2 = document.getElementById("bg2");
+  if(!value){
+    result.innerHTML = "אנא בחר בעיה לפני ניתוח.";
+    return;
+  }
 
-images.forEach(src=>{ const img=new Image(); img.src=src; });
+  if(value === "hair"){
+    result.innerHTML = "נשירת שיער יכולה לנבוע מאלרגיה, סטרס או טפילים. מומלץ לבדוק שינוי מזון ולוודא טיפול נגד פרעושים.";
+  }
 
-bg1.style.backgroundImage = `url(${images[0]})`;
+  if(value === "vomit"){
+    result.innerHTML = "הקאות חוזרות עשויות להעיד על רגישות במערכת העיכול או גוף זר. אם זה נמשך מעל 24 שעות – יש לפנות לוטרינר.";
+  }
 
-function next(){
-index = (index+1) % images.length;
-
-if(active===1){
-bg2.style.backgroundImage=`url(${images[index]})`;
-bg2.style.opacity=1;
-bg1.style.opacity=0;
-active=2;
-}else{
-bg1.style.backgroundImage=`url(${images[index]})`;
-bg1.style.opacity=1;
-bg2.style.opacity=0;
-active=1;
-}
+  if(value === "aggressive"){
+    result.innerHTML = "התנהגות תוקפנית לרוב קשורה לסטרס, טריטוריאליות או כאב פיזי. חשוב לשלול בעיה רפואית לפני טיפול התנהגותי.";
+  }
 }
 
-setInterval(next,8000);
-
-async function executeAnalysis(){
-const select=document.getElementById("mainSymptom");
-const result=document.getElementById("resultContainer");
-
-if(!select.value){
-result.innerHTML="⚠ אנא בחר בעיה לפני הניתוח.";
-return;
-}
-
-result.innerHTML="⏳ מעבד...";
-
-try{
-const response=await fetch("https://catmind-ai-server.onrender.com/generate",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({text:"נתח סימפטום: "+select.value})
-});
-
-const data=await response.json();
-let text=data.result || "לא התקבלה תשובה.";
-text=text.replace(/\n/g,"<br>");
-result.innerHTML=text;
-
-}catch(err){
-result.innerHTML="❌ שגיאה בחיבור לשרת.";
-}
-}
 </script>
 
 </body>
