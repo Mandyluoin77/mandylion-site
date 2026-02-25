@@ -19,14 +19,14 @@ background:#020617;
 overflow:hidden;
 }
 
-/* ===== Background ===== */
+/* ===== רקע ===== */
 .bg-layer{
 position:fixed;
 inset:0;
 background-size:cover;
 background-position:center;
 background-repeat:no-repeat;
-transition:opacity 2s ease;
+transition:opacity 1.5s ease;
 filter:brightness(0.7) contrast(1.05);
 z-index:0;
 }
@@ -42,7 +42,7 @@ rgba(0,0,0,0.2) 75%);
 z-index:1;
 }
 
-/* ===== Card ===== */
+/* ===== Glass Card ===== */
 .card{
 position:fixed;
 top:50%;
@@ -52,16 +52,25 @@ width:420px;
 height:85vh;
 display:flex;
 flex-direction:column;
+
 background:linear-gradient(
 145deg,
 rgba(255,255,255,0.10),
 rgba(255,255,255,0.02)
 );
+
 backdrop-filter:blur(45px) saturate(160%);
+-webkit-backdrop-filter:blur(45px) saturate(160%);
+
 border-radius:30px;
 padding:28px;
+
 border:1px solid rgba(255,255,255,0.25);
-box-shadow:0 50px 120px rgba(0,0,0,0.75);
+
+box-shadow:
+0 50px 120px rgba(0,0,0,0.75),
+0 0 50px rgba(34,211,238,0.12);
+
 z-index:2;
 }
 
@@ -96,32 +105,75 @@ color:#06131c;
 font-size:15px;
 }
 
+/* ===== Result ===== */
 #resultContainer{
 flex:1;
+min-height:0;
 overflow-y:auto;
-background:rgba(10,25,45,0.6);
-backdrop-filter:blur(20px);
+
+background:linear-gradient(
+160deg,
+rgba(20,40,70,0.50),
+rgba(10,25,45,0.40)
+);
+
+backdrop-filter:blur(25px) saturate(130%);
+-webkit-backdrop-filter:blur(25px) saturate(130%);
+
 border-radius:24px;
 padding:24px;
+
 border:1px solid rgba(34,211,238,0.5);
+
+box-shadow:
+0 0 40px rgba(34,211,238,0.25),
+inset 0 0 35px rgba(0,0,0,0.5);
+
 font-size:14px;
 line-height:1.9;
 color:#f0fbff;
-direction:rtl;
-text-align:right;
+
+direction: rtl;
+text-align: right;
+overflow-wrap: break-word;
+word-break: break-word;
 }
 
+/* Markdown */
+#resultContainer h1,
+#resultContainer h2,
+#resultContainer h3{
+color:#22d3ee;
+margin-bottom:8px;
+}
+#resultContainer ul{
+padding-right:18px;
+margin-bottom:12px;
+}
+
+/* ===== Disclaimer ===== */
 .disclaimer{
 margin-top:14px;
 padding:14px;
 border-radius:18px;
-background:rgba(255,140,0,0.15);
+
+background:linear-gradient(
+160deg,
+rgba(255,170,0,0.15),
+rgba(255,80,0,0.12)
+);
+
 border:1px solid rgba(255,140,0,0.35);
+
+backdrop-filter:blur(12px);
+
 font-size:12px;
+line-height:1.6;
 color:#ffd9b3;
 text-align:center;
 }
 
+/* ===== Links ===== */
 .section{
 border-top:1px solid rgba(255,255,255,0.1);
 padding-top:14px;
@@ -148,8 +200,10 @@ transition:0.3s;
 }
 .link-btn:hover{ background:rgba(255,255,255,0.3); }
 
-@media (max-width:768px){
+/* ===== Mobile ===== */
+@media (max-width: 768px){
 body{ overflow:auto; }
+
 .card{
 position:relative;
 top:auto;
@@ -210,6 +264,7 @@ margin:40px auto;
 
 <div class="disclaimer">
 ⚠ הכלי הוא להכוונה בלבד ואינו מחליף ייעוץ וטרינרי מקצועי.
+במקרה חירום יש לפנות מיד לוטרינר.
 </div>
 
 <div class="section">
@@ -219,23 +274,48 @@ margin:40px auto;
 
 <div class="section">
 <h3>וטרינרים מומלצים</h3>
-<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד״ר טלי שטיין</a>
-<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד״ר תמר פלידל</a>
+<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
+<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
 </div>
 
 </div>
 
 <script>
-
-/* ===== הרבה תמונות רקע ===== */
-const images = [];
-for(let i=1;i<=30;i++){
-images.push(`https://source.unsplash.com/1920x1080/?cat&sig=${i}`);
-}
-
+/* ===== Background Rotation ===== */
+const images=[
+"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1494256997604-768d1f608cac?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1519052537078-e6302a4968d4?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1574158622682-e40e69881006?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1560807707-8cc77767d783?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1517451330947-7809dead78d5?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1591768793355-74d04bb6608f?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1571566882372-1598d88abd90?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1548247416-ec66f4900b2e?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1570824104453-508955ab713e?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1601758064223-29f84e2b05b2?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1595433562696-f8d0f9b3e2d8?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1606214102298-3b6f8b0e4f5e?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1518792224239-f9f2e0d08b3f?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1519066629447-267fffa62d4b?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1596854273331-0a21b7d1cf9f?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1517451330947-7809dead78d5?q=80&w=1920&auto=format&fit=crop&sat=-50",
+"https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1920&auto=format&fit=crop&sat=-30",
+"https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920&auto=format&fit=crop&sat=-20",
+"https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?q=80&w=1920&auto=format&fit=crop&sat=-40"
+];
 let currentIndex=Math.floor(Math.random()*images.length);
 let activeLayer=1;
-
 const bg1=document.getElementById("bg1");
 const bg2=document.getElementById("bg2");
 
@@ -263,8 +343,50 @@ activeLayer=1;
 }
 }
 
-setInterval(nextBackground,12000);
+setInterval(nextBackground,8000);
 
+/* ===== Streaming AI ===== */
+async function executeAnalysis(){
+const select=document.getElementById("mainSymptom");
+const result=document.getElementById("resultContainer");
+
+if(!select.value){
+result.innerHTML="⚠ אנא בחר בעיה.";
+return;
+}
+
+result.innerHTML="⏳ מנתח...<br><br><strong>⚠ אינו מחליף ייעוץ וטרינרי.</strong><br><br>";
+
+try{
+const response=await fetch("https://catmind-ai-server.onrender.com/generate",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+text:"נתח סימפטום בחתול בצורה מקצועית ומפורטת: "+select.value
+})
+});
+
+const reader=response.body.getReader();
+const decoder=new TextDecoder();
+let fullText="";
+
+while(true){
+const {done,value}=await reader.read();
+if(done) break;
+
+const chunk=decoder.decode(value);
+fullText+=chunk;
+
+const parsed=marked.parse(fullText);
+result.innerHTML=`<div dir="rtl"><strong>⚠ אינו מחליף ייעוץ וטרינרי.</strong><br><br>${parsed}</div>`;
+result.scrollTop=result.scrollHeight;
+}
+
+}catch(err){
+console.error(err);
+result.innerHTML="❌ שגיאה בחיבור לשרת.";
+}
+}
 </script>
 
 </body>
