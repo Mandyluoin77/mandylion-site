@@ -139,7 +139,6 @@ overflow-wrap: break-word;
 word-break: break-word;
 }
 
-/* Markdown */
 #resultContainer h1,
 #resultContainer h2,
 #resultContainer h3{
@@ -151,29 +150,25 @@ padding-right:18px;
 margin-bottom:12px;
 }
 
-/* ===== Disclaimer ===== */
+/* Disclaimer */
 .disclaimer{
 margin-top:14px;
 padding:14px;
 border-radius:18px;
-
 background:linear-gradient(
 160deg,
 rgba(255,170,0,0.15),
 rgba(255,80,0,0.12)
 );
-
 border:1px solid rgba(255,140,0,0.35);
-
 backdrop-filter:blur(12px);
-
 font-size:12px;
 line-height:1.6;
 color:#ffd9b3;
 text-align:center;
 }
 
-/* ===== Links ===== */
+/* Links */
 .section{
 border-top:1px solid rgba(255,255,255,0.1);
 padding-top:14px;
@@ -200,10 +195,8 @@ transition:0.3s;
 }
 .link-btn:hover{ background:rgba(255,255,255,0.3); }
 
-/* ===== Mobile ===== */
-@media (max-width: 768px){
+@media (max-width:768px){
 body{ overflow:auto; }
-
 .card{
 position:relative;
 top:auto;
@@ -281,7 +274,6 @@ margin:40px auto;
 </div>
 
 <script>
-/* ===== Background Rotation ===== */
 const images=[
 "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920&auto=format&fit=crop",
 "https://images.unsplash.com/photo-1494256997604-768d1f608cac?q=80&w=1920&auto=format&fit=crop",
@@ -320,7 +312,6 @@ activeLayer=1;
 
 setInterval(nextBackground,8000);
 
-/* ===== Streaming AI ===== */
 async function executeAnalysis(){
 const select=document.getElementById("mainSymptom");
 const result=document.getElementById("resultContainer");
@@ -337,25 +328,24 @@ const response=await fetch("https://catmind-ai-server.onrender.com/generate",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({
-text:"נתח סימפטום בחתול בצורה מקצועית ומפורטת: "+select.value
+text:"נתח סימפטום בחתול: "+select.value
 })
 });
 
-const reader=response.body.getReader();
-const decoder=new TextDecoder();
-let fullText="";
-
-while(true){
-const {done,value}=await reader.read();
-if(done) break;
-
-const chunk=decoder.decode(value);
-fullText+=chunk;
-
-const parsed=marked.parse(fullText);
-result.innerHTML=`<div dir="rtl"><strong>⚠ אינו מחליף ייעוץ וטרינרי.</strong><br><br>${parsed}</div>`;
-result.scrollTop=result.scrollHeight;
+if(!response.ok){
+result.innerHTML="❌ שגיאה בשרת.";
+return;
 }
+
+const data=await response.json();
+const parsed = marked.parse(data.result || "לא התקבלה תשובה.");
+
+result.innerHTML=`
+<div dir="rtl">
+<strong>⚠ אינו מחליף ייעוץ וטרינרי.</strong><br><br>
+${parsed}
+</div>
+`;
 
 }catch(err){
 console.error(err);
