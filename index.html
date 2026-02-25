@@ -1,394 +1,3 @@
-
-
-
-You said:
-Uploaded image
-צריך להגדיר את ו חלון האב   זה הקוד כרגע:        <!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CatMind</title>
-
-<style>
-:root{
---turquoise:#22d3ee;
-}
-
-*{box-sizing:border-box;}
-
-body{
-margin:0;
-height:100vh;
-overflow:hidden;
-font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
-color:#fff;
-
-/* תמונה תמיד מלאה */
-background-size:cover;
-background-position:center top; /* חיתוך מלמטה בלבד */
-background-repeat:no-repeat;
-transition:background-image 1s ease-in-out;
-}
-
-/* כהות */
-.overlay{
-position:fixed;
-inset:0;
-background:linear-gradient(to left, rgba(0,0,0,0.75), rgba(0,0,0,0.15));
-z-index:0;
-}
-
-/* ===== כרטיס 75% אמיתי ===== */
-.card{
-position:fixed;
-top:50%;
-right:60px;
-transform:translateY(-50%);
-width:250px;
-background:rgba(10,20,35,0.45);
-backdrop-filter:blur(18px);
-border-radius:18px;
-padding:18px;
-border:1px solid rgba(255,255,255,0.1);
-z-index:1;
-}
-
-/* מובייל */
-@media(max-width:900px){
-.card{
-right:10px;
-left:10px;
-width:auto;
-top:20px;
-transform:none;
-}
-}
-
-h1{
-text-align:center;
-font-size:17px;
-margin-bottom:15px;
-color:var(--turquoise);
-}
-
-select{
-width:100%;
-padding:10px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,0.15);
-margin-bottom:14px;
-background:rgba(30,41,59,0.85);
-color:#fff;
-font-size:12px;
-}
-
-button{
-width:100%;
-padding:10px;
-border-radius:12px;
-border:none;
-background:var(--turquoise);
-font-weight:700;
-cursor:pointer;
-margin-bottom:14px;
-color:#06131c;
-font-size:12px;
-}
-
-#resultContainer{
-background:rgba(0,0,0,0.35);
-border-radius:12px;
-padding:14px;
-min-height:85px;
-border:1px dashed rgba(34,211,238,0.5);
-font-size:11px;
-line-height:1.6;
-}
-
-.section{
-border-top:1px solid rgba(255,255,255,0.1);
-padding-top:12px;
-margin-top:14px;
-}
-
-.section h3{
-color:var(--turquoise);
-font-size:12px;
-margin-bottom:8px;
-}
-
-.link-btn{
-display:block;
-text-align:center;
-padding:8px;
-border-radius:10px;
-background:rgba(255,255,255,0.12);
-color:#fff;
-text-decoration:none;
-font-size:11px;
-margin-bottom:8px;
-transition:0.3s;
-}
-
-.link-btn:hover{
-background:rgba(255,255,255,0.25);
-}
-</style>
-</head>
-
-<body>
-
-<div class="overlay"></div>
-
-<div class="card">
-<h1>🐱 אבחון חכם</h1>
-
-<select id="mainSymptom">
-<option value="">בחר בעיה מהרשימה</option>
-<option value="Vomiting">הקאות</option>
-<option value="Diarrhea">שלשול</option>
-<option value="Constipation">עצירות</option>
-<option value="Loss of appetite">חוסר תיאבון</option>
-<option value="Weight loss">ירידה במשקל</option>
-<option value="Abnormal weight gain">עלייה חריגה במשקל</option>
-<option value="Extreme fatigue">עייפות קיצונית</option>
-<option value="Breathing difficulty">קושי בנשימה</option>
-<option value="Coughing">שיעול</option>
-<option value="Frequent sneezing">התעטשויות תכופות</option>
-<option value="Nasal discharge">הפרשות מהאף</option>
-<option value="Eye discharge">הפרשות מהעיניים</option>
-<option value="Excessive itching">גירודים מרובים</option>
-<option value="Abnormal hair loss">נשירת שיער חריגה</option>
-<option value="Skin sores">פצעים בעור</option>
-<option value="Swelling">נפיחות בגוף</option>
-<option value="Limping">צליעה</option>
-<option value="Not using litter box">חוסר שימוש בארגז חול</option>
-<option value="Blood in urine">דם בשתן</option>
-<option value="Behavioral changes">שינויים בהתנהגות</option>
-<option value="Sudden aggression">אגרסיביות פתאומית</option>
-<option value="Trembling">רעידות</option>
-<option value="Seizures">פרכוסים</option>
-<option value="Possible poisoning">הרעלה אפשרית</option>
-<option value="Swallowed foreign object">בליעת חפץ זר</option>
-<option value="High fever">חום גבוה</option>
-<option value="Loss of consciousness">אובדן הכרה</option>
-</select>
-
-<button onclick="executeAnalysis()">נתח מקרה</button>
-
-<div id="resultContainer">האבחנה תופיע כאן...</div>
-
-<div class="section">
-<h3>מידע נוסף</h3>
-<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
-</div>
-
-<div class="section">
-<h3>וטרינרים מומלצים</h3>
-<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
-<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
-</div>
-
-</div>
-
-<script>
-const images=[
-"bg.png","bg2.png","bg3.png","bg4.png",
-"bg5.png","bg6.png","bg7.png","bg8.png",
-"bg9.png","bg10.png","bg11.png","bg12.png"
-];
-
-let i=0;
-
-function rotate(){
-document.body.style.backgroundImage=url(${images[i]});
-i=(i+1)%images.length;
-}
-
-rotate();
-setInterval(rotate,6000);
-
-async function executeAnalysis(){
-const select=document.getElementById("mainSymptom");
-const result=document.getElementById("resultContainer");
-
-if(!select.value){
-result.innerHTML="⚠ אנא בחר בעיה לפני הניתוח.";
-return;
-}
-
-result.innerHTML="⏳ מעבד...";
-
-try{
-const response=await fetch("https://catmind-ai-server.onrender.com/generate",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({text:"נתח סימפטום: "+select.value})
-});
-
-const data=await response.json();
-let text=data.result || "לא התקבלה תשובה.";
-
-text=text
-.replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>")
-.replace(/\*(.*?)\*/g,"<em>$1</em>")
-.replace(/\n/g,"<br>");
-
-result.innerHTML=text;
-
-}catch(err){
-result.innerHTML="❌ שגיאה בחיבור לשרת.";
-}
-}
-</script>
-
-</body>
-</html>
-
-ChatGPT said:
-ישראל,
-הבעיה שלך לא בקוד הלוגי — אלא בפרופורציות ובניהול הגובה של הכרטיס מול ה-viewport.
-
-כרגע אתה עם:
-
-height:100vh;
-overflow:hidden;
-אבל הכרטיס בגובה דינמי, וכשהתוכן גדל – הוא נדחס, נחתך או “נשבר” במובייל.
-
-אני מתקן לך את חלון האבחון בצורה מקצועית ונקייה:
-
-בלי גלילה בגוף הדף
-
-בלי חיתוך מלמעלה
-
-חיתוך רק מלמטה של הרקע
-
-כרטיס בגובה יחסי למסך (ולא קבוע בפיקסלים)
-
-גלילה פנימית רק לאזור התוצאה אם צריך
-
-🔧 תחליף רק את ה-CSS של .card ושל #resultContainer בזה:
-/* ===== כרטיס חכם בגובה יחסי למסך ===== */
-.card{
-position:fixed;
-top:50%;
-right:60px;
-transform:translateY(-50%);
-width:260px;
-
-/* גובה יחסי למסך */
-max-height:75vh;
-display:flex;
-flex-direction:column;
-
-background:rgba(10,20,35,0.55);
-backdrop-filter:blur(18px);
-border-radius:18px;
-padding:18px;
-border:1px solid rgba(255,255,255,0.1);
-z-index:1;
-}
-
-/* אזור תוצאה עם גלילה פנימית בלבד */
-#resultContainer{
-background:rgba(0,0,0,0.35);
-border-radius:12px;
-padding:14px;
-border:1px dashed rgba(34,211,238,0.5);
-font-size:11px;
-line-height:1.6;
-
-/* חשוב */
-flex:1;
-overflow-y:auto;
-}
-🔧 תיקון מובייל (תחליף את ה-media query שלך בזה)
-@media(max-width:900px){
-.card{
-right:10px;
-left:10px;
-width:auto;
-top:20px;
-transform:none;
-max-height:85vh;
-}
-}
-מה זה פותר בפועל
-✔ הכרטיס לא יחתך
-✔ הרקע תמיד ייחתך מלמטה בלבד
-✔ אין גלילה בדף
-✔ אם הטקסט ארוך — רק אזור התוצאה גולל
-✔ במובייל זה נשאר אלגנטי ולא דחוס
-
-אם אתה רוצה שהכרטיס ירגיש אפילו יותר “טריילר” ופרימיום (שקיפות עמוקה יותר, הצללה חכמה, glow טורקיז עדין) – תגיד ואני נותן לך גרסת PRO מעודנת יותר.
-
-
-You said:
-מתכוון לPC 
-
-ChatGPT said:
-מעולה. ב-PC צריך שליטה מדויקת בגובה ובמרכז — בלי דחיסה, בלי גלילה בדף ובלי שהכרטיס יברח למעלה.
-
-כרגע הבעיה אצלך היא ש־75% לא באמת מוגדרים בצורה נכונה למסך מלא, ולכן לפעמים זה נראה קטן מדי או חתוך.
-
-להלן הגדרה מקצועית ונקייה ל-PC בלבד:
-
-🔧 החלף את ה-CSS של .card בזה:
-.card{
-position:fixed;
-top:50%;
-right:80px;
-transform:translateY(-50%);
-
-/* רוחב נוח ל-PC */
-width:320px;
-
-/* גובה אמיתי של 75% מהמסך */
-height:75vh;
-
-display:flex;
-flex-direction:column;
-
-background:rgba(10,20,35,0.55);
-backdrop-filter:blur(22px);
-border-radius:20px;
-padding:22px;
-border:1px solid rgba(255,255,255,0.12);
-box-shadow:0 20px 60px rgba(0,0,0,0.5);
-
-z-index:1;
-}
-🔧 ועדכן את אזור התוצאה כך:
-#resultContainer{
-background:rgba(0,0,0,0.35);
-border-radius:12px;
-padding:14px;
-border:1px dashed rgba(34,211,238,0.5);
-font-size:12px;
-line-height:1.6;
-
-flex:1;               /* תופס את כל השטח הפנוי */
-overflow-y:auto;      /* גלילה פנימית בלבד */
-}
-מה תקבל עכשיו ב-PC:
-✔ הכרטיס תמיד בגובה 75% אמיתי מהמסך
-✔ ממורכז אנכית מושלם
-✔ אין גלילה בדף
-✔ אם הטקסט ארוך — רק אזור האבחון גולל
-✔ מראה יותר מקצועי ופחות דחוס
-
-אם תרצה — אני יכול גם לאזן מחדש את הרוחב כדי שהחתול והרקע יקבלו יותר “נשימה” בצד שמאל.
-
-
-You said:
-קוד מלא בבקשה
-
-ChatGPT said:
-ישראל — הנה קוד מלא, נקי ומאוזן ל-PC, עם חלון אבחון בגובה 75% אמיתי מהמסך, ממורכז מושלם, בלי גלילה בדף, ועם גלילה פנימית רק לתוצאה אם צריך.
-
-פשוט תחליף את הקובץ הקיים בזה:
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -410,9 +19,8 @@ overflow:hidden;
 font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
 color:#fff;
 
-/* רקע */
 background-size:cover;
-background-position:center top; /* חיתוך מלמטה בלבד */
+background-position:center top;
 background-repeat:no-repeat;
 transition:background-image 1s ease-in-out;
 }
@@ -425,30 +33,31 @@ background:linear-gradient(to left, rgba(0,0,0,0.75), rgba(0,0,0,0.15));
 z-index:0;
 }
 
-/* ===== כרטיס אבחון PC ===== */
+/* ===== כרטיס ===== */
 .card{
 position:fixed;
 top:50%;
 right:90px;
 transform:translateY(-50%);
 
-width:320px;
-height:75vh;
+width:330px;
+max-height:85vh;
 
 display:flex;
 flex-direction:column;
 
-background:rgba(10,20,35,0.55);
+background:rgba(10,20,35,0.60);
 backdrop-filter:blur(22px);
 border-radius:20px;
 padding:22px;
 border:1px solid rgba(255,255,255,0.12);
-box-shadow:0 20px 60px rgba(0,0,0,0.55);
+box-shadow:0 25px 60px rgba(0,0,0,0.6);
 
 z-index:1;
+overflow:hidden;
 }
 
-/* מובייל נשאר פשוט */
+/* מובייל */
 @media(max-width:900px){
 .card{
 right:10px;
@@ -456,7 +65,7 @@ left:10px;
 width:auto;
 top:20px;
 transform:none;
-height:85vh;
+max-height:90vh;
 }
 }
 
@@ -469,7 +78,7 @@ color:var(--turquoise);
 
 select{
 width:100%;
-padding:10px;
+padding:11px;
 border-radius:12px;
 border:1px solid rgba(255,255,255,0.15);
 margin-bottom:14px;
@@ -480,7 +89,7 @@ font-size:13px;
 
 button{
 width:100%;
-padding:11px;
+padding:12px;
 border-radius:12px;
 border:none;
 background:var(--turquoise);
@@ -488,7 +97,7 @@ font-weight:700;
 cursor:pointer;
 margin-bottom:14px;
 color:#06131c;
-font-size:13px;
+font-size:14px;
 transition:0.2s;
 }
 
@@ -496,23 +105,37 @@ button:hover{
 transform:scale(1.03);
 }
 
-/* אזור תוצאה */
+/* ===== אזור אבחנה ===== */
 #resultContainer{
-background:rgba(0,0,0,0.35);
-border-radius:12px;
-padding:14px;
-border:1px dashed rgba(34,211,238,0.5);
-font-size:12px;
-line-height:1.6;
+flex:1; /* תופס את כל השטח הפנוי */
+overflow-y:auto;
 
-flex:1;               /* תופס את כל השטח הפנוי */
-overflow-y:auto;      /* גלילה פנימית בלבד */
+background:rgba(5,15,25,0.92);
+border-radius:14px;
+padding:16px;
+border:1px solid rgba(34,211,238,0.6);
+
+box-shadow:
+0 0 25px rgba(34,211,238,0.15),
+inset 0 0 25px rgba(0,0,0,0.6);
+
+font-size:13px;
+line-height:1.7;
+color:#e6f7ff;
+}
+
+#resultContainer strong{
+color:#22d3ee;
+}
+
+#resultContainer em{
+color:#9befff;
 }
 
 .section{
 border-top:1px solid rgba(255,255,255,0.1);
-padding-top:12px;
-margin-top:14px;
+padding-top:14px;
+margin-top:16px;
 }
 
 .section h3{
@@ -524,7 +147,7 @@ margin-bottom:8px;
 .link-btn{
 display:block;
 text-align:center;
-padding:9px;
+padding:10px;
 border-radius:10px;
 background:rgba(255,255,255,0.12);
 color:#fff;
@@ -648,10 +271,3 @@ result.innerHTML="❌ שגיאה בחיבור לשרת.";
 
 </body>
 </html>
-זה מאוזן נכון ל-PC, נראה מקצועי, לא דחוס, והחתול מקבל את הבמה שמגיעה לו בצד שמאל.
-
-אם תרצה — אני יכול עכשיו לשדרג את זה לגרסת Premium עם תאורה דינמית עדינה ו-hover glow אלגנטי.
-
-
-
-
