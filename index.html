@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CatMind AI</title>
 
+<!-- Markdown parser -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 <style>
 :root{ --turquoise:#22d3ee; }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -116,9 +119,21 @@ color:#e6f7ff;
 
 direction: rtl;
 text-align: right;
-white-space: pre-line;
 overflow-wrap: break-word;
 word-break: break-word;
+}
+
+/* Markdown styling */
+#resultContainer h1,
+#resultContainer h2,
+#resultContainer h3{
+color:#22d3ee;
+margin-bottom:8px;
+}
+
+#resultContainer ul{
+padding-right:18px;
+margin-bottom:12px;
 }
 
 /* ===== קישורים ===== */
@@ -150,10 +165,7 @@ transition:0.3s;
 
 /* ===== מובייל ===== */
 @media (max-width: 768px){
-
-body{
-overflow:auto;
-}
+body{ overflow:auto; }
 
 .card{
 position:relative;
@@ -165,7 +177,6 @@ max-width:520px;
 height:auto;
 margin:40px auto;
 }
-
 }
 </style>
 </head>
@@ -290,7 +301,8 @@ return;
 }
 
 const data=await response.json();
-result.innerHTML=`<div dir="rtl">${data.result}</div>`;
+const parsed=marked.parse(data.result);
+result.innerHTML=`<div dir="rtl">${parsed}</div>`;
 
 }catch(err){
 console.error(err);
