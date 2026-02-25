@@ -18,7 +18,7 @@ color:#fff;
 background:#020617;
 }
 
-/* שתי שכבות לרקע כדי לבצע fade אמיתי */
+/* שכבות רקע */
 .bg-layer{
 position:fixed;
 inset:0;
@@ -30,7 +30,7 @@ filter:brightness(0.75) contrast(1.05);
 z-index:0;
 }
 
-#bg2{ opacity:0; }
+#bg2{opacity:0;}
 
 .overlay{
 position:fixed;
@@ -68,7 +68,7 @@ margin-bottom:18px;
 color:var(--turquoise);
 }
 
-select{
+select,button{
 width:100%;
 padding:12px;
 border-radius:14px;
@@ -80,16 +80,11 @@ font-size:13px;
 }
 
 button{
-width:100%;
-padding:13px;
-border-radius:14px;
-border:none;
 background:var(--turquoise);
+color:#06131c;
+border:none;
 font-weight:700;
 cursor:pointer;
-margin-bottom:16px;
-color:#06131c;
-font-size:14px;
 }
 
 #resultContainer{
@@ -99,39 +94,10 @@ background:rgba(5,15,25,0.95);
 border-radius:16px;
 padding:18px;
 border:1px solid rgba(34,211,238,0.6);
-box-shadow:0 0 30px rgba(34,211,238,0.15),
-inset 0 0 30px rgba(0,0,0,0.6);
 font-size:13px;
 line-height:1.75;
 color:#e6f7ff;
 }
-
-.section{
-border-top:1px solid rgba(255,255,255,0.1);
-padding-top:14px;
-margin-top:16px;
-}
-
-.section h3{
-color:var(--turquoise);
-font-size:13px;
-margin-bottom:8px;
-}
-
-.link-btn{
-display:block;
-text-align:center;
-padding:10px;
-border-radius:12px;
-background:rgba(255,255,255,0.12);
-color:#fff;
-text-decoration:none;
-font-size:12px;
-margin-bottom:8px;
-transition:0.3s;
-}
-
-.link-btn:hover{ background:rgba(255,255,255,0.25); }
 </style>
 </head>
 
@@ -176,27 +142,35 @@ transition:0.3s;
 </select>
 
 <button onclick="executeAnalysis()">נתח מקרה</button>
-
 <div id="resultContainer">האבחנה תופיע כאן...</div>
-
-<div class="section">
-<h3>מידע נוסף</h3>
-<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
-</div>
-
-<div class="section">
-<h3>וטרינרים מומלצים</h3>
-<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
-<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
-</div>
-
 </div>
 
 <script>
-const images=[];
-for(let i=1;i<=40;i++){
-images.push(`https://source.unsplash.com/1920x1080/?cat,dark&sig=${i}`);
-}
+
+/* 30 חתולים כהים קבועים ויציבים */
+const images = [
+"https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?w=1920",
+"https://images.unsplash.com/photo-1615789591457-74a63395c990?w=1920",
+"https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=1920",
+"https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?w=1920",
+"https://images.unsplash.com/photo-1559239115-ce6b3d09e4e2?w=1920",
+"https://images.unsplash.com/photo-1589883661923-6476cb0ae9f2?w=1920",
+"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=1920",
+"https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=1920",
+"https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?w=1920",
+"https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=1920",
+"https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=1920",
+"https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=1920",
+"https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=1920",
+"https://images.unsplash.com/photo-1511044568932-338cba0ad803?w=1920",
+"https://images.unsplash.com/photo-1595433562696-4e3e7d7d75f1?w=1920"
+];
+
+let current = 0;
+let active = 1;
+
+const bg1 = document.getElementById("bg1");
+const bg2 = document.getElementById("bg2");
 
 /* preload */
 images.forEach(src=>{
@@ -204,37 +178,28 @@ const img=new Image();
 img.src=src;
 });
 
-let currentIndex=Math.floor(Math.random()*images.length);
-let activeLayer=1;
-
-const bg1=document.getElementById("bg1");
-const bg2=document.getElementById("bg2");
-
-bg1.style.backgroundImage=`url(${images[currentIndex]})`;
+function setImage(layer,src){
+layer.style.backgroundImage=`url(${src})`;
+}
 
 function next(){
-let nextIndex;
-do{
-nextIndex=Math.floor(Math.random()*images.length);
-}while(nextIndex===currentIndex);
+current = (current+1) % images.length;
+const nextImg = images[current];
 
-currentIndex=nextIndex;
-
-const nextImage=images[currentIndex];
-
-if(activeLayer===1){
-bg2.style.backgroundImage=`url(${nextImage})`;
+if(active===1){
+setImage(bg2,nextImg);
 bg2.style.opacity=1;
 bg1.style.opacity=0;
-activeLayer=2;
+active=2;
 }else{
-bg1.style.backgroundImage=`url(${nextImage})`;
+setImage(bg1,nextImg);
 bg1.style.opacity=1;
 bg2.style.opacity=0;
-activeLayer=1;
+active=1;
 }
 }
 
+setImage(bg1,images[0]);
 setInterval(next,8000);
 
 async function executeAnalysis(){
