@@ -47,7 +47,7 @@ position:fixed;
 top:50%;
 right:90px;
 transform:translateY(-50%);
-width:380px;
+width:400px;
 max-height:88vh;
 display:flex;
 flex-direction:column;
@@ -92,6 +92,7 @@ color:#06131c;
 font-size:14px;
 }
 
+/* ===== חלון תשובה מתוקן ===== */
 #resultContainer{
 flex:1;
 overflow-y:auto;
@@ -104,7 +105,12 @@ inset 0 0 30px rgba(0,0,0,0.6);
 font-size:13px;
 line-height:1.75;
 color:#e6f7ff;
-white-space:pre-line;
+
+direction: rtl;
+text-align: right;
+white-space: pre-line;
+overflow-wrap: break-word;
+word-break: break-word;
 }
 
 .section{
@@ -267,7 +273,7 @@ result.innerHTML="⚠ לא התקבלה תשובה מה-AI.";
 return;
 }
 
-result.innerHTML=data.result;
+result.innerHTML=`<div dir="rtl">${data.result}</div>`;
 
 }catch(err){
 console.error(err);
