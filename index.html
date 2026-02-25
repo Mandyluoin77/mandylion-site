@@ -202,20 +202,58 @@ transition:0.3s;
 
 /* ===== Mobile ===== */
 @media (max-width: 768px){
-body{ overflow:auto; }
+
+body{
+overflow:auto;
+}
+
+.overlay{
+background:linear-gradient(
+to bottom,
+rgba(0,0,0,0.65),
+rgba(0,0,0,0.4)
+);
+}
 
 .card{
 position:relative;
 top:auto;
 right:auto;
 transform:none;
-width:92%;
+
+width:94%;
 max-width:520px;
 height:auto;
-margin:40px auto;
+
+margin:30px auto;
+
+padding:22px;
+
+backdrop-filter:blur(28px) saturate(140%);
+-webkit-backdrop-filter:blur(28px) saturate(140%);
 }
+
+#resultContainer{
+padding:18px;
+font-size:15px;
+line-height:1.8;
 }
-</style>
+
+select{
+padding:13px;
+font-size:15px;
+}
+
+button{
+padding:16px;
+font-size:16px;
+}
+
+h1{
+font-size:22px;
+margin-bottom:18px;
+}
+}</style>
 </head>
 
 <body>
@@ -391,3 +429,4 @@ result.innerHTML="❌ שגיאה בחיבור לשרת.";
 
 </body>
 </html>
+
