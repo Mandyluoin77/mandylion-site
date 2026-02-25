@@ -18,27 +18,26 @@ color:#fff;
 background:#020617;
 }
 
-/* ===== רקע מלא ללא שטח שחור ===== */
+/* ===== רקע ===== */
 .bg{
 position:fixed;
 inset:0;
 z-index:0;
 background-size:cover;
-background-position:left center; /* שומר חתול שמאל */
+background-position:left center;
 background-repeat:no-repeat;
 transition:background-image 1s ease;
-filter:brightness(0.8) contrast(1.05);
+filter:brightness(0.75) contrast(1.05);
 }
 
-/* שכבת כהות */
+/* כהות */
 .overlay{
 position:fixed;
 inset:0;
-background:
-linear-gradient(to right,
+background:linear-gradient(to right,
 rgba(0,0,0,0.85) 0%,
-rgba(0,0,0,0.6) 40%,
-rgba(0,0,0,0.2) 75%);
+rgba(0,0,0,0.55) 45%,
+rgba(0,0,0,0.15) 75%);
 z-index:1;
 }
 
@@ -52,7 +51,7 @@ width:360px;
 max-height:88vh;
 display:flex;
 flex-direction:column;
-background:rgba(10,20,35,0.75);
+background:rgba(10,20,35,0.80);
 backdrop-filter:blur(25px);
 border-radius:22px;
 padding:24px;
@@ -151,9 +150,28 @@ transition:0.3s;
 <option value="Constipation">עצירות</option>
 <option value="Loss of appetite">חוסר תיאבון</option>
 <option value="Weight loss">ירידה במשקל</option>
+<option value="Abnormal weight gain">עלייה חריגה במשקל</option>
+<option value="Extreme fatigue">עייפות קיצונית</option>
 <option value="Breathing difficulty">קושי בנשימה</option>
+<option value="Coughing">שיעול</option>
+<option value="Frequent sneezing">התעטשויות תכופות</option>
+<option value="Nasal discharge">הפרשות מהאף</option>
+<option value="Eye discharge">הפרשות מהעיניים</option>
+<option value="Excessive itching">גירודים מרובים</option>
+<option value="Abnormal hair loss">נשירת שיער חריגה</option>
+<option value="Skin sores">פצעים בעור</option>
+<option value="Swelling">נפיחות בגוף</option>
+<option value="Limping">צליעה</option>
+<option value="Not using litter box">חוסר שימוש בארגז חול</option>
+<option value="Blood in urine">דם בשתן</option>
+<option value="Behavioral changes">שינויים בהתנהגות</option>
+<option value="Sudden aggression">אגרסיביות פתאומית</option>
+<option value="Trembling">רעידות</option>
 <option value="Seizures">פרכוסים</option>
 <option value="Possible poisoning">הרעלה אפשרית</option>
+<option value="Swallowed foreign object">בליעת חפץ זר</option>
+<option value="High fever">חום גבוה</option>
+<option value="Loss of consciousness">אובדן הכרה</option>
 </select>
 
 <button onclick="executeAnalysis()">נתח מקרה</button>
@@ -174,27 +192,26 @@ transition:0.3s;
 </div>
 
 <script>
-const images=[
-"https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?q=80&w=1920",
-"https://images.unsplash.com/photo-1615789591457-74a63395c990?q=80&w=1920",
-"https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=1920",
-"https://images.unsplash.com/photo-1559239115-ce6b3d09e4e2?q=80&w=1920"
-];
-
-let currentIndex=Math.floor(Math.random()*images.length);
-const bg=document.getElementById("bg");
-bg.style.backgroundImage=`url(${images[currentIndex]})`;
-
-function next(){
-let next;
-do{
-next=Math.floor(Math.random()*images.length);
-}while(next===currentIndex);
-currentIndex=next;
-bg.style.backgroundImage=`url(${images[currentIndex]})`;
+const images = [];
+for(let i=1;i<=40;i++){
+images.push(`https://source.unsplash.com/1920x1080/?cat,dark&sig=${i}`);
 }
 
-setInterval(next,9000);
+let currentIndex = Math.floor(Math.random()*images.length);
+const bg = document.getElementById("bg");
+bg.style.backgroundImage = `url(${images[currentIndex]})`;
+
+function next(){
+let nextIndex;
+do{
+nextIndex = Math.floor(Math.random()*images.length);
+}while(nextIndex === currentIndex);
+
+currentIndex = nextIndex;
+bg.style.backgroundImage = `url(${images[currentIndex]})`;
+}
+
+setInterval(next, 8000);
 
 async function executeAnalysis(){
 const select=document.getElementById("mainSymptom");
