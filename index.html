@@ -24,9 +24,9 @@ overflow:hidden;
 position:fixed;
 inset:0;
 background-size:cover;
-background-position:center center;
+background-position:center;
 background-repeat:no-repeat;
-transition:opacity 1.2s ease;
+transition:opacity 1.5s ease;
 filter:brightness(0.7) contrast(1.05);
 z-index:0;
 }
@@ -105,7 +105,7 @@ color:#06131c;
 font-size:15px;
 }
 
-/* ===== Glass Result ===== */
+/* ===== Result ===== */
 #resultContainer{
 flex:1;
 min-height:0;
@@ -166,7 +166,6 @@ rgba(255,80,0,0.12)
 border:1px solid rgba(255,140,0,0.35);
 
 backdrop-filter:blur(12px);
--webkit-backdrop-filter:blur(12px);
 
 font-size:12px;
 line-height:1.6;
@@ -282,8 +281,47 @@ margin:40px auto;
 </div>
 
 <script>
-async function executeAnalysis(){
+/* ===== Background Rotation ===== */
+const images=[
+"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1494256997604-768d1f608cac?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1519052537078-e6302a4968d4?q=80&w=1920&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1920&auto=format&fit=crop"
+];
 
+let currentIndex=Math.floor(Math.random()*images.length);
+let activeLayer=1;
+const bg1=document.getElementById("bg1");
+const bg2=document.getElementById("bg2");
+
+bg1.style.backgroundImage=`url(${images[currentIndex]})`;
+bg1.style.opacity=1;
+
+function nextBackground(){
+let nextIndex;
+do{
+nextIndex=Math.floor(Math.random()*images.length);
+}while(nextIndex===currentIndex);
+
+currentIndex=nextIndex;
+
+if(activeLayer===1){
+bg2.style.backgroundImage=`url(${images[currentIndex]})`;
+bg2.style.opacity=1;
+bg1.style.opacity=0;
+activeLayer=2;
+}else{
+bg1.style.backgroundImage=`url(${images[currentIndex]})`;
+bg1.style.opacity=1;
+bg2.style.opacity=0;
+activeLayer=1;
+}
+}
+
+setInterval(nextBackground,8000);
+
+/* ===== Streaming AI ===== */
+async function executeAnalysis(){
 const select=document.getElementById("mainSymptom");
 const result=document.getElementById("resultContainer");
 
