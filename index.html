@@ -18,7 +18,6 @@ color:#fff;
 background:#020617;
 }
 
-/* שתי שכבות לרקע כדי לבצע fade אמיתי */
 .bg-layer{
 position:fixed;
 inset:0;
@@ -47,11 +46,11 @@ position:fixed;
 top:50%;
 right:90px;
 transform:translateY(-50%);
-width:360px;
+width:380px;
 max-height:88vh;
 display:flex;
 flex-direction:column;
-background:rgba(10,20,35,0.80);
+background:rgba(10,20,35,0.85);
 backdrop-filter:blur(25px);
 border-radius:22px;
 padding:24px;
@@ -102,9 +101,13 @@ border:1px solid rgba(34,211,238,0.6);
 box-shadow:0 0 30px rgba(34,211,238,0.15),
 inset 0 0 30px rgba(0,0,0,0.6);
 font-size:13px;
-line-height:1.75;
+line-height:1.7;
 color:#e6f7ff;
 }
+
+.severity-high{color:#ff4d4d;}
+.severity-medium{color:#ffcc00;}
+.severity-low{color:#4ade80;}
 
 .section{
 border-top:1px solid rgba(255,255,255,0.1);
@@ -193,20 +196,71 @@ transition:0.3s;
 </div>
 
 <script>
+
+/* ===== מנוע אבחנות ===== */
+
+const diagnoses={
+"Vomiting":{severity:"medium",text:"ייתכן קלקול קיבה, כדור שיער או שינוי מזון. אם ההקאות חוזרות מעל 24 שעות או מלוות באפאטיה – יש לפנות לוטרינר."},
+"Diarrhea":{severity:"medium",text:"שלשול יכול להעיד על רגישות מזון או טפילים. אם יש דם או התייבשות – בדיקה דחופה."},
+"Constipation":{severity:"low",text:"עצירות קלה יכולה להיגרם ממחסור במים. במידה ונמשכת מעל יומיים – בדיקה."},
+"Loss of appetite":{severity:"medium",text:"אובדן תיאבון מעל 24 שעות דורש בירור רפואי."},
+"Weight loss":{severity:"high",text:"ירידה במשקל ללא סיבה עשויה להעיד על מחלה כרונית – בדיקה דחופה."},
+"Abnormal weight gain":{severity:"low",text:"עלייה במשקל לרוב קשורה לתזונה. יש להתאים מזון."},
+"Extreme fatigue":{severity:"high",text:"עייפות קיצונית עשויה להצביע על בעיה מערכתית – בדיקה בהקדם."},
+"Breathing difficulty":{severity:"high",text:"קושי בנשימה הוא מצב חירום – לפנות מיד לוטרינר."},
+"Coughing":{severity:"medium",text:"שיעול עשוי להעיד על אסתמה חתולית או זיהום."},
+"Frequent sneezing":{severity:"low",text:"התעטשויות קלות לרוב ויראליות."},
+"Nasal discharge":{severity:"medium",text:"הפרשות מהאף עשויות להעיד על זיהום."},
+"Eye discharge":{severity:"low",text:"ייתכן דלקת עיניים קלה."},
+"Excessive itching":{severity:"medium",text:"גירודים עשויים להעיד על אלרגיה או פרעושים."},
+"Abnormal hair loss":{severity:"medium",text:"נשירה חריגה עשויה להעיד על סטרס או בעיית עור."},
+"Skin sores":{severity:"high",text:"פצעים בעור דורשים בדיקה."},
+"Swelling":{severity:"high",text:"נפיחות פתאומית עלולה להעיד על תגובה אלרגית."},
+"Limping":{severity:"medium",text:"צליעה דורשת בדיקה אם נמשכת."},
+"Not using litter box":{severity:"medium",text:"עשוי להעיד על בעיה התנהגותית או רפואית."},
+"Blood in urine":{severity:"high",text:"דם בשתן הוא מצב חירום."},
+"Behavioral changes":{severity:"medium",text:"שינויי התנהגות עשויים להעיד על כאב."},
+"Sudden aggression":{severity:"medium",text:"אגרסיביות פתאומית לעיתים קשורה לכאב."},
+"Trembling":{severity:"high",text:"רעידות חריגות דורשות בירור."},
+"Seizures":{severity:"high",text:"פרכוסים – מצב חירום."},
+"Possible poisoning":{severity:"high",text:"חשד להרעלה – פנייה מיידית לוטרינר."},
+"Swallowed foreign object":{severity:"high",text:"בליעת חפץ זר דורשת בדיקה מידית."},
+"High fever":{severity:"high",text:"חום גבוה עשוי להעיד על זיהום."},
+"Loss of consciousness":{severity:"high",text:"אובדן הכרה – מצב חירום."}
+};
+
+function executeAnalysis(){
+const select=document.getElementById("mainSymptom");
+const result=document.getElementById("resultContainer");
+
+if(!select.value){
+result.innerHTML="⚠ אנא בחר בעיה.";
+return;
+}
+
+const item=diagnoses[select.value];
+
+let severityClass="severity-low";
+if(item.severity==="medium") severityClass="severity-medium";
+if(item.severity==="high") severityClass="severity-high";
+
+result.innerHTML=`
+<b class="${severityClass}">רמת חומרה: ${item.severity.toUpperCase()}</b><br><br>
+${item.text}
+<br><br>
+⚠ האבחנה אינה תחליף לבדיקה וטרינרית.
+`;
+}
+
+/* ===== רקע דינמי ===== */
+
 const images=[];
 for(let i=1;i<=40;i++){
 images.push(`https://source.unsplash.com/1920x1080/?cat,dark&sig=${i}`);
 }
 
-/* preload */
-images.forEach(src=>{
-const img=new Image();
-img.src=src;
-});
-
 let currentIndex=Math.floor(Math.random()*images.length);
 let activeLayer=1;
-
 const bg1=document.getElementById("bg1");
 const bg2=document.getElementById("bg2");
 
@@ -214,21 +268,18 @@ bg1.style.backgroundImage=`url(${images[currentIndex]})`;
 
 function next(){
 let nextIndex;
-do{
-nextIndex=Math.floor(Math.random()*images.length);
-}while(nextIndex===currentIndex);
+do{ nextIndex=Math.floor(Math.random()*images.length); }
+while(nextIndex===currentIndex);
 
 currentIndex=nextIndex;
 
-const nextImage=images[currentIndex];
-
 if(activeLayer===1){
-bg2.style.backgroundImage=`url(${nextImage})`;
+bg2.style.backgroundImage=`url(${images[currentIndex]})`;
 bg2.style.opacity=1;
 bg1.style.opacity=0;
 activeLayer=2;
 }else{
-bg1.style.backgroundImage=`url(${nextImage})`;
+bg1.style.backgroundImage=`url(${images[currentIndex]})`;
 bg1.style.opacity=1;
 bg2.style.opacity=0;
 activeLayer=1;
@@ -237,33 +288,6 @@ activeLayer=1;
 
 setInterval(next,8000);
 
-async function executeAnalysis(){
-const select=document.getElementById("mainSymptom");
-const result=document.getElementById("resultContainer");
-
-if(!select.value){
-result.innerHTML="⚠ אנא בחר בעיה לפני הניתוח.";
-return;
-}
-
-result.innerHTML="⏳ מעבד...";
-
-try{
-const response=await fetch("https://catmind-ai-server.onrender.com/generate",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({text:"נתח סימפטום: "+select.value})
-});
-
-const data=await response.json();
-let text=data.result || "לא התקבלה תשובה.";
-text=text.replace(/\n/g,"<br>");
-result.innerHTML=text;
-
-}catch(err){
-result.innerHTML="❌ שגיאה בחיבור לשרת.";
-}
-}
 </script>
 
 </body>
