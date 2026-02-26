@@ -16,7 +16,10 @@ min-height:100vh;
 font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
 color:#fff;
 background:#020617;
-overflow:hidden;
+
+/* 🔧 תיקון 1 */
+overflow-x:hidden;
+overflow-y:auto;
 }
 
 /* ===== רקע ===== */
@@ -49,7 +52,10 @@ top:50%;
 right:90px;
 transform:translateY(-50%);
 width:420px;
-height:85vh;
+
+/* 🔧 תיקון 2 */
+max-height:85vh;
+
 display:flex;
 flex-direction:column;
 
@@ -72,6 +78,7 @@ box-shadow:
 0 0 50px rgba(34,211,238,0.12);
 
 z-index:2;
+overflow:hidden;
 }
 
 h1{
@@ -156,17 +163,13 @@ margin-bottom:12px;
 margin-top:14px;
 padding:14px;
 border-radius:18px;
-
 background:linear-gradient(
 160deg,
 rgba(255,170,0,0.15),
 rgba(255,80,0,0.12)
 );
-
 border:1px solid rgba(255,140,0,0.35);
-
 backdrop-filter:blur(12px);
-
 font-size:12px;
 line-height:1.6;
 color:#ffd9b3;
@@ -226,7 +229,6 @@ max-width:520px;
 height:auto;
 
 margin:30px auto;
-
 padding:22px;
 
 backdrop-filter:blur(28px) saturate(140%);
@@ -253,7 +255,8 @@ h1{
 font-size:22px;
 margin-bottom:18px;
 }
-}</style>
+}
+</style>
 </head>
 
 <body>
@@ -317,109 +320,3 @@ margin-bottom:18px;
 </div>
 
 </div>
-
-<script>
-/* ===== Background Rotation ===== */
-const images=[
-"https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1517451330947-7809dead78d5?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1548247416-ec66f4900b2e?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1518792224239-f9f2e0d08b3f?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1519066629447-267fffa62d4b?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1555685812-4b743f7f9c9a?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1561948955-570b270e7c36?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1503777119540-ce54b422baff?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1570018144715-43110363d70a?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1525253086316-d0c936c814f8?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1518717758536-85ae29035b6d?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920&auto=format&fit=crop&sat=-30",
-"https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?q=80&w=1920&auto=format&fit=crop&sat=-40",
-"https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920&auto=format&fit=crop&sat=-20",
-];
-let currentIndex=Math.floor(Math.random()*images.length);
-let activeLayer=1;
-const bg1=document.getElementById("bg1");
-const bg2=document.getElementById("bg2");
-
-bg1.style.backgroundImage=`url(${images[currentIndex]})`;
-bg1.style.opacity=1;
-
-function nextBackground(){
-let nextIndex;
-do{
-nextIndex=Math.floor(Math.random()*images.length);
-}while(nextIndex===currentIndex);
-
-currentIndex=nextIndex;
-
-if(activeLayer===1){
-bg2.style.backgroundImage=`url(${images[currentIndex]})`;
-bg2.style.opacity=1;
-bg1.style.opacity=0;
-activeLayer=2;
-}else{
-bg1.style.backgroundImage=`url(${images[currentIndex]})`;
-bg1.style.opacity=1;
-bg2.style.opacity=0;
-activeLayer=1;
-}
-}
-
-setInterval(nextBackground,8000);
-
-/* ===== Streaming AI ===== */
-async function executeAnalysis(){
-const select=document.getElementById("mainSymptom");
-const result=document.getElementById("resultContainer");
-
-if(!select.value){
-result.innerHTML="⚠ אנא בחר בעיה.";
-return;
-}
-
-result.innerHTML="⏳ מנתח...<br><br><strong>⚠ אינו מחליף ייעוץ וטרינרי.</strong><br><br>";
-
-try{
-const response=await fetch("https://catmind-ai-server.onrender.com/generate",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-text:"נתח סימפטום בחתול בצורה מקצועית ומפורטת: "+select.value
-})
-});
-
-const reader=response.body.getReader();
-const decoder=new TextDecoder();
-let fullText="";
-
-while(true){
-const {done,value}=await reader.read();
-if(done) break;
-
-const chunk=decoder.decode(value);
-fullText+=chunk;
-
-const parsed=marked.parse(fullText);
-result.innerHTML=`<div dir="rtl"><strong>⚠ אינו מחליף ייעוץ וטרינרי.</strong><br><br>${parsed}</div>`;
-result.scrollTop=result.scrollHeight;
-}
-
-}catch(err){
-console.error(err);
-result.innerHTML="❌ שגיאה בחיבור לשרת.";
-}
-}
-</script>
-
-</body>
-</html>
-
-
-
-
