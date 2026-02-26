@@ -48,7 +48,7 @@
             z-index: 2;
             width: 420px;
             max-width: 90%;
-            height: 92vh; /* גובה מקסימלי למניעת חריגה מהמסך */
+            height: 94vh; 
             display: flex;
             flex-direction: column;
             background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
@@ -60,7 +60,7 @@
             box-shadow: 0 40px 100px rgba(0,0,0,0.6);
         }
 
-        .card-header { flex-shrink: 0; margin-bottom: 15px; }
+        .card-header { flex-shrink: 0; margin-bottom: 10px; }
 
         h1 {
             text-align: center;
@@ -96,12 +96,11 @@
         }
         button:hover { filter: brightness(1.1); }
 
-        /* אזור התוצאה עם גלילה פנימית עצמאית */
+        /* אזור התוצאה עם גלילה פנימית */
         .result-scroll-wrapper {
-            flex: 1; /* לוקח את כל השטח הפנוי באמצע */
+            flex: 1;
             overflow-y: auto;
             margin-bottom: 15px;
-            padding-right: 5px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 18px;
             border: 1px solid rgba(34,211,238,0.1);
@@ -120,12 +119,12 @@
         .result-scroll-wrapper::-webkit-scrollbar { width: 4px; }
         .result-scroll-wrapper::-webkit-scrollbar-thumb { background: var(--turquoise); border-radius: 10px; }
 
-        /* אזור תחתון קבוע - לא זז גם כשהטקסט ארוך */
+        /* אזור תחתון קבוע */
         .card-footer {
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             border-top: 1px solid rgba(255,255,255,0.1);
             padding-top: 15px;
         }
@@ -135,35 +134,46 @@
             border-radius: 14px;
             background: rgba(251,191,36,0.1);
             border: 1px solid rgba(251,191,36,0.2);
-            font-size: 11px;
+            font-size: 10.5px;
             color: #fde68a;
             text-align: center;
+            line-height: 1.3;
         }
 
         .section-title {
             color: var(--turquoise);
-            font-size: 13px;
-            margin-bottom: 5px;
+            font-size: 12px;
+            margin-bottom: 4px;
             opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
         }
 
         .link-btn {
             display: block;
             text-align: center;
-            padding: 10px;
-            border-radius: 12px;
+            padding: 8px;
+            border-radius: 10px;
             background: rgba(255,255,255,0.07);
             color: #fff;
             text-decoration: none;
-            font-size: 12.5px;
+            font-size: 11.5px;
             border: 1px solid rgba(255,255,255,0.1);
             transition: 0.3s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .link-btn:hover { background: rgba(255,255,255,0.15); border-color: var(--turquoise); }
 
         /* Mobile */
         @media (max-width: 768px) {
-            .card { position: relative; right: auto; top: auto; transform: none; margin: 15px auto; width: 92%; height: 88vh; }
+            .card { position: relative; right: auto; top: auto; transform: none; margin: 15px auto; width: 92%; height: 90vh; }
         }
     </style>
 </head>
@@ -216,7 +226,7 @@
 
     <div class="card-footer">
         <div class="disclaimer">
-            ⚠ הכלי הוא להכוונה בלבד ואינו מחליף ייעוץ וטרינרי מקצועי. במקרה חירום יש לפנות מיד לוטרינר.
+            ⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי. במקרה חירום פנה לוטרינר.
         </div>
 
         <div>
@@ -226,13 +236,15 @@
 
         <div>
             <div class="section-title">וטרינרים מומלצים</div>
-            <a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
+            <div class="links-grid">
+                <a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank" title="ד''ר טלי שטיין">ד"ר טלי שטיין</a>
+                <a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank" title="ד''ר תמר פלידל">ד"ר תמר פלידל</a>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-// כל גלריית התמונות שלך
 const images=[
     "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1920&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920&auto=format&fit=crop",
@@ -293,7 +305,6 @@ async function executeAnalysis(){
         const decoder=new TextDecoder();
         let rawAccumulatedText="";
 
-        // ניקוי לפני תחילת הצגה
         result.innerHTML="<strong>אבחנת CatMind:</strong><br><br><div id='inner-output'></div>";
         const innerOutput = document.getElementById('inner-output');
 
@@ -303,18 +314,15 @@ async function executeAnalysis(){
             
             rawAccumulatedText+=decoder.decode(value, {stream: true});
 
-            // ניקוי JSON במידה והשרת עוטף את התשובה (מניעת הבלגן שראינו בתמונות)
             let cleanText = rawAccumulatedText;
             if (rawAccumulatedText.includes('"result":')) {
-                const match = rawAccumulatedText.match(/"result":\s*"(.*)"/);
+                const match = rawAccumulatedText.match(/"result":\s*"(.*?)"/);
                 if (match && match[1]) {
                     cleanText = match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
                 }
             }
 
             innerOutput.innerHTML=marked.parse(cleanText);
-            
-            // גלילה אוטומטית למטה בזמן שה-AI כותב
             scrollWrapper.scrollTop = scrollWrapper.scrollHeight;
         }
     }catch(err){
