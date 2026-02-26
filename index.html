@@ -9,20 +9,25 @@
 
 <style>
 :root{ --turquoise:#22d3ee; }
-*{box-sizing:border-box;margin:0;padding:0;}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
 
 body{
 min-height:100vh;
 font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
 color:#fff;
 background:#020617;
-
-/* 🔧 תיקון 1 */
-overflow-x:hidden;
-overflow-y:auto;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
-/* ===== רקע ===== */
+/* ===== Background ===== */
 .bg-layer{
 position:fixed;
 inset:0;
@@ -45,19 +50,14 @@ rgba(0,0,0,0.2) 75%);
 z-index:1;
 }
 
-/* ===== Glass Card ===== */
+/* ===== Card ===== */
 .card{
-position:fixed;
-top:50%;
-right:90px;
-transform:translateY(-50%);
+position:relative;
 width:420px;
-
-/* 🔧 תיקון 2 */
-max-height:85vh;
-
+height:85vh;
 display:flex;
 flex-direction:column;
+z-index:2;
 
 background:linear-gradient(
 145deg,
@@ -70,14 +70,12 @@ backdrop-filter:blur(45px) saturate(160%);
 
 border-radius:30px;
 padding:28px;
-
 border:1px solid rgba(255,255,255,0.25);
 
 box-shadow:
 0 50px 120px rgba(0,0,0,0.75),
 0 0 50px rgba(34,211,238,0.12);
 
-z-index:2;
 overflow:hidden;
 }
 
@@ -112,7 +110,7 @@ color:#06131c;
 font-size:15px;
 }
 
-/* ===== Result ===== */
+/* ===== Result Area ===== */
 #resultContainer{
 flex:1;
 min-height:0;
@@ -120,30 +118,37 @@ overflow-y:auto;
 
 background:linear-gradient(
 160deg,
-rgba(20,40,70,0.50),
-rgba(10,25,45,0.40)
+rgba(20,40,70,0.55),
+rgba(10,25,45,0.45)
 );
 
-backdrop-filter:blur(25px) saturate(130%);
--webkit-backdrop-filter:blur(25px) saturate(130%);
+border-radius:22px;
+padding:22px;
 
-border-radius:24px;
-padding:24px;
-
-border:1px solid rgba(34,211,238,0.5);
+border:1px solid rgba(34,211,238,0.6);
 
 box-shadow:
-0 0 40px rgba(34,211,238,0.25),
-inset 0 0 35px rgba(0,0,0,0.5);
+0 0 30px rgba(34,211,238,0.25),
+inset 0 0 25px rgba(0,0,0,0.6);
 
 font-size:14px;
 line-height:1.9;
 color:#f0fbff;
 
-direction: rtl;
-text-align: right;
-overflow-wrap: break-word;
-word-break: break-word;
+direction:rtl;
+text-align:right;
+}
+
+/* Scrollbar clean */
+#resultContainer::-webkit-scrollbar{
+width:8px;
+}
+#resultContainer::-webkit-scrollbar-track{
+background:transparent;
+}
+#resultContainer::-webkit-scrollbar-thumb{
+background:rgba(34,211,238,0.5);
+border-radius:10px;
 }
 
 /* Markdown */
@@ -153,12 +158,13 @@ word-break: break-word;
 color:#22d3ee;
 margin-bottom:8px;
 }
+
 #resultContainer ul{
 padding-right:18px;
 margin-bottom:12px;
 }
 
-/* ===== Disclaimer ===== */
+/* Disclaimer */
 .disclaimer{
 margin-top:14px;
 padding:14px;
@@ -169,14 +175,13 @@ rgba(255,170,0,0.15),
 rgba(255,80,0,0.12)
 );
 border:1px solid rgba(255,140,0,0.35);
-backdrop-filter:blur(12px);
 font-size:12px;
 line-height:1.6;
 color:#ffd9b3;
 text-align:center;
 }
 
-/* ===== Links ===== */
+/* Sections */
 .section{
 border-top:1px solid rgba(255,255,255,0.1);
 padding-top:14px;
@@ -201,60 +206,24 @@ font-size:13px;
 margin-bottom:10px;
 transition:0.3s;
 }
-.link-btn:hover{ background:rgba(255,255,255,0.3); }
+.link-btn:hover{
+background:rgba(255,255,255,0.3);
+}
 
 /* ===== Mobile ===== */
-@media (max-width: 768px){
+@media (max-width:768px){
 
 body{
 overflow:auto;
-}
-
-.overlay{
-background:linear-gradient(
-to bottom,
-rgba(0,0,0,0.65),
-rgba(0,0,0,0.4)
-);
+padding:20px;
 }
 
 .card{
-position:relative;
-top:auto;
-right:auto;
-transform:none;
-
-width:94%;
+width:100%;
 max-width:520px;
 height:auto;
-
-margin:30px auto;
-padding:22px;
-
-backdrop-filter:blur(28px) saturate(140%);
--webkit-backdrop-filter:blur(28px) saturate(140%);
 }
 
-#resultContainer{
-padding:18px;
-font-size:15px;
-line-height:1.8;
-}
-
-select{
-padding:13px;
-font-size:15px;
-}
-
-button{
-padding:16px;
-font-size:16px;
-}
-
-h1{
-font-size:22px;
-margin-bottom:18px;
-}
 }
 </style>
 </head>
@@ -266,6 +235,7 @@ margin-bottom:18px;
 <div class="overlay"></div>
 
 <div class="card">
+
 <h1>🐱 CatMind AI</h1>
 
 <select id="mainSymptom">
