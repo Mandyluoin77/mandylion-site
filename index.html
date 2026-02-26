@@ -16,7 +16,8 @@ min-height:100vh;
 font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
 color:#fff;
 background:#020617;
-overflow:hidden;
+/* תיקון: מאפשר גלילה של הדף כולו אם הכרטיס ארוך מדי */
+overflow-y: auto;
 }
 
 /* ===== רקע ===== */
@@ -49,7 +50,8 @@ top:50%;
 right:90px;
 transform:translateY(-50%);
 width:420px;
-height:85vh;
+/* תיקון: גובה מקסימלי גמיש במקום גובה קבוע */
+max-height: 92vh;
 display:flex;
 flex-direction:column;
 
@@ -63,7 +65,7 @@ backdrop-filter:blur(45px) saturate(160%);
 -webkit-backdrop-filter:blur(45px) saturate(160%);
 
 border-radius:30px;
-padding:28px;
+padding:25px; /* צמצום קל */
 
 border:1px solid rgba(255,255,255,0.25);
 
@@ -77,16 +79,16 @@ z-index:2;
 h1{
 text-align:center;
 font-size:20px;
-margin-bottom:20px;
+margin-bottom:15px;
 color:var(--turquoise);
 }
 
 select{
 width:100%;
-padding:14px;
+padding:12px;
 border-radius:16px;
 border:1px solid rgba(255,255,255,0.2);
-margin-bottom:16px;
+margin-bottom:12px;
 background:#1e293b;
 color:#fff;
 font-size:14px;
@@ -94,13 +96,13 @@ font-size:14px;
 
 button{
 width:100%;
-padding:15px;
+padding:14px;
 border-radius:16px;
 border:none;
 background:var(--turquoise);
 font-weight:700;
 cursor:pointer;
-margin-bottom:18px;
+margin-bottom:15px;
 color:#06131c;
 font-size:15px;
 }
@@ -108,7 +110,7 @@ font-size:15px;
 /* ===== Result ===== */
 #resultContainer{
 flex:1;
-min-height:0;
+min-height:120px;
 overflow-y:auto;
 
 background:linear-gradient(
@@ -120,8 +122,8 @@ rgba(10,25,45,0.40)
 backdrop-filter:blur(25px) saturate(130%);
 -webkit-backdrop-filter:blur(25px) saturate(130%);
 
-border-radius:24px;
-padding:24px;
+border-radius:20px;
+padding:20px;
 
 border:1px solid rgba(34,211,238,0.5);
 
@@ -130,13 +132,12 @@ box-shadow:
 inset 0 0 35px rgba(0,0,0,0.5);
 
 font-size:14px;
-line-height:1.9;
+line-height:1.7;
 color:#f0fbff;
 
 direction: rtl;
 text-align: right;
 overflow-wrap: break-word;
-word-break: break-word;
 }
 
 /* Markdown */
@@ -153,22 +154,15 @@ margin-bottom:12px;
 
 /* ===== Disclaimer ===== */
 .disclaimer{
-margin-top:14px;
-padding:14px;
-border-radius:18px;
+margin-top:12px;
+padding:10px;
+border-radius:15px;
 
-background:linear-gradient(
-160deg,
-rgba(255,170,0,0.15),
-rgba(255,80,0,0.12)
-);
+background:rgba(255,140,0,0.1);
+border:1px solid rgba(255,140,0,0.3);
 
-border:1px solid rgba(255,140,0,0.35);
-
-backdrop-filter:blur(12px);
-
-font-size:12px;
-line-height:1.6;
+font-size:11px;
+line-height:1.4;
 color:#ffd9b3;
 text-align:center;
 }
@@ -176,84 +170,44 @@ text-align:center;
 /* ===== Links ===== */
 .section{
 border-top:1px solid rgba(255,255,255,0.1);
-padding-top:14px;
-margin-top:18px;
+padding-top:10px;
+margin-top:10px;
 }
 
 .section h3{
 color:var(--turquoise);
-font-size:14px;
-margin-bottom:10px;
+font-size:13px;
+margin-bottom:8px;
 }
 
 .link-btn{
 display:block;
 text-align:center;
-padding:12px;
-border-radius:14px;
-background:rgba(255,255,255,0.15);
+padding:10px;
+border-radius:12px;
+background:rgba(255,255,255,0.1);
 color:#fff;
 text-decoration:none;
-font-size:13px;
-margin-bottom:10px;
+font-size:12px;
+margin-bottom:8px;
 transition:0.3s;
 }
-.link-btn:hover{ background:rgba(255,255,255,0.3); }
+.link-btn:hover{ background:rgba(255,255,255,0.2); }
 
 /* ===== Mobile ===== */
 @media (max-width: 768px){
-
-body{
-overflow:auto;
-}
-
-.overlay{
-background:linear-gradient(
-to bottom,
-rgba(0,0,0,0.65),
-rgba(0,0,0,0.4)
-);
-}
-
 .card{
 position:relative;
 top:auto;
 right:auto;
 transform:none;
-
 width:94%;
-max-width:520px;
-height:auto;
-
-margin:30px auto;
-
-padding:22px;
-
-backdrop-filter:blur(28px) saturate(140%);
--webkit-backdrop-filter:blur(28px) saturate(140%);
+max-height:none;
+margin:20px auto;
+padding:20px;
 }
-
-#resultContainer{
-padding:18px;
-font-size:15px;
-line-height:1.8;
 }
-
-select{
-padding:13px;
-font-size:15px;
-}
-
-button{
-padding:16px;
-font-size:16px;
-}
-
-h1{
-font-size:22px;
-margin-bottom:18px;
-}
-}</style>
+</style>
 </head>
 
 <body>
@@ -419,6 +373,3 @@ result.innerHTML="❌ שגיאה בחיבור לשרת.";
 
 </body>
 </html>
-
-
-
