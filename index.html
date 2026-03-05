@@ -21,7 +21,7 @@ background:#020617;
 overflow:hidden;
 }
 
-/* ===== רקע ===== */
+/* רקע */
 
 .bg-layer{
 position:fixed;
@@ -43,7 +43,7 @@ background:linear-gradient(to right,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.4) 50%,rgba(
 z-index:1;
 }
 
-/* ===== Card ===== */
+/* CARD */
 
 .card{
 position:absolute;
@@ -79,7 +79,6 @@ text-align:center;
 font-size:22px;
 margin-bottom:15px;
 color:var(--turquoise);
-text-shadow:0 2px 10px rgba(34,211,238,0.3);
 }
 
 select{
@@ -91,7 +90,6 @@ margin-bottom:12px;
 background:#0f172a;
 color:#fff;
 font-size:14px;
-outline:none;
 }
 
 button{
@@ -104,10 +102,7 @@ font-weight:700;
 cursor:pointer;
 color:#06131c;
 font-size:16px;
-transition:0.2s;
 }
-
-button:hover{filter:brightness(1.1);}
 
 .result-scroll-wrapper{
 flex:1;
@@ -126,25 +121,6 @@ color:#e2e8f0;
 direction:rtl;
 text-align:right;
 }
-
-/* ===== צבעי דחיפות ===== */
-
-.urgency-high{
-color:#ef4444;
-font-weight:700;
-}
-
-.urgency-medium{
-color:#f59e0b;
-font-weight:700;
-}
-
-.urgency-low{
-color:#22c55e;
-font-weight:700;
-}
-
-/* ===== Footer ===== */
 
 .card-footer{
 flex-shrink:0;
@@ -169,7 +145,6 @@ text-align:center;
 color:var(--turquoise);
 font-size:12px;
 margin-bottom:4px;
-opacity:0.9;
 font-weight:600;
 }
 
@@ -189,12 +164,10 @@ color:#fff;
 text-decoration:none;
 font-size:11.5px;
 border:1px solid rgba(255,255,255,0.1);
-transition:0.3s;
 }
 
 .link-btn:hover{
 background:rgba(255,255,255,0.15);
-border-color:var(--turquoise);
 }
 
 </style>
@@ -230,8 +203,6 @@ border-color:var(--turquoise);
 <option value="Behavioral changes">שינויים בהתנהגות</option>
 <option value="Trembling">רעידות</option>
 <option value="Seizures">פרכוסים</option>
-<option value="Possible poisoning">הרעלה אפשרית</option>
-<option value="Swallowed foreign object">בליעת חפץ זר</option>
 
 </select>
 
@@ -250,106 +221,90 @@ border-color:var(--turquoise);
 </div>
 
 <div>
-
 <div class="section-title">מידע נוסף</div>
-
-<a class="link-btn"
-href="https://www.whiskas.in/cat-breeds"
-target="_blank">
-Browse All Breeds
-</a>
-
+<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
 </div>
 
 <div>
-
 <div class="section-title">וטרינרים מומלצים</div>
-
 <div class="links-grid">
-
-<a class="link-btn"
-href="https://www.talisteinvet.co.il/"
-target="_blank">
-ד"ר טלי שטיין
-</a>
-
-<a class="link-btn"
-href="https://easy.co.il/page/3056876"
-target="_blank">
-ד"ר תמר פלידל
-</a>
-
+<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
+<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
+</div>
 </div>
 
 </div>
-
-</div>
-
 </div>
 
 <script>
 
-async function executeAnalysis(){
+/* הרבה תמונות חתולים */
 
-const select=document.getElementById("mainSymptom");
-const result=document.getElementById("resultContainer");
+const images=[
 
-if(!select.value){
-result.innerHTML="⚠ אנא בחר בעיה מהרשימה.";
-return;
+"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1920",
+"https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920",
+"https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920",
+"https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1920",
+"https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1920",
+"https://images.unsplash.com/photo-1548247416-ec66f4900b2e?q=80&w=1920",
+"https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1920",
+"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920",
+"https://images.unsplash.com/photo-1519052537078-e6302a4968d4?q=80&w=1920",
+"https://images.unsplash.com/photo-1516750484197-6b28d10c91ea?q=80&w=1920",
+
+"https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?q=80&w=1920",
+"https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=1920",
+"https://images.unsplash.com/photo-1568152950566-c1bf43f4ab28?q=80&w=1920",
+"https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?q=80&w=1920",
+"https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?q=80&w=1920",
+"https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1920",
+"https://images.unsplash.com/photo-1601758228041-f3b2795255f1?q=80&w=1920",
+"https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1920",
+"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920",
+"https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?q=80&w=1920"
+
+];
+
+let currentIndex=Math.floor(Math.random()*images.length);
+let activeLayer=1;
+
+const bg1=document.getElementById("bg1");
+const bg2=document.getElementById("bg2");
+
+bg1.style.backgroundImage=`url(${images[currentIndex]})`;
+bg1.style.opacity=1;
+
+function nextBackground(){
+
+let nextIndex;
+
+do{
+nextIndex=Math.floor(Math.random()*images.length);
+}
+while(nextIndex===currentIndex);
+
+currentIndex=nextIndex;
+
+if(activeLayer===1){
+
+bg2.style.backgroundImage=`url(${images[currentIndex]})`;
+bg2.style.opacity=1;
+bg1.style.opacity=0;
+activeLayer=2;
+
+}else{
+
+bg1.style.backgroundImage=`url(${images[currentIndex]})`;
+bg1.style.opacity=1;
+bg2.style.opacity=0;
+activeLayer=1;
+
 }
 
-result.innerHTML="🔍 CatMind מנתח את הסימפטומים...";
-
-try{
-
-const response=await fetch(
-"https://catmind-ai-server.onrender.com/generate",
-{
-method:"POST",
-headers:{ "Content-Type":"application/json" },
-body:JSON.stringify({
-text:`
-אתה וטרינר מומחה לחתולים בלבד.
-
-נתח רק את הסימפטום הבא:
-${select.value}
-
-אל תוסיף סימפטומים אחרים.
-
-ענה בפורמט הבא בלבד:
-
-כותרת:
-גורמים אפשריים:
-רמת דחיפות:
-מה מומלץ לעשות:
-`
-})
-}
-);
-
-const data=await response.json();
-
-let output=data.result || "לא התקבלה תשובה";
-
-if(output.includes("גבוהה"))
-output=output.replace("גבוהה","<span class='urgency-high'>גבוהה</span>");
-
-if(output.includes("בינונית"))
-output=output.replace("בינונית","<span class='urgency-medium'>בינונית</span>");
-
-if(output.includes("נמוכה"))
-output=output.replace("נמוכה","<span class='urgency-low'>נמוכה</span>");
-
-result.innerHTML="<strong>אבחנת CatMind:</strong><br><br>"+marked.parse(output);
-
-}catch(err){
-
-result.innerHTML="❌ השרת מתעורר. נסה שוב בעוד כמה שניות.";
-
 }
 
-}
+setInterval(nextBackground,8000);
 
 </script>
 
