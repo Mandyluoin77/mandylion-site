@@ -70,7 +70,10 @@ border:1px solid rgba(255,255,255,.2);
 box-shadow:0 40px 100px rgba(0,0,0,.6);
 }
 
+/* MOBILE */
+
 @media(max-width:768px){
+
 .card{
 position:relative;
 top:auto;
@@ -80,6 +83,7 @@ margin:20px auto;
 height:auto;
 min-height:90vh;
 }
+
 }
 
 /* HEADER */
@@ -102,6 +106,7 @@ margin-bottom:12px;
 background:#0f172a;
 color:#fff;
 font-size:14px;
+outline:none;
 }
 
 /* BUTTON */
@@ -141,7 +146,7 @@ white-space:normal;
 overflow-wrap:break-word;
 }
 
-/* LINKS */
+/* FOOTER */
 
 .card-footer{
 border-top:1px solid rgba(255,255,255,.1);
@@ -228,8 +233,11 @@ border:1px solid rgba(255,255,255,.1);
 <div class="links-grid">
 
 <a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
+
 <a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
+
 <a class="link-btn" href="https://icatcare.org/" target="_blank">International Cat Care</a>
+
 <a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
 
 </div>
@@ -240,7 +248,7 @@ border:1px solid rgba(255,255,255,.1);
 
 <script>
 
-/* CAT IMAGES */
+/* CAT BACKGROUND IMAGES */
 
 const images=[
 
@@ -253,7 +261,7 @@ const images=[
 "https://images.unsplash.com/photo-1548247416-ec66f4900b2e",
 "https://images.unsplash.com/photo-1513245543132-31f507417b26",
 "https://images.unsplash.com/photo-1519052537078-e6302a4968d4",
-"https://images.unsplash.com/photo-1518791841217-8f162f1e1131"
+"https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e"
 
 ];
 
@@ -296,6 +304,40 @@ activeLayer=1;
 
 setInterval(nextBackground,10000);
 
+/* TRANSLATION MAP */
+
+const symptomMap={
+
+"Vomiting":"הקאות",
+"Diarrhea":"שלשול",
+"Constipation":"עצירות",
+"Loss of appetite":"חוסר תיאבון",
+"Weight loss":"ירידה במשקל",
+"Abnormal weight gain":"עלייה במשקל",
+"Extreme fatigue":"עייפות קיצונית",
+"Breathing difficulty":"קושי בנשימה",
+"Coughing":"שיעול",
+"Frequent sneezing":"התעטשויות",
+"Nasal discharge":"הפרשות מהאף",
+"Eye discharge":"הפרשות מהעיניים",
+"Excessive itching":"גירודים",
+"Abnormal hair loss":"נשירת שיער חריגה",
+"Skin sores":"פצעים בעור",
+"Swelling":"נפיחות בגוף",
+"Limping":"צליעה",
+"Not using litter box":"חוסר שימוש בארגז חול",
+"Blood in urine":"דם בשתן",
+"Behavioral changes":"שינויים בהתנהגות",
+"Sudden aggression":"אגרסיביות פתאומית",
+"Trembling":"רעידות",
+"Seizures":"פרכוסים",
+"Possible poisoning":"הרעלה אפשרית",
+"Swallowed foreign object":"בליעת חפץ זר",
+"High fever":"חום גבוה",
+"Loss of consciousness":"אובדן הכרה"
+
+};
+
 /* AI ANALYSIS */
 
 async function executeAnalysis(){
@@ -304,29 +346,37 @@ const select=document.getElementById("mainSymptom");
 const result=document.getElementById("resultContainer");
 
 if(!select.value){
+
 result.innerHTML="⚠ אנא בחר בעיה מהרשימה.";
+
 return;
+
 }
+
+const hebrewSymptom=symptomMap[select.value]||select.value;
 
 result.innerHTML="🔍 מנתח סימפטום...";
 
 try{
 
 const response=await fetch(
+
 "https://catmind-ai-server.onrender.com/generate",
+
 {
+
 method:"POST",
+
 headers:{"Content-Type":"application/json"},
+
 body:JSON.stringify({
 
 text:`אתה וטרינר מומחה לחתולים בלבד.
 
-נתח את הסימפטום:
-${select.value}
+הסימפטום הוא:
+${hebrewSymptom}
 
-אל תתייחס לכלבים.
-
-ענה בפורמט:
+ענה בעברית בפורמט:
 
 סימפטום:
 גורמים אפשריים:
@@ -334,7 +384,9 @@ ${select.value}
 מה מומלץ לעשות:`
 
 })
+
 }
+
 );
 
 const data=await response.json();
