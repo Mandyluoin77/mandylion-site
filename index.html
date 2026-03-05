@@ -8,219 +8,183 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <style>
+:root { --turquoise: #22d3ee; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root{ --turquoise:#22d3ee; }
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
+body {
+height: 100vh;
+font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+color: #fff;
+background: #020617;
+overflow: hidden;
 }
 
-body{
-height:100vh;
-font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
-color:#fff;
-background:#020617;
-overflow:hidden;
+/* ===== רקע משתנה ===== */
+
+.bg-layer {
+position: fixed;
+inset: 0;
+background-size: cover;
+background-position: center 20%;
+background-repeat: no-repeat;
+transition: opacity 1.5s ease;
+filter: brightness(0.6) contrast(1.1);
+z-index: 0;
 }
 
-/* רקע */
+#bg2 { opacity: 0; }
 
-.bg-layer{
-position:fixed;
-inset:0;
-background-size:cover;
-background-position:center 20%;
-background-repeat:no-repeat;
-transition:opacity 1.5s ease;
-filter:brightness(0.6) contrast(1.1);
-z-index:0;
+.overlay {
+position: fixed;
+inset: 0;
+background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%);
+z-index: 1;
 }
 
-#bg2{
-opacity:0;
+/* ===== Card ===== */
+
+.card {
+position: absolute;
+right: 50px;
+top: 50%;
+transform: translateY(-50%);
+z-index: 2;
+
+width: 420px;
+max-width: 90%;
+height: 94vh;
+
+display: flex;
+flex-direction: column;
+
+background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+
+backdrop-filter: blur(40px) saturate(150%);
+-webkit-backdrop-filter: blur(40px) saturate(150%);
+
+border-radius: 28px;
+padding: 25px;
+
+border: 1px solid rgba(255,255,255,0.2);
+box-shadow: 0 40px 100px rgba(0,0,0,0.6);
 }
 
-.overlay{
-position:fixed;
-inset:0;
-background:linear-gradient(to right,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.4) 50%,rgba(0,0,0,0.1) 100%);
-z-index:1;
+.card-header { flex-shrink: 0; margin-bottom: 10px; }
+
+h1 {
+text-align: center;
+font-size: 22px;
+margin-bottom: 15px;
+color: var(--turquoise);
+text-shadow: 0 2px 10px rgba(34,211,238,0.3);
 }
 
-/* CARD */
-
-.card{
-position:absolute;
-right:50px;
-top:50%;
-transform:translateY(-50%);
-z-index:2;
-
-width:420px;
-max-width:90%;
-
-height:94vh;
-
-display:flex;
-flex-direction:column;
-
-background:linear-gradient(145deg,rgba(255,255,255,0.12),rgba(255,255,255,0.03));
-
-backdrop-filter:blur(40px) saturate(150%);
--webkit-backdrop-filter:blur(40px) saturate(150%);
-
-border-radius:28px;
-padding:25px;
-
-border:1px solid rgba(255,255,255,0.2);
-
-box-shadow:0 40px 100px rgba(0,0,0,0.6);
+select {
+width: 100%;
+padding: 12px;
+border-radius: 14px;
+border: 1px solid rgba(255,255,255,0.2);
+margin-bottom: 12px;
+background: #0f172a;
+color: #fff;
+font-size: 14px;
+outline: none;
 }
 
-.card-header{
-flex-shrink:0;
-margin-bottom:10px;
+button {
+width: 100%;
+padding: 14px;
+border-radius: 14px;
+border: none;
+background: var(--turquoise);
+font-weight: 700;
+cursor: pointer;
+color: #06131c;
+font-size: 16px;
+transition: 0.2s;
 }
 
-h1{
-text-align:center;
-font-size:22px;
-margin-bottom:15px;
-color:var(--turquoise);
-text-shadow:0 2px 10px rgba(34,211,238,0.3);
+button:hover { filter: brightness(1.1); }
+
+.result-scroll-wrapper {
+flex: 1;
+overflow-y: auto;
+margin-bottom: 15px;
+background: rgba(0, 0, 0, 0.2);
+border-radius: 18px;
+border: 1px solid rgba(34,211,238,0.1);
 }
 
-select{
-width:100%;
-padding:12px;
-border-radius:14px;
-border:1px solid rgba(255,255,255,0.2);
-margin-bottom:12px;
-background:#0f172a;
-color:#fff;
-font-size:14px;
-outline:none;
+#resultContainer {
+padding: 18px;
+font-size: 14.5px;
+line-height: 1.7;
+color: #e2e8f0;
+direction: rtl;
+text-align: right;
 }
 
-button{
-width:100%;
-padding:14px;
-border-radius:14px;
-border:none;
-background:var(--turquoise);
-font-weight:700;
-cursor:pointer;
-color:#06131c;
-font-size:16px;
-transition:0.2s;
+.card-footer {
+flex-shrink: 0;
+display: flex;
+flex-direction: column;
+gap: 10px;
+border-top: 1px solid rgba(255,255,255,0.1);
+padding-top: 15px;
 }
 
-button:hover{
-filter:brightness(1.1);
+.disclaimer {
+padding: 10px;
+border-radius: 14px;
+background: rgba(251,191,36,0.1);
+border: 1px solid rgba(251,191,36,0.2);
+font-size: 10.5px;
+color: #fde68a;
+text-align: center;
 }
 
-/* RESULT */
-
-.result-scroll-wrapper{
-flex:1;
-overflow-y:auto;
-margin-bottom:15px;
-background:rgba(0,0,0,0.2);
-border-radius:18px;
-border:1px solid rgba(34,211,238,0.1);
+.section-title {
+color: var(--turquoise);
+font-size: 12px;
+margin-bottom: 4px;
+opacity: 0.9;
+font-weight: 600;
 }
 
-#resultContainer{
-padding:18px;
-font-size:14.5px;
-line-height:1.7;
-color:#e2e8f0;
-direction:rtl;
-text-align:right;
-unicode-bidi:plaintext;
+.links-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 8px;
 }
 
-.result-scroll-wrapper::-webkit-scrollbar{
-width:4px;
+.link-btn {
+display: block;
+text-align: center;
+padding: 8px;
+border-radius: 10px;
+background: rgba(255,255,255,0.07);
+color: #fff;
+text-decoration: none;
+font-size: 11.5px;
+border: 1px solid rgba(255,255,255,0.1);
+transition: 0.3s;
 }
 
-.result-scroll-wrapper::-webkit-scrollbar-thumb{
-background:var(--turquoise);
-border-radius:10px;
+.link-btn:hover {
+background: rgba(255,255,255,0.15);
+border-color: var(--turquoise);
 }
 
-/* FOOTER */
-
-.card-footer{
-flex-shrink:0;
-display:flex;
-flex-direction:column;
-gap:10px;
-border-top:1px solid rgba(255,255,255,0.1);
-padding-top:15px;
+@media (max-width: 768px) {
+.card {
+position: relative;
+right: auto;
+top: auto;
+transform: none;
+margin: 15px auto;
+width: 92%;
+height: 90vh;
 }
-
-.disclaimer{
-padding:10px;
-border-radius:14px;
-background:rgba(251,191,36,0.1);
-border:1px solid rgba(251,191,36,0.2);
-font-size:10.5px;
-color:#fde68a;
-text-align:center;
-line-height:1.3;
-}
-
-.section-title{
-color:var(--turquoise);
-font-size:12px;
-margin-bottom:4px;
-opacity:0.9;
-font-weight:600;
-}
-
-.links-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px;
-}
-
-.link-btn{
-display:block;
-text-align:center;
-padding:8px;
-border-radius:10px;
-background:rgba(255,255,255,0.07);
-color:#fff;
-text-decoration:none;
-font-size:11.5px;
-border:1px solid rgba(255,255,255,0.1);
-transition:0.3s;
-
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-}
-
-.link-btn:hover{
-background:rgba(255,255,255,0.15);
-border-color:var(--turquoise);
-}
-
-@media (max-width:768px){
-
-.card{
-position:relative;
-right:auto;
-top:auto;
-transform:none;
-margin:15px auto;
-width:92%;
-height:90vh;
-}
-
 }
 
 </style>
@@ -239,7 +203,6 @@ height:90vh;
 <h1>🐱 CatMind AI</h1>
 
 <select id="mainSymptom">
-
 <option value="">בחר בעיה מהרשימה</option>
 <option value="Vomiting">הקאות</option>
 <option value="Diarrhea">שלשול</option>
@@ -258,7 +221,6 @@ height:90vh;
 <option value="Seizures">פרכוסים</option>
 <option value="Possible poisoning">הרעלה אפשרית</option>
 <option value="Swallowed foreign object">בליעת חפץ זר</option>
-
 </select>
 
 <button onclick="executeAnalysis()">נתח מקרה</button>
@@ -266,25 +228,29 @@ height:90vh;
 </div>
 
 <div class="result-scroll-wrapper">
-
-<div id="resultContainer">
-
-האבחנה תופיע כאן...
-
-</div>
-
+<div id="resultContainer">האבחנה תופיע כאן...</div>
 </div>
 
 <div class="card-footer">
 
 <div class="disclaimer">
+⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי. במקרה חירום פנה לוטרינר.
+</div>
 
-⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי.
+<div>
+<div class="section-title">מידע נוסף</div>
+<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
+</div>
 
+<div>
+<div class="section-title">וטרינרים מומלצים</div>
+<div class="links-grid">
+<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
+<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
+</div>
 </div>
 
 </div>
-
 </div>
 
 <script>
@@ -295,10 +261,8 @@ const select=document.getElementById("mainSymptom");
 const result=document.getElementById("resultContainer");
 
 if(!select.value){
-
 result.innerHTML="⚠ אנא בחר בעיה מהרשימה.";
 return;
-
 }
 
 result.innerHTML="🔍 CatMind מנתח את הסימפטומים...";
@@ -309,11 +273,8 @@ const response=await fetch(
 "https://catmind-ai-server.onrender.com/generate",
 {
 method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
+headers:{ "Content-Type":"application/json" },
 body:JSON.stringify({
-
 text:`
 אתה וטרינר מומחה לחתולים בלבד.
 
@@ -321,7 +282,6 @@ text:`
 ${select.value}
 
 אל תוסיף סימפטומים אחרים.
-אל תמציא מידע שלא הופיע.
 
 ענה בפורמט הבא בלבד:
 
@@ -338,8 +298,7 @@ const data=await response.json();
 
 let output=data.result || "לא התקבלה תשובה";
 
-result.innerHTML=
-"<strong>אבחנת CatMind:</strong><br><br>"+marked.parse(output);
+result.innerHTML="<strong>אבחנת CatMind:</strong><br><br>"+marked.parse(output);
 
 }catch(err){
 
@@ -349,7 +308,7 @@ result.innerHTML="❌ השרת מתעורר. נסה שוב בעוד כמה שנ�
 
 }
 
-/* שינוי רקע */
+/* תמונות רקע */
 
 const images=[
 "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1920&auto=format&fit=crop",
@@ -357,18 +316,13 @@ const images=[
 "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920&auto=format&fit=crop"
 ];
 
-let i=0;
+let index=0;
 
-document.getElementById("bg1").style.backgroundImage=
-`url(${images[0]})`;
+document.getElementById("bg1").style.backgroundImage=`url(${images[0]})`;
 
 setInterval(()=>{
-
-i=(i+1)%images.length;
-
-document.getElementById("bg1").style.backgroundImage=
-`url(${images[i]})`;
-
+index=(index+1)%images.length;
+document.getElementById("bg1").style.backgroundImage=`url(${images[index]})`;
 },10000);
 
 </script>
