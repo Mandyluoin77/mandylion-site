@@ -11,27 +11,33 @@
 
 <style>
 
-:root{--turquoise:#22d3ee;}
+:root{
+--turquoise:#22d3ee;
+--green:#22c55e;
+--yellow:#eab308;
+--orange:#f97316;
+--red:#ef4444;
+}
+
 *{box-sizing:border-box;margin:0;padding:0;}
 
 body{
 height:100vh;
-font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
+font-family:'Segoe UI',Tahoma;
 color:#fff;
 background:#020617;
 overflow:hidden;
 }
 
-/* רקע */
+/* BACKGROUND */
 
 .bg-layer{
 position:fixed;
 inset:0;
 background-size:cover;
-background-position:center 20%;
-background-repeat:no-repeat;
-transition:opacity 1.5s ease;
-filter:brightness(.6) contrast(1.1);
+background-position:center;
+transition:opacity 1.5s;
+filter:brightness(.55);
 z-index:0;
 }
 
@@ -53,10 +59,8 @@ right:50px;
 top:50%;
 transform:translateY(-50%);
 
-z-index:2;
-
-width:420px;
-max-width:90%;
+width:440px;
+max-width:92%;
 height:94vh;
 
 display:flex;
@@ -64,111 +68,130 @@ flex-direction:column;
 
 background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.03));
 
-backdrop-filter:blur(40px) saturate(150%);
--webkit-backdrop-filter:blur(40px) saturate(150%);
+backdrop-filter:blur(40px);
 
 border-radius:28px;
+
 padding:25px;
 
 border:1px solid rgba(255,255,255,.2);
+
 box-shadow:0 40px 100px rgba(0,0,0,.6);
+
+z-index:2;
 
 }
 
 h1{
 text-align:center;
-font-size:22px;
-margin-bottom:15px;
+margin-bottom:12px;
 color:var(--turquoise);
 }
 
-select{
-width:100%;
-padding:12px;
+/* SYMPTOMS LIST */
+
+.symptoms{
+
+flex:0 0 auto;
+height:170px;
+
+overflow:auto;
+
 border-radius:14px;
-border:1px solid rgba(255,255,255,.2);
-margin-bottom:12px;
+
 background:#0f172a;
-color:#fff;
-font-size:14px;
+
+padding:10px;
+
+border:1px solid rgba(255,255,255,.1);
+
+margin-bottom:10px;
+
+}
+
+.symptoms label{
+
+display:block;
+font-size:13px;
+margin:3px 0;
+
 }
 
 button{
+
 width:100%;
-padding:14px;
+padding:13px;
 border-radius:14px;
 border:none;
+
 background:var(--turquoise);
-font-weight:700;
+
+font-weight:bold;
 cursor:pointer;
-color:#06131c;
-font-size:16px;
+
+margin-bottom:10px;
+
 }
 
+/* RESULT */
+
 .result-scroll-wrapper{
+
 flex:1;
-overflow-y:auto;
-margin-bottom:15px;
+overflow:auto;
+
 background:rgba(0,0,0,.25);
+
 border-radius:18px;
-border:1px solid rgba(34,211,238,.1);
+
+padding:15px;
+
+margin-bottom:10px;
+
 }
 
 #resultContainer{
-padding:18px;
+
 font-size:14.5px;
-line-height:1.7;
-color:#e2e8f0;
-direction:rtl;
-text-align:right;
+line-height:1.6;
+
 }
+
+.urgency-green{color:var(--green);font-weight:bold;}
+.urgency-yellow{color:var(--yellow);font-weight:bold;}
+.urgency-orange{color:var(--orange);font-weight:bold;}
+.urgency-red{color:var(--red);font-weight:bold;}
+
+/* FOOTER */
 
 .card-footer{
-flex-shrink:0;
-display:flex;
-flex-direction:column;
-gap:10px;
 border-top:1px solid rgba(255,255,255,.1);
-padding-top:15px;
-}
-
-.disclaimer{
-padding:10px;
-border-radius:14px;
-background:rgba(251,191,36,.1);
-border:1px solid rgba(251,191,36,.2);
-font-size:10.5px;
-color:#fde68a;
-text-align:center;
-}
-
-.section-title{
-color:var(--turquoise);
-font-size:12px;
-margin-bottom:4px;
-font-weight:600;
+padding-top:10px;
 }
 
 .links-grid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:8px;
+gap:6px;
 }
 
 .link-btn{
+
 display:block;
 text-align:center;
-padding:8px;
-border-radius:10px;
-background:rgba(255,255,255,.07);
-color:#fff;
-text-decoration:none;
-font-size:11.5px;
-border:1px solid rgba(255,255,255,.1);
-}
 
-.link-btn:hover{
-background:rgba(255,255,255,.15);
+padding:7px;
+
+border-radius:10px;
+
+background:rgba(255,255,255,.08);
+
+color:#fff;
+
+text-decoration:none;
+
+font-size:11px;
+
 }
 
 </style>
@@ -184,70 +207,37 @@ background:rgba(255,255,255,.15);
 
 <h1>🐱 CatMind AI</h1>
 
-<select id="mainSymptom">
+<div class="symptoms" id="symptomsList"></div>
 
-<option value="">בחר בעיה מהרשימה</option>
-
-<option value="Vomiting">הקאות</option>
-<option value="Diarrhea">שלשול</option>
-<option value="Constipation">עצירות</option>
-<option value="Loss of appetite">חוסר תיאבון</option>
-<option value="Weight loss">ירידה במשקל</option>
-<option value="Abnormal weight gain">עלייה חריגה במשקל</option>
-<option value="Extreme fatigue">עייפות קיצונית</option>
-<option value="Breathing difficulty">קושי בנשימה</option>
-<option value="Coughing">שיעול</option>
-<option value="Frequent sneezing">התעטשויות תכופות</option>
-<option value="Nasal discharge">הפרשות מהאף</option>
-<option value="Eye discharge">הפרשות מהעיניים</option>
-<option value="Excessive itching">גירודים מרובים</option>
-<option value="Abnormal hair loss">נשירת שיער חריגה</option>
-<option value="Skin sores">פצעים בעור</option>
-<option value="Swelling">נפיחות בגוף</option>
-<option value="Limping">צליעה</option>
-<option value="Not using litter box">חוסר שימוש בארגז חול</option>
-<option value="Blood in urine">דם בשתן</option>
-<option value="Behavioral changes">שינויים בהתנהגות</option>
-<option value="Sudden aggression">אגרסיביות פתאומית</option>
-<option value="Trembling">רעידות</option>
-<option value="Seizures">פרכוסים</option>
-<option value="Possible poisoning">הרעלה אפשרית</option>
-<option value="Swallowed foreign object">בליעת חפץ זר</option>
-<option value="High fever">חום גבוה</option>
-<option value="Loss of consciousness">אובדן הכרה</option>
-
-</select>
-
-<button onclick="executeAnalysis()">נתח מקרה</button>
+<button onclick="executeAnalysis()">נתח סימפטומים</button>
 
 <div class="result-scroll-wrapper">
 
 <div id="resultContainer">
-האבחנה תופיע כאן...
+בחר סימפטומים ונתח
 </div>
 
 </div>
 
 <div class="card-footer">
 
-<div class="disclaimer">
-⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי
-</div>
-
-<div>
-<div class="section-title">מידע נוסף</div>
-<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
-</div>
-
-<div>
-<div class="section-title">וטרינרים מומלצים</div>
-
 <div class="links-grid">
 
-<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
-<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
+<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">
+ד"ר טלי שטיין
+</a>
 
-</div>
+<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">
+ד"ר תמר פלידל
+</a>
+
+<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">
+גזעי חתולים
+</a>
+
+<a class="link-btn" href="https://icatcare.org/" target="_blank">
+Cat Care
+</a>
 
 </div>
 
@@ -257,23 +247,54 @@ background:rgba(255,255,255,.15);
 
 <script>
 
-/* הרבה תמונות חתולים */
+/* ===== 80 סימפטומים ===== */
+
+const symptoms=[
+
+"הקאות","שלשול","עצירות","חוסר תיאבון","ירידה במשקל","עלייה במשקל",
+"עייפות קיצונית","קושי בנשימה","שיעול","התעטשויות",
+"הפרשות מהאף","הפרשות מהעיניים","גירודים","נשירת שיער",
+"פצעים בעור","נפיחות בגוף","צליעה","דם בשתן",
+"שינויים בהתנהגות","אגרסיביות","רעידות","פרכוסים",
+"חום גבוה","אובדן הכרה","קצף מהפה","חולשה",
+"שתייה מרובה","השתנה מרובה","ריח רע מהפה",
+"חניכיים אדומות","שיניים שבורות","חוסר שיווי משקל",
+"הליכה מוזרה","יללות חזקות","חוסר תגובה",
+"עיניים אדומות","עיניים נפוחות","עפעף שלישי",
+"אוזניים מלוכלכות","ריח מהאוזן","גרד באוזן",
+"התגרדות בראש","גירוד בצוואר","גירוד בגב",
+"פצע פתוח","פצע מדמם","נפיחות בפנים",
+"בטן נפוחה","בטן קשה","קושי בהליכה",
+"ישיבה מוזרה","נשימה מהירה","נשימה כבדה",
+"שינה מרובה","חוסר שינה","חוסר תנועה",
+"רעד ברגליים","רעד בראש","בלבול",
+"הליכה במעגלים","פגיעה בראייה","אובדן ראייה",
+"חוסר שליטה בצרכים","שתן מחוץ לארגז",
+"שלשול דמי","הקאות דמיות","התייבשות"
+
+];
+
+const container=document.getElementById("symptomsList");
+
+symptoms.forEach(s=>{
+container.innerHTML+=`
+<label>
+<input type="checkbox" value="${s}">
+${s}
+</label>
+`;
+});
+
+/* BACKGROUND */
 
 const images=[
-
-"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1920",
-"https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920",
-"https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920",
-"https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1920",
-"https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1920",
-"https://images.unsplash.com/photo-1548247416-ec66f4900b2e?q=80&w=1920",
-"https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1920",
-"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920",
-"https://images.unsplash.com/photo-1519052537078-e6302a4968d4?q=80&w=1920",
-"https://images.unsplash.com/photo-1516750484197-6b28d10c91ea?q=80&w=1920",
-"https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?q=80&w=1920",
-"https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=1920"
-
+"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba",
+"https://images.unsplash.com/photo-1573865526739-10659fec78a5",
+"https://images.unsplash.com/photo-1495360010541-f48722b34f7d",
+"https://images.unsplash.com/photo-1511044568932-338cba0ad803",
+"https://images.unsplash.com/photo-1533738363-b7f9aef128ce",
+"https://images.unsplash.com/photo-1548247416-ec66f4900b2e",
+"https://images.unsplash.com/photo-1518791841217-8f162f1e1131"
 ];
 
 let currentIndex=Math.floor(Math.random()*images.length);
@@ -320,15 +341,19 @@ setInterval(nextBackground,10000);
 
 async function executeAnalysis(){
 
-const select=document.getElementById("mainSymptom");
 const result=document.getElementById("resultContainer");
 
-if(!select.value){
-result.innerHTML="⚠ אנא בחר בעיה מהרשימה.";
+const selected=[...document.querySelectorAll("input:checked")].map(e=>e.value);
+
+if(selected.length===0){
+
+result.innerHTML="בחר לפחות סימפטום אחד";
+
 return;
+
 }
 
-result.innerHTML="🔍 מתחבר ל-CatMind...";
+result.innerHTML="🔍 מנתח סימפטומים...";
 
 try{
 
@@ -337,17 +362,17 @@ const response=await fetch(
 {
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({ text:select.value })
+body:JSON.stringify({ text:selected.join(", ") })
 }
 );
 
 const data=await response.json();
 
-result.innerHTML="<strong>אבחנת CatMind:</strong><br><br>"+marked.parse(data.result);
+result.innerHTML=marked.parse(data.result);
 
-}catch(err){
+}catch{
 
-result.innerHTML="❌ שגיאה בחיבור לשרת";
+result.innerHTML="שגיאת שרת";
 
 }
 
