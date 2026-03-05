@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
 
 <meta charset="UTF-8">
@@ -11,16 +12,16 @@
 
 <style>
 
-:root { --turquoise:#22d3ee; }
+:root{ --turquoise:#22d3ee; }
 
 *{box-sizing:border-box;margin:0;padding:0;}
 
 body{
-height:100vh;
+min-height:100vh;
 font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
 color:#fff;
 background:#020617;
-overflow:hidden;
+overflow-x:hidden;
 }
 
 /* BACKGROUND */
@@ -55,31 +56,39 @@ transform:translateY(-50%);
 z-index:2;
 
 width:420px;
-max-width:90%;
+max-width:92%;
 height:94vh;
 
 display:flex;
 flex-direction:column;
 
 background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.03));
-
 backdrop-filter:blur(40px) saturate(150%);
-
 border-radius:28px;
-
-padding:25px;
-
+padding:24px;
 border:1px solid rgba(255,255,255,.2);
-
 box-shadow:0 40px 100px rgba(0,0,0,.6);
 }
+
+@media(max-width:768px){
+.card{
+position:relative;
+top:auto;
+right:auto;
+transform:none;
+margin:20px auto;
+height:auto;
+min-height:90vh;
+}
+}
+
+/* HEADER */
 
 h1{
 text-align:center;
 font-size:22px;
 margin-bottom:15px;
 color:var(--turquoise);
-text-shadow:0 2px 10px rgba(34,211,238,.3);
 }
 
 /* SELECT */
@@ -93,7 +102,6 @@ margin-bottom:12px;
 background:#0f172a;
 color:#fff;
 font-size:14px;
-outline:none;
 }
 
 /* BUTTON */
@@ -115,7 +123,7 @@ font-size:16px;
 .result-scroll-wrapper{
 flex:1;
 overflow-y:auto;
-margin-bottom:15px;
+margin-bottom:12px;
 background:rgba(0,0,0,.2);
 border-radius:18px;
 border:1px solid rgba(34,211,238,.1);
@@ -128,17 +136,19 @@ line-height:1.7;
 color:#e2e8f0;
 direction:rtl;
 text-align:right;
+unicode-bidi:plaintext;
+white-space:normal;
+overflow-wrap:break-word;
 }
 
-/* FOOTER */
+/* LINKS */
 
 .card-footer{
-flex-shrink:0;
+border-top:1px solid rgba(255,255,255,.1);
+padding-top:12px;
 display:flex;
 flex-direction:column;
-gap:10px;
-border-top:1px solid rgba(255,255,255,.1);
-padding-top:15px;
+gap:8px;
 }
 
 .links-grid{
@@ -160,6 +170,7 @@ border:1px solid rgba(255,255,255,.1);
 }
 
 </style>
+
 </head>
 
 <body>
@@ -189,16 +200,17 @@ border:1px solid rgba(255,255,255,.1);
 <option value="Nasal discharge">הפרשות מהאף</option>
 <option value="Eye discharge">הפרשות מהעיניים</option>
 <option value="Excessive itching">גירודים</option>
-<option value="Abnormal hair loss">נשירת שיער</option>
+<option value="Abnormal hair loss">נשירת שיער חריגה</option>
 <option value="Skin sores">פצעים בעור</option>
-<option value="Swelling">נפיחות</option>
+<option value="Swelling">נפיחות בגוף</option>
 <option value="Limping">צליעה</option>
+<option value="Not using litter box">חוסר שימוש בארגז חול</option>
 <option value="Blood in urine">דם בשתן</option>
 <option value="Behavioral changes">שינויים בהתנהגות</option>
-<option value="Sudden aggression">אגרסיביות</option>
+<option value="Sudden aggression">אגרסיביות פתאומית</option>
 <option value="Trembling">רעידות</option>
 <option value="Seizures">פרכוסים</option>
-<option value="Possible poisoning">הרעלה</option>
+<option value="Possible poisoning">הרעלה אפשרית</option>
 <option value="Swallowed foreign object">בליעת חפץ זר</option>
 <option value="High fever">חום גבוה</option>
 <option value="Loss of consciousness">אובדן הכרה</option>
@@ -208,9 +220,7 @@ border:1px solid rgba(255,255,255,.1);
 <button onclick="executeAnalysis()">נתח מקרה</button>
 
 <div class="result-scroll-wrapper">
-<div id="resultContainer">
-האבחנה תופיע כאן...
-</div>
+<div id="resultContainer">האבחנה תופיע כאן...</div>
 </div>
 
 <div class="card-footer">
@@ -236,13 +246,14 @@ const images=[
 
 "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba",
 "https://images.unsplash.com/photo-1573865526739-10659fec78a5",
+"https://images.unsplash.com/photo-1518791841217-8f162f1e1131",
 "https://images.unsplash.com/photo-1495360010541-f48722b34f7d",
 "https://images.unsplash.com/photo-1511044568932-338cba0ad803",
 "https://images.unsplash.com/photo-1533738363-b7f9aef128ce",
 "https://images.unsplash.com/photo-1548247416-ec66f4900b2e",
 "https://images.unsplash.com/photo-1513245543132-31f507417b26",
-"https://images.unsplash.com/photo-1518791841217-8f162f1e1131",
-"https://images.unsplash.com/photo-1519052537078-e6302a4968d4"
+"https://images.unsplash.com/photo-1519052537078-e6302a4968d4",
+"https://images.unsplash.com/photo-1518791841217-8f162f1e1131"
 
 ];
 
@@ -285,8 +296,7 @@ activeLayer=1;
 
 setInterval(nextBackground,10000);
 
-
-/* ANALYSIS */
+/* AI ANALYSIS */
 
 async function executeAnalysis(){
 
@@ -311,14 +321,12 @@ body:JSON.stringify({
 
 text:`אתה וטרינר מומחה לחתולים בלבד.
 
-הסימפטום שנבחר הוא:
+נתח את הסימפטום:
 ${select.value}
 
-חשוב מאוד:
-אל תשנה את הסימפטום
-אל תמציא סימפטומים אחרים
+אל תתייחס לכלבים.
 
-ענה בעברית בפורמט:
+ענה בפורמט:
 
 סימפטום:
 גורמים אפשריים:
