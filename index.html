@@ -1,7 +1,6 @@
 ```html
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-
 <head>
 
 <meta charset="UTF-8">
@@ -62,7 +61,7 @@ transform:translateY(-50%);
 z-index:2;
 
 width:420px;
-max-width:90%;
+max-width:92%;
 height:94vh;
 
 display:flex;
@@ -71,7 +70,7 @@ flex-direction:column;
 background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.03));
 backdrop-filter:blur(40px) saturate(150%);
 border-radius:28px;
-padding:25px;
+padding:24px;
 border:1px solid rgba(255,255,255,.2);
 box-shadow:0 40px 100px rgba(0,0,0,.6);
 }
@@ -84,20 +83,16 @@ right:auto;
 top:auto;
 transform:none;
 margin:15px auto;
-width:92%;
 height:90vh;
 }
 
 }
 
-/* HEADER */
-
 h1{
 text-align:center;
 font-size:22px;
-margin-bottom:15px;
+margin-bottom:14px;
 color:var(--turquoise);
-text-shadow:0 2px 10px rgba(34,211,238,.3);
 }
 
 select{
@@ -109,7 +104,6 @@ margin-bottom:12px;
 background:#0f172a;
 color:#fff;
 font-size:14px;
-outline:none;
 }
 
 button{
@@ -122,25 +116,7 @@ font-weight:700;
 cursor:pointer;
 color:#06131c;
 font-size:16px;
-transition:.2s;
 }
-
-button:hover{filter:brightness(1.1);}
-
-/* URGENCY */
-
-#urgencyBar{
-display:none;
-padding:10px;
-border-radius:12px;
-font-weight:700;
-text-align:center;
-margin-top:10px;
-}
-
-.urgency-low{background:var(--green);}
-.urgency-medium{background:var(--yellow);color:#333;}
-.urgency-high{background:var(--red);}
 
 /* RESULT */
 
@@ -168,14 +144,29 @@ direction:rtl;
 text-align:right;
 }
 
+/* URGENCY BAR */
+
+#urgencyBar{
+display:none;
+padding:10px;
+border-radius:12px;
+font-weight:700;
+text-align:center;
+margin-top:10px;
+}
+
+.urgency-low{background:var(--green);}
+.urgency-medium{background:var(--yellow);color:#333;}
+.urgency-high{background:var(--red);}
+
 /* DISCLAIMER */
 
 .disclaimer{
 margin-top:10px;
 padding:10px;
-border-radius:14px;
 background:rgba(251,191,36,.1);
-border:1px solid rgba(251,191,36,.2);
+border:1px solid rgba(251,191,36,.3);
+border-radius:12px;
 font-size:11px;
 color:#fde68a;
 text-align:center;
@@ -266,7 +257,7 @@ border-color:var(--turquoise);
 </div>
 
 <div class="disclaimer">
-⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי. במקרה חירום פנה לוטרינר.
+⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי מקצועי.
 </div>
 
 <div class="links-grid">
@@ -282,45 +273,49 @@ border-color:var(--turquoise);
 
 <script>
 
-/* CAT IMAGES */
+/* CAT BACKGROUNDS */
 
 const images=[
 
-"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1548247416-ec66f4900b2e?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1920&auto=format&fit=crop"
+"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1920",
+"https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920",
+"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920",
+"https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920",
+"https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1920",
+"https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1920",
+"https://images.unsplash.com/photo-1548247416-ec66f4900b2e?q=80&w=1920",
+"https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1920"
 
 ];
 
-let currentIndex=0;
+let index=Math.floor(Math.random()*images.length);
 let activeLayer=1;
 
 const bg1=document.getElementById("bg1");
 const bg2=document.getElementById("bg2");
 
-bg1.style.backgroundImage=`url(${images[0]})`;
+bg1.style.backgroundImage=`url(${images[index]})`;
+bg1.style.opacity=1;
 
 function nextBackground(){
 
-currentIndex++;
+let next;
+do{
+next=Math.floor(Math.random()*images.length);
+}while(next===index);
 
-if(currentIndex>=images.length) currentIndex=0;
+index=next;
 
 if(activeLayer===1){
 
-bg2.style.backgroundImage=`url(${images[currentIndex]})`;
+bg2.style.backgroundImage=`url(${images[index]})`;
 bg2.style.opacity=1;
 bg1.style.opacity=0;
 activeLayer=2;
 
 }else{
 
-bg1.style.backgroundImage=`url(${images[currentIndex]})`;
+bg1.style.backgroundImage=`url(${images[index]})`;
 bg1.style.opacity=1;
 bg2.style.opacity=0;
 activeLayer=1;
@@ -343,23 +338,23 @@ body:JSON.stringify({text:"ping"})
 
 });
 
-/* AI */
+/* AI ANALYSIS */
 
 async function executeAnalysis(){
 
 const result=document.getElementById("resultContainer");
-const urgencyBar=document.getElementById("urgencyBar");
+const urgency=document.getElementById("urgencyBar");
 
 const symptom=document.getElementById("mainSymptom").value;
 
 if(!symptom){
 
-result.innerHTML="⚠ אנא בחר בעיה מהרשימה.";
+result.innerHTML="⚠ בחר סימפטום מהרשימה";
 return;
 
 }
 
-result.innerHTML="🔍 מתחבר למוח החתולי...";
+result.innerHTML="🔍 מנתח סימפטום חתולי...";
 
 try{
 
@@ -374,7 +369,7 @@ text:`אתה וטרינר מומחה לחתולים בלבד.
 סימפטום:
 ${symptom}
 
-ענה בפורמט:
+ענה בעברית בפורמט:
 
 רמת דחיפות:
 גורמים אפשריים:
@@ -384,31 +379,28 @@ ${symptom}
 );
 
 const data=await response.json();
-
 const text=data.result;
 
 result.innerHTML=marked.parse(text);
 
-/* URGENCY COLOR */
-
 if(text.includes("גבוה")){
 
-urgencyBar.className="urgency-high";
-urgencyBar.innerHTML="🚨 מצב חירום — פנה לוטרינר מיד";
+urgency.className="urgency-high";
+urgency.innerHTML="🚨 מצב חירום — פנה לוטרינר מיד";
 
 }else if(text.includes("בינונ")){
 
-urgencyBar.className="urgency-medium";
-urgencyBar.innerHTML="⚠ מומלץ להתייעץ עם וטרינר";
+urgency.className="urgency-medium";
+urgency.innerHTML="⚠ מומלץ להתייעץ עם וטרינר";
 
 }else{
 
-urgencyBar.className="urgency-low";
-urgencyBar.innerHTML="✔ כנראה לא מצב דחוף";
+urgency.className="urgency-low";
+urgency.innerHTML="✔ כנראה לא מצב דחוף";
 
 }
 
-urgencyBar.style.display="block";
+urgency.style.display="block";
 
 }catch{
 
