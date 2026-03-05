@@ -1,68 +1,207 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CatMind AI</title>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<style>
-:root{--turquoise:#22d3ee;--green:#22c55e;--yellow:#facc15;--red:#ef4444;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{min-height:100vh;font-family:'Segoe UI',Tahoma,Verdana,sans-serif;color:#fff;background:#020617;overflow:hidden;}
-.bg-layer{position:fixed;inset:0;background-size:cover;background-position:center 20%;background-repeat:no-repeat;transition:opacity 1.8s ease;filter:brightness(.55) contrast(1.1);z-index:0;}
-#bg2{opacity:0;}
-.overlay{position:fixed;inset:0;background:linear-gradient(to right,rgba(0,0,0,.85),rgba(0,0,0,.4),rgba(0,0,0,.1));z-index:1;}
-.card{
-  position:absolute;right:50px;top:50%;transform:translateY(-50%);
-  z-index:2;width:440px;max-width:93%;height:94vh;
-  display:flex;flex-direction:column;gap:8px;
-  background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.03));
-  backdrop-filter:blur(40px) saturate(150%);border-radius:28px;padding:20px;
-  border:1px solid rgba(255,255,255,.2);box-shadow:0 40px 100px rgba(0,0,0,.6);overflow:hidden;
-}
-@media(max-width:768px){
-  .card{position:relative;right:auto;top:auto;transform:none;margin:12px auto;height:92vh;}
-  body{overflow-y:auto;}
-}
-h1{text-align:center;font-size:21px;color:var(--turquoise);letter-spacing:.5px;}
-.symptoms-label{font-size:12px;color:rgba(255,255,255,.5);text-align:center;}
-.symptoms-grid{display:flex;flex-wrap:wrap;gap:6px;overflow-y:auto;max-height:165px;padding:4px 2px;}
-.symptoms-grid::-webkit-scrollbar{width:3px;}
-.symptoms-grid::-webkit-scrollbar-thumb{background:var(--turquoise);border-radius:10px;}
-.tag{padding:5px 11px;border-radius:20px;font-size:12.5px;cursor:pointer;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#cbd5e1;transition:.2s;user-select:none;}
-.tag:hover{background:rgba(34,211,238,.15);border-color:var(--turquoise);color:#fff;}
-.tag.selected{background:rgba(34,211,238,.25);border-color:var(--turquoise);color:var(--turquoise);font-weight:700;}
-.selected-summary{font-size:12px;color:rgba(255,255,255,.45);text-align:center;min-height:16px;}
-#followUp{display:none;gap:6px;flex-direction:column;}
-.fq-label{font-size:11.5px;color:rgba(255,255,255,.4);}
-.fq-row{display:flex;gap:6px;flex-wrap:wrap;}
-.fq-btn{padding:5px 12px;border-radius:16px;font-size:12px;cursor:pointer;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#cbd5e1;transition:.2s;user-select:none;}
-.fq-btn:hover{background:rgba(250,204,21,.15);border-color:var(--yellow);color:#fff;}
-.fq-btn.selected{background:rgba(250,204,21,.25);border-color:var(--yellow);color:var(--yellow);font-weight:700;}
-button#analyzeBtn{padding:13px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--turquoise),#0ea5e9);font-weight:700;cursor:pointer;color:#06131c;font-size:15px;transition:.2s;flex-shrink:0;}
-button#analyzeBtn:hover{opacity:.9;transform:translateY(-1px);}
-button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-#urgencyBar{display:none;padding:9px 12px;border-radius:12px;font-weight:700;text-align:center;font-size:14px;flex-shrink:0;}
-.urgency-low{background:linear-gradient(135deg,#16a34a,var(--green));}
-.urgency-medium{background:linear-gradient(135deg,#ca8a04,var(--yellow));color:#1a1000;}
-.urgency-high{background:linear-gradient(135deg,#b91c1c,var(--red));}
-.urgency-critical{background:linear-gradient(135deg,#7c3aed,#ef4444);animation:pulse 1s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.75}}
-.result-scroll-wrapper{flex:1;overflow-y:auto;min-height:0;background:rgba(0,0,0,.2);border-radius:18px;border:1px solid rgba(34,211,238,.1);}
-.result-scroll-wrapper::-webkit-scrollbar{width:4px;}
-.result-scroll-wrapper::-webkit-scrollbar-thumb{background:var(--turquoise);border-radius:10px;}
-#resultContainer{padding:16px;font-size:14px;line-height:1.75;color:#e2e8f0;direction:rtl;text-align:right;}
-#resultContainer h2,#resultContainer h3{color:var(--turquoise);margin:10px 0 4px;}
-#resultContainer strong{color:#fff;}
-#resultContainer ul{padding-right:18px;}
-#resultContainer li{margin-bottom:4px;}
-.cursor::after{content:'▌';animation:blink .7s infinite;color:var(--turquoise);}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.disclaimer{padding:8px 10px;flex-shrink:0;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);border-radius:10px;font-size:11px;color:#fde68a;text-align:center;}
-.links-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex-shrink:0;}
-.link-btn{display:block;text-align:center;padding:7px 6px;border-radius:10px;background:rgba(255,255,255,.06);color:#fff;text-decoration:none;font-size:11px;border:1px solid rgba(255,255,255,.1);transition:.25s;}
-.link-btn:hover{background:rgba(34,211,238,.15);border-color:var(--turquoise);}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CatMind AI</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --turquoise: #22d3ee;
+            --green: #22c55e;
+            --yellow: #facc15;
+            --red: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+            color: #fff;
+            background: #020617;
+            /* שינוי קריטי: מאפשר גלילה כללית אם התוכן ארוך מהמסך */
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            background-size: cover;
+            background-position: center 20%;
+            background-repeat: no-repeat;
+            transition: opacity 1.8s ease;
+            filter: brightness(.55) contrast(1.1);
+            z-index: 0;
+        }
+
+        #bg2 { opacity: 0; }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, .85), rgba(0, 0, 0, .4), rgba(0, 0, 0, .1));
+            z-index: 1;
+        }
+
+        /* עיצוב הכרטיס המרכזי - תיקון רזולוציה */
+        .card {
+            position: absolute;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            width: 440px;
+            max-width: 95%;
+            /* הגבלה חכמה של גובה למניעת חיתוך */
+            max-height: 95vh;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .03));
+            backdrop-filter: blur(40px) saturate(150%);
+            border-radius: 28px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, .6);
+            /* הוספת גלילה פנימית אם התוכן חורג מהגובה המקסימלי */
+            overflow-y: auto;
+        }
+
+        /* עיצוב פס גלילה פנימי לכרטיס */
+        .card::-webkit-scrollbar { width: 5px; }
+        .card::-webkit-scrollbar-thumb { background: var(--turquoise); border-radius: 10px; }
+
+        @media (max-width: 768px) {
+            .card {
+                position: relative;
+                right: auto;
+                top: 20px;
+                transform: none;
+                margin: 0 auto 30px auto;
+                max-height: none; /* במובייל ניתן לכרטיס להיפרס לאורך */
+                padding: 15px;
+            }
+        }
+
+        h1 { text-align: center; font-size: 21px; color: var(--turquoise); letter-spacing: .5px; }
+
+        .symptoms-label { font-size: 12px; color: rgba(255, 255, 255, .5); text-align: center; }
+
+        .symptoms-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            overflow-y: auto;
+            max-height: 150px; /* צמצום קל כדי להשאיר מקום לתוצאה */
+            padding: 4px 2px;
+        }
+
+        .symptoms-grid::-webkit-scrollbar { width: 3px; }
+        .symptoms-grid::-webkit-scrollbar-thumb { background: var(--turquoise); border-radius: 10px; }
+
+        .tag {
+            padding: 5px 11px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, .18);
+            background: rgba(255, 255, 255, .06);
+            color: #cbd5e1;
+            transition: .2s;
+            user-select: none;
+        }
+
+        .tag:hover { background: rgba(34, 211, 238, .15); border-color: var(--turquoise); color: #fff; }
+        .tag.selected { background: rgba(34, 211, 238, .25); border-color: var(--turquoise); color: var(--turquoise); font-weight: 700; }
+
+        .selected-summary { font-size: 11px; color: rgba(255, 255, 255, .45); text-align: center; min-height: 16px; }
+
+        #followUp { display: none; gap: 6px; flex-direction: column; }
+
+        .fq-label { font-size: 11.5px; color: rgba(255, 255, 255, .4); }
+
+        .fq-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+        .fq-btn {
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, .18);
+            background: rgba(255, 255, 255, .06);
+            color: #cbd5e1;
+            transition: .2s;
+            user-select: none;
+        }
+
+        .fq-btn:hover { background: rgba(250, 204, 21, .15); border-color: var(--yellow); color: #fff; }
+        .fq-btn.selected { background: rgba(250, 204, 21, .25); border-color: var(--yellow); color: var(--yellow); font-weight: 700; }
+
+        button#analyzeBtn {
+            padding: 13px;
+            border-radius: 14px;
+            border: none;
+            background: linear-gradient(135deg, var(--turquoise), #0ea5e9);
+            font-weight: 700;
+            cursor: pointer;
+            color: #06131c;
+            font-size: 15px;
+            transition: .2s;
+            flex-shrink: 0;
+        }
+
+        button#analyzeBtn:hover { opacity: .9; transform: translateY(-1px); }
+        button#analyzeBtn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+        #urgencyBar { display: none; padding: 9px 12px; border-radius: 12px; font-weight: 700; text-align: center; font-size: 14px; flex-shrink: 0; }
+        .urgency-low { background: linear-gradient(135deg, #16a34a, var(--green)); }
+        .urgency-medium { background: linear-gradient(135deg, #ca8a04, var(--yellow)); color: #1a1000; }
+        .urgency-high { background: linear-gradient(135deg, #b91c1c, var(--red)); }
+        .urgency-critical { background: linear-gradient(135deg, #7c3aed, #ef4444); animation: pulse 1s infinite; }
+
+        @keyframes pulse { 0%, 100% { opacity: 1 } 50% { opacity: .75 } }
+
+        .result-scroll-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 100px;
+            background: rgba(0, 0, 0, .2);
+            border-radius: 18px;
+            border: 1px solid rgba(34, 211, 238, .1);
+        }
+
+        #resultContainer { padding: 16px; font-size: 14px; line-height: 1.75; color: #e2e8f0; direction: rtl; text-align: right; }
+        #resultContainer h2, #resultContainer h3 { color: var(--turquoise); margin: 10px 0 4px; }
+        #resultContainer ul { padding-right: 18px; }
+
+        .cursor::after { content: '▌'; animation: blink .7s infinite; color: var(--turquoise); }
+        @keyframes blink { 0%, 100% { opacity: 1 } 50% { opacity: 0 } }
+
+        .disclaimer { padding: 8px 10px; flex-shrink: 0; background: rgba(251, 191, 36, .08); border: 1px solid rgba(251, 191, 36, .25); border-radius: 10px; font-size: 10.5px; color: #fde68a; text-align: center; }
+
+        .links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; flex-shrink: 0; }
+
+        .link-btn {
+            display: block;
+            text-align: center;
+            padding: 7px 6px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .06);
+            color: #fff;
+            text-decoration: none;
+            font-size: 11px;
+            border: 1px solid rgba(255, 255, 255, .1);
+            transition: .25s;
+        }
+
+        .link-btn:hover { background: rgba(34, 211, 238, .15); border-color: var(--turquoise); }
+    </style>
 </head>
 <body>
 
@@ -71,198 +210,195 @@ button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 <div class="overlay"></div>
 
 <div class="card">
-  <h1>🐱 CatMind AI</h1>
-  <div class="symptoms-label">בחר סימפטום אחד או יותר</div>
-  <div class="symptoms-grid" id="symptomsGrid"></div>
-  <div class="selected-summary" id="selectedSummary">לא נבחרו סימפטומים</div>
+    <h1>🐱 CatMind AI</h1>
+    <div class="symptoms-label">בחר סימפטום אחד או יותר</div>
+    <div class="symptoms-grid" id="symptomsGrid"></div>
+    <div class="selected-summary" id="selectedSummary">לא נבחרו סימפטומים</div>
 
-  <div id="followUp">
-    <div class="fq-label">גיל החתול:</div>
-    <div class="fq-row">
-      <div class="fq-btn" data-group="age" onclick="toggleFQ(this)">גור (עד שנה)</div>
-      <div class="fq-btn" data-group="age" onclick="toggleFQ(this)">בוגר (1–10)</div>
-      <div class="fq-btn" data-group="age" onclick="toggleFQ(this)">קשיש (10+)</div>
+    <div id="followUp">
+        <div class="fq-label">גיל החתול:</div>
+        <div class="fq-row">
+            <div class="fq-btn" data-group="age" onclick="toggleFQ(this)">גור (עד שנה)</div>
+            <div class="fq-btn" data-group="age" onclick="toggleFQ(this)">בוגר (1–10)</div>
+            <div class="fq-btn" data-group="age" onclick="toggleFQ(this)">קשיש (10+)</div>
+        </div>
+        <div class="fq-label">סוג חיים:</div>
+        <div class="fq-row">
+            <div class="fq-btn" data-group="life" onclick="toggleFQ(this)">חתול בית</div>
+            <div class="fq-btn" data-group="life" onclick="toggleFQ(this)">חתול חוץ</div>
+            <div class="fq-btn" data-group="life" onclick="toggleFQ(this)">בית + חוץ</div>
+        </div>
+        <div class="fq-label">משך הסימפטום:</div>
+        <div class="fq-row">
+            <div class="fq-btn" data-group="duration" onclick="toggleFQ(this)">היום בלבד</div>
+            <div class="fq-btn" data-group="duration" onclick="toggleFQ(this)">2–3 ימים</div>
+            <div class="fq-btn" data-group="duration" onclick="toggleFQ(this)">שבוע ומעלה</div>
+        </div>
     </div>
-    <div class="fq-label">סוג חיים:</div>
-    <div class="fq-row">
-      <div class="fq-btn" data-group="life" onclick="toggleFQ(this)">חתול בית</div>
-      <div class="fq-btn" data-group="life" onclick="toggleFQ(this)">חתול חוץ</div>
-      <div class="fq-btn" data-group="life" onclick="toggleFQ(this)">בית + חוץ</div>
+
+    <button id="analyzeBtn" onclick="executeAnalysis()">🔍 נתח מקרה</button>
+    <div id="urgencyBar"></div>
+
+    <div class="result-scroll-wrapper">
+        <div id="resultContainer">האבחנה תופיע כאן...</div>
     </div>
-    <div class="fq-label">משך הסימפטום:</div>
-    <div class="fq-row">
-      <div class="fq-btn" data-group="duration" onclick="toggleFQ(this)">היום בלבד</div>
-      <div class="fq-btn" data-group="duration" onclick="toggleFQ(this)">2–3 ימים</div>
-      <div class="fq-btn" data-group="duration" onclick="toggleFQ(this)">שבוע ומעלה</div>
+
+    <div class="disclaimer">⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי מקצועי.</div>
+
+    <div class="links-grid">
+        <a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">🩺 ד"ר טלי שטיין</a>
+        <a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">🩺 ד"ר תמר פלידל</a>
+        <a class="link-btn" href="https://icatcare.org/" target="_blank">🌍 International Cat Care</a>
+        <a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">🐱 Browse All Breeds</a>
     </div>
-  </div>
-
-  <button id="analyzeBtn" onclick="executeAnalysis()">🔍 נתח מקרה</button>
-  <div id="urgencyBar"></div>
-
-  <div class="result-scroll-wrapper">
-    <div id="resultContainer">האבחנה תופיע כאן...</div>
-  </div>
-
-  <div class="disclaimer">⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי מקצועי.</div>
-
-  <div class="links-grid">
-    <a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">🩺 ד"ר טלי שטיין</a>
-    <a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">🩺 ד"ר תמר פלידל</a>
-    <a class="link-btn" href="https://icatcare.org/" target="_blank">🌍 International Cat Care</a>
-    <a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">🐱 Browse All Breeds</a>
-  </div>
 </div>
 
 <script>
-const SYMPTOMS = [
-  "הקאות","שלשול","עצירות","חוסר תיאבון","ירידה במשקל",
-  "עלייה חריגה במשקל","עייפות קיצונית","קושי בנשימה","שיעול",
-  "התעטשויות תכופות","הפרשות מהאף","הפרשות מהעיניים",
-  "גירודים מרובים","נשירת שיער חריגה","פצעים בעור","נפיחות בגוף",
-  "צליעה","חוסר שימוש בארגז חול","דם בשתן","שינויים בהתנהגות",
-  "אגרסיביות פתאומית","רעידות","פרכוסים","הרעלה אפשרית",
-  "בליעת חפץ זר","חום גבוה","אובדן הכרה","שתייה מוגברת",
-  "השתנה מוגברת","כאב בעת מגע","נשימה פה פתוח","בטן נפוחה",
-  "ריח רע מהפה","חוסר שיווי משקל"
-];
+    const SYMPTOMS = [
+        "הקאות", "שלשול", "עצירות", "חוסר תיאבון", "ירידה במשקל",
+        "עלייה חריגה במשקל", "עייפות קיצונית", "קושי בנשימה", "שיעול",
+        "התעטשויות תכופות", "הפרשות מהאף", "הפרשות מהעיניים",
+        "גירודים מרובים", "נשירת שיער חריגה", "פצעים בעור", "נפיחות בגוף",
+        "צליעה", "חוסר שימוש בארגז חול", "דם בשתן", "שינויים בהתנהגות",
+        "אגרסיביות פתאומית", "רעידות", "פרכוסים", "הרעלה אפשרית",
+        "בליעת חפץ זר", "חום גבוה", "אובדן הכרה", "שתייה מוגברת",
+        "השתנה מוגברת", "כאב בעת מגע", "נשימה פה פתוח", "בטן נפוחה",
+        "ריח רע מהפה", "חוסר שיווי משקל"
+    ];
 
-const selected = new Set();
-const grid = document.getElementById('symptomsGrid');
-SYMPTOMS.forEach(s => {
-  const t = document.createElement('div');
-  t.className = 'tag'; t.textContent = s;
-  t.onclick = () => {
-    if (selected.has(s)) { selected.delete(s); t.classList.remove('selected'); }
-    else                 { selected.add(s);    t.classList.add('selected'); }
-    updateSummary();
-  };
-  grid.appendChild(t);
-});
+    const selected = new Set();
+    const grid = document.getElementById('symptomsGrid');
+    SYMPTOMS.forEach(s => {
+        const t = document.createElement('div');
+        t.className = 'tag'; t.textContent = s;
+        t.onclick = () => {
+            if (selected.has(s)) { selected.delete(s); t.classList.remove('selected'); }
+            else { selected.add(s); t.classList.add('selected'); }
+            updateSummary();
+        };
+        grid.appendChild(t);
+    });
 
-function updateSummary() {
-  const sum = document.getElementById('selectedSummary');
-  const fu  = document.getElementById('followUp');
-  if (selected.size === 0) { sum.textContent='לא נבחרו סימפטומים'; fu.style.display='none'; }
-  else { sum.textContent=`✔ נבחרו: ${[...selected].join(' · ')}`; fu.style.display='flex'; }
-}
+    function updateSummary() {
+        const sum = document.getElementById('selectedSummary');
+        const fu = document.getElementById('followUp');
+        if (selected.size === 0) { sum.textContent = 'לא נבחרו סימפטומים'; fu.style.display = 'none'; }
+        else { sum.textContent = `✔ נבחרו: ${[...selected].join(' · ')}`; fu.style.display = 'flex'; }
+    }
 
-function toggleFQ(el) {
-  document.querySelectorAll(`.fq-btn[data-group="${el.dataset.group}"]`).forEach(b=>b.classList.remove('selected'));
-  el.classList.add('selected');
-}
-function getFQ(g) {
-  const el = document.querySelector(`.fq-btn[data-group="${g}"].selected`);
-  return el ? el.textContent : 'לא צוין';
-}
+    function toggleFQ(el) {
+        document.querySelectorAll(`.fq-btn[data-group="${el.dataset.group}"]`).forEach(b => b.classList.remove('selected'));
+        el.classList.add('selected');
+    }
 
-/* BACKGROUNDS */
-const images = [
-  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1920",
-  "https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920",
-  "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920",
-  "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920",
-  "https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1920",
-  "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1920",
-  "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?q=80&w=1920",
-  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1920",
-  "https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?q=80&w=1920",
-  "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1920",
-  "https://images.unsplash.com/photo-1574158622682-e40e69881006?q=80&w=1920",
-  "https://images.unsplash.com/photo-1561948955-570b270e7c36?q=80&w=1920",
-  "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?q=80&w=1920",
-  "https://images.unsplash.com/photo-1583795128727-6ec3642408f8?q=80&w=1920",
-  "https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?q=80&w=1920",
-  "https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=1920",
-  "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=1920",
-  "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?q=80&w=1920",
-];
-let bgIdx=Math.floor(Math.random()*images.length), activeLayer=1;
-const bg1=document.getElementById('bg1'), bg2=document.getElementById('bg2');
-bg1.style.backgroundImage=`url(${images[bgIdx]})`; bg1.style.opacity=1;
-function nextBg(){
-  let n; do{n=Math.floor(Math.random()*images.length);}while(n===bgIdx); bgIdx=n;
-  if(activeLayer===1){bg2.style.backgroundImage=`url(${images[bgIdx]})`;bg2.style.opacity=1;bg1.style.opacity=0;activeLayer=2;}
-  else{bg1.style.backgroundImage=`url(${images[bgIdx]})`;bg1.style.opacity=1;bg2.style.opacity=0;activeLayer=1;}
-}
-setInterval(nextBg,10000);
+    function getFQ(g) {
+        const el = document.querySelector(`.fq-btn[data-group="${g}"].selected`);
+        return el ? el.textContent : 'לא צוין';
+    }
 
-/* WAKE */
-window.addEventListener('DOMContentLoaded',()=>{
-  fetch("https://catmind-ai-server.onrender.com/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:"ping"})}).catch(()=>{});
-});
+    /* BACKGROUNDS */
+    const images = [
+        "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1920",
+        "https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920",
+        "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920",
+        "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920",
+        "https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1920",
+        "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1920",
+        "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?q=80&w=1920",
+        "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1920",
+        "https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?q=80&w=1920",
+        "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1920",
+        "https://images.unsplash.com/photo-1574158622682-e40e69881006?q=80&w=1920",
+        "https://images.unsplash.com/photo-1561948955-570b270e7c36?q=80&w=1920",
+        "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?q=80&w=1920",
+        "https://images.unsplash.com/photo-1583795128727-6ec3642408f8?q=80&w=1920",
+        "https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?q=80&w=1920",
+        "https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=1920",
+        "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=1920",
+        "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?q=80&w=1920",
+    ];
+    let bgIdx = Math.floor(Math.random() * images.length), activeLayer = 1;
+    const bg1 = document.getElementById('bg1'), bg2 = document.getElementById('bg2');
+    bg1.style.backgroundImage = `url(${images[bgIdx]})`; bg1.style.opacity = 1;
 
-/* URGENCY */
-function setUrgency(level){
-  const bar=document.getElementById('urgencyBar');
-  bar.style.display='block';
-  const map={
-    1:{cls:'urgency-low',text:'✅ לא דחוף — מעקב ביתי מספיק'},
-    2:{cls:'urgency-medium',text:'⚠️ מומלץ לפנות לווטרינר תוך יום-יומיים'},
-    3:{cls:'urgency-high',text:'🚨 פנה לווטרינר היום!'},
-    4:{cls:'urgency-critical',text:'🆘 חירום — פנה לווטרינר מיד!'},
-  };
-  const m=map[level]||map[2];
-  bar.className=m.cls; bar.innerHTML=m.text;
-}
+    function nextBg() {
+        let n; do { n = Math.floor(Math.random() * images.length); } while (n === bgIdx); bgIdx = n;
+        if (activeLayer === 1) { bg2.style.backgroundImage = `url(${images[bgIdx]})`; bg2.style.opacity = 1; bg1.style.opacity = 0; activeLayer = 2; }
+        else { bg1.style.backgroundImage = `url(${images[bgIdx]})`; bg1.style.opacity = 1; bg2.style.opacity = 0; activeLayer = 1; }
+    }
+    setInterval(nextBg, 10000);
 
-/* ANALYSIS */
-async function executeAnalysis(){
-  const resultEl=document.getElementById('resultContainer');
-  const btn=document.getElementById('analyzeBtn');
-  const urgencyEl=document.getElementById('urgencyBar');
-  if(selected.size===0){resultEl.innerHTML='⚠ בחר לפחות סימפטום אחד';return;}
+    /* WAKE SERVER */
+    window.addEventListener('DOMContentLoaded', () => {
+        fetch("https://catmind-ai-server.onrender.com/generate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: "ping" }) }).catch(() => { });
+    });
 
-  btn.disabled=true; btn.textContent='⏳ מנתח...';
-  urgencyEl.style.display='none';
-  resultEl.innerHTML=''; resultEl.classList.add('cursor');
+    /* URGENCY BAR */
+    function setUrgency(level) {
+        const bar = document.getElementById('urgencyBar');
+        bar.style.display = 'block';
+        const map = {
+            1: { cls: 'urgency-low', text: '✅ לא דחוף — מעקב ביתי מספיק' },
+            2: { cls: 'urgency-medium', text: '⚠️ מומלץ לפנות לווטרינר תוך יום-יומיים' },
+            3: { cls: 'urgency-high', text: '🚨 פנה לווטרינר היום!' },
+            4: { cls: 'urgency-critical', text: '🆘 חירום — פנה לווטרינר מיד!' },
+        };
+        const m = map[level] || map[2];
+        bar.className = m.cls; bar.innerHTML = m.text;
+    }
 
-  const prompt=`אתה וטרינר מומחה לחתולים בלבד. ענה תמיד בעברית בלבד.
+    /* ANALYSIS EXECUTION */
+    async function executeAnalysis() {
+        const resultEl = document.getElementById('resultContainer');
+        const btn = document.getElementById('analyzeBtn');
+        const urgencyEl = document.getElementById('urgencyBar');
+        if (selected.size === 0) { resultEl.innerHTML = '⚠ בחר לפחות סימפטום אחד'; return; }
 
+        btn.disabled = true; btn.textContent = '⏳ מנתח...';
+        urgencyEl.style.display = 'none';
+        resultEl.innerHTML = ''; resultEl.classList.add('cursor');
+
+        const prompt = `אתה וטרינר מומחה לחתולים בלבד. ענה תמיד בעברית בלבד.
 סימפטומים: ${[...selected].join(', ')}
 גיל: ${getFQ('age')}
 סוג חיים: ${getFQ('life')}
 משך: ${getFQ('duration')}
 
 ענה בפורמט markdown מדויק:
-
 ## רמת דחיפות
 [רק מספר: 1=לא דחוף / 2=בינוני / 3=דחוף / 4=חירום]
-
 ## גורמים אפשריים
-רשימה של הגורמים הסבירים ביותר, מהנפוץ לנדיר.
-
+רשימה של הגורמים הסבירים ביותר...
 ## מה לעשות כעת
-צעדים מעשיים ברורים שהבעלים יכול לעשות.
-
+צעדים מעשיים...
 ## סימנים מדאיגים
 אם תראה את אלה — פנה לווטרינר מיד.`;
 
-  try{
-    const response=await fetch("https://catmind-ai-server.onrender.com/generate",{
-      method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:prompt})
-    });
-    const data=await response.json();
-    finalize(data.result||data.text||'');
-  }catch(e){
-    resultEl.classList.remove('cursor');
-    resultEl.innerHTML='❌ השרת לא זמין כרגע. נסה שוב בעוד מספר שניות.';
-  }finally{
-    btn.disabled=false; btn.textContent='🔍 נתח מקרה';
-  }
-}
+        try {
+            const response = await fetch("https://catmind-ai-server.onrender.com/generate", {
+                method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: prompt })
+            });
+            const data = await response.json();
+            finalize(data.result || data.text || '');
+        } catch (e) {
+            resultEl.classList.remove('cursor');
+            resultEl.innerHTML = '❌ השרת לא זמין כרגע. נסה שוב בעוד מספר שניות.';
+        } finally {
+            btn.disabled = false; btn.textContent = '🔍 נתח מקרה';
+        }
+    }
 
-function finalize(raw){
-  document.getElementById('resultContainer').classList.remove('cursor');
-  const match=raw.match(/##\s*רמת דחיפות\s*\n+([1-4])/);
-  if(match) setUrgency(parseInt(match[1]));
-  else if(/חירום|מיד|מסכן חיים/i.test(raw)) setUrgency(4);
-  else if(/דחוף|היום|בהקדם/i.test(raw))      setUrgency(3);
-  else if(/בינוני|יום.יומיים/i.test(raw))     setUrgency(2);
-  else                                         setUrgency(1);
-  const clean=raw.replace(/##\s*רמת דחיפות[\s\S]*?(?=##|$)/m,'').trim();
-  document.getElementById('resultContainer').innerHTML=marked.parse(clean);
-}
+    function finalize(raw) {
+        document.getElementById('resultContainer').classList.remove('cursor');
+        const match = raw.match(/##\s*רמת דחיפות\s*\n+([1-4])/);
+        if (match) setUrgency(parseInt(match[1]));
+        else if (/חירום|מיד|מסכן חיים/i.test(raw)) setUrgency(4);
+        else if (/דחוף|היום|בהקדם/i.test(raw)) setUrgency(3);
+        else if (/בינוני|יום.יומיים/i.test(raw)) setUrgency(2);
+        else setUrgency(1);
+        const clean = raw.replace(/##\s*רמת דחיפות[\s\S]*?(?=##|$)/m, '').trim();
+        document.getElementById('resultContainer').innerHTML = marked.parse(clean);
+    }
 </script>
 </body>
 </html>
