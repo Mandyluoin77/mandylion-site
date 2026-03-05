@@ -8,183 +8,193 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <style>
-:root { --turquoise: #22d3ee; }
-* { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-height: 100vh;
-font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
-color: #fff;
-background: #020617;
-overflow: hidden;
+:root{ --turquoise:#22d3ee; }
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+height:100vh;
+font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
+color:#fff;
+background:#020617;
+overflow:hidden;
 }
 
-/* ===== רקע משתנה ===== */
+/* ===== רקע ===== */
 
-.bg-layer {
-position: fixed;
-inset: 0;
-background-size: cover;
-background-position: center 20%;
-background-repeat: no-repeat;
-transition: opacity 1.5s ease;
-filter: brightness(0.6) contrast(1.1);
-z-index: 0;
+.bg-layer{
+position:fixed;
+inset:0;
+background-size:cover;
+background-position:center 20%;
+background-repeat:no-repeat;
+transition:opacity 1.5s ease;
+filter:brightness(0.6) contrast(1.1);
+z-index:0;
 }
 
-#bg2 { opacity: 0; }
+#bg2{opacity:0;}
 
-.overlay {
-position: fixed;
-inset: 0;
-background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%);
-z-index: 1;
+.overlay{
+position:fixed;
+inset:0;
+background:linear-gradient(to right,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.4) 50%,rgba(0,0,0,0.1) 100%);
+z-index:1;
 }
 
 /* ===== Card ===== */
 
-.card {
-position: absolute;
-right: 50px;
-top: 50%;
-transform: translateY(-50%);
-z-index: 2;
+.card{
+position:absolute;
+right:50px;
+top:50%;
+transform:translateY(-50%);
+z-index:2;
 
-width: 420px;
-max-width: 90%;
-height: 94vh;
+width:420px;
+max-width:90%;
+height:94vh;
 
-display: flex;
-flex-direction: column;
+display:flex;
+flex-direction:column;
 
-background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+background:linear-gradient(145deg,rgba(255,255,255,0.12),rgba(255,255,255,0.03));
 
-backdrop-filter: blur(40px) saturate(150%);
--webkit-backdrop-filter: blur(40px) saturate(150%);
+backdrop-filter:blur(40px) saturate(150%);
+-webkit-backdrop-filter:blur(40px) saturate(150%);
 
-border-radius: 28px;
-padding: 25px;
+border-radius:28px;
+padding:25px;
 
-border: 1px solid rgba(255,255,255,0.2);
-box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.2);
+
+box-shadow:0 40px 100px rgba(0,0,0,0.6);
 }
 
-.card-header { flex-shrink: 0; margin-bottom: 10px; }
+.card-header{flex-shrink:0;margin-bottom:10px;}
 
-h1 {
-text-align: center;
-font-size: 22px;
-margin-bottom: 15px;
-color: var(--turquoise);
-text-shadow: 0 2px 10px rgba(34,211,238,0.3);
+h1{
+text-align:center;
+font-size:22px;
+margin-bottom:15px;
+color:var(--turquoise);
+text-shadow:0 2px 10px rgba(34,211,238,0.3);
 }
 
-select {
-width: 100%;
-padding: 12px;
-border-radius: 14px;
-border: 1px solid rgba(255,255,255,0.2);
-margin-bottom: 12px;
-background: #0f172a;
-color: #fff;
-font-size: 14px;
-outline: none;
+select{
+width:100%;
+padding:12px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,0.2);
+margin-bottom:12px;
+background:#0f172a;
+color:#fff;
+font-size:14px;
+outline:none;
 }
 
-button {
-width: 100%;
-padding: 14px;
-border-radius: 14px;
-border: none;
-background: var(--turquoise);
-font-weight: 700;
-cursor: pointer;
-color: #06131c;
-font-size: 16px;
-transition: 0.2s;
+button{
+width:100%;
+padding:14px;
+border-radius:14px;
+border:none;
+background:var(--turquoise);
+font-weight:700;
+cursor:pointer;
+color:#06131c;
+font-size:16px;
+transition:0.2s;
 }
 
-button:hover { filter: brightness(1.1); }
+button:hover{filter:brightness(1.1);}
 
-.result-scroll-wrapper {
-flex: 1;
-overflow-y: auto;
-margin-bottom: 15px;
-background: rgba(0, 0, 0, 0.2);
-border-radius: 18px;
-border: 1px solid rgba(34,211,238,0.1);
+.result-scroll-wrapper{
+flex:1;
+overflow-y:auto;
+margin-bottom:15px;
+background:rgba(0,0,0,0.2);
+border-radius:18px;
+border:1px solid rgba(34,211,238,0.1);
 }
 
-#resultContainer {
-padding: 18px;
-font-size: 14.5px;
-line-height: 1.7;
-color: #e2e8f0;
-direction: rtl;
-text-align: right;
+#resultContainer{
+padding:18px;
+font-size:14.5px;
+line-height:1.7;
+color:#e2e8f0;
+direction:rtl;
+text-align:right;
 }
 
-.card-footer {
-flex-shrink: 0;
-display: flex;
-flex-direction: column;
-gap: 10px;
-border-top: 1px solid rgba(255,255,255,0.1);
-padding-top: 15px;
+/* ===== צבעי דחיפות ===== */
+
+.urgency-high{
+color:#ef4444;
+font-weight:700;
 }
 
-.disclaimer {
-padding: 10px;
-border-radius: 14px;
-background: rgba(251,191,36,0.1);
-border: 1px solid rgba(251,191,36,0.2);
-font-size: 10.5px;
-color: #fde68a;
-text-align: center;
+.urgency-medium{
+color:#f59e0b;
+font-weight:700;
 }
 
-.section-title {
-color: var(--turquoise);
-font-size: 12px;
-margin-bottom: 4px;
-opacity: 0.9;
-font-weight: 600;
+.urgency-low{
+color:#22c55e;
+font-weight:700;
 }
 
-.links-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 8px;
+/* ===== Footer ===== */
+
+.card-footer{
+flex-shrink:0;
+display:flex;
+flex-direction:column;
+gap:10px;
+border-top:1px solid rgba(255,255,255,0.1);
+padding-top:15px;
 }
 
-.link-btn {
-display: block;
-text-align: center;
-padding: 8px;
-border-radius: 10px;
-background: rgba(255,255,255,0.07);
-color: #fff;
-text-decoration: none;
-font-size: 11.5px;
-border: 1px solid rgba(255,255,255,0.1);
-transition: 0.3s;
+.disclaimer{
+padding:10px;
+border-radius:14px;
+background:rgba(251,191,36,0.1);
+border:1px solid rgba(251,191,36,0.2);
+font-size:10.5px;
+color:#fde68a;
+text-align:center;
 }
 
-.link-btn:hover {
-background: rgba(255,255,255,0.15);
-border-color: var(--turquoise);
+.section-title{
+color:var(--turquoise);
+font-size:12px;
+margin-bottom:4px;
+opacity:0.9;
+font-weight:600;
 }
 
-@media (max-width: 768px) {
-.card {
-position: relative;
-right: auto;
-top: auto;
-transform: none;
-margin: 15px auto;
-width: 92%;
-height: 90vh;
+.links-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
 }
+
+.link-btn{
+display:block;
+text-align:center;
+padding:8px;
+border-radius:10px;
+background:rgba(255,255,255,0.07);
+color:#fff;
+text-decoration:none;
+font-size:11.5px;
+border:1px solid rgba(255,255,255,0.1);
+transition:0.3s;
+}
+
+.link-btn:hover{
+background:rgba(255,255,255,0.15);
+border-color:var(--turquoise);
 }
 
 </style>
@@ -203,6 +213,7 @@ height: 90vh;
 <h1>🐱 CatMind AI</h1>
 
 <select id="mainSymptom">
+
 <option value="">בחר בעיה מהרשימה</option>
 <option value="Vomiting">הקאות</option>
 <option value="Diarrhea">שלשול</option>
@@ -211,7 +222,7 @@ height: 90vh;
 <option value="Weight loss">ירידה במשקל</option>
 <option value="Breathing difficulty">קושי בנשימה</option>
 <option value="Coughing">שיעול</option>
-<option value="Frequent sneezing">התעטשויות תכופות</option>
+<option value="Frequent sneezing">התעטשויות</option>
 <option value="Eye discharge">הפרשות מהעיניים</option>
 <option value="Excessive itching">גירודים</option>
 <option value="Limping">צליעה</option>
@@ -221,6 +232,7 @@ height: 90vh;
 <option value="Seizures">פרכוסים</option>
 <option value="Possible poisoning">הרעלה אפשרית</option>
 <option value="Swallowed foreign object">בליעת חפץ זר</option>
+
 </select>
 
 <button onclick="executeAnalysis()">נתח מקרה</button>
@@ -234,23 +246,45 @@ height: 90vh;
 <div class="card-footer">
 
 <div class="disclaimer">
-⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי. במקרה חירום פנה לוטרינר.
+⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי.
 </div>
 
 <div>
+
 <div class="section-title">מידע נוסף</div>
-<a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">Browse All Breeds</a>
+
+<a class="link-btn"
+href="https://www.whiskas.in/cat-breeds"
+target="_blank">
+Browse All Breeds
+</a>
+
 </div>
 
 <div>
+
 <div class="section-title">וטרינרים מומלצים</div>
+
 <div class="links-grid">
-<a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">ד"ר טלי שטיין</a>
-<a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">ד"ר תמר פלידל</a>
-</div>
+
+<a class="link-btn"
+href="https://www.talisteinvet.co.il/"
+target="_blank">
+ד"ר טלי שטיין
+</a>
+
+<a class="link-btn"
+href="https://easy.co.il/page/3056876"
+target="_blank">
+ד"ר תמר פלידל
+</a>
+
 </div>
 
 </div>
+
+</div>
+
 </div>
 
 <script>
@@ -298,6 +332,15 @@ const data=await response.json();
 
 let output=data.result || "לא התקבלה תשובה";
 
+if(output.includes("גבוהה"))
+output=output.replace("גבוהה","<span class='urgency-high'>גבוהה</span>");
+
+if(output.includes("בינונית"))
+output=output.replace("בינונית","<span class='urgency-medium'>בינונית</span>");
+
+if(output.includes("נמוכה"))
+output=output.replace("נמוכה","<span class='urgency-low'>נמוכה</span>");
+
 result.innerHTML="<strong>אבחנת CatMind:</strong><br><br>"+marked.parse(output);
 
 }catch(err){
@@ -307,23 +350,6 @@ result.innerHTML="❌ השרת מתעורר. נסה שוב בעוד כמה שנ�
 }
 
 }
-
-/* תמונות רקע */
-
-const images=[
-"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920&auto=format&fit=crop",
-"https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920&auto=format&fit=crop"
-];
-
-let index=0;
-
-document.getElementById("bg1").style.backgroundImage=`url(${images[0]})`;
-
-setInterval(()=>{
-index=(index+1)%images.length;
-document.getElementById("bg1").style.backgroundImage=`url(${images[index]})`;
-},10000);
 
 </script>
 
