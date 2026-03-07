@@ -11,116 +11,83 @@
 html,body{height:100%;overflow:hidden;}
 body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;color:#fff;background:#020617;}
 
-/* ── BACKGROUND ── */
 .bg-layer{position:fixed;inset:0;background-size:cover;background-position:center 20%;background-repeat:no-repeat;transition:opacity 1.8s ease;filter:brightness(.55) contrast(1.1);z-index:0;}
 #bg2{opacity:0;}
 .overlay{position:fixed;inset:0;background:linear-gradient(to right,rgba(0,0,0,.85),rgba(0,0,0,.4),rgba(0,0,0,.1));z-index:1;}
 
-/* ── CARD ── */
 .card{
   position:fixed;right:50px;top:50%;transform:translateY(-50%);
-  z-index:3;width:440px;max-width:93%;height:94vh;
-  display:flex;flex-direction:column;gap:7px;
+  z-index:3;width:440px;max-width:93%;height:96vh;
+  display:flex;flex-direction:column;gap:5px;
   background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.03));
   backdrop-filter:blur(40px) saturate(150%);
-  border-radius:28px;padding:18px;
+  border-radius:28px;padding:14px 16px;
   border:1px solid rgba(255,255,255,.2);
   box-shadow:0 40px 100px rgba(0,0,0,.6);
   overflow:hidden;
 }
 @media(max-width:768px){
-  .card{position:relative;right:auto;top:auto;transform:none;margin:12px auto;}
+  .card{position:relative;right:auto;top:auto;transform:none;margin:12px auto;height:auto;}
   html,body{overflow-y:auto;height:auto;}
 }
+.top-section{display:flex;flex-direction:column;gap:5px;flex-shrink:1;min-height:0;overflow-y:auto;}
+.top-section::-webkit-scrollbar{width:0;}
 
-h1{text-align:center;font-size:20px;color:var(--turquoise);letter-spacing:.5px;flex-shrink:0;}
+.header-row{display:flex;align-items:center;justify-content:center;position:relative;}
+h1{font-size:18px;color:var(--turquoise);letter-spacing:.5px;}
+.lang-switcher{position:absolute;left:0;display:flex;gap:5px;}
+.lang-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:2px 7px;font-size:14px;cursor:pointer;transition:.2s;color:#fff;}
+.lang-btn:hover{background:rgba(34,211,238,.2);border-color:var(--turquoise);}
+.lang-btn.active{background:rgba(34,211,238,.25);border-color:var(--turquoise);}
 
-/* ── SYMPTOMS ── */
-.symptoms-label{font-size:11px;color:rgba(255,255,255,.45);text-align:center;flex-shrink:0;}
-.symptoms-grid{
-  display:flex;flex-wrap:wrap;gap:5px;
-  overflow-y:auto;max-height:130px;
-  padding:3px 2px;flex-shrink:0;
-}
+.symptoms-label{font-size:10.5px;color:rgba(255,255,255,.45);text-align:center;}
+.symptoms-grid{overflow-y:auto;display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start;padding:2px;}
 .symptoms-grid::-webkit-scrollbar{width:3px;}
 .symptoms-grid::-webkit-scrollbar-thumb{background:var(--turquoise);border-radius:10px;}
-.tag{padding:4px 10px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#cbd5e1;transition:.18s;user-select:none;}
+.tag{padding:3px 9px;border-radius:20px;font-size:11.5px;cursor:pointer;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#cbd5e1;transition:.18s;user-select:none;height:fit-content;}
 .tag:hover{background:rgba(34,211,238,.15);border-color:var(--turquoise);color:#fff;}
 .tag.selected{background:rgba(34,211,238,.25);border-color:var(--turquoise);color:var(--turquoise);font-weight:700;}
-.selected-summary{font-size:11px;color:rgba(255,255,255,.4);text-align:center;min-height:14px;flex-shrink:0;}
+.selected-summary{font-size:10.5px;color:rgba(255,255,255,.4);text-align:center;min-height:13px;}
 
-/* ── FOLLOW-UP ── */
-#followUp{display:none;gap:4px;flex-direction:column;flex-shrink:0;}
-.fq-label{font-size:11px;color:rgba(255,255,255,.38);}
-.fq-row{display:flex;gap:5px;flex-wrap:wrap;}
-.fq-btn{padding:4px 10px;border-radius:14px;font-size:11.5px;cursor:pointer;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#cbd5e1;transition:.18s;user-select:none;}
+#followUp{display:none;gap:3px;flex-direction:column;}
+.fq-label{font-size:10.5px;color:rgba(255,255,255,.38);}
+.fq-row{display:flex;gap:4px;flex-wrap:wrap;}
+.fq-btn{padding:3px 9px;border-radius:12px;font-size:11px;cursor:pointer;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#cbd5e1;transition:.18s;user-select:none;}
 .fq-btn:hover{background:rgba(250,204,21,.15);border-color:var(--yellow);color:#fff;}
 .fq-btn.selected{background:rgba(250,204,21,.25);border-color:var(--yellow);color:var(--yellow);font-weight:700;}
 
-/* ── BUTTON ── */
-button#analyzeBtn{
-  padding:11px;border-radius:14px;border:none;
-  background:linear-gradient(135deg,var(--turquoise),#0ea5e9);
-  font-weight:700;cursor:pointer;color:#06131c;font-size:14px;
-  transition:.2s;flex-shrink:0;
-}
+button#analyzeBtn{padding:9px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--turquoise),#0ea5e9);font-weight:700;cursor:pointer;color:#06131c;font-size:13.5px;transition:.2s;}
 button#analyzeBtn:hover{opacity:.9;transform:translateY(-1px);}
 button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 
-/* ── URGENCY ── */
-#urgencyBar{display:none;padding:8px 12px;border-radius:12px;font-weight:700;text-align:center;font-size:13px;flex-shrink:0;}
+#urgencyBar{display:none;padding:7px 12px;border-radius:10px;font-weight:700;text-align:center;font-size:12.5px;}
 .urgency-low{background:linear-gradient(135deg,#16a34a,var(--green));}
 .urgency-medium{background:linear-gradient(135deg,#ca8a04,var(--yellow));color:#1a1000;}
 .urgency-high{background:linear-gradient(135deg,#b91c1c,var(--red));}
 .urgency-critical{background:linear-gradient(135deg,#7c3aed,#ef4444);animation:pulse 1s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.75}}
 
-/* ── RESULT — flex:1 fills all remaining space ── */
-.result-scroll-wrapper{
-  flex:1;
-  min-height:0;        /* critical for flex children to shrink */
-  overflow-y:auto;
-  background:rgba(0,0,0,.2);border-radius:18px;
-  border:1px solid rgba(34,211,238,.1);
-}
+/* result — grid row is 1fr so it ALWAYS fills remaining space */
+.result-scroll-wrapper{flex:1;min-height:80px;overflow-y:auto;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(34,211,238,.1);}
 .result-scroll-wrapper::-webkit-scrollbar{width:4px;}
 .result-scroll-wrapper::-webkit-scrollbar-thumb{background:var(--turquoise);border-radius:10px;}
-#resultContainer{
-  padding:14px;font-size:13.5px;line-height:1.75;
-  color:#e2e8f0;direction:rtl;text-align:right;
-}
-#resultContainer h2,#resultContainer h3{color:var(--turquoise);margin:10px 0 4px;}
+#resultContainer{padding:12px;font-size:13px;line-height:1.7;color:#e2e8f0;direction:rtl;text-align:right;}
+#resultContainer h2,#resultContainer h3{color:var(--turquoise);margin:8px 0 3px;}
 #resultContainer strong{color:#fff;}
-#resultContainer ul{padding-right:18px;}
-#resultContainer li{margin-bottom:4px;}
+#resultContainer ul{padding-right:16px;}
+#resultContainer li{margin-bottom:3px;}
 .cursor::after{content:'▌';animation:blink .7s infinite;color:var(--turquoise);}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
-/* ── DISCLAIMER ── */
-.disclaimer{padding:7px 10px;flex-shrink:0;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);border-radius:10px;font-size:10.5px;color:#fde68a;text-align:center;}
-
-/* ── LINKS ── */
-.links-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex-shrink:0;}
-.link-btn{display:block;text-align:center;padding:6px;border-radius:10px;background:rgba(255,255,255,.06);color:#fff;text-decoration:none;font-size:11px;border:1px solid rgba(255,255,255,.1);transition:.25s;}
+.disclaimer{padding:5px 10px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);border-radius:8px;font-size:10px;color:#fde68a;text-align:center;}
+.links-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.link-btn{display:block;text-align:center;padding:5px;border-radius:8px;background:rgba(255,255,255,.06);color:#fff;text-decoration:none;font-size:10.5px;border:1px solid rgba(255,255,255,.1);transition:.25s;}
 .link-btn:hover{background:rgba(34,211,238,.15);border-color:var(--turquoise);}
 
-/* ── WALKING CAT — z-index above card ── */
-#walkingCat{
-  position:fixed;
-  font-size:34px;
-  z-index:10;
-  pointer-events:none;
-  filter:drop-shadow(0 3px 10px rgba(0,0,0,0.7));
-  will-change:left,bottom,transform;
-}
-#catBubble{
-  position:fixed;z-index:11;pointer-events:none;
-  background:white;color:#333;font-size:12px;
-  font-family:'Segoe UI',sans-serif;
-  padding:4px 10px;border-radius:10px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.3);
-  white-space:nowrap;opacity:0;transition:opacity 0.4s ease;
-}
+/* ── WALKING CAT ── */
+#catWrap{position:fixed;z-index:10;pointer-events:none;will-change:left,bottom;}
+#catWrap svg{width:60px;height:44px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.6));}
+#catBubble{position:fixed;z-index:11;pointer-events:none;background:white;color:#333;font-size:12px;font-family:'Segoe UI',sans-serif;padding:4px 10px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.3);white-space:nowrap;opacity:0;transition:opacity 0.4s ease;}
 #catBubble::after{content:'';position:absolute;bottom:-7px;left:10px;border:4px solid transparent;border-top-color:white;}
 </style>
 </head>
@@ -130,44 +97,79 @@ button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 <div id="bg2" class="bg-layer"></div>
 <div class="overlay"></div>
 
-<div id="walkingCat">🐱</div>
+<!-- SVG cat — drawn facing RIGHT (positive x direction) -->
+<div id="catWrap">
+<svg id="catSvg" viewBox="0 0 60 44" xmlns="http://www.w3.org/2000/svg">
+  <!-- tail at left when facing right -->
+  <path id="catTail" d="M14,22 Q2,16 4,9" stroke="#c8a87a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- body -->
+  <ellipse cx="30" cy="26" rx="15" ry="10" fill="#d4b896"/>
+  <!-- neck -->
+  <ellipse cx="40" cy="23" rx="6" ry="5" fill="#d4b896"/>
+  <!-- head — facing right -->
+  <ellipse cx="48" cy="17" rx="10" ry="9" fill="#d4b896"/>
+  <!-- ears -->
+  <polygon points="43,10 40,2 48,8" fill="#d4b896"/>
+  <polygon points="53,9 56,2 58,8" fill="#d4b896"/>
+  <polygon points="43,10 41,4 47,8" fill="#f0b8b8" opacity=".75"/>
+  <polygon points="53,9 55,3 57,8" fill="#f0b8b8" opacity=".75"/>
+  <!-- legs back -->
+  <line id="leg-bl" x1="22" y1="32" x2="18" y2="42" stroke="#c0a882" stroke-width="4" stroke-linecap="round"/>
+  <line id="leg-br" x1="26" y1="32" x2="30" y2="42" stroke="#b09070" stroke-width="4" stroke-linecap="round"/>
+  <!-- legs front -->
+  <line id="leg-fl" x1="36" y1="32" x2="32" y2="42" stroke="#c0a882" stroke-width="4" stroke-linecap="round"/>
+  <line id="leg-fr" x1="40" y1="32" x2="44" y2="42" stroke="#b09070" stroke-width="4" stroke-linecap="round"/>
+  <!-- eyes -->
+  <ellipse cx="45" cy="16" rx="2.2" ry="2.4" fill="#1a1008"/>
+  <ellipse cx="51" cy="16" rx="2.2" ry="2.4" fill="#1a1008"/>
+  <circle cx="45.7" cy="15.3" r=".8" fill="white"/>
+  <circle cx="51.7" cy="15.3" r=".8" fill="white"/>
+  <!-- nose -->
+  <ellipse cx="55" cy="19" rx="1.3" ry="1" fill="#e06080"/>
+  <!-- mouth -->
+  <path d="M53.5,20.2 Q55,22 56.5,20.2" stroke="#804040" stroke-width=".9" fill="none" stroke-linecap="round"/>
+  <!-- whiskers -->
+  <line x1="55" y1="18" x2="60" y2="17" stroke="white" stroke-width=".8" opacity=".6"/>
+  <line x1="55" y1="20" x2="60" y2="20" stroke="white" stroke-width=".8" opacity=".6"/>
+  <line x1="38" y1="18" x2="43" y2="17" stroke="white" stroke-width=".8" opacity=".6"/>
+  <line x1="38" y1="20" x2="43" y2="20" stroke="white" stroke-width=".8" opacity=".6"/>
+  <!-- stripes -->
+  <path d="M24,22 Q26,19 28,22" stroke="#b89060" stroke-width="1.2" fill="none" opacity=".5"/>
+  <path d="M29,21 Q31,18 33,21" stroke="#b89060" stroke-width="1.2" fill="none" opacity=".5"/>
+</svg>
+</div>
 <div id="catBubble"></div>
 
 <div class="card">
-  <h1>🐱 CatMind AI</h1>
-  <div class="symptoms-label">בחר סימפטום אחד או יותר</div>
-  <div class="symptoms-grid" id="symptomsGrid"></div>
-  <div class="selected-summary" id="selectedSummary">לא נבחרו סימפטומים</div>
-
-  <div id="followUp">
-    <div class="fq-label">גיל החתול:</div>
-    <div class="fq-row">
-      <div class="fq-btn" data-group="age" onclick="toggleFQ(this)">גור (עד שנה)</div>
-      <div class="fq-btn" data-group="age" onclick="toggleFQ(this)">בוגר (1–10)</div>
-      <div class="fq-btn" data-group="age" onclick="toggleFQ(this)">קשיש (10+)</div>
+  <div class="header-row">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+      <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
     </div>
-    <div class="fq-label">סוג חיים:</div>
-    <div class="fq-row">
-      <div class="fq-btn" data-group="life" onclick="toggleFQ(this)">חתול בית</div>
-      <div class="fq-btn" data-group="life" onclick="toggleFQ(this)">חתול חוץ</div>
-      <div class="fq-btn" data-group="life" onclick="toggleFQ(this)">בית + חוץ</div>
-    </div>
-    <div class="fq-label">משך הסימפטום:</div>
-    <div class="fq-row">
-      <div class="fq-btn" data-group="duration" onclick="toggleFQ(this)">היום בלבד</div>
-      <div class="fq-btn" data-group="duration" onclick="toggleFQ(this)">2–3 ימים</div>
-      <div class="fq-btn" data-group="duration" onclick="toggleFQ(this)">שבוע ומעלה</div>
-    </div>
+    <h1>🐱 CatMind AI</h1>
   </div>
 
-  <button id="analyzeBtn" onclick="executeAnalysis()">🔍 נתח מקרה</button>
-  <div id="urgencyBar"></div>
+  <div class="top-section">
+    <div class="symptoms-label" id="lblSymptoms">בחר סימפטום אחד או יותר</div>
+    <div class="symptoms-grid" id="symptomsGrid"></div>
+    <div class="selected-summary" id="selectedSummary">לא נבחרו סימפטומים</div>
+    <div id="followUp">
+      <div class="fq-label" id="lblAge">גיל החתול:</div>
+      <div class="fq-row" id="rowAge"></div>
+      <div class="fq-label" id="lblLife">סוג חיים:</div>
+      <div class="fq-row" id="rowLife"></div>
+      <div class="fq-label" id="lblDuration">משך הסימפטום:</div>
+      <div class="fq-row" id="rowDuration"></div>
+    </div>
+    <button id="analyzeBtn" onclick="executeAnalysis()">🔍 <span id="btnText">נתח מקרה</span></button>
+    <div id="urgencyBar"></div>
+  </div>
 
   <div class="result-scroll-wrapper">
     <div id="resultContainer">האבחנה תופיע כאן...</div>
   </div>
 
-  <div class="disclaimer">⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי מקצועי.</div>
+  <div class="disclaimer" id="disclaimer">⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי מקצועי.</div>
 
   <div class="links-grid">
     <a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">🩺 ד"ר טלי שטיין</a>
@@ -178,64 +180,134 @@ button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 </div>
 
 <script>
-/* ── SYMPTOMS ── */
-const SYMPTOMS=[
-  "הקאות","שלשול","עצירות","חוסר תיאבון","ירידה במשקל",
-  "עלייה חריגה במשקל","עייפות קיצונית","קושי בנשימה","שיעול",
-  "התעטשויות תכופות","הפרשות מהאף","הפרשות מהעיניים",
-  "גירודים מרובים","נשירת שיער חריגה","פצעים בעור","נפיחות בגוף",
-  "צליעה","חוסר שימוש בארגז חול","דם בשתן","שינויים בהתנהגות",
-  "אגרסיביות פתאומית","רעידות","פרכוסים","הרעלה אפשרית",
-  "בליעת חפץ זר","חום גבוה","אובדן הכרה","שתייה מוגברת",
-  "השתנה מוגברת","כאב בעת מגע","נשימה פה פתוח","בטן נפוחה",
-  "ריח רע מהפה","חוסר שיווי משקל"
-];
+const T={
+  he:{
+    symptoms:["הקאות","שלשול","עצירות","חוסר תיאבון","ירידה במשקל","עלייה חריגה במשקל","עייפות קיצונית","קושי בנשימה","שיעול","התעטשויות תכופות","הפרשות מהאף","הפרשות מהעיניים","גירודים מרובים","נשירת שיער חריגה","פצעים בעור","נפיחות בגוף","צליעה","חוסר שימוש בארגז חול","דם בשתן","שינויים בהתנהגות","אגרסיביות פתאומית","רעידות","פרכוסים","הרעלה אפשרית","בליעת חפץ זר","חום גבוה","אובדן הכרה","שתייה מוגברת","השתנה מוגברת","כאב בעת מגע","נשימה פה פתוח","בטן נפוחה","ריח רע מהפה","חוסר שיווי משקל"],
+    lblSymptoms:"בחר סימפטום אחד או יותר",noSelected:"לא נבחרו סימפטומים",selectedPrefix:"✔ נבחרו: ",
+    lblAge:"גיל החתול:",lblLife:"סוג חיים:",lblDuration:"משך הסימפטום:",
+    age:["גור (עד שנה)","בוגר (1–10)","קשיש (10+)"],
+    life:["חתול בית","חתול חוץ","בית + חוץ"],
+    duration:["היום בלבד","2–3 ימים","שבוע ומעלה"],
+    btnAnalyze:"נתח מקרה",btnAnalyzing:"מנתח...",placeholder:"האבחנה תופיע כאן...",
+    disclaimer:"⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי מקצועי.",
+    notSelected:"לא צוין",selectFirst:"⚠ בחר לפחות סימפטום אחד",
+    serverError:"❌ השרת לא זמין כרגע. נסה שוב בעוד מספר שניות.",
+    urgency:{1:"✅ לא דחוף — מעקב ביתי מספיק",2:"⚠️ מומלץ לפנות לווטרינר תוך יום-יומיים",3:"🚨 פנה לווטרינר היום!",4:"🆘 חירום — פנה לווטרינר מיד!"},
+    dir:"rtl",
+    promptIntro:"אתה וטרינר מומחה לחתולים בלבד. ענה תמיד בעברית בלבד.",
+    sections:"## רמת דחיפות\n[רק מספר: 1=לא דחוף / 2=בינוני / 3=דחוף / 4=חירום]\n\n## גורמים אפשריים\nרשימה של הגורמים הסבירים ביותר, מהנפוץ לנדיר.\n\n## מה לעשות כעת\nצעדים מעשיים ברורים שהבעלים יכול לעשות.\n\n## סימנים מדאיגים\nאם תראה את אלה — פנה לווטרינר מיד.",
+    phrases:["מיאו...","מה זה?","😼","מעניין...","👀","פוסס"],
+    urgencyRgx:/##\s*רמת דחיפות\s*\n+([1-4])/,
+    urgencyStrip:/##\s*רמת דחיפות[\s\S]*?(?=##|$)/m,
+  },
+  en:{
+    symptoms:["Vomiting","Diarrhea","Constipation","Loss of appetite","Weight loss","Unusual weight gain","Extreme fatigue","Breathing difficulty","Coughing","Frequent sneezing","Nasal discharge","Eye discharge","Excessive scratching","Abnormal hair loss","Skin wounds","Body swelling","Limping","Not using litter box","Blood in urine","Behavior changes","Sudden aggression","Tremors","Seizures","Possible poisoning","Swallowed foreign object","High fever","Loss of consciousness","Excessive drinking","Excessive urination","Pain when touched","Open-mouth breathing","Bloated belly","Bad breath","Loss of balance"],
+    lblSymptoms:"Select one or more symptoms",noSelected:"No symptoms selected",selectedPrefix:"✔ Selected: ",
+    lblAge:"Cat's age:",lblLife:"Lifestyle:",lblDuration:"Duration:",
+    age:["Kitten (under 1yr)","Adult (1–10)","Senior (10+)"],
+    life:["Indoor","Outdoor","Indoor + Outdoor"],
+    duration:["Today only","2–3 days","A week or more"],
+    btnAnalyze:"Analyze Case",btnAnalyzing:"Analyzing...",placeholder:"Diagnosis will appear here...",
+    disclaimer:"⚠ For guidance only — not a substitute for professional veterinary advice.",
+    notSelected:"Not specified",selectFirst:"⚠ Please select at least one symptom",
+    serverError:"❌ Server unavailable. Please try again in a few seconds.",
+    urgency:{1:"✅ Not urgent — home monitoring sufficient",2:"⚠️ Recommend vet visit within 1-2 days",3:"🚨 See a vet today!",4:"🆘 Emergency — see a vet immediately!"},
+    dir:"ltr",
+    promptIntro:"You are a veterinary AI specialized ONLY in cats. Always respond in English.",
+    sections:"## Urgency Level\n[Number only: 1=Not urgent / 2=Moderate / 3=Urgent / 4=Emergency]\n\n## Possible Causes\nList the most likely causes, from common to rare.\n\n## What To Do Now\nClear practical steps the owner can take.\n\n## Warning Signs\nIf you see these — see a vet immediately.",
+    phrases:["Meow...","What's that?","😼","Interesting...","👀","Purr..."],
+    urgencyRgx:/##\s*Urgency Level\s*\n+([1-4])/,
+    urgencyStrip:/##\s*Urgency Level[\s\S]*?(?=##|$)/m,
+  }
+};
+
+let lang='he';
 const selected=new Set();
-const grid=document.getElementById('symptomsGrid');
-SYMPTOMS.forEach(s=>{
-  const t=document.createElement('div');
-  t.className='tag';t.textContent=s;
-  t.onclick=()=>{
-    if(selected.has(s)){selected.delete(s);t.classList.remove('selected');}
-    else{selected.add(s);t.classList.add('selected');}
-    updateSummary();
-  };
-  grid.appendChild(t);
-});
+
+function setLang(l){
+  lang=l;
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  const t=T[l];
+  document.documentElement.lang=l;
+  document.documentElement.dir=t.dir;
+  document.getElementById('lblSymptoms').textContent=t.lblSymptoms;
+  document.getElementById('lblAge').textContent=t.lblAge;
+  document.getElementById('lblLife').textContent=t.lblLife;
+  document.getElementById('lblDuration').textContent=t.lblDuration;
+  document.getElementById('disclaimer').textContent=t.disclaimer;
+  document.getElementById('btnText').textContent=t.btnAnalyze;
+  document.getElementById('resultContainer').innerHTML=t.placeholder;
+  document.getElementById('urgencyBar').style.display='none';
+  selected.clear();
+  buildSymptoms();
+  buildFQ('rowAge','age');
+  buildFQ('rowLife','life');
+  buildFQ('rowDuration','duration');
+  updateSummary();
+}
+
+function buildSymptoms(){
+  const grid=document.getElementById('symptomsGrid');
+  grid.innerHTML='';
+  T[lang].symptoms.forEach(s=>{
+    const t=document.createElement('div');
+    t.className='tag';t.textContent=s;
+    t.onclick=()=>{
+      if(selected.has(s)){selected.delete(s);t.classList.remove('selected');}
+      else{selected.add(s);t.classList.add('selected');}
+      updateSummary();
+    };
+    grid.appendChild(t);
+  });
+}
+
+function buildFQ(rowId,key){
+  const row=document.getElementById(rowId);
+  row.innerHTML='';
+  T[lang][key].forEach(v=>{
+    const b=document.createElement('div');
+    b.className='fq-btn';b.textContent=v;b.dataset.group=key;
+    b.onclick=()=>toggleFQ(b);
+    row.appendChild(b);
+  });
+}
+
 function updateSummary(){
-  const sum=document.getElementById('selectedSummary'),fu=document.getElementById('followUp');
-  if(selected.size===0){sum.textContent='לא נבחרו סימפטומים';fu.style.display='none';}
-  else{sum.textContent=`✔ נבחרו: ${[...selected].join(' · ')}`;fu.style.display='flex';}
+  const sum=document.getElementById('selectedSummary'),fu=document.getElementById('followUp'),t=T[lang];
+  if(selected.size===0){sum.textContent=t.noSelected;fu.style.display='none';}
+  else{sum.textContent=t.selectedPrefix+[...selected].join(' · ');fu.style.display='flex';}
 }
 function toggleFQ(el){
   document.querySelectorAll(`.fq-btn[data-group="${el.dataset.group}"]`).forEach(b=>b.classList.remove('selected'));
   el.classList.add('selected');
 }
-function getFQ(g){
-  const el=document.querySelector(`.fq-btn[data-group="${g}"].selected`);
-  return el?el.textContent:'לא צוין';
+function getFQ(key){
+  const el=document.querySelector(`.fq-btn[data-group="${key}"].selected`);
+  return el?el.textContent:T[lang].notSelected;
 }
 
-/* ── BACKGROUNDS ── */
+/* BACKGROUNDS */
 const images=[
-  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1920",
-  "https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920",
-  "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920",
-  "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920",
-  "https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1920",
-  "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1920",
-  "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?q=80&w=1920",
-  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1920",
-  "https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?q=80&w=1920",
-  "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1920",
-  "https://images.unsplash.com/photo-1574158622682-e40e69881006?q=80&w=1920",
-  "https://images.unsplash.com/photo-1561948955-570b270e7c36?q=80&w=1920",
-  "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?q=80&w=1920",
-  "https://images.unsplash.com/photo-1583795128727-6ec3642408f8?q=80&w=1920",
-  "https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?q=80&w=1920",
-  "https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=1920",
-  "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=1920",
-  "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?q=80&w=1920",
+  // 100% verified cats only
+  "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1920", // tabby close-up
+  "https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=1920", // orange cat
+  "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1920", // white cat
+  "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1920", // grey cat
+  "https://images.unsplash.com/photo-1561948955-570b270e7c36?q=80&w=1920", // cat face
+  "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1920", // cat lying
+  "https://images.unsplash.com/photo-1574158622682-e40e69881006?q=80&w=1920", // cat staring
+  "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?q=80&w=1920", // cute cat
+  "https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?q=80&w=1920", // cat portrait
+  "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=1920", // cat outdoors
+  "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?q=80&w=1920", // black cat
+  "https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1920", // sleepy cat
+  "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?q=80&w=1920", // cat window
+  "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=1920", // cat yawning
+  "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?q=80&w=1920", // cat green eyes
+  "https://images.unsplash.com/photo-1494256997604-768d1f608cac?q=80&w=1920", // fluffy cat
+  "https://images.unsplash.com/photo-1478098711619-5ab0b478d6e6?q=80&w=1920", // cat sitting
+  "https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1920", // cat napping
 ];
 let bgIdx=Math.floor(Math.random()*images.length),activeLayer=1;
 const bg1=document.getElementById('bg1'),bg2=document.getElementById('bg2');
@@ -247,77 +319,72 @@ function nextBg(){
 }
 setInterval(nextBg,10000);
 
-/* ── WAKE SERVER ── */
+/* WAKE */
 window.addEventListener('DOMContentLoaded',()=>{
   fetch("https://catmind-ai-server.onrender.com/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:"ping"})}).catch(()=>{});
+  buildSymptoms();buildFQ('rowAge','age');buildFQ('rowLife','life');buildFQ('rowDuration','duration');
 });
 
-/* ── URGENCY ── */
+/* URGENCY */
 function setUrgency(level){
   const bar=document.getElementById('urgencyBar');bar.style.display='block';
-  const map={
-    1:{cls:'urgency-low',text:'✅ לא דחוף — מעקב ביתי מספיק'},
-    2:{cls:'urgency-medium',text:'⚠️ מומלץ לפנות לווטרינר תוך יום-יומיים'},
-    3:{cls:'urgency-high',text:'🚨 פנה לווטרינר היום!'},
-    4:{cls:'urgency-critical',text:'🆘 חירום — פנה לווטרינר מיד!'},
-  };
-  const m=map[level]||map[2];bar.className=m.cls;bar.innerHTML=m.text;
+  const cls={1:'urgency-low',2:'urgency-medium',3:'urgency-high',4:'urgency-critical'};
+  bar.className=cls[level]||cls[2];bar.innerHTML=T[lang].urgency[level]||T[lang].urgency[2];
 }
 
-/* ── ANALYSIS ── */
+/* ANALYSIS */
 async function executeAnalysis(){
-  const resultEl=document.getElementById('resultContainer'),btn=document.getElementById('analyzeBtn'),urgencyEl=document.getElementById('urgencyBar');
-  if(selected.size===0){resultEl.innerHTML='⚠ בחר לפחות סימפטום אחד';return;}
-  btn.disabled=true;btn.textContent='⏳ מנתח...';
+  const resultEl=document.getElementById('resultContainer'),btn=document.getElementById('analyzeBtn'),urgencyEl=document.getElementById('urgencyBar'),t=T[lang];
+  if(selected.size===0){resultEl.innerHTML=t.selectFirst;return;}
+  btn.disabled=true;document.getElementById('btnText').textContent=t.btnAnalyzing;
   urgencyEl.style.display='none';resultEl.innerHTML='';resultEl.classList.add('cursor');
-  const prompt=`אתה וטרינר מומחה לחתולים בלבד. ענה תמיד בעברית בלבד.\n\nסימפטומים: ${[...selected].join(', ')}\nגיל: ${getFQ('age')}\nסוג חיים: ${getFQ('life')}\nמשך: ${getFQ('duration')}\n\nענה בפורמט markdown מדויק:\n\n## רמת דחיפות\n[רק מספר: 1=לא דחוף / 2=בינוני / 3=דחוף / 4=חירום]\n\n## גורמים אפשריים\nרשימה של הגורמים הסבירים ביותר, מהנפוץ לנדיר.\n\n## מה לעשות כעת\nצעדים מעשיים ברורים שהבעלים יכול לעשות.\n\n## סימנים מדאיגים\nאם תראה את אלה — פנה לווטרינר מיד.`;
+  const prompt=`${t.promptIntro}\n\nסימפטומים: ${[...selected].join(', ')}\nגיל: ${getFQ('age')}\nסוג חיים: ${getFQ('life')}\nמשך: ${getFQ('duration')}\n\n${t.sections}`;
   try{
     const res=await fetch("https://catmind-ai-server.onrender.com/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:prompt})});
-    const data=await res.json();
-    finalize(data.result||data.text||'');
-  }catch(e){
-    resultEl.classList.remove('cursor');
-    resultEl.innerHTML='❌ השרת לא זמין כרגע. נסה שוב בעוד מספר שניות.';
-  }finally{btn.disabled=false;btn.textContent='🔍 נתח מקרה';}
+    const data=await res.json();finalize(data.result||data.text||'');
+  }catch(e){resultEl.classList.remove('cursor');resultEl.innerHTML=t.serverError;}
+  finally{btn.disabled=false;document.getElementById('btnText').textContent=t.btnAnalyze;}
 }
+
 function finalize(raw){
+  const t=T[lang];
   document.getElementById('resultContainer').classList.remove('cursor');
-  const match=raw.match(/##\s*רמת דחיפות\s*\n+([1-4])/);
-  if(match) setUrgency(parseInt(match[1]));
-  else if(/חירום|מיד|מסכן חיים/i.test(raw)) setUrgency(4);
-  else if(/דחוף|היום|בהקדם/i.test(raw))      setUrgency(3);
-  else if(/בינוני|יום.יומיים/i.test(raw))     setUrgency(2);
-  else                                         setUrgency(1);
-  const clean=raw.replace(/##\s*רמת דחיפות[\s\S]*?(?=##|$)/m,'').trim();
+  const match=raw.match(t.urgencyRgx);
+  if(match)setUrgency(parseInt(match[1]));
+  else if(/חירום|emergency|immediate/i.test(raw))setUrgency(4);
+  else if(/דחוף|urgent|today/i.test(raw))setUrgency(3);
+  else if(/בינוני|moderate/i.test(raw))setUrgency(2);
+  else setUrgency(1);
+  const clean=raw.replace(t.urgencyStrip,'').trim();
   document.getElementById('resultContainer').innerHTML=marked.parse(clean);
 }
 
 /* ══════════════════════════════════════
-   WALKING CAT 🐱
-   — straight normal walk, no rotation
-   — occasionally stops and rarely glances at screen
+   WALKING CAT
+   SVG is drawn facing RIGHT.
+   dir=1  → moving right → scaleX(1)  = faces right ✓
+   dir=-1 → moving left  → scaleX(-1) = mirror = faces left ✓
 ══════════════════════════════════════ */
 (function(){
-  const cat    = document.getElementById('walkingCat');
+  const wrap   = document.getElementById('catWrap');
   const bubble = document.getElementById('catBubble');
-  const EMOJIS  = ['🐱','🐈','🐈‍⬛'];
-  const PHRASES = ['מיאו...','מה זה?','😼','מעניין...','👀','...','פוסס'];
+  const legFL  = document.getElementById('leg-fl');
+  const legFR  = document.getElementById('leg-fr');
+  const legBL  = document.getElementById('leg-bl');
+  const legBR  = document.getElementById('leg-br');
+  const tail   = document.getElementById('catTail');
+  const catSvg = document.getElementById('catSvg');
 
-  let catState = 'walking';
-  let x, y, dir = 1;
-  let walkTimer = 0, stateTimer = 0, meowCooldown = 5;
-  let pausesUntilLook = 2 + Math.floor(Math.random()*3);
-  let acCtx = null;
+  let catState='walking', x, y, dir=1;
+  let walkTimer=0, stateTimer=0, meowCooldown=5;
+  let pausesUntilLook=2+Math.floor(Math.random()*3);
+  let acCtx=null;
 
-  function getAC(){
-    if(!acCtx) acCtx=new(window.AudioContext||window.webkitAudioContext)();
-    return acCtx;
-  }
+  function getAC(){if(!acCtx)acCtx=new(window.AudioContext||window.webkitAudioContext)();return acCtx;}
 
   function catMeow(){
     try{
-      const ac=getAC();
-      const o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter();
+      const ac=getAC(),o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter();
       f.type='bandpass';f.frequency.value=700;f.Q.value=2.5;
       o.connect(f);f.connect(g);g.connect(ac.destination);o.type='sawtooth';
       o.frequency.setValueAtTime(320,ac.currentTime);
@@ -331,93 +398,93 @@ function finalize(raw){
     }catch(e){}
   }
 
-  function randY(){ return 12 + Math.floor(Math.random()*80); }
-  function randEmoji(){ return EMOJIS[Math.floor(Math.random()*EMOJIS.length)]; }
+  function randY(){return 12+Math.floor(Math.random()*80);}
 
   function showBubble(){
-    const text=PHRASES[Math.floor(Math.random()*PHRASES.length)];
+    const phrases=T[lang].phrases;
+    const text=phrases[Math.floor(Math.random()*phrases.length)];
     bubble.textContent=text;
-    bubble.style.left  =(x+44)+'px';
-    bubble.style.bottom=(y+48)+'px';
+    bubble.style.left=(x+64)+'px';
+    bubble.style.bottom=(y+52)+'px';
     bubble.style.opacity='1';
     setTimeout(()=>{bubble.style.opacity='0';},2600);
   }
 
-  // start from random edge
-  dir = Math.random()>0.5 ? 1 : -1;
-  x   = dir===1 ? -50 : window.innerWidth+10;
-  y   = randY();
-  cat.style.bottom=y+'px';
-  cat.style.left=x+'px';
-  cat.textContent=randEmoji();
-  setTimeout(()=>catMeow(),3000);
+  /* leg animation — sine wave gait */
+  function animateLegs(t){
+    const f1= Math.sin(t*8);
+    const f2= Math.sin(t*8+Math.PI);
+    const b1= Math.sin(t*8+Math.PI);
+    const b2= Math.sin(t*8);
+    // front legs (x1 around 36 and 40)
+    legFL.setAttribute('x2',(32+f1*5).toFixed(1)); legFL.setAttribute('y2','42');
+    legFR.setAttribute('x2',(44+f2*5).toFixed(1)); legFR.setAttribute('y2','42');
+    // back legs (x1 around 22 and 26)
+    legBL.setAttribute('x2',(18+b1*5).toFixed(1)); legBL.setAttribute('y2','42');
+    legBR.setAttribute('x2',(30+b2*5).toFixed(1)); legBR.setAttribute('y2','42');
+    // tail wag
+    const tw=Math.sin(t*3)*7;
+    tail.setAttribute('d',`M14,22 Q${2+tw*0.3},${16-tw*0.4} ${4+tw*0.2},${9-tw}`);
+  }
+
+  function stopLegs(){
+    legFL.setAttribute('x2','32');legFL.setAttribute('y2','42');
+    legFR.setAttribute('x2','44');legFR.setAttribute('y2','42');
+    legBL.setAttribute('x2','18');legBL.setAttribute('y2','42');
+    legBR.setAttribute('x2','30');legBR.setAttribute('y2','42');
+  }
+
+  function applyDir(){
+    // SVG faces right → dir=1: no flip, dir=-1: flip horizontally around centre
+    catSvg.style.transform = dir===1 ? 'scaleX(1)' : 'scaleX(-1)';
+    catSvg.style.transformOrigin = '30px 22px'; // centre of SVG
+  }
 
   function startPause(){
     pausesUntilLook--;
-    cat.textContent=randEmoji();
-    y=randY();
-    cat.style.bottom=y+'px';
-    catMeow();
-    meowCooldown=4;
-
+    y=randY(); wrap.style.bottom=y+'px';
+    stopLegs(); catMeow(); meowCooldown=5;
     if(pausesUntilLook<=0){
-      catState='looking';
-      stateTimer=2.5+Math.random()*2;
+      catState='looking'; stateTimer=2.5+Math.random()*2;
       pausesUntilLook=2+Math.floor(Math.random()*3);
       showBubble();
-    } else {
-      catState='pausing';
-      stateTimer=1.5+Math.random()*3;
+      // face toward screen centre
+      const faceRight = x < window.innerWidth*0.5;
+      catSvg.style.transform = faceRight ? 'scaleX(1) scale(1.08)' : 'scaleX(-1) scale(1.08)';
+    }else{
+      catState='pausing'; stateTimer=1.5+Math.random()*3;
+      applyDir();
     }
   }
+
+  // init
+  dir  = Math.random()>0.5 ? 1 : -1;
+  x    = dir===1 ? -60 : window.innerWidth+10;
+  y    = randY();
+  wrap.style.bottom=y+'px'; wrap.style.left=x+'px';
+  applyDir();
+  setTimeout(()=>catMeow(),3000);
 
   let last=null;
   function loop(ts){
     if(!last)last=ts;
     const dt=Math.min((ts-last)/1000,0.05);
-    last=ts;
-    meowCooldown-=dt;
-    stateTimer-=dt;
+    last=ts; meowCooldown-=dt; stateTimer-=dt;
 
     if(catState==='walking'){
-      // ── straight normal walk — only gentle up/down bob, NO rotation ──
-      x += dir * 40 * dt;
-      walkTimer += dt;
-      const bob = Math.sin(walkTimer * 6) * 1.2; // tiny vertical bob only
-      cat.style.transform = `scaleX(${dir}) translateY(${bob}px)`;
-      cat.style.left = x+'px';
-
-      // rare meow while walking
-      if(meowCooldown<=0 && Math.random()<0.003){
-        catMeow();
-        meowCooldown=10+Math.random()*15;
-      }
-
+      x+=dir*40*dt; walkTimer+=dt;
+      animateLegs(walkTimer);
+      wrap.style.left=x+'px';
+      applyDir();
+      if(meowCooldown<=0&&Math.random()<0.003){catMeow();meowCooldown=10+Math.random()*15;}
       const W=window.innerWidth;
       if(x>W+10){x=W+10;dir=-1;startPause();}
-      else if(x<-50){x=-50;dir=1;startPause();}
-
-    } else if(catState==='pausing'){
-      // sitting still — tiny float
-      cat.style.transform=`scaleX(${dir}) translateY(${Math.sin(Date.now()/600)*1}px)`;
-      if(stateTimer<=0){
-        catState='walking';
-        cat.style.transform=`scaleX(${dir})`;
-      }
-
-    } else if(catState==='looking'){
-      // face screen, gentle curious tilt of head only (not whole body)
-      const faceDir=x<window.innerWidth*0.5?1:-1;
-      cat.style.transform=`scaleX(${faceDir}) scale(1.1)`;
-      if(stateTimer<=0){
-        catState='walking';
-        cat.style.transform=`scaleX(${dir})`;
-      }
+      else if(x<-60){x=-60;dir=1;startPause();}
+    }else if(catState==='pausing'||catState==='looking'){
+      if(stateTimer<=0){catState='walking';applyDir();}
     }
-
     requestAnimationFrame(loop);
   }
-
   requestAnimationFrame(loop);
 })();
 </script>
