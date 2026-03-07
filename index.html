@@ -19,8 +19,8 @@ body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;color:#fff;background:#020
   position:fixed;right:50px;top:50%;transform:translateY(-50%);
   z-index:3;width:440px;max-width:93%;height:96vh;
   display:grid;
-  grid-template-rows: auto auto 1fr auto auto;
-  /* row1=header  row2=top-inputs(capped)  row3=RESULT(1fr)  row4=disclaimer  row5=links */
+  grid-template-rows: auto minmax(0,auto) auto auto 1fr auto auto;
+  /* header | top-inputs | btn | urgency | RESULT(1fr) | disclaimer | links */
   gap:5px;
   background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.03));
   backdrop-filter:blur(40px) saturate(150%);
@@ -38,7 +38,7 @@ body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;color:#fff;background:#020
 .top-section{
   display:flex;flex-direction:column;gap:4px;
   overflow-y:auto;min-height:0;
-  max-height:44vh;
+  max-height:40vh;
 }
 .top-section::-webkit-scrollbar{width:3px;}
 .top-section::-webkit-scrollbar-thumb{background:var(--turquoise);border-radius:10px;}
@@ -78,7 +78,7 @@ button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.75}}
 
 /* result — grid row is 1fr so it ALWAYS fills remaining space */
-.result-scroll-wrapper{overflow-y:auto;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(34,211,238,.1);min-height:0;height:100%;}
+.result-scroll-wrapper{overflow-y:auto;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid rgba(34,211,238,.1);min-height:0;}
 .result-scroll-wrapper::-webkit-scrollbar{width:4px;}
 .result-scroll-wrapper::-webkit-scrollbar-thumb{background:var(--turquoise);border-radius:10px;}
 #resultContainer{padding:12px;font-size:13px;line-height:1.7;color:#e2e8f0;direction:rtl;text-align:right;}
@@ -171,9 +171,10 @@ button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
       <div class="fq-label" id="lblDuration">משך הסימפטום:</div>
       <div class="fq-row" id="rowDuration"></div>
     </div>
-    <button id="analyzeBtn" onclick="executeAnalysis()">🔍 <span id="btnText">נתח מקרה</span></button>
-    <div id="urgencyBar"></div>
   </div>
+
+  <button id="analyzeBtn" onclick="executeAnalysis()">🔍 <span id="btnText">נתח מקרה</span></button>
+  <div id="urgencyBar"></div>
 
   <div class="result-scroll-wrapper">
     <div id="resultContainer">האבחנה תופיע כאן...</div>
