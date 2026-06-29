@@ -135,6 +135,12 @@ button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 .link-btn{display:block;text-align:center;padding:5px;border-radius:8px;background:rgba(255,255,255,.06);color:#fff;text-decoration:none;font-size:10.5px;border:1px solid rgba(255,255,255,.1);transition:.25s;}
 .link-btn:hover{background:rgba(34,211,238,.15);border-color:var(--turquoise);}
 
+#shareRow{display:none;gap:5px;}
+.share-btn{flex:1;padding:6px;border-radius:10px;border:none;font-weight:700;cursor:pointer;font-size:11.5px;transition:.2s;}
+.share-btn:hover{opacity:.85;transform:translateY(-1px);}
+.whatsapp-btn{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;}
+.email-btn{background:linear-gradient(135deg,#4a90d9,#1a5fa8);color:#fff;}
+
 #catWrap{position:fixed;z-index:10;pointer-events:none;will-change:left,bottom;}
 #catWrap svg{width:60px;height:44px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.6));}
 #catBubble{position:fixed;z-index:11;pointer-events:none;background:white;color:#333;font-size:12px;font-family:'Segoe UI',sans-serif;padding:4px 10px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.3);white-space:nowrap;opacity:0;transition:opacity 0.4s ease;}
@@ -208,6 +214,11 @@ button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
   </div>
 
   <div class="disclaimer" id="disclaimer">⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי מקצועי.</div>
+
+  <div id="shareRow" style="display:none;gap:5px;">
+    <button class="share-btn whatsapp-btn" onclick="shareWhatsApp()">📲 שתף ב-WhatsApp</button>
+    <button class="share-btn email-btn" onclick="shareEmail()">📧 שלח במייל</button>
+  </div>
 
   <div class="links-grid">
     <a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">🩺 ד"ר טלי שטיין</a>
@@ -411,6 +422,29 @@ function finalize(raw, hasCritical){
 
   const clean=raw.replace(t.urgencyStrip,'').trim();
   document.getElementById('resultContainer').innerHTML=marked.parse(clean);
+  // הצג כפתורי שיתוף
+  document.getElementById('shareRow').style.display='flex';
+}
+
+function getShareText(){
+  const t=T[lang];
+  const urgencyBar=document.getElementById('urgencyBar');
+  const symptoms=[...selected].join(', ');
+  const urgencyText=urgencyBar.textContent||'';
+  const result=document.getElementById('resultContainer').innerText||'';
+  return `🐱 CatMind AI - אבחון חתול\n\nסימפטומים: ${symptoms}\n${urgencyText}\n\n${result.substring(0,300)}...\n\nhttps://mandylion.co.il`;
+}
+
+function shareWhatsApp(){
+  const text=encodeURIComponent(getShareText());
+  window.open(`https://wa.me/?text=${text}`,'_blank');
+}
+
+function shareEmail(){
+  const t=T[lang];
+  const subject=encodeURIComponent('CatMind AI - תוצאת אבחון חתול');
+  const body=encodeURIComponent(getShareText());
+  window.open(`mailto:?subject=${subject}&body=${body}`,'_blank');
 }
 
 /* WALKING CAT */
