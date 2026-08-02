@@ -225,6 +225,7 @@ button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
     <a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">🩺 ד"ר תמר פלידל</a>
     <a class="link-btn" href="https://icatcare.org/" target="_blank">🌍 International Cat Care</a>
     <a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">🐱 Browse All Breeds</a>
+    <a class="link-btn" href="/symptoms/">📋 מדריכי תסמינים</a>
   </div>
 </div>
 
@@ -372,7 +373,20 @@ setInterval(nextBg,10000);
 window.addEventListener('DOMContentLoaded',()=>{
   fetch("https://catmind-ai-server.onrender.com/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:"ping"})}).catch(()=>{});
   buildSymptoms();buildFQ('rowAge','age');buildFQ('rowLife','life');buildFQ('rowDuration','duration');
+  applyPreselect();
 });
+
+/* PRESELECT FROM GUIDE PAGES */
+const SLUG_MAP={vomiting:"הקאות","appetite-loss":"חוסר תיאבון",diarrhea:"שלשול",constipation:"עצירות","weight-loss":"ירידה במשקל",breathing:"קושי בנשימה",lethargy:"עייפות קיצונית","blood-urine":"דם בשתן","litter-avoidance":"חוסר שימוש בארגז חול","hair-loss":"נשירת שיער חריגה"};
+function applyPreselect(){
+  const slug=new URLSearchParams(location.search).get('symptom');
+  if(!slug||lang!=='he')return;
+  const name=SLUG_MAP[slug];
+  if(!name)return;
+  document.querySelectorAll('#symptomsGrid .tag').forEach(el=>{
+    if(el.textContent===name&&!el.classList.contains('selected'))el.click();
+  });
+}
 
 /* URGENCY */
 function setUrgency(level){
