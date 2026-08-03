@@ -216,17 +216,17 @@ button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
   <div class="disclaimer" id="disclaimer">⚠ הכלי להכוונה בלבד ואינו מחליף ייעוץ וטרינרי מקצועי.</div>
 
   <div id="shareRow" style="display:none;gap:5px;">
-    <button class="share-btn whatsapp-btn" onclick="shareWhatsApp()">📲 שתף ב-WhatsApp</button>
-    <button class="share-btn email-btn" onclick="shareEmail()">📧 שלח במייל</button>
+    <button class="share-btn whatsapp-btn" id="btnWa" onclick="shareWhatsApp()">📲 שתף ב-WhatsApp</button>
+    <button class="share-btn email-btn" id="btnMail" onclick="shareEmail()">📧 שלח במייל</button>
   </div>
 
   <div class="links-grid">
-    <a class="link-btn" href="https://www.talisteinvet.co.il/" target="_blank">🩺 ד"ר טלי שטיין</a>
-    <a class="link-btn" href="https://easy.co.il/page/3056876" target="_blank">🩺 ד"ר תמר פלידל</a>
-    <a class="link-btn" href="https://icatcare.org/" target="_blank">🌍 International Cat Care</a>
-    <a class="link-btn" href="https://www.whiskas.in/cat-breeds" target="_blank">🐱 Browse All Breeds</a>
-    <a class="link-btn" href="/symptoms/">📋 מדריכי תסמינים</a>
-    <a class="link-btn" href="mailto:fadeinto77@gmail.com">✉️ צור קשר</a>
+    <a class="link-btn" id="lnkVet1" href="https://www.talisteinvet.co.il/" target="_blank">🩺 ד"ר טלי שטיין</a>
+    <a class="link-btn" id="lnkVet2" href="https://easy.co.il/page/3056876" target="_blank">🩺 ד"ר תמר פלידל</a>
+    <a class="link-btn" id="lnkIcc" href="https://icatcare.org/" target="_blank">🌍 International Cat Care</a>
+    <a class="link-btn" id="lnkBreeds" href="https://www.whiskas.in/cat-breeds" target="_blank">🐱 Browse All Breeds</a>
+    <a class="link-btn" id="lnkGuides" href="/symptoms/">📋 מדריכי תסמינים</a>
+    <a class="link-btn" id="lnkContact" href="mailto:fadeinto77@gmail.com">✉️ צור קשר</a>
   </div>
 </div>
 
@@ -298,6 +298,17 @@ function setLang(l){
   buildFQ('rowLife','life');
   buildFQ('rowDuration','duration');
   updateSummary();
+  const L={
+    lnkGuides:['📋 מדריכי תסמינים','📋 Symptom guides'],
+    lnkContact:['✉️ צור קשר','✉️ Contact'],
+    lnkVet1:['🩺 ד"ר טלי שטיין','🩺 Dr. Tali Stein'],
+    lnkVet2:['🩺 ד"ר תמר פלידל','🩺 Dr. Tamar Flidel'],
+    lnkIcc:['🌍 International Cat Care','🌍 International Cat Care'],
+    lnkBreeds:['🐱 גזעי חתולים','🐱 Browse all breeds'],
+    btnWa:['📲 שתף ב-WhatsApp','📲 Share on WhatsApp'],
+    btnMail:['📧 שלח במייל','📧 Send by email']
+  };
+  for(const k in L){const el=document.getElementById(k); if(el) el.textContent = L[k][l==='he'?0:1];}
 }
 
 function buildSymptoms(){
