@@ -377,7 +377,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 
 /* PRESELECT FROM GUIDE PAGES */
-const SLUG_MAP={vomiting:"הקאות","appetite-loss":"חוסר תיאבון",diarrhea:"שלשול",constipation:"עצירות","weight-loss":"ירידה במשקל",breathing:"קושי בנשימה",lethargy:"עייפות קיצונית","blood-urine":"דם בשתן","litter-avoidance":"חוסר שימוש בארגז חול","hair-loss":"נשירת שיער חריגה"};
+const SLUG_MAP={vomiting:"הקאות","appetite-loss":"חוסר תיאבון",diarrhea:"שלשול",constipation:"עצירות","weight-loss":"ירידה במשקל",breathing:"קושי בנשימה",lethargy:"עייפות קיצונית","blood-urine":"דם בשתן","litter-avoidance":"חוסר שימוש בארגז חול","hair-loss":"נשירת שיער חריגה","increased-thirst":"שתייה מוגברת",fever:"חום גבוה",coughing:"שיעול","bad-breath":"ריח רע מהפה",limping:"צליעה",itching:"גירודים מרובים","eye-discharge":"הפרשות מהעיניים",sneezing:"התעטשויות תכופות"};
 function applyPreselect(){
   const slug=new URLSearchParams(location.search).get('symptom');
   if(!slug||lang!=='he')return;
