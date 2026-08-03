@@ -79,6 +79,10 @@ li::before{content:""; position:absolute; inset-inline-start:4px; top:.72em; wid
 .card em{font-style:normal; font-size:.87rem; color:var(--ink-mute)}
 .dot{display:inline-block; width:8px; height:8px; border-radius:50%; margin-inline-start:7px; vertical-align:middle}
 .dot.u1{background:#e8735c} .dot.u2{background:var(--amber)} .dot.u3{background:var(--cyan)}
+.grid-safety{grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); margin-top:22px}
+.card-safety{background:linear-gradient(135deg,rgba(245,177,61,.13),rgba(9,58,70,.5)); border-color:var(--amber)}
+.card-safety:hover{border-color:var(--amber-soft)}
+.card-safety b{color:var(--amber-soft)}
 .legend{font-size:.85rem; color:var(--ink-mute); margin-top:22px}
 .legend span{margin-inline-end:16px; white-space:nowrap}
 
@@ -92,6 +96,11 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 <div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="../index.html">חזרה לכלי האבחון</a></div>
 <h1>מדריכי תסמינים לחתולים</h1>
 <p class="lede">לכל תסמין כאן יש מדריך קצר: מה עשוי לגרום לו, אילו סימנים מחייבים ווטרינר מיד, ומה אפשר לעשות בבית בינתיים. אם יש כמה תסמינים יחד, עדיף להריץ אותם ביחד בכלי האבחון.</p>
+<div class="grid grid-safety">
+<a class="card card-safety" href="toxic-foods.html"><b>מה אסור לחתולים לאכול</b><em>מזונות רעילים לחתולים</em></a>
+<a class="card card-safety" href="toxic-plants.html"><b>צמחי בית רעילים לחתולים</b><em>אילו צמחים מסוכנים</em></a>
+</div>
+<h2>לפי תסמין</h2>
 <div class="grid">
 <a class="card" href="vomiting.html"><b>הקאות<span class="dot u2"></span></b><em>חתול מקיא</em></a>
 <a class="card" href="appetite-loss.html"><b>חוסר תיאבון<span class="dot u1"></span></b><em>חתול לא אוכל</em></a>
