@@ -309,6 +309,7 @@ function setLang(l){
     btnMail:['📧 שלח במייל','📧 Send by email']
   };
   for(const k in L){const el=document.getElementById(k); if(el) el.textContent = L[k][l==='he'?0:1];}
+  try{ localStorage.setItem('catmind_lang', l); }catch(e){}
 }
 
 function buildSymptoms(){
@@ -386,6 +387,11 @@ window.addEventListener('DOMContentLoaded',()=>{
   fetch("https://catmind-ai-server.onrender.com/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:"ping"})}).catch(()=>{});
   buildSymptoms();buildFQ('rowAge','age');buildFQ('rowLife','life');buildFQ('rowDuration','duration');
   applyPreselect();
+  try{
+    const savedLang = localStorage.getItem('catmind_lang');
+    const hasSymptomParam = new URLSearchParams(location.search).has('symptom');
+    if(savedLang==='en' && !hasSymptomParam){ setLang('en'); }
+  }catch(e){}
 });
 
 /* PRESELECT FROM GUIDE PAGES */
