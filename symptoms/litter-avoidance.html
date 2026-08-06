@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>חתול לא עושה בארגז — סיבות ופתרונות | CatMind AI</title>
+<title id="pageTitle">חתול לא עושה בארגז — סיבות ופתרונות | CatMind AI</title>
 <meta name="description" content="חתול שהפסיק להשתמש בארגז לא עושה דווקא. הסבר על ההפרדה בין סיבה רפואית לבין סיבה התנהגותית, ומה בודקים קודם.">
 <link rel="canonical" href="https://mandylion.co.il/symptoms/litter-avoidance.html">
 <meta property="og:title" content="חתול לא עושה בארגז — סיבות ופתרונות | CatMind AI">
@@ -27,7 +27,12 @@ body{
   font-family:'Assistant',system-ui,'Segoe UI',Arial,sans-serif; font-size:18px; line-height:1.75;
 }
 .wrap{max-width:760px; margin:0 auto; padding:28px 20px 80px}
-.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px}
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; flex-wrap:wrap}
+.top-links{display:flex; align-items:center; gap:14px}
+.lang-switcher{display:flex; gap:5px}
+.lang-btn{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:3px 8px; font-size:14px; cursor:pointer; transition:.2s; color:#fff}
+.lang-btn:hover{background:rgba(46,200,230,.2); border-color:var(--cyan)}
+.lang-btn.active{background:rgba(46,200,230,.25); border-color:var(--cyan)}
 .brand{font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--cyan); text-decoration:none; letter-spacing:-.01em}
 .brand span{color:var(--ink)}
 .crumb{font-size:.9rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid transparent}
@@ -93,38 +98,59 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html">כל התסמינים</a></div>
-<h1>חתול לא עושה בארגז — סיבות רפואיות והתנהגותיות</h1>
-<p class="lede">הפסקת שימוש בארגז היא אחת התלונות הנפוצות ביותר, וגם אחת שמתפרשות לא נכון לעיתים קרובות. הכלל המקצועי ברור: קודם שוללים בעיה רפואית, ורק אחר כך מטפלים בהתנהגות. חתול שכואב לו להשתין קושר את הכאב לארגז ומתחיל להימנע ממנו, וזה נראה מבחוץ בדיוק כמו מרד.</p>
-<div class="triage"><div class="triage-label">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b>מיידי</b>לא מחכים לבוקר</div><div class="step u2 on"><b>תוך 24 שעות</b>לקבוע ביקור היום</div><div class="step u3"><b>לעקוב בבית</b>לתעד ולהתייעץ</div></div></div>
-<h2>סיבות אפשריות</h2><ul class="causes">
-<li><strong>כאב בהשתנה.</strong> דלקת שלפוחית או אבנים. זו הסיבה הרפואית הראשונה שבודקים.</li>
-<li><strong>עצירות או שלשול.</strong> גם כאב ביציאה יוצר אותה הימנעות.</li>
-<li><strong>דלקת מפרקים.</strong> חתול מבוגר מתקשה לטפס לארגז עם דפנות גבוהות.</li>
-<li><strong>ארגז לא מתאים.</strong> מלוכלך, קטן מדי, מכוסה, או עם חול שהוחלף לאחרונה.</li>
-<li><strong>מיקום.</strong> ארגז ליד מכונת כביסה או במעבר הומה נתפס כלא בטוח.</li>
-<li><strong>מתח חברתי.</strong> חתול נוסף בבית שחוסם את הגישה, לפעמים בלי שהבעלים מבחין.</li>
+<div class="top">
+  <div class="top-links"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html" data-he="כל התסמינים" data-en="All Symptoms">כל התסמינים</a></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
+  </div>
+</div>
+<h1 data-he="חתול לא עושה בארגז — סיבות רפואיות והתנהגותיות" data-en="Cat Not Using the Litter Box — Medical and Behavioral Causes">חתול לא עושה בארגז — סיבות רפואיות והתנהגותיות</h1>
+<p class="lede" data-he="הפסקת שימוש בארגז היא אחת התלונות הנפוצות ביותר, וגם אחת שמתפרשות לא נכון לעיתים קרובות. הכלל המקצועי ברור: קודם שוללים בעיה רפואית, ורק אחר כך מטפלים בהתנהגות. חתול שכואב לו להשתין קושר את הכאב לארגז ומתחיל להימנע ממנו, וזה נראה מבחוץ בדיוק כמו מרד." data-en="Stopping litter box use is one of the most common complaints, and also one that's often misread. The professional rule is clear: first rule out a medical problem, and only then address behavior. A cat that has pain while urinating links the pain to the box and starts avoiding it, which from the outside looks exactly like defiance.">הפסקת שימוש בארגז היא אחת התלונות הנפוצות ביותר, וגם אחת שמתפרשות לא נכון לעיתים קרובות. הכלל המקצועי ברור: קודם שוללים בעיה רפואית, ורק אחר כך מטפלים בהתנהגות. חתול שכואב לו להשתין קושר את הכאב לארגז ומתחיל להימנע ממנו, וזה נראה מבחוץ בדיוק כמו מרד.</p>
+<div class="triage"><div class="triage-label" data-he="רמת דחיפות מקובלת" data-en="Typical Urgency Level">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b data-he="מיידי" data-en="Immediate">מיידי</b><span data-he="לא מחכים לבוקר" data-en="Don't wait till morning">לא מחכים לבוקר</span></div><div class="step u2 on"><b data-he="תוך 24 שעות" data-en="Within 24 hours">תוך 24 שעות</b><span data-he="לקבוע ביקור היום" data-en="Schedule a visit today">לקבוע ביקור היום</span></div><div class="step u3"><b data-he="לעקוב בבית" data-en="Monitor at home">לעקוב בבית</b><span data-he="לתעד ולהתייעץ" data-en="Document and consult">לתעד ולהתייעץ</span></div></div></div>
+<h2 data-he="סיבות אפשריות" data-en="Possible Causes">סיבות אפשריות</h2><ul class="causes">
+<li><strong data-he="כאב בהשתנה." data-en="Painful urination.">כאב בהשתנה.</strong> <span data-he="דלקת שלפוחית או אבנים. זו הסיבה הרפואית הראשונה שבודקים." data-en="Bladder inflammation or stones. This is the first medical cause to check.">דלקת שלפוחית או אבנים. זו הסיבה הרפואית הראשונה שבודקים.</span></li>
+<li><strong data-he="עצירות או שלשול." data-en="Constipation or diarrhea.">עצירות או שלשול.</strong> <span data-he="גם כאב ביציאה יוצר אותה הימנעות." data-en="Pain during bowel movements creates the same avoidance.">גם כאב ביציאה יוצר אותה הימנעות.</span></li>
+<li><strong data-he="דלקת מפרקים." data-en="Arthritis.">דלקת מפרקים.</strong> <span data-he="חתול מבוגר מתקשה לטפס לארגז עם דפנות גבוהות." data-en="An older cat struggles to climb into a box with high sides.">חתול מבוגר מתקשה לטפס לארגז עם דפנות גבוהות.</span></li>
+<li><strong data-he="ארגז לא מתאים." data-en="Unsuitable litter box.">ארגז לא מתאים.</strong> <span data-he="מלוכלך, קטן מדי, מכוסה, או עם חול שהוחלף לאחרונה." data-en="Dirty, too small, covered, or with recently changed litter.">מלוכלך, קטן מדי, מכוסה, או עם חול שהוחלף לאחרונה.</span></li>
+<li><strong data-he="מיקום." data-en="Location.">מיקום.</strong> <span data-he="ארגז ליד מכונת כביסה או במעבר הומה נתפס כלא בטוח." data-en="A box near a washing machine or in a busy hallway feels unsafe.">ארגז ליד מכונת כביסה או במעבר הומה נתפס כלא בטוח.</span></li>
+<li><strong data-he="מתח חברתי." data-en="Social tension.">מתח חברתי.</strong> <span data-he="חתול נוסף בבית שחוסם את הגישה, לפעמים בלי שהבעלים מבחין." data-en="Another cat in the house blocking access, sometimes without the owner noticing.">חתול נוסף בבית שחוסם את הגישה, לפעמים בלי שהבעלים מבחין.</span></li>
 </ul>
-<div class="flags"><h2>מתי לא מחכים</h2><ul>
-<li>החתול מתאמץ בארגז בלי תוצאה — חשד לחסימת שתן</li>
-<li>יש דם בשתן או בצואה</li>
-<li>הוא מייבב בזמן עשיית הצרכים</li>
-<li>השינוי היה פתאומי אצל חתול שהיה מסודר שנים</li>
-<li>יש בנוסף שתייה מוגברת או ירידה במשקל</li>
+<div class="flags"><h2 data-he="מתי לא מחכים" data-en="When Not to Wait">מתי לא מחכים</h2><ul>
+<li data-he="החתול מתאמץ בארגז בלי תוצאה — חשד לחסימת שתן" data-en="The cat strains in the box with no result — suspected urinary blockage">החתול מתאמץ בארגז בלי תוצאה — חשד לחסימת שתן</li>
+<li data-he="יש דם בשתן או בצואה" data-en="There's blood in the urine or stool">יש דם בשתן או בצואה</li>
+<li data-he="הוא מייבב בזמן עשיית הצרכים" data-en="It whimpers while relieving itself">הוא מייבב בזמן עשיית הצרכים</li>
+<li data-he="השינוי היה פתאומי אצל חתול שהיה מסודר שנים" data-en="The change was sudden in a cat that had been reliably using the box for years">השינוי היה פתאומי אצל חתול שהיה מסודר שנים</li>
+<li data-he="יש בנוסף שתייה מוגברת או ירידה במשקל" data-en="There's also increased drinking or weight loss">יש בנוסף שתייה מוגברת או ירידה במשקל</li>
 </ul></div>
-<h2>מה אפשר לעשות בינתיים</h2><ul>
-<li>מספר הארגזים המומלץ הוא מספר החתולים בבית ועוד אחד</li>
-<li>לנקות פעם ביום ולהחליף חול לגמרי אחת לשבוע</li>
-<li>לחזור לסוג החול הקודם אם הוחלף לאחרונה</li>
-<li>לנקות מקומות תאונה באנזימים ולא באמוניה, שריחה מזכיר שתן ומזמין חזרה</li>
-<li>ארגז פתוח, גדול ובמקום שקט מנצח כמעט תמיד ארגז מעוצב</li>
+<h2 data-he="מה אפשר לעשות בינתיים" data-en="What You Can Do Meanwhile">מה אפשר לעשות בינתיים</h2><ul>
+<li data-he="מספר הארגזים המומלץ הוא מספר החתולים בבית ועוד אחד" data-en="The recommended number of boxes is the number of cats in the house plus one">מספר הארגזים המומלץ הוא מספר החתולים בבית ועוד אחד</li>
+<li data-he="לנקות פעם ביום ולהחליף חול לגמרי אחת לשבוע" data-en="Clean once a day and fully change the litter once a week">לנקות פעם ביום ולהחליף חול לגמרי אחת לשבוע</li>
+<li data-he="לחזור לסוג החול הקודם אם הוחלף לאחרונה" data-en="Go back to the previous litter type if it was recently changed">לחזור לסוג החול הקודם אם הוחלף לאחרונה</li>
+<li data-he="לנקות מקומות תאונה באנזימים ולא באמוניה, שריחה מזכיר שתן ומזמין חזרה" data-en="Clean accident spots with enzyme cleaner, not ammonia, whose smell resembles urine and invites a repeat">לנקות מקומות תאונה באנזימים ולא באמוניה, שריחה מזכיר שתן ומזמין חזרה</li>
+<li data-he="ארגז פתוח, גדול ובמקום שקט מנצח כמעט תמיד ארגז מעוצב" data-en="An open, large box in a quiet spot almost always beats a fancy designed one">ארגז פתוח, גדול ובמקום שקט מנצח כמעט תמיד ארגז מעוצב</li>
 </ul>
-<p>אם השינוי היה פתאומי, ההנחה הראשונה היא רפואית ולא התנהגותית. בדיקת שתן פשוטה סוגרת את רוב השאלה.</p>
-<a class="cta" href="../index.html?symptom=litter-avoidance">בדיקת התסמינים של החתול שלי<small>הכלי יסמן עבורכם את התסמין חוסר שימוש בארגז חול</small></a>
-<p class="note">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
+<p data-he="אם השינוי היה פתאומי, ההנחה הראשונה היא רפואית ולא התנהגותית. בדיקת שתן פשוטה סוגרת את רוב השאלה." data-en="If the change was sudden, the first assumption is medical, not behavioral. A simple urine test settles most of the question.">אם השינוי היה פתאומי, ההנחה הראשונה היא רפואית ולא התנהגותית. בדיקת שתן פשוטה סוגרת את רוב השאלה.</p>
+<a class="cta" href="../index.html?symptom=litter-avoidance"><span data-he="בדיקת התסמינים של החתול שלי" data-en="Check My Cat's Symptoms">בדיקת התסמינים של החתול שלי</span><small data-he="הכלי יסמן עבורכם את התסמין חוסר שימוש בארגז חול" data-en="The tool will preselect the not using the litter box symptom for you">הכלי יסמן עבורכם את התסמין חוסר שימוש בארגז חול</small></a>
+<p class="note" data-he="המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר." data-en="The information on this page is general and intended only to help understand the situation. It does not replace an examination, diagnosis, or advice from a veterinarian.">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
 <div class="foot">
-<a href="index.html">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/">CatMind AI — כלי האבחון</a>
+<a href="index.html" data-he="כל מדריכי התסמינים" data-en="All Symptom Guides">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/" data-he="CatMind AI — כלי האבחון" data-en="CatMind AI — Diagnosis Tool">CatMind AI — כלי האבחון</a>
 </div>
 </div>
+
+<script>
+var TITLE_HE="חתול לא עושה בארגז — סיבות ופתרונות | CatMind AI";
+var TITLE_EN="Cat Not Using the Litter Box — Causes and Solutions | CatMind AI";
+function setLang(l){
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  document.getElementById('pageTitle').textContent=(l==='en')?TITLE_EN:TITLE_HE;
+  document.querySelectorAll('[data-he]').forEach(function(el){
+    el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
+  });
+}
+</script>
 </body>
 </html>

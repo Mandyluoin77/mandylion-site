@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>חתול צולע — סיבות ומתי לפנות לווטרינר | CatMind AI</title>
+<title id="pageTitle">חתול צולע — סיבות ומתי לפנות לווטרינר | CatMind AI</title>
 <meta name="description" content="צליעה אצל חתול יכולה לנבוע מפצע קטן או משבר. הסבר על הסיבות, על מה שאפשר לבדוק בעדינות בבית ועל סימני האזהרה.">
 <link rel="canonical" href="https://mandylion.co.il/symptoms/limping.html">
 <meta property="og:title" content="חתול צולע — סיבות ומתי לפנות לווטרינר | CatMind AI">
@@ -27,7 +27,12 @@ body{
   font-family:'Assistant',system-ui,'Segoe UI',Arial,sans-serif; font-size:18px; line-height:1.75;
 }
 .wrap{max-width:760px; margin:0 auto; padding:28px 20px 80px}
-.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px}
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; flex-wrap:wrap}
+.top-links{display:flex; align-items:center; gap:14px}
+.lang-switcher{display:flex; gap:5px}
+.lang-btn{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:3px 8px; font-size:14px; cursor:pointer; transition:.2s; color:#fff}
+.lang-btn:hover{background:rgba(46,200,230,.2); border-color:var(--cyan)}
+.lang-btn.active{background:rgba(46,200,230,.25); border-color:var(--cyan)}
 .brand{font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--cyan); text-decoration:none; letter-spacing:-.01em}
 .brand span{color:var(--ink)}
 .crumb{font-size:.9rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid transparent}
@@ -93,37 +98,58 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html">כל התסמינים</a></div>
-<h1>חתול צולע — סיבות ומה בודקים בבית</h1>
-<p class="lede">חתולים סופגים כאב בשקט, וצליעה היא לעיתים הסימן היחיד שמשהו קרה. שווה לדעת שהסיבה השכיחה ביותר אינה דרמטית: פצע נשיכה או שריטה בכף הרגל שהתמסה למוגלה. אבל חתולים גם נופלים, נתפסים בין דלתות ומפתחים דלקת מפרקים בגיל מבוגר, ולכן שווה לבדוק בעדינות מה מצב הרגל.</p>
-<div class="triage"><div class="triage-label">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b>מיידי</b>לא מחכים לבוקר</div><div class="step u2 on"><b>תוך 24 שעות</b>לקבוע ביקור היום</div><div class="step u3"><b>לעקוב בבית</b>לתעד ולהתייעץ</div></div></div>
-<h2>סיבות אפשריות</h2><ul class="causes">
-<li><strong>פצע או מוגלה.</strong> נפוץ מאוד בחתולים שיוצאים. הפצע עצמו קטן וכמעט לא נראה, והנפיחות מגיעה כמה ימים אחר כך.</li>
-<li><strong>חבלה או נקע.</strong> נפילה מגובה או קפיצה שלא הצליחה.</li>
-<li><strong>שבר.</strong> בעיקר לאחר תאונה, ולעיתים בלי שהבעלים ראה מה קרה.</li>
-<li><strong>גוף זר בכף הרגל.</strong> קוץ, שבב או גומייה שנתקעו בין הכריות.</li>
-<li><strong>דלקת מפרקים.</strong> שכיחה מאוד בחתולים מבוגרים, ומתבטאת בהיסוס לפני קפיצה יותר מבצליעה בולטת.</li>
-<li><strong>ציפורן פגועה.</strong> ציפורן שנשברה או שצמחה לתוך הכרית.</li>
+<div class="top">
+  <div class="top-links"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html" data-he="כל התסמינים" data-en="All Symptoms">כל התסמינים</a></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
+  </div>
+</div>
+<h1 data-he="חתול צולע — סיבות ומה בודקים בבית" data-en="Cat Limping — Causes and What to Check at Home">חתול צולע — סיבות ומה בודקים בבית</h1>
+<p class="lede" data-he="חתולים סופגים כאב בשקט, וצליעה היא לעיתים הסימן היחיד שמשהו קרה. שווה לדעת שהסיבה השכיחה ביותר אינה דרמטית: פצע נשיכה או שריטה בכף הרגל שהתמסה למוגלה. אבל חתולים גם נופלים, נתפסים בין דלתות ומפתחים דלקת מפרקים בגיל מבוגר, ולכן שווה לבדוק בעדינות מה מצב הרגל." data-en="Cats absorb pain silently, and limping is sometimes the only sign that something happened. It's worth knowing that the most common cause isn't dramatic: a bite wound or scratch on the paw that turned into an abscess. But cats also fall, get caught in doors, and develop arthritis in old age, so it's worth gently checking the leg's condition.">חתולים סופגים כאב בשקט, וצליעה היא לעיתים הסימן היחיד שמשהו קרה. שווה לדעת שהסיבה השכיחה ביותר אינה דרמטית: פצע נשיכה או שריטה בכף הרגל שהתמסה למוגלה. אבל חתולים גם נופלים, נתפסים בין דלתות ומפתחים דלקת מפרקים בגיל מבוגר, ולכן שווה לבדוק בעדינות מה מצב הרגל.</p>
+<div class="triage"><div class="triage-label" data-he="רמת דחיפות מקובלת" data-en="Typical Urgency Level">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b data-he="מיידי" data-en="Immediate">מיידי</b><span data-he="לא מחכים לבוקר" data-en="Don't wait till morning">לא מחכים לבוקר</span></div><div class="step u2 on"><b data-he="תוך 24 שעות" data-en="Within 24 hours">תוך 24 שעות</b><span data-he="לקבוע ביקור היום" data-en="Schedule a visit today">לקבוע ביקור היום</span></div><div class="step u3"><b data-he="לעקוב בבית" data-en="Monitor at home">לעקוב בבית</b><span data-he="לתעד ולהתייעץ" data-en="Document and consult">לתעד ולהתייעץ</span></div></div></div>
+<h2 data-he="סיבות אפשריות" data-en="Possible Causes">סיבות אפשריות</h2><ul class="causes">
+<li><strong data-he="פצע או מוגלה." data-en="Wound or abscess.">פצע או מוגלה.</strong> <span data-he="נפוץ מאוד בחתולים שיוצאים. הפצע עצמו קטן וכמעט לא נראה, והנפיחות מגיעה כמה ימים אחר כך." data-en="Very common in outdoor cats. The wound itself is small and barely visible, and the swelling appears a few days later.">נפוץ מאוד בחתולים שיוצאים. הפצע עצמו קטן וכמעט לא נראה, והנפיחות מגיעה כמה ימים אחר כך.</span></li>
+<li><strong data-he="חבלה או נקע." data-en="Bruise or sprain.">חבלה או נקע.</strong> <span data-he="נפילה מגובה או קפיצה שלא הצליחה." data-en="A fall from height or a failed jump.">נפילה מגובה או קפיצה שלא הצליחה.</span></li>
+<li><strong data-he="שבר." data-en="Fracture.">שבר.</strong> <span data-he="בעיקר לאחר תאונה, ולעיתים בלי שהבעלים ראה מה קרה." data-en="Mainly after an accident, sometimes without the owner having seen what happened.">בעיקר לאחר תאונה, ולעיתים בלי שהבעלים ראה מה קרה.</span></li>
+<li><strong data-he="גוף זר בכף הרגל." data-en="Foreign object in the paw.">גוף זר בכף הרגל.</strong> <span data-he="קוץ, שבב או גומייה שנתקעו בין הכריות." data-en="A thorn, splinter, or rubber band stuck between the pads.">קוץ, שבב או גומייה שנתקעו בין הכריות.</span></li>
+<li><strong data-he="דלקת מפרקים." data-en="Arthritis.">דלקת מפרקים.</strong> <span data-he="שכיחה מאוד בחתולים מבוגרים, ומתבטאת בהיסוס לפני קפיצה יותר מבצליעה בולטת." data-en="Very common in older cats, and shows up more as hesitation before jumping than as an obvious limp.">שכיחה מאוד בחתולים מבוגרים, ומתבטאת בהיסוס לפני קפיצה יותר מבצליעה בולטת.</span></li>
+<li><strong data-he="ציפורן פגועה." data-en="Injured nail.">ציפורן פגועה.</strong> <span data-he="ציפורן שנשברה או שצמחה לתוך הכרית." data-en="A broken nail, or one that's grown into the pad.">ציפורן שנשברה או שצמחה לתוך הכרית.</span></li>
 </ul>
-<div class="flags"><h2>מתי לא מחכים</h2><ul>
-<li>הרגל תלויה, מסובבת בזווית לא טבעית או לא נושאת משקל בכלל</li>
-<li>יש נפיחות חמה, פצע פתוח או מוגלה</li>
-<li>החתול צועק כשנוגעים באזור</li>
-<li>הצליעה הופיעה אחרי נפילה מגובה או תאונה</li>
-<li>יש בנוסף חום או חוסר תיאבון</li>
+<div class="flags"><h2 data-he="מתי לא מחכים" data-en="When Not to Wait">מתי לא מחכים</h2><ul>
+<li data-he="הרגל תלויה, מסובבת בזווית לא טבעית או לא נושאת משקל בכלל" data-en="The leg is dangling, twisted at an unnatural angle, or bearing no weight at all">הרגל תלויה, מסובבת בזווית לא טבעית או לא נושאת משקל בכלל</li>
+<li data-he="יש נפיחות חמה, פצע פתוח או מוגלה" data-en="There's warm swelling, an open wound, or pus">יש נפיחות חמה, פצע פתוח או מוגלה</li>
+<li data-he="החתול צועק כשנוגעים באזור" data-en="The cat cries out when the area is touched">החתול צועק כשנוגעים באזור</li>
+<li data-he="הצליעה הופיעה אחרי נפילה מגובה או תאונה" data-en="The limp appeared after a fall from height or an accident">הצליעה הופיעה אחרי נפילה מגובה או תאונה</li>
+<li data-he="יש בנוסף חום או חוסר תיאבון" data-en="There's also fever or loss of appetite">יש בנוסף חום או חוסר תיאבון</li>
 </ul></div>
-<h2>מה אפשר לעשות בינתיים</h2><ul>
-<li>לבדוק את כף הרגל בעדינות, כולל בין הכריות ומצב הציפורניים</li>
-<li>להגביל קפיצות: לסגור בחדר אחד בלי גישה לרהיטים גבוהים</li>
-<li>לא לתת שום משכך כאבים אנושי. הם רעילים לחתולים</li>
-<li>לצלם סרטון של ההליכה — הרבה חתולים מפסיקים לצלוע דווקא במרפאה</li>
+<h2 data-he="מה אפשר לעשות בינתיים" data-en="What You Can Do Meanwhile">מה אפשר לעשות בינתיים</h2><ul>
+<li data-he="לבדוק את כף הרגל בעדינות, כולל בין הכריות ומצב הציפורניים" data-en="Gently check the paw, including between the pads and the state of the nails">לבדוק את כף הרגל בעדינות, כולל בין הכריות ומצב הציפורניים</li>
+<li data-he="להגביל קפיצות: לסגור בחדר אחד בלי גישה לרהיטים גבוהים" data-en="Limit jumping: confine to one room without access to high furniture">להגביל קפיצות: לסגור בחדר אחד בלי גישה לרהיטים גבוהים</li>
+<li data-he="לא לתת שום משכך כאבים אנושי. הם רעילים לחתולים" data-en="Don't give any human painkiller. They're toxic to cats">לא לתת שום משכך כאבים אנושי. הם רעילים לחתולים</li>
+<li data-he="לצלם סרטון של ההליכה — הרבה חתולים מפסיקים לצלוע דווקא במרפאה" data-en="Film a video of the walk — many cats conveniently stop limping right at the clinic">לצלם סרטון של ההליכה — הרבה חתולים מפסיקים לצלוע דווקא במרפאה</li>
 </ul>
-<p>צליעה קלה בלי נפיחות שנעלמת תוך יום אפשר לעקוב אחריה. צליעה עם נפיחות, חום או סירוב לדרוך על הרגל מצריכה בדיקה עוד היום.</p>
-<a class="cta" href="../index.html?symptom=limping">בדיקת התסמינים של החתול שלי<small>הכלי יסמן עבורכם את התסמין צליעה</small></a>
-<p class="note">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
+<p data-he="צליעה קלה בלי נפיחות שנעלמת תוך יום אפשר לעקוב אחריה. צליעה עם נפיחות, חום או סירוב לדרוך על הרגל מצריכה בדיקה עוד היום." data-en="A mild limp without swelling that disappears within a day can be monitored. A limp with swelling, fever, or refusal to bear weight on the leg needs a checkup that same day.">צליעה קלה בלי נפיחות שנעלמת תוך יום אפשר לעקוב אחריה. צליעה עם נפיחות, חום או סירוב לדרוך על הרגל מצריכה בדיקה עוד היום.</p>
+<a class="cta" href="../index.html?symptom=limping"><span data-he="בדיקת התסמינים של החתול שלי" data-en="Check My Cat's Symptoms">בדיקת התסמינים של החתול שלי</span><small data-he="הכלי יסמן עבורכם את התסמין צליעה" data-en="The tool will preselect the limping symptom for you">הכלי יסמן עבורכם את התסמין צליעה</small></a>
+<p class="note" data-he="המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר." data-en="The information on this page is general and intended only to help understand the situation. It does not replace an examination, diagnosis, or advice from a veterinarian.">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
 <div class="foot">
-<a href="index.html">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/">CatMind AI — כלי האבחון</a>
+<a href="index.html" data-he="כל מדריכי התסמינים" data-en="All Symptom Guides">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/" data-he="CatMind AI — כלי האבחון" data-en="CatMind AI — Diagnosis Tool">CatMind AI — כלי האבחון</a>
 </div>
 </div>
+
+<script>
+var TITLE_HE="חתול צולע — סיבות ומתי לפנות לווטרינר | CatMind AI";
+var TITLE_EN="Cat Limping — Causes and When to See a Vet | CatMind AI";
+function setLang(l){
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  document.getElementById('pageTitle').textContent=(l==='en')?TITLE_EN:TITLE_HE;
+  document.querySelectorAll('[data-he]').forEach(function(el){
+    el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
+  });
+}
+</script>
 </body>
 </html>

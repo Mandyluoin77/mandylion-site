@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>חתול מתקשה לנשום — סימנים ומה עושים מיד | CatMind AI</title>
+<title id="pageTitle">חתול מתקשה לנשום — סימנים ומה עושים מיד | CatMind AI</title>
 <meta name="description" content="קושי בנשימה אצל חתול הוא כמעט תמיד מצב חירום. כך מזהים את הסימנים, מה אסור לעשות, ולמה חייבים לפנות לווטרינר מיד.">
 <link rel="canonical" href="https://mandylion.co.il/symptoms/breathing.html">
 <meta property="og:title" content="חתול מתקשה לנשום — סימנים ומה עושים מיד | CatMind AI">
@@ -27,7 +27,12 @@ body{
   font-family:'Assistant',system-ui,'Segoe UI',Arial,sans-serif; font-size:18px; line-height:1.75;
 }
 .wrap{max-width:760px; margin:0 auto; padding:28px 20px 80px}
-.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px}
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; flex-wrap:wrap}
+.top-links{display:flex; align-items:center; gap:14px}
+.lang-switcher{display:flex; gap:5px}
+.lang-btn{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:3px 8px; font-size:14px; cursor:pointer; transition:.2s; color:#fff}
+.lang-btn:hover{background:rgba(46,200,230,.2); border-color:var(--cyan)}
+.lang-btn.active{background:rgba(46,200,230,.25); border-color:var(--cyan)}
 .brand{font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--cyan); text-decoration:none; letter-spacing:-.01em}
 .brand span{color:var(--ink)}
 .crumb{font-size:.9rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid transparent}
@@ -93,38 +98,59 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html">כל התסמינים</a></div>
-<h1>חתול מתקשה לנשום — מצב חירום שדורש פעולה מיידית</h1>
-<p class="lede">חתולים מסתירים מצוקה נשימתית עד הרגע האחרון. כשהסימנים כבר גלויים לעין, המצב לרוב מתקדם. חתול בריא נושם בשקט, עם בית חזה שכמעט לא זז, בקצב של עשרים עד שלושים נשימות בדקה במנוחה. כל חריגה משמעותית מכך מצדיקה נסיעה לווטרינר, לא המתנה.</p>
-<div class="triage"><div class="triage-label">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1 on"><b>מיידי</b>לא מחכים לבוקר</div><div class="step u2"><b>תוך 24 שעות</b>לקבוע ביקור היום</div><div class="step u3"><b>לעקוב בבית</b>לתעד ולהתייעץ</div></div></div>
-<h2>סיבות אפשריות</h2><ul class="causes">
-<li><strong>נוזלים סביב הריאות או בתוכן.</strong> לרוב על רקע מחלת לב או דלקת.</li>
-<li><strong>אסתמה חתולית.</strong> מתבטאת בהתקפי שיעול ובתנוחת צוואר מושט קדימה.</li>
-<li><strong>מחלת לב.</strong> אצל חתולים היא לעיתים קרובות שקטה לגמרי עד להתקף הראשון.</li>
-<li><strong>אנמיה חמורה.</strong> פחות חמצן בדם מתורגם לנשימה מהירה.</li>
-<li><strong>חבלה או טראומה.</strong> נפילה או תאונה עלולות לגרום לפגיעה בבית החזה.</li>
-<li><strong>חום קיצוני.</strong> מכת חום, בעיקר במכוניות ובמרפסות סגורות.</li>
+<div class="top">
+  <div class="top-links"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html" data-he="כל התסמינים" data-en="All Symptoms">כל התסמינים</a></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
+  </div>
+</div>
+<h1 data-he="חתול מתקשה לנשום — מצב חירום שדורש פעולה מיידית" data-en="Cat Struggling to Breathe — An Emergency Requiring Immediate Action">חתול מתקשה לנשום — מצב חירום שדורש פעולה מיידית</h1>
+<p class="lede" data-he="חתולים מסתירים מצוקה נשימתית עד הרגע האחרון. כשהסימנים כבר גלויים לעין, המצב לרוב מתקדם. חתול בריא נושם בשקט, עם בית חזה שכמעט לא זז, בקצב של עשרים עד שלושים נשימות בדקה במנוחה. כל חריגה משמעותית מכך מצדיקה נסיעה לווטרינר, לא המתנה." data-en="Cats hide respiratory distress until the last moment. By the time signs are visible, the condition is usually advanced. A healthy cat breathes quietly, with a chest that barely moves, at a rate of twenty to thirty breaths per minute at rest. Any significant deviation from this warrants a trip to the vet, not waiting.">חתולים מסתירים מצוקה נשימתית עד הרגע האחרון. כשהסימנים כבר גלויים לעין, המצב לרוב מתקדם. חתול בריא נושם בשקט, עם בית חזה שכמעט לא זז, בקצב של עשרים עד שלושים נשימות בדקה במנוחה. כל חריגה משמעותית מכך מצדיקה נסיעה לווטרינר, לא המתנה.</p>
+<div class="triage"><div class="triage-label" data-he="רמת דחיפות מקובלת" data-en="Typical Urgency Level">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1 on"><b data-he="מיידי" data-en="Immediate">מיידי</b><span data-he="לא מחכים לבוקר" data-en="Don't wait till morning">לא מחכים לבוקר</span></div><div class="step u2"><b data-he="תוך 24 שעות" data-en="Within 24 hours">תוך 24 שעות</b><span data-he="לקבוע ביקור היום" data-en="Schedule a visit today">לקבוע ביקור היום</span></div><div class="step u3"><b data-he="לעקוב בבית" data-en="Monitor at home">לעקוב בבית</b><span data-he="לתעד ולהתייעץ" data-en="Document and consult">לתעד ולהתייעץ</span></div></div></div>
+<h2 data-he="סיבות אפשריות" data-en="Possible Causes">סיבות אפשריות</h2><ul class="causes">
+<li><strong data-he="נוזלים סביב הריאות או בתוכן." data-en="Fluid around or in the lungs.">נוזלים סביב הריאות או בתוכן.</strong> <span data-he="לרוב על רקע מחלת לב או דלקת." data-en="Usually due to heart disease or inflammation.">לרוב על רקע מחלת לב או דלקת.</span></li>
+<li><strong data-he="אסתמה חתולית." data-en="Feline asthma.">אסתמה חתולית.</strong> <span data-he="מתבטאת בהתקפי שיעול ובתנוחת צוואר מושט קדימה." data-en="Shows up as coughing fits and a stretched-forward neck posture.">מתבטאת בהתקפי שיעול ובתנוחת צוואר מושט קדימה.</span></li>
+<li><strong data-he="מחלת לב." data-en="Heart disease.">מחלת לב.</strong> <span data-he="אצל חתולים היא לעיתים קרובות שקטה לגמרי עד להתקף הראשון." data-en="In cats it's often completely silent until the first crisis.">אצל חתולים היא לעיתים קרובות שקטה לגמרי עד להתקף הראשון.</span></li>
+<li><strong data-he="אנמיה חמורה." data-en="Severe anemia.">אנמיה חמורה.</strong> <span data-he="פחות חמצן בדם מתורגם לנשימה מהירה." data-en="Less oxygen in the blood translates to rapid breathing.">פחות חמצן בדם מתורגם לנשימה מהירה.</span></li>
+<li><strong data-he="חבלה או טראומה." data-en="Trauma.">חבלה או טראומה.</strong> <span data-he="נפילה או תאונה עלולות לגרום לפגיעה בבית החזה." data-en="A fall or accident can cause chest injury.">נפילה או תאונה עלולות לגרום לפגיעה בבית החזה.</span></li>
+<li><strong data-he="חום קיצוני." data-en="Extreme heat.">חום קיצוני.</strong> <span data-he="מכת חום, בעיקר במכוניות ובמרפסות סגורות." data-en="Heatstroke, mainly in cars and enclosed balconies.">מכת חום, בעיקר במכוניות ובמרפסות סגורות.</span></li>
 </ul>
-<div class="flags"><h2>מתי לא מחכים</h2><ul>
-<li>החתול נושם עם הפה פתוח — אצל חתול זה כמעט תמיד מצב חירום</li>
-<li>הבטן עובדת בכוח בכל נשימה</li>
-<li>הלשון או החניכיים כחלחלות, סגולות או חיוורות מאוד</li>
-<li>הוא יושב עם צוואר מושט קדימה ומסרב לשכב</li>
-<li>יש רעש, צפצוף או גרגור בנשימה</li>
+<div class="flags"><h2 data-he="מתי לא מחכים" data-en="When Not to Wait">מתי לא מחכים</h2><ul>
+<li data-he="החתול נושם עם הפה פתוח — אצל חתול זה כמעט תמיד מצב חירום" data-en="The cat is breathing with its mouth open — in a cat this is almost always an emergency">החתול נושם עם הפה פתוח — אצל חתול זה כמעט תמיד מצב חירום</li>
+<li data-he="הבטן עובדת בכוח בכל נשימה" data-en="The belly is working hard with every breath">הבטן עובדת בכוח בכל נשימה</li>
+<li data-he="הלשון או החניכיים כחלחלות, סגולות או חיוורות מאוד" data-en="The tongue or gums are bluish, purple, or very pale">הלשון או החניכיים כחלחלות, סגולות או חיוורות מאוד</li>
+<li data-he="הוא יושב עם צוואר מושט קדימה ומסרב לשכב" data-en="It sits with its neck stretched forward and refuses to lie down">הוא יושב עם צוואר מושט קדימה ומסרב לשכב</li>
+<li data-he="יש רעש, צפצוף או גרגור בנשימה" data-en="There's noise, wheezing, or gurgling in the breathing">יש רעש, צפצוף או גרגור בנשימה</li>
 </ul></div>
-<h2>מה אפשר לעשות בינתיים</h2><ul>
-<li>לצמצם כל מאמץ. לא לרדוף אחריו ולא להוציא אותו בכוח מהמחבוא</li>
-<li>לשמור על סביבה קרירה ושקטה</li>
-<li>להעביר אותו בהובלה בתא נשיאה פתוח מלמעלה, בלי לחיצה על בית החזה</li>
-<li>לספור נשימות בדקה בזמן מנוחה ולמסור את המספר בטלפון לווטרינר</li>
-<li>לא לתת שום תרופה בלי הוראה מפורשת</li>
+<h2 data-he="מה אפשר לעשות בינתיים" data-en="What You Can Do Meanwhile">מה אפשר לעשות בינתיים</h2><ul>
+<li data-he="לצמצם כל מאמץ. לא לרדוף אחריו ולא להוציא אותו בכוח מהמחבוא" data-en="Minimize all exertion. Don't chase it or force it out of hiding">לצמצם כל מאמץ. לא לרדוף אחריו ולא להוציא אותו בכוח מהמחבוא</li>
+<li data-he="לשמור על סביבה קרירה ושקטה" data-en="Keep the environment cool and quiet">לשמור על סביבה קרירה ושקטה</li>
+<li data-he="להעביר אותו בהובלה בתא נשיאה פתוח מלמעלה, בלי לחיצה על בית החזה" data-en="Transport it in a carrier open on top, without pressure on the chest">להעביר אותו בהובלה בתא נשיאה פתוח מלמעלה, בלי לחיצה על בית החזה</li>
+<li data-he="לספור נשימות בדקה בזמן מנוחה ולמסור את המספר בטלפון לווטרינר" data-en="Count breaths per minute at rest and give the number to the vet by phone">לספור נשימות בדקה בזמן מנוחה ולמסור את המספר בטלפון לווטרינר</li>
+<li data-he="לא לתת שום תרופה בלי הוראה מפורשת" data-en="Don't give any medication without explicit instruction">לא לתת שום תרופה בלי הוראה מפורשת</li>
 </ul>
-<p>קושי בנשימה הוא אחד המצבים הבודדים שבהם אין מקום לשקול ולהמתין. אם החתול נושם בפה פתוח — יוצאים לדרך עכשיו, ומתקשרים מהרכב.</p>
-<a class="cta" href="../index.html?symptom=breathing">בדיקת התסמינים של החתול שלי<small>הכלי יסמן עבורכם את התסמין קושי בנשימה</small></a>
-<p class="note">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
+<p data-he="קושי בנשימה הוא אחד המצבים הבודדים שבהם אין מקום לשקול ולהמתין. אם החתול נושם בפה פתוח — יוצאים לדרך עכשיו, ומתקשרים מהרכב." data-en="Breathing difficulty is one of the few situations where there's no room to weigh options and wait. If the cat is breathing with its mouth open — leave now, and call from the car.">קושי בנשימה הוא אחד המצבים הבודדים שבהם אין מקום לשקול ולהמתין. אם החתול נושם בפה פתוח — יוצאים לדרך עכשיו, ומתקשרים מהרכב.</p>
+<a class="cta" href="../index.html?symptom=breathing"><span data-he="בדיקת התסמינים של החתול שלי" data-en="Check My Cat's Symptoms">בדיקת התסמינים של החתול שלי</span><small data-he="הכלי יסמן עבורכם את התסמין קושי בנשימה" data-en="The tool will preselect the breathing difficulty symptom for you">הכלי יסמן עבורכם את התסמין קושי בנשימה</small></a>
+<p class="note" data-he="המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר." data-en="The information on this page is general and intended only to help understand the situation. It does not replace an examination, diagnosis, or advice from a veterinarian.">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
 <div class="foot">
-<a href="index.html">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/">CatMind AI — כלי האבחון</a>
+<a href="index.html" data-he="כל מדריכי התסמינים" data-en="All Symptom Guides">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/" data-he="CatMind AI — כלי האבחון" data-en="CatMind AI — Diagnosis Tool">CatMind AI — כלי האבחון</a>
 </div>
 </div>
+
+<script>
+var TITLE_HE="חתול מתקשה לנשום — סימנים ומה עושים מיד | CatMind AI";
+var TITLE_EN="Cat Struggling to Breathe — Signs and What to Do Immediately | CatMind AI";
+function setLang(l){
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  document.getElementById('pageTitle').textContent=(l==='en')?TITLE_EN:TITLE_HE;
+  document.querySelectorAll('[data-he]').forEach(function(el){
+    el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
+  });
+}
+</script>
 </body>
 </html>

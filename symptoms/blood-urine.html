@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>דם בשתן של חתול — סיבות ומצבי חירום | CatMind AI</title>
+<title id="pageTitle">דם בשתן של חתול — סיבות ומצבי חירום | CatMind AI</title>
 <meta name="description" content="דם בשתן אצל חתול אף פעם אינו נורמלי. הסבר על הסיבות השכיחות, על הסכנה המיוחדת בזכרים, ועל הסימנים שמחייבים נסיעה מיידית לווטרינר.">
 <link rel="canonical" href="https://mandylion.co.il/symptoms/blood-urine.html">
 <meta property="og:title" content="דם בשתן של חתול — סיבות ומצבי חירום | CatMind AI">
@@ -27,7 +27,12 @@ body{
   font-family:'Assistant',system-ui,'Segoe UI',Arial,sans-serif; font-size:18px; line-height:1.75;
 }
 .wrap{max-width:760px; margin:0 auto; padding:28px 20px 80px}
-.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px}
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; flex-wrap:wrap}
+.top-links{display:flex; align-items:center; gap:14px}
+.lang-switcher{display:flex; gap:5px}
+.lang-btn{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:3px 8px; font-size:14px; cursor:pointer; transition:.2s; color:#fff}
+.lang-btn:hover{background:rgba(46,200,230,.2); border-color:var(--cyan)}
+.lang-btn.active{background:rgba(46,200,230,.25); border-color:var(--cyan)}
 .brand{font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--cyan); text-decoration:none; letter-spacing:-.01em}
 .brand span{color:var(--ink)}
 .crumb{font-size:.9rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid transparent}
@@ -93,37 +98,58 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html">כל התסמינים</a></div>
-<h1>דם בשתן של חתול — מה זה אומר ומתי זה חירום</h1>
-<p class="lede">שתן ורדרד, אדמדם או עם כתמים בארגז החול מצביע על דם, וזה תמיד ממצא שדורש בירור. אצל חתולים זכרים המצב מחייב תשומת לב מיוחדת: השופכה שלהם צרה, וחסימה מלאה שלה גורמת לכשל כלייתי ולהפרעות בקצב הלב תוך פרק זמן קצר מאוד. חתול זכר שמתאמץ בארגז ולא מוציא כלום הוא מקרה חירום לכל דבר.</p>
-<div class="triage"><div class="triage-label">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1 on"><b>מיידי</b>לא מחכים לבוקר</div><div class="step u2"><b>תוך 24 שעות</b>לקבוע ביקור היום</div><div class="step u3"><b>לעקוב בבית</b>לתעד ולהתייעץ</div></div></div>
-<h2>סיבות אפשריות</h2><ul class="causes">
-<li><strong>דלקת שלפוחית אידיופתית.</strong> השכיחה ביותר בחתולים צעירים, וקשורה קשר הדוק ללחץ ולשינויים בבית.</li>
-<li><strong>אבנים או גבישים.</strong> גורמים לגירוי, לדימום ולעיתים לחסימה.</li>
-<li><strong>זיהום בדרכי השתן.</strong> נפוץ יותר בחתולים מבוגרים ובחולי סוכרת או כליות.</li>
-<li><strong>חסימה בשופכה.</strong> בעיקר בזכרים, ולעיתים קרובות אחרי כמה ימים של סימנים קלים יותר.</li>
-<li><strong>חבלה.</strong> נפילה או מכה באזור הבטן.</li>
-<li><strong>הפרעות קרישה.</strong> נדירות יותר, ולרוב מלוות בסימני דימום נוספים.</li>
+<div class="top">
+  <div class="top-links"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html" data-he="כל התסמינים" data-en="All Symptoms">כל התסמינים</a></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
+  </div>
+</div>
+<h1 data-he="דם בשתן של חתול — מה זה אומר ומתי זה חירום" data-en="Blood in Cat Urine — What It Means and When It's an Emergency">דם בשתן של חתול — מה זה אומר ומתי זה חירום</h1>
+<p class="lede" data-he="שתן ורדרד, אדמדם או עם כתמים בארגז החול מצביע על דם, וזה תמיד ממצא שדורש בירור. אצל חתולים זכרים המצב מחייב תשומת לב מיוחדת: השופכה שלהם צרה, וחסימה מלאה שלה גורמת לכשל כלייתי ולהפרעות בקצב הלב תוך פרק זמן קצר מאוד. חתול זכר שמתאמץ בארגז ולא מוציא כלום הוא מקרה חירום לכל דבר." data-en="Pinkish, reddish urine or stains in the litter box indicate blood, and that always warrants investigation. Male cats need special attention: their urethra is narrow, and a full blockage causes kidney failure and heart rhythm disturbances within a very short time. A male cat straining in the litter box and producing nothing is a true emergency.">שתן ורדרד, אדמדם או עם כתמים בארגז החול מצביע על דם, וזה תמיד ממצא שדורש בירור. אצל חתולים זכרים המצב מחייב תשומת לב מיוחדת: השופכה שלהם צרה, וחסימה מלאה שלה גורמת לכשל כלייתי ולהפרעות בקצב הלב תוך פרק זמן קצר מאוד. חתול זכר שמתאמץ בארגז ולא מוציא כלום הוא מקרה חירום לכל דבר.</p>
+<div class="triage"><div class="triage-label" data-he="רמת דחיפות מקובלת" data-en="Typical Urgency Level">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1 on"><b data-he="מיידי" data-en="Immediate">מיידי</b><span data-he="לא מחכים לבוקר" data-en="Don't wait till morning">לא מחכים לבוקר</span></div><div class="step u2"><b data-he="תוך 24 שעות" data-en="Within 24 hours">תוך 24 שעות</b><span data-he="לקבוע ביקור היום" data-en="Schedule a visit today">לקבוע ביקור היום</span></div><div class="step u3"><b data-he="לעקוב בבית" data-en="Monitor at home">לעקוב בבית</b><span data-he="לתעד ולהתייעץ" data-en="Document and consult">לתעד ולהתייעץ</span></div></div></div>
+<h2 data-he="סיבות אפשריות" data-en="Possible Causes">סיבות אפשריות</h2><ul class="causes">
+<li><strong data-he="דלקת שלפוחית אידיופתית." data-en="Idiopathic cystitis.">דלקת שלפוחית אידיופתית.</strong> <span data-he="השכיחה ביותר בחתולים צעירים, וקשורה קשר הדוק ללחץ ולשינויים בבית." data-en="The most common cause in young cats, closely linked to stress and changes at home.">השכיחה ביותר בחתולים צעירים, וקשורה קשר הדוק ללחץ ולשינויים בבית.</span></li>
+<li><strong data-he="אבנים או גבישים." data-en="Stones or crystals.">אבנים או גבישים.</strong> <span data-he="גורמים לגירוי, לדימום ולעיתים לחסימה." data-en="Cause irritation, bleeding, and sometimes blockage.">גורמים לגירוי, לדימום ולעיתים לחסימה.</span></li>
+<li><strong data-he="זיהום בדרכי השתן." data-en="Urinary tract infection.">זיהום בדרכי השתן.</strong> <span data-he="נפוץ יותר בחתולים מבוגרים ובחולי סוכרת או כליות." data-en="More common in older cats and those with diabetes or kidney disease.">נפוץ יותר בחתולים מבוגרים ובחולי סוכרת או כליות.</span></li>
+<li><strong data-he="חסימה בשופכה." data-en="Urethral obstruction.">חסימה בשופכה.</strong> <span data-he="בעיקר בזכרים, ולעיתים קרובות אחרי כמה ימים של סימנים קלים יותר." data-en="Mainly in males, often after a few days of milder signs.">בעיקר בזכרים, ולעיתים קרובות אחרי כמה ימים של סימנים קלים יותר.</span></li>
+<li><strong data-he="חבלה." data-en="Trauma.">חבלה.</strong> <span data-he="נפילה או מכה באזור הבטן." data-en="A fall or blow to the abdominal area.">נפילה או מכה באזור הבטן.</span></li>
+<li><strong data-he="הפרעות קרישה." data-en="Clotting disorders.">הפרעות קרישה.</strong> <span data-he="נדירות יותר, ולרוב מלוות בסימני דימום נוספים." data-en="Rarer, and usually accompanied by other signs of bleeding.">נדירות יותר, ולרוב מלוות בסימני דימום נוספים.</span></li>
 </ul>
-<div class="flags"><h2>מתי לא מחכים</h2><ul>
-<li>החתול נכנס לארגז שוב ושוב ולא מוציא כלום</li>
-<li>הוא מייבב או צועק בזמן ההשתנה</li>
-<li>מדובר בזכר — כל סימן חסימה אצלו הוא חירום</li>
-<li>הבטן התחתונה קשה ומתוחה</li>
-<li>יש בנוסף הקאות או אדישות</li>
+<div class="flags"><h2 data-he="מתי לא מחכים" data-en="When Not to Wait">מתי לא מחכים</h2><ul>
+<li data-he="החתול נכנס לארגז שוב ושוב ולא מוציא כלום" data-en="The cat keeps entering the litter box repeatedly and produces nothing">החתול נכנס לארגז שוב ושוב ולא מוציא כלום</li>
+<li data-he="הוא מייבב או צועק בזמן ההשתנה" data-en="It whimpers or cries out while urinating">הוא מייבב או צועק בזמן ההשתנה</li>
+<li data-he="מדובר בזכר — כל סימן חסימה אצלו הוא חירום" data-en="It's a male — any sign of blockage in a male is an emergency">מדובר בזכר — כל סימן חסימה אצלו הוא חירום</li>
+<li data-he="הבטן התחתונה קשה ומתוחה" data-en="The lower belly is hard and tense">הבטן התחתונה קשה ומתוחה</li>
+<li data-he="יש בנוסף הקאות או אדישות" data-en="There's also vomiting or lethargy">יש בנוסף הקאות או אדישות</li>
 </ul></div>
-<h2>מה אפשר לעשות בינתיים</h2><ul>
-<li>לרוקן את הארגז ולהחליף לחול נקי, כדי לראות בוודאות אם יוצא שתן בכלל</li>
-<li>לספור כמה פעמים הוא נכנס לארגז בשעה ולתעד</li>
-<li>לוודא שיש מים זמינים בכמה נקודות</li>
-<li>לא ללחוץ על הבטן בניסיון לעזור — בשלפוחית מלאה זה מסוכן</li>
+<h2 data-he="מה אפשר לעשות בינתיים" data-en="What You Can Do Meanwhile">מה אפשר לעשות בינתיים</h2><ul>
+<li data-he="לרוקן את הארגז ולהחליף לחול נקי, כדי לראות בוודאות אם יוצא שתן בכלל" data-en="Empty the litter box and switch to clean litter, to clearly see whether any urine comes out at all">לרוקן את הארגז ולהחליף לחול נקי, כדי לראות בוודאות אם יוצא שתן בכלל</li>
+<li data-he="לספור כמה פעמים הוא נכנס לארגז בשעה ולתעד" data-en="Count how many times per hour it enters the box and note it">לספור כמה פעמים הוא נכנס לארגז בשעה ולתעד</li>
+<li data-he="לוודא שיש מים זמינים בכמה נקודות" data-en="Make sure water is available in several spots">לוודא שיש מים זמינים בכמה נקודות</li>
+<li data-he="לא ללחוץ על הבטן בניסיון לעזור — בשלפוחית מלאה זה מסוכן" data-en="Don't press on the belly trying to help — with a full bladder this is dangerous">לא ללחוץ על הבטן בניסיון לעזור — בשלפוחית מלאה זה מסוכן</li>
 </ul>
-<p>דם בשתן מצריך בדיקה תמיד. חתול זכר שמתאמץ ולא מוציא שתן מצריך נסיעה לווטרינר מיד, גם באמצע הלילה.</p>
-<a class="cta" href="../index.html?symptom=blood-urine">בדיקת התסמינים של החתול שלי<small>הכלי יסמן עבורכם את התסמין דם בשתן</small></a>
-<p class="note">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
+<p data-he="דם בשתן מצריך בדיקה תמיד. חתול זכר שמתאמץ ולא מוציא שתן מצריך נסיעה לווטרינר מיד, גם באמצע הלילה." data-en="Blood in urine always requires a checkup. A male cat straining without producing urine needs to go to the vet immediately, even in the middle of the night.">דם בשתן מצריך בדיקה תמיד. חתול זכר שמתאמץ ולא מוציא שתן מצריך נסיעה לווטרינר מיד, גם באמצע הלילה.</p>
+<a class="cta" href="../index.html?symptom=blood-urine"><span data-he="בדיקת התסמינים של החתול שלי" data-en="Check My Cat's Symptoms">בדיקת התסמינים של החתול שלי</span><small data-he="הכלי יסמן עבורכם את התסמין דם בשתן" data-en="The tool will preselect the blood in urine symptom for you">הכלי יסמן עבורכם את התסמין דם בשתן</small></a>
+<p class="note" data-he="המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר." data-en="The information on this page is general and intended only to help understand the situation. It does not replace an examination, diagnosis, or advice from a veterinarian.">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
 <div class="foot">
-<a href="index.html">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/">CatMind AI — כלי האבחון</a>
+<a href="index.html" data-he="כל מדריכי התסמינים" data-en="All Symptom Guides">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/" data-he="CatMind AI — כלי האבחון" data-en="CatMind AI — Diagnosis Tool">CatMind AI — כלי האבחון</a>
 </div>
 </div>
+
+<script>
+var TITLE_HE="דם בשתן של חתול — סיבות ומצבי חירום | CatMind AI";
+var TITLE_EN="Blood in Cat Urine — Causes and Emergencies | CatMind AI";
+function setLang(l){
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  document.getElementById('pageTitle').textContent=(l==='en')?TITLE_EN:TITLE_HE;
+  document.querySelectorAll('[data-he]').forEach(function(el){
+    el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
+  });
+}
+</script>
 </body>
 </html>

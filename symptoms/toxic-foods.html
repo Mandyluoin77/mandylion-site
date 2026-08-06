@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>מה אסור לחתולים לאכול — רשימת מזונות רעילים | CatMind AI</title>
+<title id="pageTitle">מה אסור לחתולים לאכול — רשימת מזונות רעילים | CatMind AI</title>
 <meta name="description" content="רשימת המזונות והתרופות הרעילים לחתולים: שוקולד, בצל, שום, ענבים, פרצטמול ועוד. מה עושים אם החתול אכל, ומה סימני האזהרה.">
 <link rel="canonical" href="https://mandylion.co.il/symptoms/toxic-foods.html">
 <meta property="og:title" content="מה אסור לחתולים לאכול — רשימת מזונות רעילים | CatMind AI">
@@ -27,7 +27,12 @@ body{
   font-family:'Assistant',system-ui,'Segoe UI',Arial,sans-serif; font-size:18px; line-height:1.75;
 }
 .wrap{max-width:760px; margin:0 auto; padding:28px 20px 80px}
-.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px}
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; flex-wrap:wrap}
+.top-links{display:flex; align-items:center; gap:14px}
+.lang-switcher{display:flex; gap:5px}
+.lang-btn{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:3px 8px; font-size:14px; cursor:pointer; transition:.2s; color:#fff}
+.lang-btn:hover{background:rgba(46,200,230,.2); border-color:var(--cyan)}
+.lang-btn.active{background:rgba(46,200,230,.25); border-color:var(--cyan)}
 .brand{font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--cyan); text-decoration:none; letter-spacing:-.01em}
 .brand span{color:var(--ink)}
 .crumb{font-size:.9rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid transparent}
@@ -93,49 +98,70 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html">כל המדריכים</a></div>
-<h1>מה אסור לחתולים לאכול — רשימת מזונות רעילים</h1>
-<p class="lede">חתולים בררנים, אבל לא חסינים. חלק מהמזונות שיושבים אצלנו על השיש מזיקים להם כבר בכמויות קטנות, ואת ההשפעה לא רואים בהכרח מיד. הכלל הראשון והחשוב ביותר: אף פעם לא לתת לחתול תרופה אנושית. פרצטמול הוא הרעל הביתי הקטלני ביותר לחתולים, וכמות של חצי כדור עלולה להספיק.</p>
-<h2>רעילות גבוהה — סכנת חיים</h2><ul class="causes">
-<li><strong>פרצטמול ואקמול.</strong> רעיל ביותר. פוגע בכבד ובכדוריות הדם. חצי כדור מסוכן.</li>
-<li><strong>איבופרופן ותרופות נגד דלקת.</strong> גורמים לכשל כליות ולכיבים בקיבה.</li>
-<li><strong>בצל, שום, שאלוט וכרישה.</strong> פוגעים בכדוריות הדם. גם מבושלים, גם בתוך מרק או אבקת מרק.</li>
-<li><strong>שוקולד וקקאו.</strong> תיאוברומין וקפאין פוגעים בלב ובמערכת העצבים. כמה יותר כהה, כך יותר מסוכן.</li>
-<li><strong>קסיליטול ומתחלים.</strong> נמצאים במסטיקים, בממתקים ובחמאת בוטנים ללא סוכר.</li>
+<div class="top">
+  <div class="top-links"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html" data-he="כל המדריכים" data-en="All Guides">כל המדריכים</a></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
+  </div>
+</div>
+<h1 data-he="מה אסור לחתולים לאכול — רשימת מזונות רעילים" data-en="What Cats Must Not Eat — List of Toxic Foods">מה אסור לחתולים לאכול — רשימת מזונות רעילים</h1>
+<p class="lede" data-he="חתולים בררנים, אבל לא חסינים. חלק מהמזונות שיושבים אצלנו על השיש מזיקים להם כבר בכמויות קטנות, ואת ההשפעה לא רואים בהכרח מיד. הכלל הראשון והחשוב ביותר: אף פעם לא לתת לחתול תרופה אנושית. פרצטמול הוא הרעל הביתי הקטלני ביותר לחתולים, וכמות של חצי כדור עלולה להספיק." data-en="Cats are picky eaters, but not immune. Some of the foods sitting on our counters harm them even in small amounts, and you won't necessarily see the effect right away. The first and most important rule: never give a cat human medication. Paracetamol is the deadliest household poison for cats, and half a pill can be enough.">חתולים בררנים, אבל לא חסינים. חלק מהמזונות שיושבים אצלנו על השיש מזיקים להם כבר בכמויות קטנות, ואת ההשפעה לא רואים בהכרח מיד. הכלל הראשון והחשוב ביותר: אף פעם לא לתת לחתול תרופה אנושית. פרצטמול הוא הרעל הביתי הקטלני ביותר לחתולים, וכמות של חצי כדור עלולה להספיק.</p>
+<h2 data-he="רעילות גבוהה — סכנת חיים" data-en="High Toxicity — Life-Threatening">רעילות גבוהה — סכנת חיים</h2><ul class="causes">
+<li><strong data-he="פרצטמול ואקמול." data-en="Paracetamol and acetaminophen.">פרצטמול ואקמול.</strong> <span data-he="רעיל ביותר. פוגע בכבד ובכדוריות הדם. חצי כדור מסוכן." data-en="Extremely toxic. Damages the liver and blood cells. Half a pill is dangerous.">רעיל ביותר. פוגע בכבד ובכדוריות הדם. חצי כדור מסוכן.</span></li>
+<li><strong data-he="איבופרופן ותרופות נגד דלקת." data-en="Ibuprofen and anti-inflammatories.">איבופרופן ותרופות נגד דלקת.</strong> <span data-he="גורמים לכשל כליות ולכיבים בקיבה." data-en="Cause kidney failure and stomach ulcers.">גורמים לכשל כליות ולכיבים בקיבה.</span></li>
+<li><strong data-he="בצל, שום, שאלוט וכרישה." data-en="Onion, garlic, shallots, and leeks.">בצל, שום, שאלוט וכרישה.</strong> <span data-he="פוגעים בכדוריות הדם. גם מבושלים, גם בתוך מרק או אבקת מרק." data-en="Damage blood cells. Even cooked, even inside soup or soup powder.">פוגעים בכדוריות הדם. גם מבושלים, גם בתוך מרק או אבקת מרק.</span></li>
+<li><strong data-he="שוקולד וקקאו." data-en="Chocolate and cocoa.">שוקולד וקקאו.</strong> <span data-he="תיאוברומין וקפאין פוגעים בלב ובמערכת העצבים. כמה יותר כהה, כך יותר מסוכן." data-en="Theobromine and caffeine harm the heart and nervous system. The darker it is, the more dangerous.">תיאוברומין וקפאין פוגעים בלב ובמערכת העצבים. כמה יותר כהה, כך יותר מסוכן.</span></li>
+<li><strong data-he="קסיליטול ומתחלים." data-en="Xylitol and sweeteners.">קסיליטול ומתחלים.</strong> <span data-he="נמצאים במסטיקים, בממתקים ובחמאת בוטנים ללא סוכר." data-en="Found in gum, candy, and sugar-free peanut butter.">נמצאים במסטיקים, בממתקים ובחמאת בוטנים ללא סוכר.</span></li>
 </ul>
-<h2>רעילות בינונית — לפנות באותו יום</h2><ul class="causes">
-<li><strong>ענבים וצימוקים.</strong> קשורים לכשל כליות, בעיקר בכלבים אבל מוטב להימנע לגמרי.</li>
-<li><strong>אלכוהול ובצק שמרים.</strong> הבצק ממשיך לתפוח בקיבה ומייצר אלכוהול בגוף.</li>
-<li><strong>קפה, תה ומשקאות אנרגיה.</strong> קפאין מעלה קצב לב ולחץ דם.</li>
-<li><strong>אגוזי מקדמיה.</strong> גורמים לחולשה ולרעד.</li>
-<li><strong>עצמות מבושלות.</strong> מתפצלות לרסיסים חדים ועלולות לפגוע במערכת העיכול.</li>
+<h2 data-he="רעילות בינונית — לפנות באותו יום" data-en="Moderate Toxicity — See a Vet the Same Day">רעילות בינונית — לפנות באותו יום</h2><ul class="causes">
+<li><strong data-he="ענבים וצימוקים." data-en="Grapes and raisins.">ענבים וצימוקים.</strong> <span data-he="קשורים לכשל כליות, בעיקר בכלבים אבל מוטב להימנע לגמרי." data-en="Linked to kidney failure, mainly in dogs, but best avoided entirely.">קשורים לכשל כליות, בעיקר בכלבים אבל מוטב להימנע לגמרי.</span></li>
+<li><strong data-he="אלכוהול ובצק שמרים." data-en="Alcohol and yeast dough.">אלכוהול ובצק שמרים.</strong> <span data-he="הבצק ממשיך לתפוח בקיבה ומייצר אלכוהול בגוף." data-en="The dough keeps rising in the stomach and produces alcohol in the body.">הבצק ממשיך לתפוח בקיבה ומייצר אלכוהול בגוף.</span></li>
+<li><strong data-he="קפה, תה ומשקאות אנרגיה." data-en="Coffee, tea, and energy drinks.">קפה, תה ומשקאות אנרגיה.</strong> <span data-he="קפאין מעלה קצב לב ולחץ דם." data-en="Caffeine raises heart rate and blood pressure.">קפאין מעלה קצב לב ולחץ דם.</span></li>
+<li><strong data-he="אגוזי מקדמיה." data-en="Macadamia nuts.">אגוזי מקדמיה.</strong> <span data-he="גורמים לחולשה ולרעד." data-en="Cause weakness and tremors.">גורמים לחולשה ולרעד.</span></li>
+<li><strong data-he="עצמות מבושלות." data-en="Cooked bones.">עצמות מבושלות.</strong> <span data-he="מתפצלות לרסיסים חדים ועלולות לפגוע במערכת העיכול." data-en="Splinter into sharp fragments and can injure the digestive tract.">מתפצלות לרסיסים חדים ועלולות לפגוע במערכת העיכול.</span></li>
 </ul>
-<h2>לא רעיל אבל מזיק</h2><ul class="causes">
-<li><strong>חלב ומוצריו.</strong> רוב החתולים הבוגרים אינם מעכלים לקטוז, והתוצאה היא שלשול.</li>
-<li><strong>דגים חיים בקביעות.</strong> פוגעים בספיגת ויטמין B1 לאורך זמן.</li>
-<li><strong>מזון כלבים.</strong> חסר טאורין, שהוא חיוני לחתולים ולא מיוצר בגופם.</li>
-<li><strong>שאריות מתובלות.</strong> מלח, שומן ותבלינים מרגיזים את מערכת העיכול.</li>
-<li><strong>טונה בשמן בקביעות.</strong> כמנה מזדמנת בסדר, כתפריט קבוע יוצרת חסרים.</li>
+<h2 data-he="לא רעיל אבל מזיק" data-en="Not Toxic but Harmful">לא רעיל אבל מזיק</h2><ul class="causes">
+<li><strong data-he="חלב ומוצריו." data-en="Milk and dairy.">חלב ומוצריו.</strong> <span data-he="רוב החתולים הבוגרים אינם מעכלים לקטוז, והתוצאה היא שלשול." data-en="Most adult cats can't digest lactose, and the result is diarrhea.">רוב החתולים הבוגרים אינם מעכלים לקטוז, והתוצאה היא שלשול.</span></li>
+<li><strong data-he="דגים חיים בקביעות." data-en="Regular raw fish.">דגים חיים בקביעות.</strong> <span data-he="פוגעים בספיגת ויטמין B1 לאורך זמן." data-en="Impairs vitamin B1 absorption over time.">פוגעים בספיגת ויטמין B1 לאורך זמן.</span></li>
+<li><strong data-he="מזון כלבים." data-en="Dog food.">מזון כלבים.</strong> <span data-he="חסר טאורין, שהוא חיוני לחתולים ולא מיוצר בגופם." data-en="Lacks taurine, which is essential for cats and isn't produced in their bodies.">חסר טאורין, שהוא חיוני לחתולים ולא מיוצר בגופם.</span></li>
+<li><strong data-he="שאריות מתובלות." data-en="Seasoned leftovers.">שאריות מתובלות.</strong> <span data-he="מלח, שומן ותבלינים מרגיזים את מערכת העיכול." data-en="Salt, fat, and spices irritate the digestive system.">מלח, שומן ותבלינים מרגיזים את מערכת העיכול.</span></li>
+<li><strong data-he="טונה בשמן בקביעות." data-en="Regular tuna in oil.">טונה בשמן בקביעות.</strong> <span data-he="כמנה מזדמנת בסדר, כתפריט קבוע יוצרת חסרים." data-en="Fine as an occasional treat; as a regular diet it creates deficiencies.">כמנה מזדמנת בסדר, כתפריט קבוע יוצרת חסרים.</span></li>
 </ul>
-<div class="flags"><h2>מתי לא מחכים</h2><ul>
-<li>יש חשד שהחתול אכל תרופה אנושית — כל כמות, גם קטנה</li>
-<li>יש הקאות חוזרות, ריור מוגבר או רעד</li>
-<li>החניכיים חיוורות, כחלחלות או צהובות</li>
-<li>החתול אדיש, לא מגיב או מתנשם</li>
-<li>יש חשד לבצל, שום או שוקולד בכמות משמעותית</li>
+<div class="flags"><h2 data-he="מתי לא מחכים" data-en="When Not to Wait">מתי לא מחכים</h2><ul>
+<li data-he="יש חשד שהחתול אכל תרופה אנושית — כל כמות, גם קטנה" data-en="There's suspicion the cat ate human medication — any amount, even small">יש חשד שהחתול אכל תרופה אנושית — כל כמות, גם קטנה</li>
+<li data-he="יש הקאות חוזרות, ריור מוגבר או רעד" data-en="There's repeated vomiting, excess drooling, or tremors">יש הקאות חוזרות, ריור מוגבר או רעד</li>
+<li data-he="החניכיים חיוורות, כחלחלות או צהובות" data-en="The gums are pale, bluish, or yellow">החניכיים חיוורות, כחלחלות או צהובות</li>
+<li data-he="החתול אדיש, לא מגיב או מתנשם" data-en="The cat is lethargic, unresponsive, or panting">החתול אדיש, לא מגיב או מתנשם</li>
+<li data-he="יש חשד לבצל, שום או שוקולד בכמות משמעותית" data-en="There's suspicion of a significant amount of onion, garlic, or chocolate">יש חשד לבצל, שום או שוקולד בכמות משמעותית</li>
 </ul></div>
-<h2>מה לעשות בינתיים</h2><ul>
-<li>לא לנסות לגרום להקאה בכוח. בחלק מהחומרים זה מחמיר את הנזק</li>
-<li>לשמור את האריזה או את שאריות המזון ולהביא לווטרינר</li>
-<li>להעריך כמה זמן עבר ומה הכמות המשוערת</li>
-<li>להתקשר לווטרינר גם אם החתול נראה בסדר. חלק מהרעלים פועלים באיחור של שעות</li>
+<h2 data-he="מה לעשות בינתיים" data-en="What to Do Meanwhile">מה לעשות בינתיים</h2><ul>
+<li data-he="לא לנסות לגרום להקאה בכוח. בחלק מהחומרים זה מחמיר את הנזק" data-en="Don't try to force vomiting. With some substances this worsens the damage">לא לנסות לגרום להקאה בכוח. בחלק מהחומרים זה מחמיר את הנזק</li>
+<li data-he="לשמור את האריזה או את שאריות המזון ולהביא לווטרינר" data-en="Keep the packaging or food leftovers and bring them to the vet">לשמור את האריזה או את שאריות המזון ולהביא לווטרינר</li>
+<li data-he="להעריך כמה זמן עבר ומה הכמות המשוערת" data-en="Estimate how much time has passed and the approximate amount">להעריך כמה זמן עבר ומה הכמות המשוערת</li>
+<li data-he="להתקשר לווטרינר גם אם החתול נראה בסדר. חלק מהרעלים פועלים באיחור של שעות" data-en="Call the vet even if the cat looks fine. Some poisons act with a delay of hours">להתקשר לווטרינר גם אם החתול נראה בסדר. חלק מהרעלים פועלים באיחור של שעות</li>
 </ul>
-<p>בחשד להרעלה הזמן הוא הגורם המשמעותי ביותר. אין מה להמתין ולראות אם זה עובר — מתקשרים מיד, גם באמצע הלילה.</p>
-<a class="cta" href="../index.html">בדיקת התסמינים של החתול שלי<small>בחירת כמה תסמינים יחד וקבלת תמונה מלאה</small></a>
-<p class="note">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
+<p data-he="בחשד להרעלה הזמן הוא הגורם המשמעותי ביותר. אין מה להמתין ולראות אם זה עובר — מתקשרים מיד, גם באמצע הלילה." data-en="When poisoning is suspected, time is the most critical factor. There's no waiting to see if it passes — call immediately, even in the middle of the night.">בחשד להרעלה הזמן הוא הגורם המשמעותי ביותר. אין מה להמתין ולראות אם זה עובר — מתקשרים מיד, גם באמצע הלילה.</p>
+<a class="cta" href="../index.html"><span data-he="בדיקת התסמינים של החתול שלי" data-en="Check My Cat's Symptoms">בדיקת התסמינים של החתול שלי</span><small data-he="בחירת כמה תסמינים יחד וקבלת תמונה מלאה" data-en="Select several symptoms together for a full picture">בחירת כמה תסמינים יחד וקבלת תמונה מלאה</small></a>
+<p class="note" data-he="המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר." data-en="The information on this page is general and intended only to help understand the situation. It does not replace an examination, diagnosis, or advice from a veterinarian.">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
 <div class="foot">
-<a href="index.html">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/">CatMind AI — כלי האבחון</a>
+<a href="index.html" data-he="כל מדריכי התסמינים" data-en="All Symptom Guides">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/" data-he="CatMind AI — כלי האבחון" data-en="CatMind AI — Diagnosis Tool">CatMind AI — כלי האבחון</a>
 </div>
 </div>
+
+<script>
+var TITLE_HE="מה אסור לחתולים לאכול — רשימת מזונות רעילים | CatMind AI";
+var TITLE_EN="What Cats Must Not Eat — List of Toxic Foods | CatMind AI";
+function setLang(l){
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  document.getElementById('pageTitle').textContent=(l==='en')?TITLE_EN:TITLE_HE;
+  document.querySelectorAll('[data-he]').forEach(function(el){
+    el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
+  });
+}
+</script>
 </body>
 </html>

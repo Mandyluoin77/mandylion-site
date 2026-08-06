@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>חתול אדיש ועייף — מתי זה סימן למחלה | CatMind AI</title>
+<title id="pageTitle">חתול אדיש ועייף — מתי זה סימן למחלה | CatMind AI</title>
 <meta name="description" content="חתולים ישנים הרבה, אבל אדישות אמיתית נראית אחרת. כך מבדילים בין שינה רגילה לבין סימן מחלה, ומתי חייבים לפנות לווטרינר.">
 <link rel="canonical" href="https://mandylion.co.il/symptoms/lethargy.html">
 <meta property="og:title" content="חתול אדיש ועייף — מתי זה סימן למחלה | CatMind AI">
@@ -27,7 +27,12 @@ body{
   font-family:'Assistant',system-ui,'Segoe UI',Arial,sans-serif; font-size:18px; line-height:1.75;
 }
 .wrap{max-width:760px; margin:0 auto; padding:28px 20px 80px}
-.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px}
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; flex-wrap:wrap}
+.top-links{display:flex; align-items:center; gap:14px}
+.lang-switcher{display:flex; gap:5px}
+.lang-btn{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:3px 8px; font-size:14px; cursor:pointer; transition:.2s; color:#fff}
+.lang-btn:hover{background:rgba(46,200,230,.2); border-color:var(--cyan)}
+.lang-btn.active{background:rgba(46,200,230,.25); border-color:var(--cyan)}
 .brand{font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--cyan); text-decoration:none; letter-spacing:-.01em}
 .brand span{color:var(--ink)}
 .crumb{font-size:.9rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid transparent}
@@ -93,37 +98,58 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html">כל התסמינים</a></div>
-<h1>חתול אדיש וישן כל היום — מתי זה סימן למחלה</h1>
-<p class="lede">חתול בוגר ישן בין שתים־עשרה לשש־עשרה שעות ביממה, וזה תקין לחלוטין. ההבדל בין שינה לבין אדישות אינו בכמות אלא באיכות ההתעוררות: חתול בריא שנרדם מגיב לפתיחת שקית, קם לקראת האוכל ומרים את הראש כשנכנסים לחדר. חתול אדיש נשאר במקום, לא מגיב, ולעיתים בוחר מקום מסתור לא אופייני.</p>
-<div class="triage"><div class="triage-label">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b>מיידי</b>לא מחכים לבוקר</div><div class="step u2 on"><b>תוך 24 שעות</b>לקבוע ביקור היום</div><div class="step u3"><b>לעקוב בבית</b>לתעד ולהתייעץ</div></div></div>
-<h2>סיבות אפשריות</h2><ul class="causes">
-<li><strong>חום או זיהום.</strong> כמעט כל מחלה חדה מתחילה בירידה בפעילות.</li>
-<li><strong>כאב.</strong> חתולים לא מייללים כשכואב להם. הם פשוט מפסיקים לזוז.</li>
-<li><strong>אנמיה.</strong> מלווה בחניכיים חיוורות ובנשימה מהירה.</li>
-<li><strong>מחלת כליות.</strong> אחת הסיבות השכיחות לאדישות בחתולים מבוגרים.</li>
-<li><strong>הרעלה.</strong> צמחי בית, ניקוי, שמנים אתריים ותרופות אנושיות הם החשודים הראשונים.</li>
-<li><strong>דיכאון ולחץ.</strong> אובדן בן בית או שינוי גדול משפיעים גם על חתולים.</li>
+<div class="top">
+  <div class="top-links"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html" data-he="כל התסמינים" data-en="All Symptoms">כל התסמינים</a></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
+  </div>
+</div>
+<h1 data-he="חתול אדיש וישן כל היום — מתי זה סימן למחלה" data-en="Cat Lethargic and Sleeping All Day — When It's a Sign of Illness">חתול אדיש וישן כל היום — מתי זה סימן למחלה</h1>
+<p class="lede" data-he="חתול בוגר ישן בין שתים־עשרה לשש־עשרה שעות ביממה, וזה תקין לחלוטין. ההבדל בין שינה לבין אדישות אינו בכמות אלא באיכות ההתעוררות: חתול בריא שנרדם מגיב לפתיחת שקית, קם לקראת האוכל ומרים את הראש כשנכנסים לחדר. חתול אדיש נשאר במקום, לא מגיב, ולעיתים בוחר מקום מסתור לא אופייני." data-en="An adult cat sleeps between twelve and sixteen hours a day, and that's perfectly normal. The difference between sleep and lethargy isn't in the amount but in the quality of waking: a healthy sleeping cat reacts to a bag opening, gets up for food, and lifts its head when someone enters the room. A lethargic cat stays put, doesn't react, and sometimes chooses an unusual hiding spot.">חתול בוגר ישן בין שתים־עשרה לשש־עשרה שעות ביממה, וזה תקין לחלוטין. ההבדל בין שינה לבין אדישות אינו בכמות אלא באיכות ההתעוררות: חתול בריא שנרדם מגיב לפתיחת שקית, קם לקראת האוכל ומרים את הראש כשנכנסים לחדר. חתול אדיש נשאר במקום, לא מגיב, ולעיתים בוחר מקום מסתור לא אופייני.</p>
+<div class="triage"><div class="triage-label" data-he="רמת דחיפות מקובלת" data-en="Typical Urgency Level">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b data-he="מיידי" data-en="Immediate">מיידי</b><span data-he="לא מחכים לבוקר" data-en="Don't wait till morning">לא מחכים לבוקר</span></div><div class="step u2 on"><b data-he="תוך 24 שעות" data-en="Within 24 hours">תוך 24 שעות</b><span data-he="לקבוע ביקור היום" data-en="Schedule a visit today">לקבוע ביקור היום</span></div><div class="step u3"><b data-he="לעקוב בבית" data-en="Monitor at home">לעקוב בבית</b><span data-he="לתעד ולהתייעץ" data-en="Document and consult">לתעד ולהתייעץ</span></div></div></div>
+<h2 data-he="סיבות אפשריות" data-en="Possible Causes">סיבות אפשריות</h2><ul class="causes">
+<li><strong data-he="חום או זיהום." data-en="Fever or infection.">חום או זיהום.</strong> <span data-he="כמעט כל מחלה חדה מתחילה בירידה בפעילות." data-en="Almost any acute illness starts with a drop in activity.">כמעט כל מחלה חדה מתחילה בירידה בפעילות.</span></li>
+<li><strong data-he="כאב." data-en="Pain.">כאב.</strong> <span data-he="חתולים לא מייללים כשכואב להם. הם פשוט מפסיקים לזוז." data-en="Cats don't cry out when in pain. They simply stop moving.">חתולים לא מייללים כשכואב להם. הם פשוט מפסיקים לזוז.</span></li>
+<li><strong data-he="אנמיה." data-en="Anemia.">אנמיה.</strong> <span data-he="מלווה בחניכיים חיוורות ובנשימה מהירה." data-en="Accompanied by pale gums and rapid breathing.">מלווה בחניכיים חיוורות ובנשימה מהירה.</span></li>
+<li><strong data-he="מחלת כליות." data-en="Kidney disease.">מחלת כליות.</strong> <span data-he="אחת הסיבות השכיחות לאדישות בחתולים מבוגרים." data-en="One of the common causes of lethargy in older cats.">אחת הסיבות השכיחות לאדישות בחתולים מבוגרים.</span></li>
+<li><strong data-he="הרעלה." data-en="Poisoning.">הרעלה.</strong> <span data-he="צמחי בית, ניקוי, שמנים אתריים ותרופות אנושיות הם החשודים הראשונים." data-en="Houseplants, cleaning products, essential oils, and human medications are the first suspects.">צמחי בית, ניקוי, שמנים אתריים ותרופות אנושיות הם החשודים הראשונים.</span></li>
+<li><strong data-he="דיכאון ולחץ." data-en="Depression and stress.">דיכאון ולחץ.</strong> <span data-he="אובדן בן בית או שינוי גדול משפיעים גם על חתולים." data-en="The loss of a housemate or a major change affects cats too.">אובדן בן בית או שינוי גדול משפיעים גם על חתולים.</span></li>
 </ul>
-<div class="flags"><h2>מתי לא מחכים</h2><ul>
-<li>החתול לא קם גם כשמציעים לו אוכל אהוב</li>
-<li>הוא מסתתר במקום חדש ולא יוצא ממנו</li>
-<li>החניכיים חיוורות, לבנות או כחלחלות</li>
-<li>יש בנוסף הקאות, חוסר תיאבון או נשימה מהירה</li>
-<li>הוא לא מגיב כשנוגעים בו</li>
+<div class="flags"><h2 data-he="מתי לא מחכים" data-en="When Not to Wait">מתי לא מחכים</h2><ul>
+<li data-he="החתול לא קם גם כשמציעים לו אוכל אהוב" data-en="The cat won't get up even when offered favorite food">החתול לא קם גם כשמציעים לו אוכל אהוב</li>
+<li data-he="הוא מסתתר במקום חדש ולא יוצא ממנו" data-en="It's hiding in a new spot and won't come out">הוא מסתתר במקום חדש ולא יוצא ממנו</li>
+<li data-he="החניכיים חיוורות, לבנות או כחלחלות" data-en="The gums are pale, white, or bluish">החניכיים חיוורות, לבנות או כחלחלות</li>
+<li data-he="יש בנוסף הקאות, חוסר תיאבון או נשימה מהירה" data-en="There's also vomiting, loss of appetite, or rapid breathing">יש בנוסף הקאות, חוסר תיאבון או נשימה מהירה</li>
+<li data-he="הוא לא מגיב כשנוגעים בו" data-en="It doesn't react when touched">הוא לא מגיב כשנוגעים בו</li>
 </ul></div>
-<h2>מה אפשר לעשות בינתיים</h2><ul>
-<li>למדוד את קצב הנשימה במנוחה ולרשום אותו</li>
-<li>לבדוק את צבע החניכיים בעדינות — ורוד בהיר הוא תקין</li>
-<li>לוודא שאין גישה לצמחים או לחומרים חדשים בבית</li>
-<li>לרשום מתי בפעם האחרונה אכל, שתה והשתמש בארגז</li>
+<h2 data-he="מה אפשר לעשות בינתיים" data-en="What You Can Do Meanwhile">מה אפשר לעשות בינתיים</h2><ul>
+<li data-he="למדוד את קצב הנשימה במנוחה ולרשום אותו" data-en="Measure the breathing rate at rest and note it">למדוד את קצב הנשימה במנוחה ולרשום אותו</li>
+<li data-he="לבדוק את צבע החניכיים בעדינות — ורוד בהיר הוא תקין" data-en="Gently check the color of the gums — light pink is normal">לבדוק את צבע החניכיים בעדינות — ורוד בהיר הוא תקין</li>
+<li data-he="לוודא שאין גישה לצמחים או לחומרים חדשים בבית" data-en="Make sure there's no access to plants or new substances in the house">לוודא שאין גישה לצמחים או לחומרים חדשים בבית</li>
+<li data-he="לרשום מתי בפעם האחרונה אכל, שתה והשתמש בארגז" data-en="Note when it last ate, drank, and used the litter box">לרשום מתי בפעם האחרונה אכל, שתה והשתמש בארגז</li>
 </ul>
-<p>אדישות היא סימן לא ספציפי, ובדיוק בגלל זה היא חשובה — היא מלווה כמעט כל מחלה משמעותית. חתול שלא קם לאוכל במשך יום שלם צריך להיבדק.</p>
-<a class="cta" href="../index.html?symptom=lethargy">בדיקת התסמינים של החתול שלי<small>הכלי יסמן עבורכם את התסמין עייפות קיצונית</small></a>
-<p class="note">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
+<p data-he="אדישות היא סימן לא ספציפי, ובדיוק בגלל זה היא חשובה — היא מלווה כמעט כל מחלה משמעותית. חתול שלא קם לאוכל במשך יום שלם צריך להיבדק." data-en="Lethargy is a non-specific sign, and that's exactly why it matters — it accompanies almost every significant illness. A cat that doesn't get up for food for a whole day needs to be checked.">אדישות היא סימן לא ספציפי, ובדיוק בגלל זה היא חשובה — היא מלווה כמעט כל מחלה משמעותית. חתול שלא קם לאוכל במשך יום שלם צריך להיבדק.</p>
+<a class="cta" href="../index.html?symptom=lethargy"><span data-he="בדיקת התסמינים של החתול שלי" data-en="Check My Cat's Symptoms">בדיקת התסמינים של החתול שלי</span><small data-he="הכלי יסמן עבורכם את התסמין עייפות קיצונית" data-en="The tool will preselect the extreme fatigue symptom for you">הכלי יסמן עבורכם את התסמין עייפות קיצונית</small></a>
+<p class="note" data-he="המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר." data-en="The information on this page is general and intended only to help understand the situation. It does not replace an examination, diagnosis, or advice from a veterinarian.">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
 <div class="foot">
-<a href="index.html">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/">CatMind AI — כלי האבחון</a>
+<a href="index.html" data-he="כל מדריכי התסמינים" data-en="All Symptom Guides">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/" data-he="CatMind AI — כלי האבחון" data-en="CatMind AI — Diagnosis Tool">CatMind AI — כלי האבחון</a>
 </div>
 </div>
+
+<script>
+var TITLE_HE="חתול אדיש ועייף — מתי זה סימן למחלה | CatMind AI";
+var TITLE_EN="Cat Lethargic and Tired — When It's a Sign of Illness | CatMind AI";
+function setLang(l){
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  document.getElementById('pageTitle').textContent=(l==='en')?TITLE_EN:TITLE_HE;
+  document.querySelectorAll('[data-he]').forEach(function(el){
+    el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
+  });
+}
+</script>
 </body>
 </html>

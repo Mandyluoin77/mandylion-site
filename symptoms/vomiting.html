@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>חתול מקיא — סיבות אפשריות ומתי לפנות לווטרינר | CatMind AI</title>
+<title id="pageTitle">חתול מקיא — סיבות אפשריות ומתי לפנות לווטרינר | CatMind AI</title>
 <meta name="description" content="החתול שלך מקיא ואתם לא בטוחים אם זה מצב חירום? הסבר על הסיבות הנפוצות להקאות אצל חתולים, סימני האזהרה שמחייבים ווטרינר, ומה אפשר לעשות בינתיים.">
 <link rel="canonical" href="https://mandylion.co.il/symptoms/vomiting.html">
 <meta property="og:title" content="חתול מקיא — סיבות אפשריות ומתי לפנות לווטרינר | CatMind AI">
@@ -27,11 +27,16 @@ body{
   font-family:'Assistant',system-ui,'Segoe UI',Arial,sans-serif; font-size:18px; line-height:1.75;
 }
 .wrap{max-width:760px; margin:0 auto; padding:28px 20px 80px}
-.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px}
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; flex-wrap:wrap}
+.top-links{display:flex; align-items:center; gap:14px}
 .brand{font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--cyan); text-decoration:none; letter-spacing:-.01em}
 .brand span{color:var(--ink)}
 .crumb{font-size:.9rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid transparent}
 .crumb:hover{border-bottom-color:var(--cyan)}
+.lang-switcher{display:flex; gap:5px}
+.lang-btn{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:3px 8px; font-size:14px; cursor:pointer; transition:.2s; color:#fff}
+.lang-btn:hover{background:rgba(46,200,230,.2); border-color:var(--cyan)}
+.lang-btn.active{background:rgba(46,200,230,.25); border-color:var(--cyan)}
 h1{font-family:'Secular One',sans-serif; font-weight:400; font-size:clamp(1.7rem,4.6vw,2.5rem);
    line-height:1.25; margin:0 0 18px; letter-spacing:-.015em}
 h2{font-family:'Secular One',sans-serif; font-weight:400; font-size:1.32rem; margin:44px 0 14px; color:var(--cyan-soft)}
@@ -70,22 +75,6 @@ li::before{content:""; position:absolute; inset-inline-start:4px; top:.72em; wid
 .foot a{color:var(--cyan-soft); text-decoration:none}
 .foot a:hover{text-decoration:underline}
 
-/* hub */
-.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(228px,1fr)); gap:13px; margin-top:26px}
-.card{display:block; text-decoration:none; color:inherit; border:1px solid var(--line); border-radius:14px;
-      padding:17px 18px; background:rgba(9,58,70,.5); transition:transform .16s ease, border-color .16s ease}
-.card:hover{transform:translateY(-2px); border-color:var(--cyan)}
-.card b{display:block; font-family:'Secular One',sans-serif; font-weight:400; font-size:1.08rem; color:var(--ink); margin-bottom:5px}
-.card em{font-style:normal; font-size:.87rem; color:var(--ink-mute)}
-.dot{display:inline-block; width:8px; height:8px; border-radius:50%; margin-inline-start:7px; vertical-align:middle}
-.dot.u1{background:#e8735c} .dot.u2{background:var(--amber)} .dot.u3{background:var(--cyan)}
-.grid-safety{grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); margin-top:22px}
-.card-safety{background:linear-gradient(135deg,rgba(245,177,61,.13),rgba(9,58,70,.5)); border-color:var(--amber)}
-.card-safety:hover{border-color:var(--amber-soft)}
-.card-safety b{color:var(--amber-soft)}
-.legend{font-size:.85rem; color:var(--ink-mute); margin-top:22px}
-.legend span{margin-inline-end:16px; white-space:nowrap}
-
 a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offset:3px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 @media (max-width:520px){body{font-size:17px} .wrap{padding:20px 16px 60px} .triage-track{grid-template-columns:1fr; gap:6px}}</style>
@@ -93,37 +82,61 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html">כל התסמינים</a></div>
-<h1>חתול מקיא — סיבות אפשריות ומתי לפנות לווטרינר</h1>
-<p class="lede">הקאה בודדת אצל חתול בריא, שאחריה הוא חוזר לאכול ולהתנהג כרגיל, היא לרוב אירוע חולף. מה שמדאיג הוא הקאות חוזרות, הקאות שנמשכות יותר מיממה, או הקאה שמלווה בסימנים נוספים כמו חוסר תיאבון או אדישות. חשוב גם להבחין בין הקאה לבין רגורגיטציה, שבה המזון יוצא כמעט מיד אחרי הבליעה ובצורתו המקורית — אלה מצבים שונים לגמרי מבחינה רפואית.</p>
-<div class="triage"><div class="triage-label">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b>מיידי</b>לא מחכים לבוקר</div><div class="step u2 on"><b>תוך 24 שעות</b>לקבוע ביקור היום</div><div class="step u3"><b>לעקוב בבית</b>לתעד ולהתייעץ</div></div></div>
-<h2>סיבות אפשריות</h2><ul class="causes">
-<li><strong>כדורי שיער.</strong> נפוצים במיוחד בחתולים ארוכי פרווה ובעונות נשירה. הקאה של גליל שיער אחת לכמה שבועות נחשבת סבירה, אבל תדירות גבוהה מזו מצדיקה בדיקה.</li>
-<li><strong>אכילה מהירה מדי.</strong> חתול שבולע את המנה בשניות עלול להחזיר אותה כמעט מיד. פיזור המזון על משטח רחב או קערה מאטה פותרים את זה לרוב.</li>
-<li><strong>שינוי במזון.</strong> מעבר חד בין מותגים או טעמים מרגיז את מערכת העיכול. מעבר הדרגתי לאורך שבוע מונע את רוב המקרים.</li>
-<li><strong>טפילים במעיים.</strong> שכיחים בגורים ובחתולים שיוצאים החוצה. מתגלים בבדיקת צואה פשוטה.</li>
-<li><strong>בליעת גוף זר.</strong> חוטים, גומיות ופיסות ניילון הם קלאסיקה חתולית ומצב מסוכן במיוחד.</li>
-<li><strong>מחלות רקע.</strong> אי ספיקת כליות, בעיות בבלוטת התריס, דלקת לבלב ומחלת מעי דלקתית מתבטאות לא פעם דרך הקאות חוזרות.</li>
+<div class="top">
+  <div class="top-links"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html" data-he="כל התסמינים" data-en="All Symptoms">כל התסמינים</a></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
+  </div>
+</div>
+<h1 data-he="חתול מקיא — סיבות אפשריות ומתי לפנות לווטרינר" data-en="Cat Vomiting — Possible Causes and When to See a Vet">חתול מקיא — סיבות אפשריות ומתי לפנות לווטרינר</h1>
+<p class="lede" data-he="הקאה בודדת אצל חתול בריא, שאחריה הוא חוזר לאכול ולהתנהג כרגיל, היא לרוב אירוע חולף. מה שמדאיג הוא הקאות חוזרות, הקאות שנמשכות יותר מיממה, או הקאה שמלווה בסימנים נוספים כמו חוסר תיאבון או אדישות. חשוב גם להבחין בין הקאה לבין רגורגיטציה, שבה המזון יוצא כמעט מיד אחרי הבליעה ובצורתו המקורית — אלה מצבים שונים לגמרי מבחינה רפואית." data-en="A single episode of vomiting in an otherwise healthy cat, after which it goes back to eating and behaving normally, is usually a passing event. What's concerning is repeated vomiting, vomiting that lasts more than a day, or vomiting accompanied by other signs like loss of appetite or lethargy. It's also important to distinguish vomiting from regurgitation, where food comes back up almost immediately after swallowing and in its original form — these are entirely different conditions medically.">הקאה בודדת אצל חתול בריא, שאחריה הוא חוזר לאכול ולהתנהג כרגיל, היא לרוב אירוע חולף. מה שמדאיג הוא הקאות חוזרות, הקאות שנמשכות יותר מיממה, או הקאה שמלווה בסימנים נוספים כמו חוסר תיאבון או אדישות. חשוב גם להבחין בין הקאה לבין רגורגיטציה, שבה המזון יוצא כמעט מיד אחרי הבליעה ובצורתו המקורית — אלה מצבים שונים לגמרי מבחינה רפואית.</p>
+<div class="triage"><div class="triage-label" data-he="רמת דחיפות מקובלת" data-en="Typical Urgency Level">רמת דחיפות מקובלת</div><div class="triage-track">
+<div class="step u1"><b data-he="מיידי" data-en="Immediate">מיידי</b><span data-he="לא מחכים לבוקר" data-en="Don't wait till morning">לא מחכים לבוקר</span></div>
+<div class="step u2 on"><b data-he="תוך 24 שעות" data-en="Within 24 hours">תוך 24 שעות</b><span data-he="לקבוע ביקור היום" data-en="Schedule a visit today">לקבוע ביקור היום</span></div>
+<div class="step u3"><b data-he="לעקוב בבית" data-en="Monitor at home">לעקוב בבית</b><span data-he="לתעד ולהתייעץ" data-en="Document and consult">לתעד ולהתייעץ</span></div>
+</div></div>
+<h2 data-he="סיבות אפשריות" data-en="Possible Causes">סיבות אפשריות</h2><ul class="causes">
+<li><strong data-he="כדורי שיער." data-en="Hairballs.">כדורי שיער.</strong> <span data-he="נפוצים במיוחד בחתולים ארוכי פרווה ובעונות נשירה. הקאה של גליל שיער אחת לכמה שבועות נחשבת סבירה, אבל תדירות גבוהה מזו מצדיקה בדיקה." data-en="Especially common in long-haired cats and during shedding season. Bringing up one hairball every few weeks is considered normal, but higher frequency warrants a checkup.">נפוצים במיוחד בחתולים ארוכי פרווה ובעונות נשירה. הקאה של גליל שיער אחת לכמה שבועות נחשבת סבירה, אבל תדירות גבוהה מזו מצדיקה בדיקה.</span></li>
+<li><strong data-he="אכילה מהירה מדי." data-en="Eating too fast.">אכילה מהירה מדי.</strong> <span data-he="חתול שבולע את המנה בשניות עלול להחזיר אותה כמעט מיד. פיזור המזון על משטח רחב או קערה מאטה פותרים את זה לרוב." data-en="A cat that gulps its meal down in seconds may bring it back up almost immediately. Spreading the food over a wide surface or using a slow-feeder bowl usually solves this.">חתול שבולע את המנה בשניות עלול להחזיר אותה כמעט מיד. פיזור המזון על משטח רחב או קערה מאטה פותרים את זה לרוב.</span></li>
+<li><strong data-he="שינוי במזון." data-en="Change in food.">שינוי במזון.</strong> <span data-he="מעבר חד בין מותגים או טעמים מרגיז את מערכת העיכול. מעבר הדרגתי לאורך שבוע מונע את רוב המקרים." data-en="An abrupt switch between brands or flavors upsets the digestive system. A gradual transition over a week prevents most cases.">מעבר חד בין מותגים או טעמים מרגיז את מערכת העיכול. מעבר הדרגתי לאורך שבוע מונע את רוב המקרים.</span></li>
+<li><strong data-he="טפילים במעיים." data-en="Intestinal parasites.">טפילים במעיים.</strong> <span data-he="שכיחים בגורים ובחתולים שיוצאים החוצה. מתגלים בבדיקת צואה פשוטה." data-en="Common in kittens and outdoor cats. Detected with a simple stool test.">שכיחים בגורים ובחתולים שיוצאים החוצה. מתגלים בבדיקת צואה פשוטה.</span></li>
+<li><strong data-he="בליעת גוף זר." data-en="Swallowing a foreign object.">בליעת גוף זר.</strong> <span data-he="חוטים, גומיות ופיסות ניילון הם קלאסיקה חתולית ומצב מסוכן במיוחד." data-en="Strings, rubber bands, and pieces of plastic are a classic — and especially dangerous — feline hazard.">חוטים, גומיות ופיסות ניילון הם קלאסיקה חתולית ומצב מסוכן במיוחד.</span></li>
+<li><strong data-he="מחלות רקע." data-en="Underlying illness.">מחלות רקע.</strong> <span data-he="אי ספיקת כליות, בעיות בבלוטת התריס, דלקת לבלב ומחלת מעי דלקתית מתבטאות לא פעם דרך הקאות חוזרות." data-en="Kidney failure, thyroid problems, pancreatitis, and inflammatory bowel disease often show up as recurring vomiting.">אי ספיקת כליות, בעיות בבלוטת התריס, דלקת לבלב ומחלת מעי דלקתית מתבטאות לא פעם דרך הקאות חוזרות.</span></li>
 </ul>
-<div class="flags"><h2>מתי לא מחכים</h2><ul>
-<li>החתול מקיא שוב ושוב במשך כמה שעות ולא מצליח להחזיק אפילו מים</li>
-<li>ההקאה מכילה דם, או נראית כמו שאריות קפה טחון</li>
-<li>הבטן נראית נפוחה או כואבת למגע</li>
-<li>יש חשד שהוא בלע חוט, גומייה או צמח בית</li>
-<li>ההקאות מלווות באדישות עמוקה, בחניכיים חיוורות או בקושי בנשימה</li>
+<div class="flags"><h2 data-he="מתי לא מחכים" data-en="When Not to Wait">מתי לא מחכים</h2><ul>
+<li data-he="החתול מקיא שוב ושוב במשך כמה שעות ולא מצליח להחזיק אפילו מים" data-en="The cat keeps vomiting for several hours and can't even keep water down">החתול מקיא שוב ושוב במשך כמה שעות ולא מצליח להחזיק אפילו מים</li>
+<li data-he="ההקאה מכילה דם, או נראית כמו שאריות קפה טחון" data-en="The vomit contains blood, or looks like coffee grounds">ההקאה מכילה דם, או נראית כמו שאריות קפה טחון</li>
+<li data-he="הבטן נראית נפוחה או כואבת למגע" data-en="The belly looks swollen or is painful to the touch">הבטן נראית נפוחה או כואבת למגע</li>
+<li data-he="יש חשד שהוא בלע חוט, גומייה או צמח בית" data-en="There's a suspicion it swallowed string, a rubber band, or a houseplant">יש חשד שהוא בלע חוט, גומייה או צמח בית</li>
+<li data-he="ההקאות מלווות באדישות עמוקה, בחניכיים חיוורות או בקושי בנשימה" data-en="The vomiting is accompanied by deep lethargy, pale gums, or difficulty breathing">ההקאות מלווות באדישות עמוקה, בחניכיים חיוורות או בקושי בנשימה</li>
 </ul></div>
-<h2>מה אפשר לעשות בינתיים</h2><ul>
-<li>להוציא את האוכל לכמה שעות, אבל להשאיר מים זמינים כל הזמן</li>
-<li>לחזור לאכילה במנות קטנות של מזון קל לעיכול, ולא במנה רגילה גדולה</li>
-<li>לספור את מספר ההקאות ולתעד את השעות — זה המידע הראשון שהווטרינר יבקש</li>
-<li>לצלם את ההקאה. זה לא נעים, אבל זה חוסך הרבה ניחושים</li>
+<h2 data-he="מה אפשר לעשות בינתיים" data-en="What You Can Do Meanwhile">מה אפשר לעשות בינתיים</h2><ul>
+<li data-he="להוציא את האוכל לכמה שעות, אבל להשאיר מים זמינים כל הזמן" data-en="Withhold food for a few hours, but keep water available at all times">להוציא את האוכל לכמה שעות, אבל להשאיר מים זמינים כל הזמן</li>
+<li data-he="לחזור לאכילה במנות קטנות של מזון קל לעיכול, ולא במנה רגילה גדולה" data-en="Reintroduce food in small portions of something easy to digest, not a full regular meal">לחזור לאכילה במנות קטנות של מזון קל לעיכול, ולא במנה רגילה גדולה</li>
+<li data-he="לספור את מספר ההקאות ולתעד את השעות — זה המידע הראשון שהווטרינר יבקש" data-en="Count the number of vomiting episodes and note the times — this is the first thing the vet will ask for">לספור את מספר ההקאות ולתעד את השעות — זה המידע הראשון שהווטרינר יבקש</li>
+<li data-he="לצלם את ההקאה. זה לא נעים, אבל זה חוסך הרבה ניחושים" data-en="Take a photo of the vomit. It's unpleasant, but it saves a lot of guesswork">לצלם את ההקאה. זה לא נעים, אבל זה חוסך הרבה ניחושים</li>
 </ul>
-<p>חתול שמקיא פעם או פעמיים וממשיך לאכול, לשתות ולהתנהג כרגיל אפשר לרוב לעקוב אחריו יום־יומיים. חתול שמקיא שוב ושוב, מפסיק לאכול או נראה חלש — זקוק לבדיקה עוד היום.</p>
-<a class="cta" href="../index.html?symptom=vomiting">בדיקת התסמינים של החתול שלי<small>הכלי יסמן עבורכם את התסמין הקאות</small></a>
-<p class="note">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
+<p data-he="חתול שמקיא פעם או פעמיים וממשיך לאכול, לשתות ולהתנהג כרגיל אפשר לרוב לעקוב אחריו יום־יומיים. חתול שמקיא שוב ושוב, מפסיק לאכול או נראה חלש — זקוק לבדיקה עוד היום." data-en="A cat that vomits once or twice and keeps eating, drinking, and behaving normally can usually be monitored for a day or two. A cat that keeps vomiting repeatedly, stops eating, or seems weak needs to be checked today.">חתול שמקיא פעם או פעמיים וממשיך לאכול, לשתות ולהתנהג כרגיל אפשר לרוב לעקוב אחריו יום־יומיים. חתול שמקיא שוב ושוב, מפסיק לאכול או נראה חלש — זקוק לבדיקה עוד היום.</p>
+<a class="cta" href="../index.html?symptom=vomiting"><span data-he="בדיקת התסמינים של החתול שלי" data-en="Check My Cat's Symptoms">בדיקת התסמינים של החתול שלי</span><small data-he="הכלי יסמן עבורכם את התסמין הקאות" data-en="The tool will preselect the vomiting symptom for you">הכלי יסמן עבורכם את התסמין הקאות</small></a>
+<p class="note" data-he="המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר." data-en="The information on this page is general and intended only to help understand the situation. It does not replace an examination, diagnosis, or advice from a veterinarian.">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
 <div class="foot">
-<a href="index.html">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/">CatMind AI — כלי האבחון</a>
+<a href="index.html" data-he="כל מדריכי התסמינים" data-en="All Symptom Guides">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/" data-he="CatMind AI — כלי האבחון" data-en="CatMind AI — Diagnosis Tool">CatMind AI — כלי האבחון</a>
 </div>
 </div>
+<script>
+var TITLE_HE="חתול מקיא — סיבות אפשריות ומתי לפנות לווטרינר | CatMind AI";
+var TITLE_EN="Cat Vomiting — Possible Causes and When to See a Vet | CatMind AI";
+function setLang(l){
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  document.getElementById('pageTitle').textContent=(l==='en')?TITLE_EN:TITLE_HE;
+  document.querySelectorAll('[data-he]').forEach(function(el){
+    el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
+  });
+}
+</script>
 </body>
 </html>

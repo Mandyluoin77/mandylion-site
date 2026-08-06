@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>נשירת שיער וקרחות אצל חתולים — סיבות | CatMind AI</title>
+<title id="pageTitle">נשירת שיער וקרחות אצל חתולים — סיבות | CatMind AI</title>
 <meta name="description" content="קרחות, גירוד וליקוק מוגזם אצל חתול מצביעים לרוב על סיבה מוגדרת. הסבר על הגורמים השכיחים ועל מה שכדאי לבדוק לפני הביקור אצל הווטרינר.">
 <link rel="canonical" href="https://mandylion.co.il/symptoms/hair-loss.html">
 <meta property="og:title" content="נשירת שיער וקרחות אצל חתולים — סיבות | CatMind AI">
@@ -27,7 +27,12 @@ body{
   font-family:'Assistant',system-ui,'Segoe UI',Arial,sans-serif; font-size:18px; line-height:1.75;
 }
 .wrap{max-width:760px; margin:0 auto; padding:28px 20px 80px}
-.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px}
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; flex-wrap:wrap}
+.top-links{display:flex; align-items:center; gap:14px}
+.lang-switcher{display:flex; gap:5px}
+.lang-btn{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:3px 8px; font-size:14px; cursor:pointer; transition:.2s; color:#fff}
+.lang-btn:hover{background:rgba(46,200,230,.2); border-color:var(--cyan)}
+.lang-btn.active{background:rgba(46,200,230,.25); border-color:var(--cyan)}
 .brand{font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--cyan); text-decoration:none; letter-spacing:-.01em}
 .brand span{color:var(--ink)}
 .crumb{font-size:.9rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid transparent}
@@ -93,37 +98,58 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html">כל התסמינים</a></div>
-<h1>נשירת שיער וקרחות אצל חתולים — סיבות וטיפול</h1>
-<p class="lede">נשירה עונתית היא חלק מהחיים עם חתול, אבל אזורים קרחים ממש, עור אדום או ליקוק אובססיבי הם סיפור אחר. חשוב לשים לב לתבנית: קרחת סימטרית בשני צדי הגוף מרמזת על סיבה אחרת מקרחת מקומית אחת, ואזור שהחתול מלקק בלי הפסקה שונה מאזור ששערו נשר מעצמו.</p>
-<div class="triage"><div class="triage-label">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b>מיידי</b>לא מחכים לבוקר</div><div class="step u2"><b>תוך 24 שעות</b>לקבוע ביקור היום</div><div class="step u3 on"><b>לעקוב בבית</b>לתעד ולהתייעץ</div></div></div>
-<h2>סיבות אפשריות</h2><ul class="causes">
-<li><strong>פרעושים ואלרגיה לעקיצה.</strong> הסיבה מספר אחת, גם בחתולי בית שלא יוצאים. מספיק פרעוש אחד.</li>
-<li><strong>אלרגיה למזון.</strong> מתבטאת בגירוד סביב הפנים והצוואר ולעיתים גם בבעיות עיכול.</li>
-<li><strong>גזזת.</strong> זיהום פטרייתי שיוצר קרחות עגולות ומדבק גם לבני אדם.</li>
-<li><strong>ליקוק על רקע לחץ.</strong> חתול שמלקק את הבטן או את הרגליים עד קרחת, בלי דלקת בעור.</li>
-<li><strong>בעיות הורמונליות.</strong> פחות שכיחות בחתולים, אבל אפשריות.</li>
-<li><strong>כאב מקומי.</strong> חתול נוטה ללקק בדיוק מעל אזור שכואב לו, כולל כאב במפרק או בשלפוחית.</li>
+<div class="top">
+  <div class="top-links"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html" data-he="כל התסמינים" data-en="All Symptoms">כל התסמינים</a></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
+  </div>
+</div>
+<h1 data-he="נשירת שיער וקרחות אצל חתולים — סיבות וטיפול" data-en="Hair Loss and Bald Patches in Cats — Causes and Treatment">נשירת שיער וקרחות אצל חתולים — סיבות וטיפול</h1>
+<p class="lede" data-he="נשירה עונתית היא חלק מהחיים עם חתול, אבל אזורים קרחים ממש, עור אדום או ליקוק אובססיבי הם סיפור אחר. חשוב לשים לב לתבנית: קרחת סימטרית בשני צדי הגוף מרמזת על סיבה אחרת מקרחת מקומית אחת, ואזור שהחתול מלקק בלי הפסקה שונה מאזור ששערו נשר מעצמו." data-en="Seasonal shedding is part of life with a cat, but actual bald patches, red skin, or obsessive licking are a different story. It's important to notice the pattern: symmetrical baldness on both sides of the body points to a different cause than a single local bald spot, and an area the cat licks nonstop is different from an area where the hair simply fell out on its own.">נשירה עונתית היא חלק מהחיים עם חתול, אבל אזורים קרחים ממש, עור אדום או ליקוק אובססיבי הם סיפור אחר. חשוב לשים לב לתבנית: קרחת סימטרית בשני צדי הגוף מרמזת על סיבה אחרת מקרחת מקומית אחת, ואזור שהחתול מלקק בלי הפסקה שונה מאזור ששערו נשר מעצמו.</p>
+<div class="triage"><div class="triage-label" data-he="רמת דחיפות מקובלת" data-en="Typical Urgency Level">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b data-he="מיידי" data-en="Immediate">מיידי</b><span data-he="לא מחכים לבוקר" data-en="Don't wait till morning">לא מחכים לבוקר</span></div><div class="step u2"><b data-he="תוך 24 שעות" data-en="Within 24 hours">תוך 24 שעות</b><span data-he="לקבוע ביקור היום" data-en="Schedule a visit today">לקבוע ביקור היום</span></div><div class="step u3 on"><b data-he="לעקוב בבית" data-en="Monitor at home">לעקוב בבית</b><span data-he="לתעד ולהתייעץ" data-en="Document and consult">לתעד ולהתייעץ</span></div></div></div>
+<h2 data-he="סיבות אפשריות" data-en="Possible Causes">סיבות אפשריות</h2><ul class="causes">
+<li><strong data-he="פרעושים ואלרגיה לעקיצה." data-en="Fleas and flea-bite allergy.">פרעושים ואלרגיה לעקיצה.</strong> <span data-he="הסיבה מספר אחת, גם בחתולי בית שלא יוצאים. מספיק פרעוש אחד." data-en="The number one cause, even in indoor cats that never go out. A single flea is enough.">הסיבה מספר אחת, גם בחתולי בית שלא יוצאים. מספיק פרעוש אחד.</span></li>
+<li><strong data-he="אלרגיה למזון." data-en="Food allergy.">אלרגיה למזון.</strong> <span data-he="מתבטאת בגירוד סביב הפנים והצוואר ולעיתים גם בבעיות עיכול." data-en="Shows up as itching around the face and neck, and sometimes digestive issues too.">מתבטאת בגירוד סביב הפנים והצוואר ולעיתים גם בבעיות עיכול.</span></li>
+<li><strong data-he="גזזת." data-en="Ringworm.">גזזת.</strong> <span data-he="זיהום פטרייתי שיוצר קרחות עגולות ומדבק גם לבני אדם." data-en="A fungal infection that creates round bald patches and is also contagious to humans.">זיהום פטרייתי שיוצר קרחות עגולות ומדבק גם לבני אדם.</span></li>
+<li><strong data-he="ליקוק על רקע לחץ." data-en="Stress-related licking.">ליקוק על רקע לחץ.</strong> <span data-he="חתול שמלקק את הבטן או את הרגליים עד קרחת, בלי דלקת בעור." data-en="A cat that licks its belly or legs bald, without skin inflammation.">חתול שמלקק את הבטן או את הרגליים עד קרחת, בלי דלקת בעור.</span></li>
+<li><strong data-he="בעיות הורמונליות." data-en="Hormonal problems.">בעיות הורמונליות.</strong> <span data-he="פחות שכיחות בחתולים, אבל אפשריות." data-en="Less common in cats, but possible.">פחות שכיחות בחתולים, אבל אפשריות.</span></li>
+<li><strong data-he="כאב מקומי." data-en="Local pain.">כאב מקומי.</strong> <span data-he="חתול נוטה ללקק בדיוק מעל אזור שכואב לו, כולל כאב במפרק או בשלפוחית." data-en="A cat tends to lick exactly over an area that hurts, including joint or bladder pain.">חתול נוטה ללקק בדיוק מעל אזור שכואב לו, כולל כאב במפרק או בשלפוחית.</span></li>
 </ul>
-<div class="flags"><h2>מתי לא מחכים</h2><ul>
-<li>העור מתחת לקרחת אדום, פצוע או מפריש</li>
-<li>הקרחות מתפשטות במהירות</li>
-<li>גם בני הבית פיתחו פריחה עגולה — חשד לגזזת</li>
-<li>החתול מלקק ללא הפסקה ולא נרגע</li>
-<li>יש בנוסף ירידה במשקל או שינוי בתיאבון</li>
+<div class="flags"><h2 data-he="מתי לא מחכים" data-en="When Not to Wait">מתי לא מחכים</h2><ul>
+<li data-he="העור מתחת לקרחת אדום, פצוע או מפריש" data-en="The skin under the bald spot is red, wounded, or oozing">העור מתחת לקרחת אדום, פצוע או מפריש</li>
+<li data-he="הקרחות מתפשטות במהירות" data-en="The bald patches are spreading quickly">הקרחות מתפשטות במהירות</li>
+<li data-he="גם בני הבית פיתחו פריחה עגולה — חשד לגזזת" data-en="Household members have also developed a round rash — suspected ringworm">גם בני הבית פיתחו פריחה עגולה — חשד לגזזת</li>
+<li data-he="החתול מלקק ללא הפסקה ולא נרגע" data-en="The cat licks nonstop and won't settle">החתול מלקק ללא הפסקה ולא נרגע</li>
+<li data-he="יש בנוסף ירידה במשקל או שינוי בתיאבון" data-en="There's also weight loss or a change in appetite">יש בנוסף ירידה במשקל או שינוי בתיאבון</li>
 </ul></div>
-<h2>מה אפשר לעשות בינתיים</h2><ul>
-<li>לוודא שטיפול הפרעושים מעודכן ומיושם על כל בעלי החיים בבית</li>
-<li>לצלם את האזור מדי כמה ימים כדי לעקוב אחרי השינוי</li>
-<li>לא למרוח משחות אנושיות. חתול ילקק אותן</li>
-<li>לרשום מתי התחיל, ואם היה שינוי במזון או בבית באותו זמן</li>
+<h2 data-he="מה אפשר לעשות בינתיים" data-en="What You Can Do Meanwhile">מה אפשר לעשות בינתיים</h2><ul>
+<li data-he="לוודא שטיפול הפרעושים מעודכן ומיושם על כל בעלי החיים בבית" data-en="Make sure flea treatment is current and applied to all pets in the house">לוודא שטיפול הפרעושים מעודכן ומיושם על כל בעלי החיים בבית</li>
+<li data-he="לצלם את האזור מדי כמה ימים כדי לעקוב אחרי השינוי" data-en="Photograph the area every few days to track the change">לצלם את האזור מדי כמה ימים כדי לעקוב אחרי השינוי</li>
+<li data-he="לא למרוח משחות אנושיות. חתול ילקק אותן" data-en="Don't apply human ointments. The cat will lick them off">לא למרוח משחות אנושיות. חתול ילקק אותן</li>
+<li data-he="לרשום מתי התחיל, ואם היה שינוי במזון או בבית באותו זמן" data-en="Note when it started, and whether there was a change in food or at home at that time">לרשום מתי התחיל, ואם היה שינוי במזון או בבית באותו זמן</li>
 </ul>
-<p>נשירת שיער היא לרוב לא דחופה, אבל היא כן מצריכה אבחנה. גירוד ממושך שלא מטופל מוביל לפצעים ולזיהום משני.</p>
-<a class="cta" href="../index.html?symptom=hair-loss">בדיקת התסמינים של החתול שלי<small>הכלי יסמן עבורכם את התסמין נשירת שיער חריגה</small></a>
-<p class="note">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
+<p data-he="נשירת שיער היא לרוב לא דחופה, אבל היא כן מצריכה אבחנה. גירוד ממושך שלא מטופל מוביל לפצעים ולזיהום משני." data-en="Hair loss usually isn't urgent, but it does need a diagnosis. Prolonged untreated scratching leads to wounds and secondary infection.">נשירת שיער היא לרוב לא דחופה, אבל היא כן מצריכה אבחנה. גירוד ממושך שלא מטופל מוביל לפצעים ולזיהום משני.</p>
+<a class="cta" href="../index.html?symptom=hair-loss"><span data-he="בדיקת התסמינים של החתול שלי" data-en="Check My Cat's Symptoms">בדיקת התסמינים של החתול שלי</span><small data-he="הכלי יסמן עבורכם את התסמין נשירת שיער חריגה" data-en="The tool will preselect the abnormal hair loss symptom for you">הכלי יסמן עבורכם את התסמין נשירת שיער חריגה</small></a>
+<p class="note" data-he="המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר." data-en="The information on this page is general and intended only to help understand the situation. It does not replace an examination, diagnosis, or advice from a veterinarian.">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
 <div class="foot">
-<a href="index.html">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/">CatMind AI — כלי האבחון</a>
+<a href="index.html" data-he="כל מדריכי התסמינים" data-en="All Symptom Guides">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/" data-he="CatMind AI — כלי האבחון" data-en="CatMind AI — Diagnosis Tool">CatMind AI — כלי האבחון</a>
 </div>
 </div>
+
+<script>
+var TITLE_HE="נשירת שיער וקרחות אצל חתולים — סיבות | CatMind AI";
+var TITLE_EN="Hair Loss and Bald Patches in Cats — Causes and Treatment | CatMind AI";
+function setLang(l){
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  document.getElementById('pageTitle').textContent=(l==='en')?TITLE_EN:TITLE_HE;
+  document.querySelectorAll('[data-he]').forEach(function(el){
+    el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
+  });
+}
+</script>
 </body>
 </html>

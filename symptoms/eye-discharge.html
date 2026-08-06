@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>הפרשות מהעיניים של חתול — סיבות | CatMind AI</title>
+<title id="pageTitle">הפרשות מהעיניים של חתול — סיבות | CatMind AI</title>
 <meta name="description" content="דמעות, ריר או מוגלה בעיניים של חתול מצביעים על דלקת, זיהום או פגיעה. הסבר על הסיבות ועל הסימנים שמחייבים בדיקה מהירה.">
 <link rel="canonical" href="https://mandylion.co.il/symptoms/eye-discharge.html">
 <meta property="og:title" content="הפרשות מהעיניים של חתול — סיבות | CatMind AI">
@@ -27,7 +27,12 @@ body{
   font-family:'Assistant',system-ui,'Segoe UI',Arial,sans-serif; font-size:18px; line-height:1.75;
 }
 .wrap{max-width:760px; margin:0 auto; padding:28px 20px 80px}
-.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px}
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; flex-wrap:wrap}
+.top-links{display:flex; align-items:center; gap:14px}
+.lang-switcher{display:flex; gap:5px}
+.lang-btn{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:3px 8px; font-size:14px; cursor:pointer; transition:.2s; color:#fff}
+.lang-btn:hover{background:rgba(46,200,230,.2); border-color:var(--cyan)}
+.lang-btn.active{background:rgba(46,200,230,.25); border-color:var(--cyan)}
 .brand{font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--cyan); text-decoration:none; letter-spacing:-.01em}
 .brand span{color:var(--ink)}
 .crumb{font-size:.9rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid transparent}
@@ -93,37 +98,58 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html">כל התסמינים</a></div>
-<h1>הפרשות מהעיניים של חתול — סיבות וטיפול</h1>
-<p class="lede">עיניים של חתול בריא נקיות, פקוחות ובהירות. הפרשה כלשהי מצביעה על גירוי, ולעיתים על משהו חמור יותר. שווה לשים לב לצד: הפרשה משתי העיניים מרמזת בדרך כלל על זיהום כללי או אלרגיה, בעוד שהפרשה מעין אחת בלבד מעלה חשד לפגיעה מקומית — שריטה, גוף זר או פצע בקרנית.</p>
-<div class="triage"><div class="triage-label">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b>מיידי</b>לא מחכים לבוקר</div><div class="step u2 on"><b>תוך 24 שעות</b>לקבוע ביקור היום</div><div class="step u3"><b>לעקוב בבית</b>לתעד ולהתייעץ</div></div></div>
-<h2>סיבות אפשריות</h2><ul class="causes">
-<li><strong>הרפס חתולים.</strong> נפוץ מאוד, במיוחד בחתולים שהיו במקלט. הוא נשאר בגוף וחוזר בתקופות לחץ.</li>
-<li><strong>דלקת לחמית.</strong> עין אדומה ונפוחה עם הפרשה, על רקע ויראלי או חיידקי.</li>
-<li><strong>פצע בקרנית.</strong> לרוב אחרי שריטה מחתול אחר. כאב, מצמוץ מוגבר וסגירת העין.</li>
-<li><strong>גוף זר.</strong> גרגר, שיער או קוץ מתחת לעפעף.</li>
-<li><strong>חסימה בתעלת הדמעות.</strong> יוצרת דמיעה מתמדת בלי דלקת אמיתית.</li>
-<li><strong>מבנה הפנים.</strong> בגזעים שטוחי פנים כמו פרסי, דמיעה קלה היא לעיתים מצב קבוע.</li>
+<div class="top">
+  <div class="top-links"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html" data-he="כל התסמינים" data-en="All Symptoms">כל התסמינים</a></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
+  </div>
+</div>
+<h1 data-he="הפרשות מהעיניים של חתול — סיבות וטיפול" data-en="Eye Discharge in Cats — Causes and Treatment">הפרשות מהעיניים של חתול — סיבות וטיפול</h1>
+<p class="lede" data-he="עיניים של חתול בריא נקיות, פקוחות ובהירות. הפרשה כלשהי מצביעה על גירוי, ולעיתים על משהו חמור יותר. שווה לשים לב לצד: הפרשה משתי העיניים מרמזת בדרך כלל על זיהום כללי או אלרגיה, בעוד שהפרשה מעין אחת בלבד מעלה חשד לפגיעה מקומית — שריטה, גוף זר או פצע בקרנית." data-en="A healthy cat's eyes are clean, open, and clear. Any discharge points to irritation, and sometimes to something more serious. It's worth noting which side: discharge from both eyes usually suggests a general infection or allergy, while discharge from just one eye raises suspicion of a local injury — a scratch, a foreign object, or a corneal wound.">עיניים של חתול בריא נקיות, פקוחות ובהירות. הפרשה כלשהי מצביעה על גירוי, ולעיתים על משהו חמור יותר. שווה לשים לב לצד: הפרשה משתי העיניים מרמזת בדרך כלל על זיהום כללי או אלרגיה, בעוד שהפרשה מעין אחת בלבד מעלה חשד לפגיעה מקומית — שריטה, גוף זר או פצע בקרנית.</p>
+<div class="triage"><div class="triage-label" data-he="רמת דחיפות מקובלת" data-en="Typical Urgency Level">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b data-he="מיידי" data-en="Immediate">מיידי</b><span data-he="לא מחכים לבוקר" data-en="Don't wait till morning">לא מחכים לבוקר</span></div><div class="step u2 on"><b data-he="תוך 24 שעות" data-en="Within 24 hours">תוך 24 שעות</b><span data-he="לקבוע ביקור היום" data-en="Schedule a visit today">לקבוע ביקור היום</span></div><div class="step u3"><b data-he="לעקוב בבית" data-en="Monitor at home">לעקוב בבית</b><span data-he="לתעד ולהתייעץ" data-en="Document and consult">לתעד ולהתייעץ</span></div></div></div>
+<h2 data-he="סיבות אפשריות" data-en="Possible Causes">סיבות אפשריות</h2><ul class="causes">
+<li><strong data-he="הרפס חתולים." data-en="Feline herpes.">הרפס חתולים.</strong> <span data-he="נפוץ מאוד, במיוחד בחתולים שהיו במקלט. הוא נשאר בגוף וחוזר בתקופות לחץ." data-en="Very common, especially in cats that were in shelters. It stays in the body and flares up during periods of stress.">נפוץ מאוד, במיוחד בחתולים שהיו במקלט. הוא נשאר בגוף וחוזר בתקופות לחץ.</span></li>
+<li><strong data-he="דלקת לחמית." data-en="Conjunctivitis.">דלקת לחמית.</strong> <span data-he="עין אדומה ונפוחה עם הפרשה, על רקע ויראלי או חיידקי." data-en="A red, swollen eye with discharge, viral or bacterial in origin.">עין אדומה ונפוחה עם הפרשה, על רקע ויראלי או חיידקי.</span></li>
+<li><strong data-he="פצע בקרנית." data-en="Corneal wound.">פצע בקרנית.</strong> <span data-he="לרוב אחרי שריטה מחתול אחר. כאב, מצמוץ מוגבר וסגירת העין." data-en="Usually after a scratch from another cat. Pain, increased blinking, and closing the eye.">לרוב אחרי שריטה מחתול אחר. כאב, מצמוץ מוגבר וסגירת העין.</span></li>
+<li><strong data-he="גוף זר." data-en="Foreign object.">גוף זר.</strong> <span data-he="גרגר, שיער או קוץ מתחת לעפעף." data-en="A speck, hair, or thorn under the eyelid.">גרגר, שיער או קוץ מתחת לעפעף.</span></li>
+<li><strong data-he="חסימה בתעלת הדמעות." data-en="Blocked tear duct.">חסימה בתעלת הדמעות.</strong> <span data-he="יוצרת דמיעה מתמדת בלי דלקת אמיתית." data-en="Creates constant tearing without real inflammation.">יוצרת דמיעה מתמדת בלי דלקת אמיתית.</span></li>
+<li><strong data-he="מבנה הפנים." data-en="Facial structure.">מבנה הפנים.</strong> <span data-he="בגזעים שטוחי פנים כמו פרסי, דמיעה קלה היא לעיתים מצב קבוע." data-en="In flat-faced breeds like Persians, mild tearing is sometimes a permanent state.">בגזעים שטוחי פנים כמו פרסי, דמיעה קלה היא לעיתים מצב קבוע.</span></li>
 </ul>
-<div class="flags"><h2>מתי לא מחכים</h2><ul>
-<li>העין סגורה או שהחתול מצמץ בכוח ולא פותח אותה</li>
-<li>ההפרשה צהובה או ירוקה</li>
-<li>יש עכירות או כתם לבן על שטח העין</li>
-<li>העין נראתה שונה בגודל, או שיש נפיחות סביבה</li>
-<li>החתול מגרד את העין בכפה ללא הפסקה</li>
+<div class="flags"><h2 data-he="מתי לא מחכים" data-en="When Not to Wait">מתי לא מחכים</h2><ul>
+<li data-he="העין סגורה או שהחתול מצמץ בכוח ולא פותח אותה" data-en="The eye is closed, or the cat is squinting hard and won't open it">העין סגורה או שהחתול מצמץ בכוח ולא פותח אותה</li>
+<li data-he="ההפרשה צהובה או ירוקה" data-en="The discharge is yellow or green">ההפרשה צהובה או ירוקה</li>
+<li data-he="יש עכירות או כתם לבן על שטח העין" data-en="There's cloudiness or a white spot on the eye's surface">יש עכירות או כתם לבן על שטח העין</li>
+<li data-he="העין נראתה שונה בגודל, או שיש נפיחות סביבה" data-en="The eye looks different in size, or there's swelling around it">העין נראתה שונה בגודל, או שיש נפיחות סביבה</li>
+<li data-he="החתול מגרד את העין בכפה ללא הפסקה" data-en="The cat is pawing at the eye nonstop">החתול מגרד את העין בכפה ללא הפסקה</li>
 </ul></div>
-<h2>מה אפשר לעשות בינתיים</h2><ul>
-<li>לנקות בעדינות עם גזה לחה במים פושרים, כל עין בגזה נפרדת</li>
-<li>לא להשתמש בטיפות עיניים שנשארו מטיפול קודם. טיפות עם סטרואיד מסוכנות בפצע בקרנית</li>
-<li>אם החתול מגרד את העין, למנוע ממנו גישה אליה עד לבדיקה</li>
-<li>לצלם את שתי העיניים לצורך השוואה</li>
+<h2 data-he="מה אפשר לעשות בינתיים" data-en="What You Can Do Meanwhile">מה אפשר לעשות בינתיים</h2><ul>
+<li data-he="לנקות בעדינות עם גזה לחה במים פושרים, כל עין בגזה נפרדת" data-en="Clean gently with gauze moistened with lukewarm water, a separate piece of gauze for each eye">לנקות בעדינות עם גזה לחה במים פושרים, כל עין בגזה נפרדת</li>
+<li data-he="לא להשתמש בטיפות עיניים שנשארו מטיפול קודם. טיפות עם סטרואיד מסוכנות בפצע בקרנית" data-en="Don't use eye drops left over from a previous treatment. Steroid drops are dangerous with a corneal wound">לא להשתמש בטיפות עיניים שנשארו מטיפול קודם. טיפות עם סטרואיד מסוכנות בפצע בקרנית</li>
+<li data-he="אם החתול מגרד את העין, למנוע ממנו גישה אליה עד לבדיקה" data-en="If the cat is pawing at the eye, prevent access to it until the checkup">אם החתול מגרד את העין, למנוע ממנו גישה אליה עד לבדיקה</li>
+<li data-he="לצלם את שתי העיניים לצורך השוואה" data-en="Photograph both eyes for comparison">לצלם את שתי העיניים לצורך השוואה</li>
 </ul>
-<p>הפרשה קלה ושקופה מעין אחת אפשר לנקות ולעקוב יום־יומיים. עין סגורה, הפרשה צהובה או עכירות מצריכות בדיקה מהירה — פגיעה בקרנית מחמירה תוך שעות.</p>
-<a class="cta" href="../index.html?symptom=eye-discharge">בדיקת התסמינים של החתול שלי<small>הכלי יסמן עבורכם את התסמין הפרשות מהעיניים</small></a>
-<p class="note">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
+<p data-he="הפרשה קלה ושקופה מעין אחת אפשר לנקות ולעקוב יום־יומיים. עין סגורה, הפרשה צהובה או עכירות מצריכות בדיקה מהירה — פגיעה בקרנית מחמירה תוך שעות." data-en="A light, clear discharge from one eye can be cleaned and monitored for a day or two. A closed eye, yellow discharge, or cloudiness needs a prompt checkup — corneal injuries worsen within hours.">הפרשה קלה ושקופה מעין אחת אפשר לנקות ולעקוב יום־יומיים. עין סגורה, הפרשה צהובה או עכירות מצריכות בדיקה מהירה — פגיעה בקרנית מחמירה תוך שעות.</p>
+<a class="cta" href="../index.html?symptom=eye-discharge"><span data-he="בדיקת התסמינים של החתול שלי" data-en="Check My Cat's Symptoms">בדיקת התסמינים של החתול שלי</span><small data-he="הכלי יסמן עבורכם את התסמין הפרשות מהעיניים" data-en="The tool will preselect the eye discharge symptom for you">הכלי יסמן עבורכם את התסמין הפרשות מהעיניים</small></a>
+<p class="note" data-he="המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר." data-en="The information on this page is general and intended only to help understand the situation. It does not replace an examination, diagnosis, or advice from a veterinarian.">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
 <div class="foot">
-<a href="index.html">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/">CatMind AI — כלי האבחון</a>
+<a href="index.html" data-he="כל מדריכי התסמינים" data-en="All Symptom Guides">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/" data-he="CatMind AI — כלי האבחון" data-en="CatMind AI — Diagnosis Tool">CatMind AI — כלי האבחון</a>
 </div>
 </div>
+
+<script>
+var TITLE_HE="הפרשות מהעיניים של חתול — סיבות | CatMind AI";
+var TITLE_EN="Eye Discharge in Cats — Causes and Treatment | CatMind AI";
+function setLang(l){
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  document.getElementById('pageTitle').textContent=(l==='en')?TITLE_EN:TITLE_HE;
+  document.querySelectorAll('[data-he]').forEach(function(el){
+    el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
+  });
+}
+</script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>חתול מתעטש הרבה — סיבות וטיפול | CatMind AI</title>
+<title id="pageTitle">חתול מתעטש הרבה — סיבות וטיפול | CatMind AI</title>
 <meta name="description" content="התעטשויות חוזרות אצל חתול נובעות לרוב מזיהום נשימתי או מגירוי סביבתי. הסבר על הסיבות ועל הסימנים שמצריכים בדיקה.">
 <link rel="canonical" href="https://mandylion.co.il/symptoms/sneezing.html">
 <meta property="og:title" content="חתול מתעטש הרבה — סיבות וטיפול | CatMind AI">
@@ -27,7 +27,12 @@ body{
   font-family:'Assistant',system-ui,'Segoe UI',Arial,sans-serif; font-size:18px; line-height:1.75;
 }
 .wrap{max-width:760px; margin:0 auto; padding:28px 20px 80px}
-.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px}
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; flex-wrap:wrap}
+.top-links{display:flex; align-items:center; gap:14px}
+.lang-switcher{display:flex; gap:5px}
+.lang-btn{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:3px 8px; font-size:14px; cursor:pointer; transition:.2s; color:#fff}
+.lang-btn:hover{background:rgba(46,200,230,.2); border-color:var(--cyan)}
+.lang-btn.active{background:rgba(46,200,230,.25); border-color:var(--cyan)}
 .brand{font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--cyan); text-decoration:none; letter-spacing:-.01em}
 .brand span{color:var(--ink)}
 .crumb{font-size:.9rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid transparent}
@@ -93,37 +98,58 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html">כל התסמינים</a></div>
-<h1>חתול מתעטש הרבה — סיבות ומה עוזר</h1>
-<p class="lede">עיטוש בודד הוא כמו אצלנו — אבק, ריח חזק או גירוי חולף. התעטשויות שחוזרות לאורך יום שלם, ובמיוחד כשהן מלוות בהפרשה מהאף או מהעיניים, מצביעות בדרך כלל על זיהום בדרכי הנשימה העליונות. זה המצב השכיח ביותר בחתולים צעירים ובכאלה שהגיעו ממקלט או מרחוב.</p>
-<div class="triage"><div class="triage-label">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b>מיידי</b>לא מחכים לבוקר</div><div class="step u2"><b>תוך 24 שעות</b>לקבוע ביקור היום</div><div class="step u3 on"><b>לעקוב בבית</b>לתעד ולהתייעץ</div></div></div>
-<h2>סיבות אפשריות</h2><ul class="causes">
-<li><strong>זיהום נשימתי ויראלי.</strong> הרפס וקליציוירוס הם הגורמים המרכזיים. שכיחים מאוד ולעיתים חוזרים בתקופות לחץ.</li>
-<li><strong>זיהום חיידקי משני.</strong> מצטרף לוויראלי ומשנה את ההפרשה לצהובה או ירוקה.</li>
-<li><strong>גירוי סביבתי.</strong> חול מתאבק, ספריי, נרות ריחניים ועשן סיגריות.</li>
-<li><strong>אלרגיה.</strong> פחות שכיחה בחתולים מאשר בבני אדם, אבל אפשרית.</li>
-<li><strong>גוף זר או פוליפ.</strong> לרוב מייצר התעטשויות מצד אחד בלבד.</li>
-<li><strong>בעיית שיניים.</strong> שורש דלוק בשן עליונה יכול לפרוץ אל חלל האף.</li>
+<div class="top">
+  <div class="top-links"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html" data-he="כל התסמינים" data-en="All Symptoms">כל התסמינים</a></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
+  </div>
+</div>
+<h1 data-he="חתול מתעטש הרבה — סיבות ומה עוזר" data-en="Cat Sneezing a Lot — Causes and What Helps">חתול מתעטש הרבה — סיבות ומה עוזר</h1>
+<p class="lede" data-he="עיטוש בודד הוא כמו אצלנו — אבק, ריח חזק או גירוי חולף. התעטשויות שחוזרות לאורך יום שלם, ובמיוחד כשהן מלוות בהפרשה מהאף או מהעיניים, מצביעות בדרך כלל על זיהום בדרכי הנשימה העליונות. זה המצב השכיח ביותר בחתולים צעירים ובכאלה שהגיעו ממקלט או מרחוב." data-en="A single sneeze is just like ours — dust, a strong smell, or a passing irritant. Sneezing that repeats over a whole day, especially with nasal or eye discharge, usually points to an upper respiratory infection. This is most common in young cats and those that came from a shelter or the street.">עיטוש בודד הוא כמו אצלנו — אבק, ריח חזק או גירוי חולף. התעטשויות שחוזרות לאורך יום שלם, ובמיוחד כשהן מלוות בהפרשה מהאף או מהעיניים, מצביעות בדרך כלל על זיהום בדרכי הנשימה העליונות. זה המצב השכיח ביותר בחתולים צעירים ובכאלה שהגיעו ממקלט או מרחוב.</p>
+<div class="triage"><div class="triage-label" data-he="רמת דחיפות מקובלת" data-en="Typical Urgency Level">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b data-he="מיידי" data-en="Immediate">מיידי</b><span data-he="לא מחכים לבוקר" data-en="Don't wait till morning">לא מחכים לבוקר</span></div><div class="step u2"><b data-he="תוך 24 שעות" data-en="Within 24 hours">תוך 24 שעות</b><span data-he="לקבוע ביקור היום" data-en="Schedule a visit today">לקבוע ביקור היום</span></div><div class="step u3 on"><b data-he="לעקוב בבית" data-en="Monitor at home">לעקוב בבית</b><span data-he="לתעד ולהתייעץ" data-en="Document and consult">לתעד ולהתייעץ</span></div></div></div>
+<h2 data-he="סיבות אפשריות" data-en="Possible Causes">סיבות אפשריות</h2><ul class="causes">
+<li><strong data-he="זיהום נשימתי ויראלי." data-en="Viral respiratory infection.">זיהום נשימתי ויראלי.</strong> <span data-he="הרפס וקליציוירוס הם הגורמים המרכזיים. שכיחים מאוד ולעיתים חוזרים בתקופות לחץ." data-en="Herpes and calicivirus are the main causes. Very common, and sometimes recur during periods of stress.">הרפס וקליציוירוס הם הגורמים המרכזיים. שכיחים מאוד ולעיתים חוזרים בתקופות לחץ.</span></li>
+<li><strong data-he="זיהום חיידקי משני." data-en="Secondary bacterial infection.">זיהום חיידקי משני.</strong> <span data-he="מצטרף לוויראלי ומשנה את ההפרשה לצהובה או ירוקה." data-en="Joins the viral infection and changes the discharge to yellow or green.">מצטרף לוויראלי ומשנה את ההפרשה לצהובה או ירוקה.</span></li>
+<li><strong data-he="גירוי סביבתי." data-en="Environmental irritant.">גירוי סביבתי.</strong> <span data-he="חול מתאבק, ספריי, נרות ריחניים ועשן סיגריות." data-en="Dusty litter, spray, scented candles, and cigarette smoke.">חול מתאבק, ספריי, נרות ריחניים ועשן סיגריות.</span></li>
+<li><strong data-he="אלרגיה." data-en="Allergy.">אלרגיה.</strong> <span data-he="פחות שכיחה בחתולים מאשר בבני אדם, אבל אפשרית." data-en="Less common in cats than in humans, but possible.">פחות שכיחה בחתולים מאשר בבני אדם, אבל אפשרית.</span></li>
+<li><strong data-he="גוף זר או פוליפ." data-en="Foreign object or polyp.">גוף זר או פוליפ.</strong> <span data-he="לרוב מייצר התעטשויות מצד אחד בלבד." data-en="Usually produces sneezing on one side only.">לרוב מייצר התעטשויות מצד אחד בלבד.</span></li>
+<li><strong data-he="בעיית שיניים." data-en="Dental problem.">בעיית שיניים.</strong> <span data-he="שורש דלוק בשן עליונה יכול לפרוץ אל חלל האף." data-en="An infected root in an upper tooth can break through into the nasal cavity.">שורש דלוק בשן עליונה יכול לפרוץ אל חלל האף.</span></li>
 </ul>
-<div class="flags"><h2>מתי לא מחכים</h2><ul>
-<li>ההפרשה מהאף צהובה, ירוקה או מכילה דם</li>
-<li>החתול הפסיק לאכול — סתימת אף פוגעת בחוש הריח ובתיאבון</li>
-<li>יש קושי בנשימה או נשימה בפה פתוח</li>
-<li>יש בנוסף חום ואדישות</li>
-<li>מדובר בגור, או שהמצב נמשך יותר משבוע</li>
+<div class="flags"><h2 data-he="מתי לא מחכים" data-en="When Not to Wait">מתי לא מחכים</h2><ul>
+<li data-he="ההפרשה מהאף צהובה, ירוקה או מכילה דם" data-en="The nasal discharge is yellow, green, or contains blood">ההפרשה מהאף צהובה, ירוקה או מכילה דם</li>
+<li data-he="החתול הפסיק לאכול — סתימת אף פוגעת בחוש הריח ובתיאבון" data-en="The cat has stopped eating — a blocked nose affects the sense of smell and appetite">החתול הפסיק לאכול — סתימת אף פוגעת בחוש הריח ובתיאבון</li>
+<li data-he="יש קושי בנשימה או נשימה בפה פתוח" data-en="There's breathing difficulty or open-mouth breathing">יש קושי בנשימה או נשימה בפה פתוח</li>
+<li data-he="יש בנוסף חום ואדישות" data-en="There's also fever and lethargy">יש בנוסף חום ואדישות</li>
+<li data-he="מדובר בגור, או שהמצב נמשך יותר משבוע" data-en="It's a kitten, or the condition has lasted more than a week">מדובר בגור, או שהמצב נמשך יותר משבוע</li>
 </ul></div>
-<h2>מה אפשר לעשות בינתיים</h2><ul>
-<li>לנקות את האף בעדינות בגזה לחה</li>
-<li>אדים עוזרים: להכניס את החתול לחדר האמבטיה בזמן מקלחת חמה, בלי לרחוץ אותו</li>
-<li>לעבור לחול נמוך אבק ולהוציא מהבית ספריי ובישום</li>
-<li>להציע מזון רטוב עם ריח חזק כדי לעודד אכילה</li>
+<h2 data-he="מה אפשר לעשות בינתיים" data-en="What You Can Do Meanwhile">מה אפשר לעשות בינתיים</h2><ul>
+<li data-he="לנקות את האף בעדינות בגזה לחה" data-en="Gently clean the nose with damp gauze">לנקות את האף בעדינות בגזה לחה</li>
+<li data-he="אדים עוזרים: להכניס את החתול לחדר האמבטיה בזמן מקלחת חמה, בלי לרחוץ אותו" data-en="Steam helps: bring the cat into the bathroom during a hot shower, without bathing it">אדים עוזרים: להכניס את החתול לחדר האמבטיה בזמן מקלחת חמה, בלי לרחוץ אותו</li>
+<li data-he="לעבור לחול נמוך אבק ולהוציא מהבית ספריי ובישום" data-en="Switch to low-dust litter and remove sprays and fragrances from the home">לעבור לחול נמוך אבק ולהוציא מהבית ספריי ובישום</li>
+<li data-he="להציע מזון רטוב עם ריח חזק כדי לעודד אכילה" data-en="Offer strong-smelling wet food to encourage eating">להציע מזון רטוב עם ריח חזק כדי לעודד אכילה</li>
 </ul>
-<p>התעטשויות בלי חום ועם תיאבון תקין אפשר לעקוב אחריהן כמה ימים. הפרשה צהובה, סירוב לאכול או מצב שנמשך מעל שבוע מצריכים בדיקה.</p>
-<a class="cta" href="../index.html?symptom=sneezing">בדיקת התסמינים של החתול שלי<small>הכלי יסמן עבורכם את התסמין התעטשויות תכופות</small></a>
-<p class="note">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
+<p data-he="התעטשויות בלי חום ועם תיאבון תקין אפשר לעקוב אחריהן כמה ימים. הפרשה צהובה, סירוב לאכול או מצב שנמשך מעל שבוע מצריכים בדיקה." data-en="Sneezing without fever and with a normal appetite can be monitored for a few days. Yellow discharge, refusal to eat, or a condition lasting over a week needs a checkup.">התעטשויות בלי חום ועם תיאבון תקין אפשר לעקוב אחריהן כמה ימים. הפרשה צהובה, סירוב לאכול או מצב שנמשך מעל שבוע מצריכים בדיקה.</p>
+<a class="cta" href="../index.html?symptom=sneezing"><span data-he="בדיקת התסמינים של החתול שלי" data-en="Check My Cat's Symptoms">בדיקת התסמינים של החתול שלי</span><small data-he="הכלי יסמן עבורכם את התסמין התעטשויות תכופות" data-en="The tool will preselect the frequent sneezing symptom for you">הכלי יסמן עבורכם את התסמין התעטשויות תכופות</small></a>
+<p class="note" data-he="המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר." data-en="The information on this page is general and intended only to help understand the situation. It does not replace an examination, diagnosis, or advice from a veterinarian.">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
 <div class="foot">
-<a href="index.html">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/">CatMind AI — כלי האבחון</a>
+<a href="index.html" data-he="כל מדריכי התסמינים" data-en="All Symptom Guides">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/" data-he="CatMind AI — כלי האבחון" data-en="CatMind AI — Diagnosis Tool">CatMind AI — כלי האבחון</a>
 </div>
 </div>
+
+<script>
+var TITLE_HE="חתול מתעטש הרבה — סיבות וטיפול | CatMind AI";
+var TITLE_EN="Cat Sneezing a Lot — Causes and Treatment | CatMind AI";
+function setLang(l){
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  document.getElementById('pageTitle').textContent=(l==='en')?TITLE_EN:TITLE_HE;
+  document.querySelectorAll('[data-he]').forEach(function(el){
+    el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
+  });
+}
+</script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>חום גבוה אצל חתול — זיהוי וטיפול | CatMind AI</title>
+<title id="pageTitle">חום גבוה אצל חתול — זיהוי וטיפול | CatMind AI</title>
 <meta name="description" content="איך מזהים חום אצל חתול בלי מדחום, מה נחשב חום גבוה, ואיזה תרופות אסור בשום אופן לתת. הסבר על הסיבות ועל סימני האזהרה.">
 <link rel="canonical" href="https://mandylion.co.il/symptoms/fever.html">
 <meta property="og:title" content="חום גבוה אצל חתול — זיהוי וטיפול | CatMind AI">
@@ -27,7 +27,12 @@ body{
   font-family:'Assistant',system-ui,'Segoe UI',Arial,sans-serif; font-size:18px; line-height:1.75;
 }
 .wrap{max-width:760px; margin:0 auto; padding:28px 20px 80px}
-.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px}
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; flex-wrap:wrap}
+.top-links{display:flex; align-items:center; gap:14px}
+.lang-switcher{display:flex; gap:5px}
+.lang-btn{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:3px 8px; font-size:14px; cursor:pointer; transition:.2s; color:#fff}
+.lang-btn:hover{background:rgba(46,200,230,.2); border-color:var(--cyan)}
+.lang-btn.active{background:rgba(46,200,230,.25); border-color:var(--cyan)}
 .brand{font-family:'Secular One',sans-serif; font-size:1.35rem; color:var(--cyan); text-decoration:none; letter-spacing:-.01em}
 .brand span{color:var(--ink)}
 .crumb{font-size:.9rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid transparent}
@@ -93,37 +98,58 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html">כל התסמינים</a></div>
-<h1>חום גבוה אצל חתול — איך מזהים ומה עושים</h1>
-<p class="lede">טמפרטורת הגוף התקינה של חתול גבוהה משל אדם ונעה בין 38 ל־39.2 מעלות. מעל 39.5 מדובר בחום, ומעל 40.5 זה מצב שדורש טיפול מיידי. אזהרה חשובה במיוחד: אסור בשום מצב לתת לחתול תרופות אנושיות להורדת חום. פרצטמול קטלני לחתולים גם במינון זעיר, ותרופות נוגדות דלקת פוגעות בכליות שלהם.</p>
-<div class="triage"><div class="triage-label">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b>מיידי</b>לא מחכים לבוקר</div><div class="step u2 on"><b>תוך 24 שעות</b>לקבוע ביקור היום</div><div class="step u3"><b>לעקוב בבית</b>לתעד ולהתייעץ</div></div></div>
-<h2>סיבות אפשריות</h2><ul class="causes">
-<li><strong>זיהום חיידקי.</strong> פצע נשיכה שהתמסה למוגלה הוא סיבה נפוצה מאוד בחתולים שיוצאים החוצה.</li>
-<li><strong>זיהום ויראלי.</strong> מחלות נשימה עליונות מלוות לרוב בחום, בהתעטשויות ובהפרשות.</li>
-<li><strong>דלקת פנימית.</strong> בלבלב, בכליות או בשלפוחית.</li>
-<li><strong>תגובה לחיסון.</strong> חום קל ליום־יומיים לאחר חיסון הוא תקין ולא מדאיג.</li>
-<li><strong>מכת חום.</strong> מצב שונה לגמרי ומסוכן במיוחד, על רקע חשיפה לסביבה חמה.</li>
-<li><strong>חום ממקור לא ידוע.</strong> קיים גם אצל חתולים ודורש בירור מסודר.</li>
+<div class="top">
+  <div class="top-links"><a class="brand" href="../index.html">CatMind <span>AI</span></a><a class="crumb" href="index.html" data-he="כל התסמינים" data-en="All Symptoms">כל התסמינים</a></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
+  </div>
+</div>
+<h1 data-he="חום גבוה אצל חתול — איך מזהים ומה עושים" data-en="Fever in Cats — How to Recognize It and What to Do">חום גבוה אצל חתול — איך מזהים ומה עושים</h1>
+<p class="lede" data-he="טמפרטורת הגוף התקינה של חתול גבוהה משל אדם ונעה בין 38 ל־39.2 מעלות. מעל 39.5 מדובר בחום, ומעל 40.5 זה מצב שדורש טיפול מיידי. אזהרה חשובה במיוחד: אסור בשום מצב לתת לחתול תרופות אנושיות להורדת חום. פרצטמול קטלני לחתולים גם במינון זעיר, ותרופות נוגדות דלקת פוגעות בכליות שלהם." data-en="A cat's normal body temperature is higher than a human's and ranges between 38 and 39.2°C. Above 39.5°C it's a fever, and above 40.5°C it's a condition that needs immediate treatment. An especially important warning: never give a cat human fever-reducing medication. Paracetamol is lethal to cats even in a tiny dose, and anti-inflammatory drugs damage their kidneys.">טמפרטורת הגוף התקינה של חתול גבוהה משל אדם ונעה בין 38 ל־39.2 מעלות. מעל 39.5 מדובר בחום, ומעל 40.5 זה מצב שדורש טיפול מיידי. אזהרה חשובה במיוחד: אסור בשום מצב לתת לחתול תרופות אנושיות להורדת חום. פרצטמול קטלני לחתולים גם במינון זעיר, ותרופות נוגדות דלקת פוגעות בכליות שלהם.</p>
+<div class="triage"><div class="triage-label" data-he="רמת דחיפות מקובלת" data-en="Typical Urgency Level">רמת דחיפות מקובלת</div><div class="triage-track"><div class="step u1"><b data-he="מיידי" data-en="Immediate">מיידי</b><span data-he="לא מחכים לבוקר" data-en="Don't wait till morning">לא מחכים לבוקר</span></div><div class="step u2 on"><b data-he="תוך 24 שעות" data-en="Within 24 hours">תוך 24 שעות</b><span data-he="לקבוע ביקור היום" data-en="Schedule a visit today">לקבוע ביקור היום</span></div><div class="step u3"><b data-he="לעקוב בבית" data-en="Monitor at home">לעקוב בבית</b><span data-he="לתעד ולהתייעץ" data-en="Document and consult">לתעד ולהתייעץ</span></div></div></div>
+<h2 data-he="סיבות אפשריות" data-en="Possible Causes">סיבות אפשריות</h2><ul class="causes">
+<li><strong data-he="זיהום חיידקי." data-en="Bacterial infection.">זיהום חיידקי.</strong> <span data-he="פצע נשיכה שהתמסה למוגלה הוא סיבה נפוצה מאוד בחתולים שיוצאים החוצה." data-en="A bite wound that turned into an abscess is a very common cause in outdoor cats.">פצע נשיכה שהתמסה למוגלה הוא סיבה נפוצה מאוד בחתולים שיוצאים החוצה.</span></li>
+<li><strong data-he="זיהום ויראלי." data-en="Viral infection.">זיהום ויראלי.</strong> <span data-he="מחלות נשימה עליונות מלוות לרוב בחום, בהתעטשויות ובהפרשות." data-en="Upper respiratory illnesses are usually accompanied by fever, sneezing, and discharge.">מחלות נשימה עליונות מלוות לרוב בחום, בהתעטשויות ובהפרשות.</span></li>
+<li><strong data-he="דלקת פנימית." data-en="Internal inflammation.">דלקת פנימית.</strong> <span data-he="בלבלב, בכליות או בשלפוחית." data-en="In the pancreas, kidneys, or bladder.">בלבלב, בכליות או בשלפוחית.</span></li>
+<li><strong data-he="תגובה לחיסון." data-en="Vaccine reaction.">תגובה לחיסון.</strong> <span data-he="חום קל ליום־יומיים לאחר חיסון הוא תקין ולא מדאיג." data-en="A mild fever for a day or two after vaccination is normal and not concerning.">חום קל ליום־יומיים לאחר חיסון הוא תקין ולא מדאיג.</span></li>
+<li><strong data-he="מכת חום." data-en="Heatstroke.">מכת חום.</strong> <span data-he="מצב שונה לגמרי ומסוכן במיוחד, על רקע חשיפה לסביבה חמה." data-en="An entirely different and especially dangerous condition, from exposure to a hot environment.">מצב שונה לגמרי ומסוכן במיוחד, על רקע חשיפה לסביבה חמה.</span></li>
+<li><strong data-he="חום ממקור לא ידוע." data-en="Fever of unknown origin.">חום ממקור לא ידוע.</strong> <span data-he="קיים גם אצל חתולים ודורש בירור מסודר." data-en="Exists in cats too and requires a thorough workup.">קיים גם אצל חתולים ודורש בירור מסודר.</span></li>
 </ul>
-<div class="flags"><h2>מתי לא מחכים</h2><ul>
-<li>החום מעל 40 מעלות, או שנמשך יותר מיום</li>
-<li>החתול מסרב לאכול ולשתות</li>
-<li>יש קושי בנשימה או נשימה מהירה</li>
-<li>האוזניים והכפות חמות מאוד והחניכיים אדומות</li>
-<li>החתול לא מגיב, מסתתר או רועד</li>
+<div class="flags"><h2 data-he="מתי לא מחכים" data-en="When Not to Wait">מתי לא מחכים</h2><ul>
+<li data-he="החום מעל 40 מעלות, או שנמשך יותר מיום" data-en="The fever is above 40°C, or has lasted more than a day">החום מעל 40 מעלות, או שנמשך יותר מיום</li>
+<li data-he="החתול מסרב לאכול ולשתות" data-en="The cat refuses to eat and drink">החתול מסרב לאכול ולשתות</li>
+<li data-he="יש קושי בנשימה או נשימה מהירה" data-en="There's breathing difficulty or rapid breathing">יש קושי בנשימה או נשימה מהירה</li>
+<li data-he="האוזניים והכפות חמות מאוד והחניכיים אדומות" data-en="The ears and paws are very hot and the gums are red">האוזניים והכפות חמות מאוד והחניכיים אדומות</li>
+<li data-he="החתול לא מגיב, מסתתר או רועד" data-en="The cat is unresponsive, hiding, or shivering">החתול לא מגיב, מסתתר או רועד</li>
 </ul></div>
-<h2>מה אפשר לעשות בינתיים</h2><ul>
-<li>מדידה אמינה היא רקטלית עם מדחום דיגיטלי. מדידה באוזן פחות מדויקת</li>
-<li>לא לתת שום תרופה אנושית — פרצטמול הוא רעל לחתולים</li>
-<li>להציע מים קרירים ולשמור על חדר מאוורר</li>
-<li>אפשר להרטיב מגבת בפושרים ולהניח על הכפות, לא בקרח ולא במים קרים</li>
+<h2 data-he="מה אפשר לעשות בינתיים" data-en="What You Can Do Meanwhile">מה אפשר לעשות בינתיים</h2><ul>
+<li data-he="מדידה אמינה היא רקטלית עם מדחום דיגיטלי. מדידה באוזן פחות מדויקת" data-en="A reliable measurement is rectal with a digital thermometer. Ear measurement is less accurate">מדידה אמינה היא רקטלית עם מדחום דיגיטלי. מדידה באוזן פחות מדויקת</li>
+<li data-he="לא לתת שום תרופה אנושית — פרצטמול הוא רעל לחתולים" data-en="Don't give any human medication — paracetamol is poison to cats">לא לתת שום תרופה אנושית — פרצטמול הוא רעל לחתולים</li>
+<li data-he="להציע מים קרירים ולשמור על חדר מאוורר" data-en="Offer cool water and keep the room ventilated">להציע מים קרירים ולשמור על חדר מאוורר</li>
+<li data-he="אפשר להרטיב מגבת בפושרים ולהניח על הכפות, לא בקרח ולא במים קרים" data-en="You can dampen a towel with lukewarm water and place it on the paws — not with ice, not with cold water">אפשר להרטיב מגבת בפושרים ולהניח על הכפות, לא בקרח ולא במים קרים</li>
 </ul>
-<p>אוזניים חמות לבד אינן הוכחה לחום, ואף אחד לא מצפה ממך למדוד לבד. אבל חתול שנראה חם, אדיש ולא אוכל צריך להיבדק באותו יום.</p>
-<a class="cta" href="../index.html?symptom=fever">בדיקת התסמינים של החתול שלי<small>הכלי יסמן עבורכם את התסמין חום גבוה</small></a>
-<p class="note">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
+<p data-he="אוזניים חמות לבד אינן הוכחה לחום, ואף אחד לא מצפה ממך למדוד לבד. אבל חתול שנראה חם, אדיש ולא אוכל צריך להיבדק באותו יום." data-en="Hot ears alone aren't proof of fever, and no one expects you to measure it yourself. But a cat that seems hot, lethargic, and isn't eating needs to be checked that same day.">אוזניים חמות לבד אינן הוכחה לחום, ואף אחד לא מצפה ממך למדוד לבד. אבל חתול שנראה חם, אדיש ולא אוכל צריך להיבדק באותו יום.</p>
+<a class="cta" href="../index.html?symptom=fever"><span data-he="בדיקת התסמינים של החתול שלי" data-en="Check My Cat's Symptoms">בדיקת התסמינים של החתול שלי</span><small data-he="הכלי יסמן עבורכם את התסמין חום גבוה" data-en="The tool will preselect the fever symptom for you">הכלי יסמן עבורכם את התסמין חום גבוה</small></a>
+<p class="note" data-he="המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר." data-en="The information on this page is general and intended only to help understand the situation. It does not replace an examination, diagnosis, or advice from a veterinarian.">המידע בדף זה כללי ונועד לסייע בהבנת המצב בלבד. הוא אינו מחליף בדיקה, אבחנה או ייעוץ של רופא וטרינר.</p>
 <div class="foot">
-<a href="index.html">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/">CatMind AI — כלי האבחון</a>
+<a href="index.html" data-he="כל מדריכי התסמינים" data-en="All Symptom Guides">כל מדריכי התסמינים</a> &nbsp;·&nbsp; <a href="https://mandylion.co.il/" data-he="CatMind AI — כלי האבחון" data-en="CatMind AI — Diagnosis Tool">CatMind AI — כלי האבחון</a>
 </div>
 </div>
+
+<script>
+var TITLE_HE="חום גבוה אצל חתול — זיהוי וטיפול | CatMind AI";
+var TITLE_EN="Fever in Cats — How to Recognize It and What to Do | CatMind AI";
+function setLang(l){
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
+  document.getElementById('btnHe').classList.toggle('active',l==='he');
+  document.getElementById('btnEn').classList.toggle('active',l==='en');
+  document.getElementById('pageTitle').textContent=(l==='en')?TITLE_EN:TITLE_HE;
+  document.querySelectorAll('[data-he]').forEach(function(el){
+    el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
+  });
+}
+</script>
 </body>
 </html>
