@@ -140,7 +140,7 @@ a:focus-visible,.card:focus-visible{outline:2px solid var(--cyan); outline-offse
 <script>
 var TITLE_HE="חתול מתגרד הרבה — סיבות וטיפול | CatMind AI";
 var TITLE_EN="Cat Scratching a Lot — Causes and What Helps | CatMind AI";
-function setLang(l){
+function setLang(l, skipSave){
   document.getElementById('htmlRoot').lang=l;
   document.getElementById('htmlRoot').dir=(l==='en')?'ltr':'rtl';
   document.getElementById('btnHe').classList.toggle('active',l==='he');
@@ -149,7 +149,16 @@ function setLang(l){
   document.querySelectorAll('[data-he]').forEach(function(el){
     el.textContent = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-he');
   });
+  if(!skipSave){
+    try{ localStorage.setItem('catmind_lang', l); }catch(e){}
+  }
 }
+(function(){
+  try{
+    var saved = localStorage.getItem('catmind_lang');
+    if(saved==='en'){ setLang('en', true); }
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
