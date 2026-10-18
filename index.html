@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO & Google -->
-    <title>CatMind AI - אבחון בריאות וכאב לחתולים בבינה מלאכותית</title>
-    <meta name="description" content="השתמשו ב-CatMind AI כדי לזהות סימני כאב, מצוקה ובעיות בריאות אצל החתול שלכם באמצעות בינה מלאכותית מתקדמת. כלי עזר חינמי ומהיר לבעלי חתולים.">
+    <title>חתול חולה? בדיקת תסמינים חינמית ומיידית | CatMind AI</title>
+    <meta name="description" content="החתול מקיא, לא אוכל או מתנהג מוזר? בחרו את התסמינים וקבלו הערכה מיידית: מה הסיבות האפשריות ועד כמה דחוף לפנות לווטרינר. חינם ובעברית.">
     <meta name="keywords" content="אבחון חתולים, בינה מלאכותית לחתולים, זיהוי כאב אצל חתולים, בריאות החתול, וטרינר AI, CatMind, חתול חולה, סימפטומים חתול">
     <meta name="robots" content="index, follow">
     <meta name="author" content="CatMind AI">
@@ -86,7 +86,8 @@ body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;color:#fff;background:#020
 .top-section::-webkit-scrollbar-thumb{background:var(--turquoise);border-radius:10px;}
 
 .header-row{display:flex;align-items:center;justify-content:center;position:relative;}
-h1{font-size:18px;color:var(--turquoise);letter-spacing:.5px;}
+h1{font-size:18px;color:var(--turquoise);letter-spacing:.5px;text-align:center;}
+.h1-sub{display:block;font-size:11px;color:rgba(255,255,255,.55);font-weight:400;letter-spacing:0;margin-top:2px;}
 .lang-switcher{position:absolute;left:0;display:flex;gap:5px;}
 .lang-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:2px 7px;font-size:14px;cursor:pointer;transition:.2s;color:#fff;}
 .lang-btn:hover{background:rgba(34,211,238,.2);border-color:var(--turquoise);}
@@ -189,7 +190,7 @@ button#analyzeBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
       <button class="lang-btn active" onclick="setLang('he')" id="btnHe">🇮🇱</button>
       <button class="lang-btn" onclick="setLang('en')" id="btnEn">🇺🇸</button>
     </div>
-    <h1>🐱 CatMind AI</h1>
+    <h1>🐱 CatMind AI <span class="h1-sub" id="h1Sub">בדיקת תסמינים לחתול חולה</span></h1>
   </div>
 
   <div class="top-section">
@@ -299,6 +300,7 @@ function setLang(l){
   buildFQ('rowDuration','duration');
   updateSummary();
   const L={
+    h1Sub:['בדיקת תסמינים לחתול חולה','Symptom checker for sick cats'],
     lnkGuides:['📋 מדריכי תסמינים','📋 Symptom guides'],
     lnkContact:['✉️ צור קשר','✉️ Contact'],
     lnkVet1:['🩺 ד"ר טלי שטיין','🩺 Dr. Tali Stein'],
